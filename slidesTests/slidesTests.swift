@@ -21,9 +21,21 @@ class slidesTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testReadBundlePath() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        let path = NSBundle.mainBundle().pathForResource("rx1", ofType: "pdf")
+        
+        XCTAssertNotNil(path)
+        
+        let url = NSURL(fileURLWithPath: path!)
+        
+        let doc = OHPDFDocument(URL: url)
+        
+        XCTAssertNotNil(doc)
+        
+        XCTAssertEqual(doc.pagesCount, 115, "number of page doesn't match")
     }
     
     func testPerformanceExample() {

@@ -1,0 +1,10 @@
+PODS:
+  - OHPDFImage (3.2.1)
+
+DEPENDENCIES:
+  - OHPDFImage
+
+SPEC CHECKSUMS:
+  OHPDFImage: b5ad5d7d99f4fbadaa8740cc3d1009f1a0b34ef0
+
+COCOAPODS: 0.39.0
