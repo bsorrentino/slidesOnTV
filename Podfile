@@ -1,5 +1,6 @@
-platform :ios, '8.0'
+platform :tvos, '8.0'
 
 use_frameworks!
 
 pod 'OHPDFImage'
+pod 'SnapKit'
