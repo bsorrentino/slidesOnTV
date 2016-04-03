@@ -76,7 +76,7 @@ class UIPDFPageCell : UICollectionViewCell {
 }
 
 
-class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegate /*,UICollectionViewDelegateFlowLayout*/ {
+class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
  
     @IBOutlet weak var pagesView: UICollectionView!
     
@@ -94,18 +94,32 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         self.view.setNeedsFocusUpdate()
         self.view.updateFocusIfNeeded()
         
-        
     }
+
+    
+    /*
+    private var didSetupConstraints = false
     
     override func updateViewConstraints() {
-        pagesView.snp_updateConstraints { (make) -> Void in
+        
+        if (!didSetupConstraints) {
             
-            //make.center.equalTo(view.snp_center)
-            //make.width.height.equalTo(view)
-            //make.edges.equalTo(view).inset(UIEdgeInsetsMake(20,20,20,20))
+            pagesView.snp_makeConstraints { (make) -> Void in
+                let _ = view.frame
+                
+                make.leading.equalTo(view).offset(20).priorityHigh()
+                make.trailing.equalTo(view).offset(20).priorityHigh()
+                make.width.equalTo( 200 ).priorityHigh()
+                
+                didSetupConstraints = true
+            }
         }
+        
         super.updateViewConstraints()
     }
+    */
+    
+
 // MARK: <UICollectionViewDelegateFlowLayout>
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize

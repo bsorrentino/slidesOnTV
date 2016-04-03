@@ -53,7 +53,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z">
-                                <rect key="frame" x="40" y="20" width="1840" height="1040"/>
+                                <rect key="frame" x="45" y="25" width="600" height="1035"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="600" id="q8g-lI-yfF"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FbY-WG-tMt">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -78,14 +81,14 @@
                             </collectionView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="centerX" secondItem="kBg-cA-YoQ" secondAttribute="centerX" id="9aN-VS-Q2z"/>
-                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="centerY" secondItem="kBg-cA-YoQ" secondAttribute="centerY" id="IiO-ng-Xyg"/>
-                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="leading" secondItem="kBg-cA-YoQ" secondAttribute="leadingMargin" constant="20" id="YdK-pa-Ani"/>
-                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" constant="20" id="yzG-4Q-5bW"/>
+                            <constraint firstAttribute="bottom" secondItem="rws-Tv-h7Z" secondAttribute="bottom" constant="20" symbolic="YES" id="F8n-0G-o7O"/>
+                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" constant="25" id="OAd-Eh-UVX"/>
+                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="leading" secondItem="kBg-cA-YoQ" secondAttribute="leadingMargin" constant="25" id="ngZ-4o-9SM"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="pagesView" destination="rws-Tv-h7Z" id="liw-vC-pWt"/>
+                        <outlet property="view" destination="kBg-cA-YoQ" id="RrZ-aT-N4E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1U8-9K-Gmt" userLabel="First Responder" sceneMemberID="firstResponder"/>
