@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -21,7 +22,7 @@
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="Push Me"/>
                                 <connections>
-                                    <segue destination="82y-8q-Kd5" kind="showDetail" action="showViewController:sender:" id="MeA-hI-4xc"/>
+                                    <segue destination="3Li-gA-Wtf" kind="show" id="xUO-Iz-NFC"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -40,38 +41,56 @@
             <point key="canvasLocation" x="283" y="253"/>
         </scene>
         <!--Collection View Controller-->
-        <scene sceneID="ebo-a5-lr4">
+        <scene sceneID="hd5-36-nR7">
             <objects>
-                <collectionViewController id="82y-8q-Kd5" customClass="UIPDFCollectionViewController" customModule="slides" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Jd2-Zm-8Yc">
-                        <rect key="frame" x="0.0" y="0.0" width="1285" height="1080"/>
+                <viewController id="3Li-gA-Wtf" customClass="UIPDFCollectionViewController" customModule="slides" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Deq-BL-f34"/>
+                        <viewControllerLayoutGuide type="bottom" id="Az4-5N-6X8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kBg-cA-YoQ">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="40" minimumInteritemSpacing="20" id="KwK-PR-sCx">
-                            <size key="itemSize" width="200" height="200"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="30" minY="15" maxX="30" maxY="15"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="slide" id="Ucy-QZ-KLU" customClass="UIPDFPageCell" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="30" y="15" width="200" height="200"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="82y-8q-Kd5" id="GeC-74-bUU"/>
-                            <outlet property="delegate" destination="82y-8q-Kd5" id="AFf-di-cxO"/>
-                        </connections>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="95C-dd-PoI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z">
+                                <rect key="frame" x="40" y="20" width="1840" height="1040"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FbY-WG-tMt">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="slide" id="k2e-9S-Kun" customClass="UIPDFPageCell" customModule="slides" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="3Li-gA-Wtf" id="8JP-E2-qsH"/>
+                                    <outlet property="delegate" destination="3Li-gA-Wtf" id="HeV-2Q-lc1"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="centerX" secondItem="kBg-cA-YoQ" secondAttribute="centerX" id="9aN-VS-Q2z"/>
+                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="centerY" secondItem="kBg-cA-YoQ" secondAttribute="centerY" id="IiO-ng-Xyg"/>
+                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="leading" secondItem="kBg-cA-YoQ" secondAttribute="leadingMargin" constant="20" id="YdK-pa-Ani"/>
+                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" constant="20" id="yzG-4Q-5bW"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pagesView" destination="rws-Tv-h7Z" id="liw-vC-pWt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1U8-9K-Gmt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1121.5" y="1793"/>
+            <point key="canvasLocation" x="896" y="2785"/>
         </scene>
     </scenes>
 </document>

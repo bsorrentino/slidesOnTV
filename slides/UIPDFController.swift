@@ -76,12 +76,15 @@ class UIPDFPageCell : UICollectionViewCell {
 }
 
 
-class UIPDFCollectionViewController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegate /*,UICollectionViewDelegateFlowLayout*/ {
  
+    @IBOutlet weak var pagesView: UICollectionView!
+    
     var doc:OHPDFDocument!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let path = NSBundle.mainBundle().pathForResource("rx1", ofType: "pdf")
         
         let url = NSURL(fileURLWithPath: path!)
@@ -91,8 +94,18 @@ class UIPDFCollectionViewController : UICollectionViewController, UICollectionVi
         self.view.setNeedsFocusUpdate()
         self.view.updateFocusIfNeeded()
         
+        
     }
     
+    override func updateViewConstraints() {
+        pagesView.snp_updateConstraints { (make) -> Void in
+            
+            //make.center.equalTo(view.snp_center)
+            //make.width.height.equalTo(view)
+            //make.edges.equalTo(view).inset(UIEdgeInsetsMake(20,20,20,20))
+        }
+        super.updateViewConstraints()
+    }
 // MARK: <UICollectionViewDelegateFlowLayout>
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
@@ -110,7 +123,7 @@ class UIPDFCollectionViewController : UICollectionViewController, UICollectionVi
     
 // MARK: <UICollectionViewDelegate>
     
-    override internal func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
+    func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
     {
         print( "canFocusItemAtIndexPath(\(indexPath.row))" )
         return true
@@ -118,13 +131,13 @@ class UIPDFCollectionViewController : UICollectionViewController, UICollectionVi
     
 // MARK: <UICollectionViewDataSource>
     
-    override internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //print( "page # \(doc.pagesCount)")
         return doc.pagesCount
     }
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    override internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("slide", forIndexPath:indexPath) as! UIPDFPageCell
         
@@ -138,7 +151,7 @@ class UIPDFCollectionViewController : UICollectionViewController, UICollectionVi
 
     }
     
-    override internal func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     
