@@ -81,9 +81,13 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     @IBOutlet weak var pagesView: UICollectionView!
     
+    @IBOutlet weak var pageImageView: UIImageView!
     var doc:OHPDFDocument!
     
-    let layoutAttrs = (  cellSize: CGSizeMake(200,300), numCols: 3, minSpacingForCell : CGFloat(20.0), minSpacingForLine: CGFloat(50.0) )
+    let layoutAttrs = (  cellSize: CGSizeMake(200,300),
+                         numCols: 1,
+                         minSpacingForCell : CGFloat(20.0),
+                         minSpacingForLine: CGFloat(50.0) )
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -144,6 +148,23 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         return true
     }
     
+    func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
+    {
+    
+        if let i = context.nextFocusedIndexPath {
+
+            let page = doc.pageAtIndex(i.row+1)
+            
+            let vectorImage = OHVectorImage(PDFPage: page)
+            
+            self.pageImageView.image = vectorImage.renderAtSize(pageImageView.frame.size)
+            
+        }
+    }
+    
+    //func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+
+    
 // MARK: <UICollectionViewDataSource>
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -176,7 +197,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     //override public func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool
     //override public func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)
     
-// MARK: <UICollectionViewDelegate>
     
     
     
