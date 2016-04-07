@@ -78,9 +78,12 @@ class UIPDFPageCell : UICollectionViewCell {
 
 class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
  
+    
     @IBOutlet weak var pagesView: UICollectionView!
     
     var doc:OHPDFDocument!
+    
+    let layoutAttrs = (  cellSize: CGSizeMake(200,300), numCols: 3, minSpacingForCell : CGFloat(20.0), minSpacingForLine: CGFloat(50.0) )
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,41 +100,39 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
 
     
-    /*
-    private var didSetupConstraints = false
-    
     override func updateViewConstraints() {
         
-        if (!didSetupConstraints) {
-            
-            pagesView.snp_makeConstraints { (make) -> Void in
+        pagesView.snp_updateConstraints { (make) -> Void in
                 let _ = view.frame
-                
-                make.leading.equalTo(view).offset(20).priorityHigh()
-                make.trailing.equalTo(view).offset(20).priorityHigh()
-                make.width.equalTo( 200 ).priorityHigh()
-                
-                didSetupConstraints = true
-            }
+            
+                let w = CGFloat(layoutAttrs.numCols) * CGFloat(layoutAttrs.cellSize.width + layoutAttrs.minSpacingForCell )
+                make.width.equalTo( w ).priorityHigh()
         }
         
         super.updateViewConstraints()
     }
-    */
-    
+
 
 // MARK: <UICollectionViewDelegateFlowLayout>
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
     {
         //print("sizeForItemAtIndexPath")
-        return CGSizeMake(180,260) //use height whatever you wants.
+        return layoutAttrs.cellSize //use height whatever you wants.
+    }
+
+    // Space between item on different row
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+            return layoutAttrs.minSpacingForLine
     }
     
-    //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets;
+    // Space between item on the same row
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+            return layoutAttrs.minSpacingForCell
+    }
+
+    //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets ;
     //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize
-    //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat
-    //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat
     //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize
     
     
