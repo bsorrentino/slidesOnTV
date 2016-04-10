@@ -76,12 +76,22 @@ class UIPDFPageCell : UICollectionViewCell {
 }
 
 
-class UIPDFCollectionViewController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
  
+    
+    @IBOutlet weak var pagesView: UICollectionView!
+    
+    @IBOutlet weak var pageImageView: UIImageView!
     var doc:OHPDFDocument!
+    
+    let layoutAttrs = (  cellSize: CGSizeMake(200,300),
+                         numCols: 1,
+                         minSpacingForCell : CGFloat(20.0),
+                         minSpacingForLine: CGFloat(50.0) )
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let path = NSBundle.mainBundle().pathForResource("rx1", ofType: "pdf")
         
         let url = NSURL(fileURLWithPath: path!)
@@ -92,39 +102,78 @@ class UIPDFCollectionViewController : UICollectionViewController, UICollectionVi
         self.view.updateFocusIfNeeded()
         
     }
+
     
+    override func updateViewConstraints() {
+        
+        pagesView.snp_updateConstraints { (make) -> Void in
+                let _ = view.frame
+            
+                let w = CGFloat(layoutAttrs.numCols) * CGFloat(layoutAttrs.cellSize.width + layoutAttrs.minSpacingForCell )
+                make.width.equalTo( w ).priorityHigh()
+        }
+        
+        super.updateViewConstraints()
+    }
+
+
 // MARK: <UICollectionViewDelegateFlowLayout>
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
     {
         //print("sizeForItemAtIndexPath")
-        return CGSizeMake(180,260) //use height whatever you wants.
+        return layoutAttrs.cellSize //use height whatever you wants.
+    }
+
+    // Space between item on different row
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+            return layoutAttrs.minSpacingForLine
     }
     
-    //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets;
+    // Space between item on the same row
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+            return layoutAttrs.minSpacingForCell
+    }
+
+    //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets ;
     //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize
-    //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat
-    //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat
     //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize
     
     
 // MARK: <UICollectionViewDelegate>
     
-    override internal func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
+    func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
     {
         print( "canFocusItemAtIndexPath(\(indexPath.row))" )
         return true
     }
     
+    func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
+    {
+    
+        if let i = context.nextFocusedIndexPath {
+
+            let page = doc.pageAtIndex(i.row+1)
+            
+            let vectorImage = OHVectorImage(PDFPage: page)
+            
+            self.pageImageView.image = vectorImage.renderAtSize(pageImageView.frame.size)
+            
+        }
+    }
+    
+    //func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+
+    
 // MARK: <UICollectionViewDataSource>
     
-    override internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //print( "page # \(doc.pagesCount)")
         return doc.pagesCount
     }
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    override internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("slide", forIndexPath:indexPath) as! UIPDFPageCell
         
@@ -138,7 +187,7 @@ class UIPDFCollectionViewController : UICollectionViewController, UICollectionVi
 
     }
     
-    override internal func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     
@@ -148,7 +197,6 @@ class UIPDFCollectionViewController : UICollectionViewController, UICollectionVi
     //override public func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool
     //override public func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)
     
-// MARK: <UICollectionViewDelegate>
     
     
     
