@@ -37,7 +37,7 @@ func slideshareSearch( apiKey apiKey:String, sharedSecret:String, what:String ) 
         "api_key":apiKey,
         "ts": ts,
         "hash": hash,
-        "what":"reactive",
+        "what":what,
         "download":"0",
         "fileformat": "pdf"
     ]
