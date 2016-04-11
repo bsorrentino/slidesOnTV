@@ -71,52 +71,56 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     
     let disposeBag = DisposeBag()
     
-    let slidehareItemsParser = SlideshareItemsParser()
     
-    //let searchResultsUpdatingSubject = PublishSubject<String>()
+    let searchResultsUpdatingSubject = PublishSubject<String>()
 
-    var filterString = "" {
-        didSet {
-            // Return if the filter string hasn't changed.
-            guard filterString != oldValue else { return }
-            
-            // Apply the filter or show all items if the filter string is empty.
-            if filterString.isEmpty {
-                filteredDataItems.removeAll()
-            }
-            else {
-                
-                slideshareSearch( apiKey: "N2ouIG0m", sharedSecret: "kWG85pR1", what: filterString )
-                    .flatMap({ (data:NSData) -> Observable<Slideshow> in
-                    
-                        return self.slidehareItemsParser.rx_parse(data)
-                    })
-                    .observeOn(MainScheduler.instance)
-                    .subscribe({ e in
-                        
-                        if let slide = e.element {
-                            
-                            self.filteredDataItems.append(slide)
-                            
-                            let title = slide["title"]
-                            print( "\(title) \(self.collectionView)")
-                            
-                            self.collectionView?.reloadData()
-                        }
-                        
-                    }).addDisposableTo(disposeBag)
-                
-                //filteredDataItems = allDataItems.filter { $0.title.localizedStandardContainsString(filterString) }
-            }
-            
-            // Reload the collection view to reflect the changes.
-        }
-    }
-    
+  
     // MARK: UICollectionViewController Lifecycle
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+    
+    
+        searchResultsUpdatingSubject
+        .filter( { (filter:String) -> Bool in
+            let length = Int(filter.characters.count)
+            
+            print( "count \(length)")
+            
+            return length > 2
+        })
+        .debounce(3.5, scheduler: MainScheduler.instance)
+        .debug("slideshareSearch")
+        .flatMap( {  (filterString) -> Observable<NSData> in
+        
+            self.filteredDataItems.removeAll()
+            
+            return slideshareSearch( apiKey: "XXXXXXX", sharedSecret: "XXXXXXX", what: filterString )
+        })
+        .debug("parse")
+        .flatMap({ (data:NSData) -> Observable<Slideshow> in
+
+            let slidehareItemsParser = SlideshareItemsParser()
+            
+            return slidehareItemsParser.rx_parse(data)
+        })
+        .observeOn(MainScheduler.instance)
+        .debug( "subscribe")
+        .subscribe({ e in
+            
+
+            if let slide = e.element {
+                
+                self.filteredDataItems.append(slide)
+                
+                let title = slide["title"]
+                
+                print( "\(title)")
+                
+                self.collectionView?.reloadData()
+            }
+            
+        }).addDisposableTo(disposeBag)
     }
     
     
@@ -161,8 +165,8 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     
     public func updateSearchResultsForSearchController(searchController: UISearchController) {
         
-        //searchResultsUpdatingSubject.onNext(<#T##element: String##String#>)
-        filterString = searchController.searchBar.text ?? ""
+        
+        searchResultsUpdatingSubject.onNext(searchController.searchBar.text ?? "")
         
         
     }
