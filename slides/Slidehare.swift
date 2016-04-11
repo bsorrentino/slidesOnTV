@@ -59,7 +59,7 @@ func slideshareSearch( apiKey apiKey:String, sharedSecret:String, what:String ) 
 
 typealias Slideshow = Dictionary<String,String>
 
-class SlideshareItems : NSObject, NSXMLParserDelegate {
+class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
     
     var currentData:(slide:Slideshow, attr:String?)?
     
@@ -142,3 +142,4 @@ class SlideshareItems : NSObject, NSXMLParserDelegate {
         }
     }
 }
+

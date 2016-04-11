@@ -3,3 +3,5 @@
 //
 
 @import OHPDFImage;
+
+#include <CommonCrypto/CommonCrypto.h>

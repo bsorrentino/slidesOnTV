@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		19A0B59C9F8E4C1F03DC342E /* Pods_slidesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72AC764941F42073BE773121 /* Pods_slidesUITests.framework */; };
+		5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */; };
+		5F9623531CBBF94900F61D9C /* Slidehare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9623521CBBF94900F61D9C /* Slidehare.swift */; };
 		5FB6D3861CAEF8B100D7AA80 /* UIPDFController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6D3851CAEF8B100D7AA80 /* UIPDFController.swift */; };
 		5FC7A4AA1CAD8CA000530CB0 /* rx1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */; };
 		5FC7A4AC1CAD8CEC00530CB0 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD9A2F91CAD596F0065BE03 /* CloudKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -43,6 +45,8 @@
 		0EF8BC57A788D0E0DF6C08B3 /* Pods-slidesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.release.xcconfig"; sourceTree = "<group>"; };
 		2F2BE46D2D4FBC130BE3C6D2 /* Pods-slidesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5F78DDA7280E489095201876 /* Pods-slides.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.release.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.release.xcconfig"; sourceTree = "<group>"; };
+		5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSlidesViewController.swift; sourceTree = "<group>"; };
+		5F9623521CBBF94900F61D9C /* Slidehare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slidehare.swift; sourceTree = "<group>"; };
 		5FB6D3851CAEF8B100D7AA80 /* UIPDFController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIPDFController.swift; sourceTree = "<group>"; };
 		5FC7A4A51CAD8A8F00530CB0 /* slides-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "slides-Bridging-Header.h"; sourceTree = "<group>"; };
 		5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = rx1.pdf; path = assets/rx1.pdf; sourceTree = "<group>"; };
@@ -147,12 +151,14 @@
 		5FD9A2CD1CAD19590065BE03 /* slides */ = {
 			isa = PBXGroup;
 			children = (
+				5F9623521CBBF94900F61D9C /* Slidehare.swift */,
 				5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */,
 				5FD9A2D01CAD19590065BE03 /* ViewController.swift */,
 				5FD9A2D21CAD19590065BE03 /* Main.storyboard */,
 				5FD9A2D51CAD19590065BE03 /* Assets.xcassets */,
 				5FD9A2D71CAD19590065BE03 /* Info.plist */,
 				5FB6D3851CAEF8B100D7AA80 /* UIPDFController.swift */,
+				5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";
@@ -451,6 +457,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F9623531CBBF94900F61D9C /* Slidehare.swift in Sources */,
+				5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */,
 				5FD9A2D11CAD19590065BE03 /* ViewController.swift in Sources */,
 				5FD9A2CF1CAD19590065BE03 /* AppDelegate.swift in Sources */,
 				5FB6D3861CAEF8B100D7AA80 /* UIPDFController.swift in Sources */,
