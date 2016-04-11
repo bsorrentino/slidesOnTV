@@ -1,13 +1,11 @@
 # Podfile
-platform :tvos, '9.0'
-#platform :ios, '8.0'
+#platform :tvos, '9.0'
+platform :ios, '8.0'
 use_frameworks!
 
 target 'slides' do
     pod 'RxSwift',    '~> 2.0'
     pod 'RxCocoa',    '~> 2.0'
-    pod 'RxBlocking', '~> 2.0'
-    pod 'RxTests',    '~> 2.0'
     pod 'OHPDFImage'
     pod 'SnapKit'
 end

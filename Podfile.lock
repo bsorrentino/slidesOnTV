@@ -1,13 +1,28 @@
 PODS:
   - OHPDFImage (3.2.1)
+  - RxBlocking (2.4):
+    - RxSwift (~> 2.4)
+  - RxCocoa (2.4):
+    - RxSwift (~> 2.4)
+  - RxSwift (2.4)
+  - RxTests (2.4):
+    - RxSwift (~> 2.4)
   - SnapKit (0.20.0)
 
 DEPENDENCIES:
   - OHPDFImage
+  - RxBlocking (~> 2.0)
+  - RxCocoa (~> 2.0)
+  - RxSwift (~> 2.0)
+  - RxTests (~> 2.0)
   - SnapKit
 
 SPEC CHECKSUMS:
   OHPDFImage: b5ad5d7d99f4fbadaa8740cc3d1009f1a0b34ef0
+  RxBlocking: 1226c1fa0ca1e0ca5f964d4330ca3649f2128680
+  RxCocoa: 7d6cd877de99f5640306b3d6cf87f580c1d91b61
+  RxSwift: 67b9ef4e8b34fb394e200e754c6a09cc16559f94
+  RxTests: 8b9691e6476dfa6025fae9a69f449bf4cb5e5cfc
   SnapKit: 5fce3c1bbbf1fbd31de9aa92f33eb9fa03f15650
 
 COCOAPODS: 0.39.0
