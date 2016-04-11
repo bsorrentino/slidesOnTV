@@ -93,13 +93,13 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         .debug("slideshareSearch")
         .flatMap( {  (filterString) -> Observable<NSData> in
         
-            self.filteredDataItems.removeAll()
-            
             return slideshareSearch( apiKey: "XXXXXXX", sharedSecret: "XXXXXXX", what: filterString )
         })
         .debug("parse")
         .flatMap({ (data:NSData) -> Observable<Slideshow> in
 
+            self.filteredDataItems.removeAll()
+            
             let slidehareItemsParser = SlideshareItemsParser()
             
             return slidehareItemsParser.rx_parse(data)
