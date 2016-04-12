@@ -27,18 +27,25 @@
                                     <rect key="frame" x="0.0" y="0.0" width="312" height="163"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="njW-TF-keJ">
-                                            <rect key="frame" x="14" y="21" width="265" height="113"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JB5-k7-71P">
+                                            <rect key="frame" x="10" y="10" width="292" height="143"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="JB5-k7-71P" firstAttribute="top" secondItem="bqw-ys-LOW" secondAttribute="topMargin" constant="2" id="Fs1-tD-Yk9"/>
+                                    <constraint firstItem="JB5-k7-71P" firstAttribute="centerY" secondItem="bqw-ys-LOW" secondAttribute="centerY" id="UUW-SZ-0cf"/>
+                                    <constraint firstItem="JB5-k7-71P" firstAttribute="leading" secondItem="bqw-ys-LOW" secondAttribute="leadingMargin" constant="2" id="g4M-T8-Sae"/>
+                                    <constraint firstItem="JB5-k7-71P" firstAttribute="centerX" secondItem="bqw-ys-LOW" secondAttribute="centerX" id="i0Q-lQ-46m"/>
+                                </constraints>
                                 <connections>
-                                    <outlet property="label" destination="njW-TF-keJ" id="Ifx-49-aOo"/>
+                                    <outlet property="label" destination="JB5-k7-71P" id="jO8-RS-YWr"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

@@ -28,7 +28,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
         imageView?.adjustsImageWhenAncestorFocused = true
         imageView?.clipsToBounds = false
         
-        label.alpha = 0.0
+        //label.alpha = 0.0
     }
     
     // MARK: UICollectionReusableView
@@ -37,7 +37,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         
         // Reset the label's alpha value so it's initially hidden.
-        label.alpha = 0.0
+        //label.alpha = 0.0
     }
     
     // MARK: UIFocusEnvironment
@@ -48,6 +48,8 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
          This will ensure all animations run alongside each other when the focus
          changes.
          */
+        
+        /*
         coordinator.addCoordinatedAnimations({
             if self.focused {
                 self.label.alpha = 1.0
@@ -56,6 +58,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                 self.label.alpha = 0.0
             }
             }, completion: nil)
+        */
     }
 }
 
@@ -93,7 +96,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         .debug("slideshareSearch")
         .flatMap( {  (filterString) -> Observable<NSData> in
         
-            return slideshareSearch( apiKey: "XXXXXXX", sharedSecret: "XXXXXXX", what: filterString )
+            return slideshareSearch( apiKey: "N2ouIG0m", sharedSecret: "kWG85pR1", what: filterString )
         })
         .debug("parse")
         .flatMap({ (data:NSData) -> Observable<Slideshow> in
@@ -141,7 +144,21 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     
     override public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         // Dequeue a cell from the collection view.
-        return collectionView.dequeueReusableCellWithReuseIdentifier(SearchSlideCollectionViewCell.reuseIdentifier, forIndexPath: indexPath)
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SearchSlideCollectionViewCell.reuseIdentifier, forIndexPath: indexPath) as! SearchSlideCollectionViewCell
+
+            let item = filteredDataItems[indexPath.row]
+            
+            if let title = item["title"] {
+                
+                print( "\(title)" )
+                
+                cell.label.text = title
+                
+            }
+            
+            return cell
+        
     }
     
     // MARK: UICollectionViewDelegate
@@ -150,7 +167,13 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         guard let cell = cell as? SearchSlideCollectionViewCell else { fatalError("Expected to display a `DataItemCollectionViewCell`.") }
         let item = filteredDataItems[indexPath.row]
         
-        cell.label.text = item["title"]
+        if let title = item["title"] {
+        
+            print( "\(title)" )
+        
+            //cell.label.text = title
+        
+        }
         
         // Configure the cell.
         //cellComposer.composeCell(cell, withDataItem: item)
