@@ -80,7 +80,16 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     override public func viewDidLoad() {
         super.viewDidLoad()
     
-    
+        guard let bundlePath = NSBundle.mainBundle().pathForResource("slideshare", ofType: "plist") else {
+            return
+        }
+        
+        guard let credentials = NSDictionary(contentsOfFile: bundlePath ) else {
+            return
+        }
+        
+        
+        
         searchResultsUpdatingSubject
         .filter( { (filter:String) -> Bool in
             let length = Int(filter.characters.count)
@@ -93,7 +102,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         .debug("slideshareSearch")
         .flatMap( {  (filterString) -> Observable<NSData> in
         
-            return slideshareSearch( apiKey: "XXXXXXX", sharedSecret: "XXXXXXX", what: filterString )
+            return slideshareSearch( apiKey: credentials["apiKey"]! as! String, sharedSecret: credentials["sharedSecret"] as! String, what: filterString )
         })
         .debug("parse")
         .flatMap({ (data:NSData) -> Observable<Slideshow> in

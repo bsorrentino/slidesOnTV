@@ -22,6 +22,9 @@
 		5FD9A2EC1CAD195A0065BE03 /* slidesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2EB1CAD195A0065BE03 /* slidesUITests.swift */; };
 		70287CC98CBB4D1000832D6A /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED3F2FC52E815F2F5BE85EF4 /* Pods_slides.framework */; };
 		93AFF38DF839D9FB03949E49 /* Pods_slidesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF57176650C748DF95AEACB5 /* Pods_slidesTests.framework */; };
+		A06B6D531CBFA23900CBE220 /* slideshare.plist in Resources */ = {isa = PBXBuildFile; fileRef = A06B6D521CBFA23900CBE220 /* slideshare.plist */; };
+		A06B6D551CBFCCA000CBE220 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = A06B6D541CBFCCA000CBE220 /* README.md */; };
+		A06B6D571CBFCEA800CBE220 /* SLIDESHARE.md in Sources */ = {isa = PBXBuildFile; fileRef = A06B6D561CBFCEA800CBE220 /* SLIDESHARE.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +71,9 @@
 		72AC764941F42073BE773121 /* Pods_slidesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		734360EB957809BE75B83988 /* Pods-slidesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7D567B480DEA11A9F7C5D1AF /* Pods-slidesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		A06B6D521CBFA23900CBE220 /* slideshare.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = slideshare.plist; path = slides/slideshare.plist; sourceTree = "<group>"; };
+		A06B6D541CBFCCA000CBE220 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A06B6D561CBFCEA800CBE220 /* SLIDESHARE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = SLIDESHARE.md; sourceTree = "<group>"; };
 		D94649D31AA267EE4C1C8238 /* Pods-slides.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.debug.xcconfig"; sourceTree = "<group>"; };
 		ED3F2FC52E815F2F5BE85EF4 /* Pods_slides.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slides.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF57176650C748DF95AEACB5 /* Pods_slidesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +132,9 @@
 		5FD9A2C21CAD19590065BE03 = {
 			isa = PBXGroup;
 			children = (
+				A06B6D561CBFCEA800CBE220 /* SLIDESHARE.md */,
+				A06B6D541CBFCCA000CBE220 /* README.md */,
+				A06B6D521CBFA23900CBE220 /* slideshare.plist */,
 				5FC7A4AB1CAD8CA700530CB0 /* assets */,
 				5FD9A2FD1CAD5CFA0065BE03 /* Podfile */,
 				5FD9A2CD1CAD19590065BE03 /* slides */,
@@ -308,6 +317,7 @@
 			files = (
 				5FC7A4AA1CAD8CA000530CB0 /* rx1.pdf in Resources */,
 				5FD9A2D61CAD19590065BE03 /* Assets.xcassets in Resources */,
+				A06B6D531CBFA23900CBE220 /* slideshare.plist in Resources */,
 				5FD9A2D41CAD19590065BE03 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,6 +467,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A06B6D571CBFCEA800CBE220 /* SLIDESHARE.md in Sources */,
+				A06B6D551CBFCCA000CBE220 /* README.md in Sources */,
 				5F9623531CBBF94900F61D9C /* Slidehare.swift in Sources */,
 				5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */,
 				5FD9A2D11CAD19590065BE03 /* ViewController.swift in Sources */,
