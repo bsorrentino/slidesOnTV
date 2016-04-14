@@ -9,8 +9,9 @@ import RxSwift
 import RxCocoa
 
 class SearchSlideCollectionViewCell: UICollectionViewCell {
-    // MARK: Properties
     
+    // MARK: Properties
+
     static let reuseIdentifier = "SearchSlideCell"
     
     @IBOutlet weak var label: UILabel!
@@ -19,47 +20,76 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     var representedDataItem: Slideshow?
     
+    var disposeBag: DisposeBag?
+    
+    func loadImageUrl( imageUrl:NSURL, backgroundWorkScheduler:ImmediateSchedulerType )  {
+            let disposeBag = DisposeBag()
+            
+            NSURLSession.sharedSession().rx_data(NSURLRequest(URL: imageUrl))
+                .debug("image request")
+                .flatMap({ (imageData) -> Observable<UIImage> in
+                    return Observable.just(imageData)
+                        .observeOn(backgroundWorkScheduler)
+                        .debug( "map data to image")
+                        .map { data in
+                            guard let image = UIImage(data: data) else {
+                                // some error
+                                throw NSError(  domain: "SearchSlidesViewController",
+                                    code: -1,
+                                    userInfo: [NSLocalizedDescriptionKey: "Decoding image error"])
+                            }
+                            return image/*.forceLazyImageDecompression()*/
+                            
+                    }
+                }).subscribe(
+                    onNext: { (image) in
+                    self.imageView?.image = image
+                    },
+                    onError: { (e) in
+                        print( "ERROR: \(e)")
+                    }
+                )                //.trackActivity(self.loadingImage)
+                .addDisposableTo(disposeBag)
+            
+                self.disposeBag = disposeBag
+    }
+    
     // MARK: Initialization
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         // These properties are also exposed in Interface Builder.
-        imageView?.adjustsImageWhenAncestorFocused = true
-        imageView?.clipsToBounds = false
+        //imageView?.adjustsImageWhenAncestorFocused = true
+        //imageView?.clipsToBounds = false
+
         
-        //label.alpha = 0.0
     }
-    
+
     // MARK: UICollectionReusableView
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        // Reset the label's alpha value so it's initially hidden.
-        //label.alpha = 0.0
+        disposeBag = nil
+
     }
     
-    // MARK: UIFocusEnvironment
-    
+    // MARK: UIFocusEnvironment   
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
-        /*
-         Update the label's alpha value using the `UIFocusAnimationCoordinator`.
-         This will ensure all animations run alongside each other when the focus
-         changes.
-         */
-        
-        /*
         coordinator.addCoordinatedAnimations({
             if self.focused {
-                self.label.alpha = 1.0
+                self.transform = CGAffineTransformMakeScale(1.01, 1.01)
+                self.backgroundColor = UIColor.whiteColor()
+                //self.label.textColor = .blackColor()
             }
             else {
-                self.label.alpha = 0.0
+                self.transform = CGAffineTransformMakeScale(1, 1)
+                self.backgroundColor = UIColor.clearColor()
+                //self.label.textColor = .whiteColor()
             }
-            }, completion: nil)
-        */
-    }
+        }, completion: nil)    }
 }
 
 
@@ -68,7 +98,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     
     public static let storyboardIdentifier = "SearchSlidesViewController"
     
-    //private let cellComposer = DataItemCellComposer()
+    private var backgroundWorkScheduler: ImmediateSchedulerType?
     
     private var filteredDataItems:[Slideshow] = []
     
@@ -77,11 +107,16 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     
     let searchResultsUpdatingSubject = PublishSubject<String>()
 
-  
     // MARK: UICollectionViewController Lifecycle
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        let operationQueue = NSOperationQueue()
+        operationQueue.maxConcurrentOperationCount = 2
+        
+        self.backgroundWorkScheduler = OperationQueueScheduler(operationQueue: operationQueue)
+      
     
         guard let bundlePath = NSBundle.mainBundle().pathForResource("slideshare", ofType: "plist") else {
             return
@@ -92,6 +127,11 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         }
         
         
+#if (arch(i386) || arch(x86_64)) && os(tvOS)
+    let debounce:RxSwift.RxTimeInterval = 0.5
+#else
+    let debounce:RxSwift.RxTimeInterval = 2.5
+#endif
         
         searchResultsUpdatingSubject
         .filter( { (filter:String) -> Bool in
@@ -101,7 +141,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
             
             return length > 2
         })
-        .debounce(3.5, scheduler: MainScheduler.instance)
+        .debounce(debounce, scheduler: MainScheduler.instance)
         .debug("slideshareSearch")
         .flatMap( {  (filterString) -> Observable<NSData> in
         
@@ -133,6 +173,10 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
             }
             
         }).addDisposableTo(disposeBag)
+        
+        self.collectionView?.setNeedsFocusUpdate()
+        self.collectionView?.updateFocusIfNeeded()
+
     }
     
     
@@ -143,11 +187,6 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     }
     
     override public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        /*
-        guard let items = filteredDataItems else {
-            return 0;
-        }
-        */
         return filteredDataItems.count
     }
     
@@ -162,14 +201,33 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     
     // MARK: UICollectionViewDelegate
     
+    override public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
+    {
+        return true
+    }
+    
+    
     override public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? SearchSlideCollectionViewCell else { fatalError("Expected to display a `DataItemCollectionViewCell`.") }
-        let item = filteredDataItems[indexPath.row]
+        
+        let item:Slideshow = filteredDataItems[indexPath.row]
+        
+        //item.forEach { (k, v) in print( "\(k)=\(v)") }
         
         if let title = item["title"] {
         
             cell.label.text = title
         
+        }
+        if let thumbnail = item["thumbnailxlargeurl"] {
+            
+            let s = "http:\(thumbnail)".stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            
+            print( "[\(s)]" )
+            if let url = NSURL(string: s ) {
+
+                cell.loadImageUrl(url, backgroundWorkScheduler: self.backgroundWorkScheduler!)
+            }
         }
         
         // Configure the cell.

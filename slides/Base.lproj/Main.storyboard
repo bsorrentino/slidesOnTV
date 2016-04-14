@@ -12,39 +12,47 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="REr-mv-HBi">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.9215686917" green="0.9215686917" blue="0.9215686917" alpha="1" colorSpace="deviceRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="b6o-ub-zc6">
-                            <size key="itemSize" width="312" height="163"/>
+                            <size key="itemSize" width="340" height="350"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchSlideCell" id="bqw-ys-LOW" customClass="SearchSlideCollectionViewCell" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="312" height="163"/>
+                                <rect key="frame" x="0.0" y="0.0" width="340" height="350"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="312" height="163"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="340" height="350"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JB5-k7-71P">
-                                            <rect key="frame" x="10" y="10" width="292" height="143"/>
+                                            <rect key="frame" x="13" y="258" width="314" height="79"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VGU-w4-XSW">
+                                            <rect key="frame" x="8" y="13" width="324" height="240"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="240" id="hXJ-sU-Apr"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="JB5-k7-71P" firstAttribute="top" secondItem="bqw-ys-LOW" secondAttribute="topMargin" constant="2" id="Fs1-tD-Yk9"/>
-                                    <constraint firstItem="JB5-k7-71P" firstAttribute="centerY" secondItem="bqw-ys-LOW" secondAttribute="centerY" id="UUW-SZ-0cf"/>
-                                    <constraint firstItem="JB5-k7-71P" firstAttribute="leading" secondItem="bqw-ys-LOW" secondAttribute="leadingMargin" constant="2" id="g4M-T8-Sae"/>
-                                    <constraint firstItem="JB5-k7-71P" firstAttribute="centerX" secondItem="bqw-ys-LOW" secondAttribute="centerX" id="i0Q-lQ-46m"/>
+                                    <constraint firstItem="JB5-k7-71P" firstAttribute="leading" secondItem="bqw-ys-LOW" secondAttribute="leadingMargin" constant="5" id="2Z4-ai-web"/>
+                                    <constraint firstItem="VGU-w4-XSW" firstAttribute="centerX" secondItem="bqw-ys-LOW" secondAttribute="centerX" id="IQH-Ey-nub"/>
+                                    <constraint firstItem="JB5-k7-71P" firstAttribute="centerX" secondItem="bqw-ys-LOW" secondAttribute="centerX" id="RJi-yc-Qhp"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="JB5-k7-71P" secondAttribute="bottom" constant="5" id="VCx-hT-W4v"/>
+                                    <constraint firstItem="VGU-w4-XSW" firstAttribute="leading" secondItem="bqw-ys-LOW" secondAttribute="leadingMargin" id="ZFc-qd-14y"/>
+                                    <constraint firstItem="VGU-w4-XSW" firstAttribute="top" secondItem="bqw-ys-LOW" secondAttribute="topMargin" constant="5" id="sDf-eJ-jSa"/>
+                                    <constraint firstItem="JB5-k7-71P" firstAttribute="top" secondItem="bqw-ys-LOW" secondAttribute="topMargin" constant="250" id="yA5-CY-YbX"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="imageView" destination="VGU-w4-XSW" id="MQK-CM-iXJ"/>
                                     <outlet property="label" destination="JB5-k7-71P" id="jO8-RS-YWr"/>
                                 </connections>
                             </collectionViewCell>
