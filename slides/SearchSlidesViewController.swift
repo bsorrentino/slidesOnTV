@@ -83,7 +83,16 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     override public func viewDidLoad() {
         super.viewDidLoad()
     
-    
+        guard let bundlePath = NSBundle.mainBundle().pathForResource("slideshare", ofType: "plist") else {
+            return
+        }
+        
+        guard let credentials = NSDictionary(contentsOfFile: bundlePath ) else {
+            return
+        }
+        
+        
+        
         searchResultsUpdatingSubject
         .filter( { (filter:String) -> Bool in
             let length = Int(filter.characters.count)
@@ -96,7 +105,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         .debug("slideshareSearch")
         .flatMap( {  (filterString) -> Observable<NSData> in
         
-            return slideshareSearch( apiKey: "N2ouIG0m", sharedSecret: "kWG85pR1", what: filterString )
+            return slideshareSearch( apiKey: credentials["apiKey"]! as! String, sharedSecret: credentials["sharedSecret"] as! String, what: filterString )
         })
         .debug("parse")
         .flatMap({ (data:NSData) -> Observable<Slideshow> in
@@ -147,17 +156,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SearchSlideCollectionViewCell.reuseIdentifier, forIndexPath: indexPath) as! SearchSlideCollectionViewCell
 
-            let item = filteredDataItems[indexPath.row]
-            
-            if let title = item["title"] {
-                
-                print( "\(title)" )
-                
-                cell.label.text = title
-                
-            }
-            
-            return cell
+        return cell
         
     }
     
@@ -169,9 +168,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         
         if let title = item["title"] {
         
-            print( "\(title)" )
-        
-            //cell.label.text = title
+            cell.label.text = title
         
         }
         
