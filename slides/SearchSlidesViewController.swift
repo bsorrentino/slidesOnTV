@@ -41,7 +41,9 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                             return image/*.forceLazyImageDecompression()*/
                             
                     }
-                }).subscribe(
+                })
+                .observeOn(MainScheduler.instance)
+                .subscribe(
                     onNext: { (image) in
                     self.imageView?.image = image
                     },
@@ -142,6 +144,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
             
             return length > 2
         })
+        .distinctUntilChanged()
         .debounce(debounce, scheduler: MainScheduler.instance)
         .debug("slideshareSearch")
         .flatMap( {  (filterString) -> Observable<NSData> in
