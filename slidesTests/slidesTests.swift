@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import TCBlobDownloadSwift
 @testable import slides
 
 class slidesTests: XCTestCase {
@@ -36,6 +37,42 @@ class slidesTests: XCTestCase {
         XCTAssertNotNil(doc)
         
         XCTAssertEqual(doc.pagesCount, 115, "number of page doesn't match")
+    }
+    
+    func testDownload() {
+        
+        let asyncExpectation = expectationWithDescription("longRunningFunction")
+        
+        let url = "http://publications.gbdirect.co.uk/c_book/thecbook.pdf"
+        
+        let downloadURL = NSURL(string: url)
+        
+        XCTAssertNotNil(downloadURL)
+        
+        let documentDirectoryURL =  try! NSFileManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+
+        XCTAssertNotNil(documentDirectoryURL)
+        
+        TCBlobDownloadManager.sharedInstance.downloadFileAtURL(downloadURL!,
+                                                               toDirectory: documentDirectoryURL,
+                                                               withName: "test1.pdf",
+                                                               progression: { (progress, totalBytesWritten, totalBytesExpectedToWrite) in
+                                                                print( "\(progress) - \(totalBytesWritten) - \(totalBytesExpectedToWrite)" )
+            }) { (error, location) in
+                
+                XCTAssertNil(error)
+                
+                print( "Download completed at location \(location)")
+                
+                asyncExpectation.fulfill()
+        }
+        
+        self.waitForExpectationsWithTimeout(60) { error in
+            
+            XCTAssertNil(error, "Something went horribly wrong")
+            
+        }
+
     }
     
     func testPerformanceExample() {

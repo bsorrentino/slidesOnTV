@@ -47,6 +47,13 @@
                 <key>NSIncludesSubdomains</key>
                 <true/>
             </dict>
+            <key>publications.gbdirect.co.uk</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+            </dict>
             
         </dict>
     </dict>

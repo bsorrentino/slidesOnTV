@@ -48,7 +48,8 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                     onError: { (e) in
                         print( "ERROR: \(e)")
                     }
-                )                //.trackActivity(self.loadingImage)
+                )
+                //.trackActivity(self.loadingImage)
                 .addDisposableTo(disposeBag)
             
                 self.disposeBag = disposeBag
@@ -229,6 +230,9 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
                 cell.loadImageUrl(url, backgroundWorkScheduler: self.backgroundWorkScheduler!)
             }
         }
+        
+        let downloadURL = item["downloadurl"]
+        print( "\(downloadURL)")
         
         // Configure the cell.
         //cellComposer.composeCell(cell, withDataItem: item)
