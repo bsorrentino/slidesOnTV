@@ -52,8 +52,8 @@
                                     <constraint firstItem="JB5-k7-71P" firstAttribute="top" secondItem="bqw-ys-LOW" secondAttribute="topMargin" constant="250" id="yA5-CY-YbX"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="imageView" destination="VGU-w4-XSW" id="MQK-CM-iXJ"/>
                                     <outlet property="label" destination="JB5-k7-71P" id="jO8-RS-YWr"/>
+                                    <outlet property="thumbnail" destination="VGU-w4-XSW" id="9sp-0A-z2V"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

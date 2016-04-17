@@ -8,6 +8,7 @@ PODS:
   - RxTests (2.4):
     - RxSwift (~> 2.4)
   - SnapKit (0.20.0)
+  - UAProgressView (0.1.3)
 
 DEPENDENCIES:
   - OHPDFImage
@@ -16,6 +17,7 @@ DEPENDENCIES:
   - RxSwift (~> 2.0)
   - RxTests (~> 2.0)
   - SnapKit
+  - UAProgressView
 
 SPEC CHECKSUMS:
   OHPDFImage: b5ad5d7d99f4fbadaa8740cc3d1009f1a0b34ef0
@@ -24,5 +26,6 @@ SPEC CHECKSUMS:
   RxSwift: 67b9ef4e8b34fb394e200e754c6a09cc16559f94
   RxTests: 8b9691e6476dfa6025fae9a69f449bf4cb5e5cfc
   SnapKit: 5fce3c1bbbf1fbd31de9aa92f33eb9fa03f15650
+  UAProgressView: ce49aee47c14df6dc372f6fd57852f570ca97e6b
 
 COCOAPODS: 0.39.0

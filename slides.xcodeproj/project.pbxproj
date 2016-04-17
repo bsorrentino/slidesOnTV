@@ -13,6 +13,7 @@
 		5F4515AA1CC2F277004C4004 /* Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F4515A91CC2F277004C4004 /* Info-dev.plist */; };
 		5F4515AB1CC2F355004C4004 /* TCBlobDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */; };
 		5F4515AC1CC2F355004C4004 /* TCBlobDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */; };
+		5F57DE0B1CC3DCCF00D5F1B8 /* TWRProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F57DE0A1CC3DCCF00D5F1B8 /* TWRProgressView.m */; };
 		5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */; };
 		5F9623531CBBF94900F61D9C /* Slidehare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9623521CBBF94900F61D9C /* Slidehare.swift */; };
 		5FB6D3861CAEF8B100D7AA80 /* UIPDFController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6D3851CAEF8B100D7AA80 /* UIPDFController.swift */; };
@@ -56,6 +57,8 @@
 		5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCBlobDownloadManager.swift; sourceTree = "<group>"; };
 		5F4515A61CC2F112004C4004 /* TCBlobDownloadSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBlobDownloadSwift.h; sourceTree = "<group>"; };
 		5F4515A91CC2F277004C4004 /* Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-dev.plist"; sourceTree = "<group>"; };
+		5F57DE091CC3DCCF00D5F1B8 /* TWRProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWRProgressView.h; sourceTree = "<group>"; };
+		5F57DE0A1CC3DCCF00D5F1B8 /* TWRProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWRProgressView.m; sourceTree = "<group>"; };
 		5F78DDA7280E489095201876 /* Pods-slides.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.release.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.release.xcconfig"; sourceTree = "<group>"; };
 		5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSlidesViewController.swift; sourceTree = "<group>"; };
 		5F9623521CBBF94900F61D9C /* Slidehare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slidehare.swift; sourceTree = "<group>"; };
@@ -140,6 +143,15 @@
 			path = TCBlobDownloadSwift;
 			sourceTree = "<group>";
 		};
+		5F57DE081CC3DCCF00D5F1B8 /* TWRProgessView */ = {
+			isa = PBXGroup;
+			children = (
+				5F57DE091CC3DCCF00D5F1B8 /* TWRProgressView.h */,
+				5F57DE0A1CC3DCCF00D5F1B8 /* TWRProgressView.m */,
+			);
+			path = TWRProgessView;
+			sourceTree = "<group>";
+		};
 		5FC7A4AB1CAD8CA700530CB0 /* assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +163,7 @@
 		5FD9A2C21CAD19590065BE03 = {
 			isa = PBXGroup;
 			children = (
+				5F57DE081CC3DCCF00D5F1B8 /* TWRProgessView */,
 				5F4515A31CC2F112004C4004 /* TCBlobDownloadSwift */,
 				A06B6D561CBFCEA800CBE220 /* SLIDESHARE.md */,
 				A06B6D541CBFCCA000CBE220 /* README.md */,
@@ -498,6 +511,7 @@
 				5F4515A71CC2F112004C4004 /* TCBlobDownload.swift in Sources */,
 				5FD9A2CF1CAD19590065BE03 /* AppDelegate.swift in Sources */,
 				5FB6D3861CAEF8B100D7AA80 /* UIPDFController.swift in Sources */,
+				5F57DE0B1CC3DCCF00D5F1B8 /* TWRProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

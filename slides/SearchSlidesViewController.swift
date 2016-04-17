@@ -5,6 +5,7 @@
 //  Created by softphone on 11/04/16.
 //  Copyright © 2016 soulsoftware. All rights reserved.
 //
+import Foundation
 import RxSwift
 import RxCocoa
 
@@ -16,7 +17,9 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var label: UILabel!
     
-    @IBOutlet weak var imageView: UIImageView?
+    @IBOutlet weak var thumbnail: UIImageView?
+    
+    private lazy var loadingView:UAProgressView? = self.initLoadingView()
     
     var representedDataItem: Slideshow?
     
@@ -45,7 +48,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                 .observeOn(MainScheduler.instance)
                 .subscribe(
                     onNext: { (image) in
-                    self.imageView?.image = image
+                    self.thumbnail?.image = image
                     },
                     onError: { (e) in
                         print( "ERROR: \(e)")
@@ -57,6 +60,64 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                 self.disposeBag = disposeBag
     }
     
+    // MARK: Progress
+    var lastUpdatedProgress:Float = 0.0
+    
+    func initLoadingView() -> UAProgressView? {
+        
+        if let _ = self.thumbnail {
+            let circleView =  UAProgressView(frame: self.contentView.frame)
+            circleView.borderWidth = 10.0
+            circleView.lineWidth = 7.0
+            
+            let label = UILabel(frame:CGRectMake(0, 0, 60.0, 20.0))
+            label.textAlignment = .Center
+            label.userInteractionEnabled = false; // Allows tap to pass through to the progress view.
+            label.backgroundColor = UIColor.whiteColor()
+            circleView.centralView = label;
+            
+            circleView.progressChangedBlock = { (progressView:UAProgressView!, progress:CGFloat) in
+                
+                if let label = progressView.centralView as? UILabel {
+                    print( "progressChangedBlock \(progress)")
+
+                    label.text = String( format:"%2.0f%%", progress*100 )
+                }
+            }
+
+            return circleView
+        }
+        
+        return nil;
+        
+    }
+
+    
+    func showProgress() {
+    
+        if let loadingView = self.loadingView {
+            self.addSubview(loadingView)
+        }
+    }
+    
+    func setProgress( progress:Float) {
+        
+        if let loadingView = self.loadingView {
+            
+            //let p = Int32( progress/10 ) * 10
+            let p = progress
+            
+            if lastUpdatedProgress < p && p <= 100.0 {
+                print( "progress \(progress)")
+                
+                loadingView.setProgress(CGFloat(p), animated: true)
+                lastUpdatedProgress = p
+            }
+            
+        }
+    }
+    
+    
     // MARK: Initialization
     
     
@@ -66,7 +127,6 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
         // These properties are also exposed in Interface Builder.
         //imageView?.adjustsImageWhenAncestorFocused = true
         //imageView?.clipsToBounds = false
-
         
     }
 
@@ -74,6 +134,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
         
         disposeBag = nil
 
@@ -110,6 +171,44 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     
     let searchResultsUpdatingSubject = PublishSubject<String>()
 
+    
+    func downloadPresentationFormURL( downloadURL:NSURL, relatedCell:SearchSlideCollectionViewCell ) throws {
+        
+        let documentDirectoryURL =  try NSFileManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+       
+        relatedCell.showProgress()
+        
+        TCBlobDownloadManager.sharedInstance.downloadFileAtURL(downloadURL,
+                                                               toDirectory: documentDirectoryURL,
+                                                               withName: "presentation.pdf",
+                                                               progression:
+            { (progress, totalBytesWritten, totalBytesExpectedToWrite) in
+                
+                //let percentage = round( Float((totalBytesWritten * 100)/totalBytesExpectedToWrite) )
+                
+                //print( "\(progress) - \(totalBytesWritten) - \(totalBytesExpectedToWrite) %: \(percentage)" )
+                
+                //relatedCell.setProgress( percentage )
+                
+                relatedCell.setProgress(progress)
+            })
+            { (error, location) in
+
+                
+                if let error = error {
+                 
+                    debugPrint(error)
+                }
+                else {
+                    
+                    print( "Download completed at location \(location)")
+                }
+            }
+        
+
+        
+    }
+    
     // MARK: UICollectionViewController Lifecycle
 
     override public func viewDidLoad() {
@@ -234,16 +333,37 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
             }
         }
         
-        let downloadURL = item["downloadurl"]
-        print( "\(downloadURL)")
-        
         // Configure the cell.
         //cellComposer.composeCell(cell, withDataItem: item)
 
     }
     
     override public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        dismissViewControllerAnimated(true, completion: nil)
+        //dismissViewControllerAnimated(true, completion: nil)
+
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? SearchSlideCollectionViewCell else { fatalError("Expected to display a `DataItemCollectionViewCell`.") }
+        
+        let item:Slideshow = filteredDataItems[indexPath.row]
+       
+        if let url = item["downloadurl"]  {
+            
+            
+            let urlDecode = url.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) //.stringByRemovingPercentEncoding!
+            
+            print( "\(url) \(urlDecode)")
+            
+            if let downloadURL = NSURL(string:urlDecode) {
+                do {
+                    try downloadPresentationFormURL( downloadURL, relatedCell:cell)
+                }
+                catch {
+                    print( "error downloading url")
+                }
+            }
+        }
+        
+        
+        
     }
     
     // MARK: UISearchResultsUpdating
