@@ -65,10 +65,16 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     func initLoadingView() -> UAProgressView? {
         
-        if let _ = self.thumbnail {
-            let circleView =  UAProgressView(frame: self.contentView.frame)
-            circleView.borderWidth = 10.0
-            circleView.lineWidth = 7.0
+        if let thumbnail = self.thumbnail {
+            
+            let size = CGSizeMake(250, 250)
+            let center = CGPointMake( thumbnail.center.x - size.width/2, thumbnail.center.y - size.height/2 )
+            
+            let frame = CGRectMake(center.x, center.y, size.width,size.height)
+            
+            let circleView =  UAProgressView(frame: frame)
+            circleView.borderWidth = 15
+            circleView.lineWidth = 5
             
             let label = UILabel(frame:CGRectMake(0, 0, 60.0, 20.0))
             label.textAlignment = .Center
@@ -84,9 +90,11 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                     label.text = String( format:"%2.0f%%", progress*100 )
                 }
             }
-
+            //circleView.fillChangedBlock =
+            
             return circleView
         }
+        
         
         return nil;
         
@@ -105,15 +113,24 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
         if let loadingView = self.loadingView {
             
             //let p = Int32( progress/10 ) * 10
-            let p = progress
             
-            if lastUpdatedProgress < p && p <= 100.0 {
+            if lastUpdatedProgress < progress && progress <= 100.0 {
                 print( "progress \(progress)")
                 
-                loadingView.setProgress(CGFloat(p), animated: true)
-                lastUpdatedProgress = p
+                loadingView.setProgress(CGFloat(progress), animated: true)
+                lastUpdatedProgress = progress
             }
             
+        }
+    }
+    
+    func resetProgress() {
+        
+        if let loadingView = self.loadingView {
+            
+            loadingView.progress = 0
+            lastUpdatedProgress = 0
+            loadingView.removeFromSuperview()
         }
     }
     
@@ -202,7 +219,10 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
                 else {
                     
                     print( "Download completed at location \(location)")
+                    
+                    self.performSegueWithIdentifier("showPresentation", sender: location)
                 }
+                relatedCell.resetProgress()
             }
         
 
@@ -370,9 +390,21 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     
     public func updateSearchResultsForSearchController(searchController: UISearchController) {
         
-        
         searchResultsUpdatingSubject.onNext(searchController.searchBar.text ?? "")
+    
+    }
+    
+    // MARK: Segue
+    
+    override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        
+        if let location = sender as? NSURL {
+            
+            if let destinationViewController = segue.destinationViewController as? UIPDFCollectionViewController {
+                
+                destinationViewController.documentLocation = location
+
+            }
+        }
     }
 }
