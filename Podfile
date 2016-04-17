@@ -8,6 +8,8 @@ target 'slides' do
     pod 'RxCocoa',    '~> 2.0'
     pod 'OHPDFImage'
     pod 'SnapKit'
+    #pod 'VAProgressCircle'
+    pod 'UAProgressView'
 end
 
 target 'slidesTests' do
@@ -25,4 +27,6 @@ target 'slidesUITests' do
     pod 'RxTests',    '~> 2.0'
     pod 'OHPDFImage'
     pod 'SnapKit'
+    #pod 'VAProgressCircle'
+    pod 'UAProgressView'
 end

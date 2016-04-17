@@ -52,8 +52,8 @@
                                     <constraint firstItem="JB5-k7-71P" firstAttribute="top" secondItem="bqw-ys-LOW" secondAttribute="topMargin" constant="250" id="yA5-CY-YbX"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="imageView" destination="VGU-w4-XSW" id="MQK-CM-iXJ"/>
                                     <outlet property="label" destination="JB5-k7-71P" id="jO8-RS-YWr"/>
+                                    <outlet property="thumbnail" destination="VGU-w4-XSW" id="9sp-0A-z2V"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -62,6 +62,9 @@
                             <outlet property="delegate" destination="z98-6z-T2C" id="ETE-z0-XST"/>
                         </connections>
                     </collectionView>
+                    <connections>
+                        <segue destination="3Li-gA-Wtf" kind="show" identifier="showPresentation" id="0AE-4I-NyF"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obw-uW-T4U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -100,7 +103,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="195" y="682"/>
+            <point key="canvasLocation" x="-289" y="1178"/>
         </scene>
         <!--Collection View Controller-->
         <scene sceneID="hd5-36-nR7">
@@ -176,7 +179,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1U8-9K-Gmt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="896" y="2785"/>
+            <point key="canvasLocation" x="2024" y="1949"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="0AE-4I-NyF"/>
+    </inferredMetricsTieBreakers>
 </document>

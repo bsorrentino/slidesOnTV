@@ -38,8 +38,10 @@ func slideshareSearch( apiKey apiKey:String, sharedSecret:String, what:String ) 
         "ts": ts,
         "hash": hash,
         "what":what,
+        "fileformat": "pdf",
         "download":"0",
-        "fileformat": "pdf"
+        //"sort":"latest",
+        //"file_type":"presentations"
     ]
     
     let queryString =  params.map { (key, value) -> String in

@@ -82,22 +82,47 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     @IBOutlet weak var pagesView: UICollectionView!
     
     @IBOutlet weak var pageImageView: UIImageView!
-    var doc:OHPDFDocument!
+    
+    private var doc:OHPDFDocument?
+    
+    var documentLocation:NSURL? {
+        didSet {
+            doc = OHPDFDocument(URL: documentLocation)
+            if( pagesView != nil ) {
+                pagesView.reloadData()    
+            }
+        }
+    }
     
     let layoutAttrs = (  cellSize: CGSizeMake(200,300),
                          numCols: 1,
                          minSpacingForCell : CGFloat(20.0),
                          minSpacingForLine: CGFloat(50.0) )
     
+    
+    
+    
+    // MARK: view lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let path = NSBundle.mainBundle().pathForResource("rx1", ofType: "pdf")
-        
-        let url = NSURL(fileURLWithPath: path!)
-        
-        doc = OHPDFDocument(URL: url)
-        
+        /*
+        do {
+            let documentDirectoryURL =  try NSFileManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+
+            //let path = NSBundle.mainBundle().pathForResource("rx1", ofType: "pdf")
+            
+            //let url = NSURL(fileURLWithPath: path!)
+            
+            let url = NSURL(string: "presentation.pdf", relativeToURL: documentDirectoryURL)
+            
+            doc = OHPDFDocument(URL: url)
+        }
+        catch {
+           // Show error on page
+        }
+        */
         self.view.setNeedsFocusUpdate()
         self.view.updateFocusIfNeeded()
         
@@ -151,7 +176,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
     {
     
-        if let i = context.nextFocusedIndexPath {
+        if let doc = self.doc, let i = context.nextFocusedIndexPath {
 
             let page = doc.pageAtIndex(i.row+1)
             
@@ -169,20 +194,25 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //print( "page # \(doc.pagesCount)")
+        guard let doc = self.doc else {
+            return 0
+        }
         return doc.pagesCount
     }
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
+        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("slide", forIndexPath:indexPath) as! UIPDFPageCell
         
-        let page = doc.pageAtIndex(indexPath.row+1)
+        if let doc = self.doc {
+            let page = doc.pageAtIndex(indexPath.row+1)
         
-        let vectorImage = OHVectorImage(PDFPage: page)
+            let vectorImage = OHVectorImage(PDFPage: page)
         
-        cell.box.image = vectorImage.renderAtSize(cell.frame.size)
-        
+            cell.box.image = vectorImage.renderAtSize(cell.frame.size)
+        }
         return cell;
 
     }
