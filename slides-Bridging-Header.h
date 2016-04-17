@@ -5,4 +5,4 @@
 @import OHPDFImage;
 
 #include <CommonCrypto/CommonCrypto.h>
-@import UAProgressView;
+#include "UAProgressView.h"

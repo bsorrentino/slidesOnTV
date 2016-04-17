@@ -75,12 +75,16 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
             let circleView =  UAProgressView(frame: frame)
             circleView.borderWidth = 15
             circleView.lineWidth = 5
+            circleView.setFillAlpha(0.5)
             
             let label = UILabel(frame:CGRectMake(0, 0, 60.0, 20.0))
             label.textAlignment = .Center
             label.userInteractionEnabled = false; // Allows tap to pass through to the progress view.
-            label.backgroundColor = UIColor.whiteColor()
+            label.font = UIFont.boldSystemFontOfSize(30.0)
+            label.textColor = UIColor.whiteColor() //circleView.tintColor
+            
             circleView.centralView = label;
+            
             
             circleView.progressChangedBlock = { (progressView:UAProgressView!, progress:CGFloat) in
                 
@@ -90,7 +94,6 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                     label.text = String( format:"%2.0f%%", progress*100 )
                 }
             }
-            //circleView.fillChangedBlock =
             
             return circleView
         }

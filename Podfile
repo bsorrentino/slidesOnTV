@@ -9,7 +9,7 @@ target 'slides' do
     pod 'OHPDFImage'
     pod 'SnapKit'
     #pod 'VAProgressCircle'
-    pod 'UAProgressView'
+    #pod 'UAProgressView'
 end
 
 target 'slidesTests' do
@@ -28,5 +28,5 @@ target 'slidesUITests' do
     pod 'OHPDFImage'
     pod 'SnapKit'
     #pod 'VAProgressCircle'
-    pod 'UAProgressView'
+    #pod 'UAProgressView'
 end

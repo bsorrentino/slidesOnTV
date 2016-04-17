@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import TCBlobDownloadSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
