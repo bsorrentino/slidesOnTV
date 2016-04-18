@@ -73,11 +73,11 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
             let frame = CGRectMake(center.x, center.y, size.width,size.height)
             
             let circleView =  UAProgressView(frame: frame)
-            circleView.borderWidth = 15
+            circleView.borderWidth = 10
             circleView.lineWidth = 5
             circleView.setFillAlpha(0.5)
             
-            let label = UILabel(frame:CGRectMake(0, 0, 60.0, 20.0))
+            let label = UILabel(frame:CGRectMake(0, 0, 120.0, 40.0))
             label.textAlignment = .Center
             label.userInteractionEnabled = false; // Allows tap to pass through to the progress view.
             label.font = UIFont.boldSystemFontOfSize(30.0)
@@ -145,9 +145,10 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         // These properties are also exposed in Interface Builder.
-        //imageView?.adjustsImageWhenAncestorFocused = true
-        //imageView?.clipsToBounds = false
-        
+        thumbnail?.adjustsImageWhenAncestorFocused = true
+        thumbnail?.clipsToBounds = false
+        label?.clipsToBounds = false
+        label.adjustsFontSizeToFitWidth = true
     }
 
     // MARK: UICollectionReusableView
@@ -162,18 +163,21 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     // MARK: UIFocusEnvironment   
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
+        
         coordinator.addCoordinatedAnimations({
             if self.focused {
-                self.transform = CGAffineTransformMakeScale(1.01, 1.01)
-                self.backgroundColor = UIColor.whiteColor()
-                //self.label.textColor = .blackColor()
+                self.label.transform = CGAffineTransformMakeScale(1.26, 1.3)
+                self.label.layer.zPosition = (self.thumbnail?.layer.zPosition)! + 1
+                self.label.backgroundColor = UIColor.whiteColor()
             }
             else {
-                self.transform = CGAffineTransformMakeScale(1, 1)
-                self.backgroundColor = UIColor.clearColor()
-                //self.label.textColor = .whiteColor()
+                self.label.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                self.label.layer.zPosition = (self.thumbnail?.layer.zPosition)! - 1
+                self.label.backgroundColor = UIColor.clearColor()
             }
-        }, completion: nil)    }
+        }, completion: nil)
+        
+    }
 }
 
 
@@ -194,7 +198,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     
     func downloadPresentationFormURL( downloadURL:NSURL, relatedCell:SearchSlideCollectionViewCell ) throws {
         
-        let documentDirectoryURL =  try NSFileManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let documentDirectoryURL =  try NSFileManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
        
         relatedCell.showProgress()
         
@@ -205,9 +209,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
             { (progress, totalBytesWritten, totalBytesExpectedToWrite) in
                 
                 //let percentage = round( Float((totalBytesWritten * 100)/totalBytesExpectedToWrite) )
-                
                 //print( "\(progress) - \(totalBytesWritten) - \(totalBytesExpectedToWrite) %: \(percentage)" )
-                
                 //relatedCell.setProgress( percentage )
                 
                 relatedCell.setProgress(progress)
@@ -221,7 +223,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
                 }
                 else {
                     
-                    print( "Download completed at location \(location)")
+                    //print( "Download completed at location \(location)")
                     
                     self.performSegueWithIdentifier("showPresentation", sender: location)
                 }
@@ -300,8 +302,8 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
             
         }).addDisposableTo(disposeBag)
         
-        self.collectionView?.setNeedsFocusUpdate()
-        self.collectionView?.updateFocusIfNeeded()
+        //self.collectionView?.setNeedsFocusUpdate()
+        //self.collectionView?.updateFocusIfNeeded()
 
     }
     
@@ -326,12 +328,12 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     }
     
     // MARK: UICollectionViewDelegate
-    
+    /*
     override public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
     {
         return true
     }
-    
+    */
     
     override public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? SearchSlideCollectionViewCell else { fatalError("Expected to display a `DataItemCollectionViewCell`.") }
@@ -349,15 +351,12 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
             
             let s = "http:\(thumbnail)".stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
             
-            print( "[\(s)]" )
+            //print( "[\(s)]" )
             if let url = NSURL(string: s ) {
 
                 cell.loadImageUrl(url, backgroundWorkScheduler: self.backgroundWorkScheduler!)
             }
         }
-        
-        // Configure the cell.
-        //cellComposer.composeCell(cell, withDataItem: item)
 
     }
     
@@ -384,8 +383,6 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
                 }
             }
         }
-        
-        
         
     }
     
