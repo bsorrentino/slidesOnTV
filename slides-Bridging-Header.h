@@ -6,3 +6,4 @@
 
 #include <CommonCrypto/CommonCrypto.h>
 #include "UAProgressView.h"
+#include "ARLabel.h"

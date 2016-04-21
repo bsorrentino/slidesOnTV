@@ -16,6 +16,22 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        let testLabel = ARLabel(frame:CGRectMake(110, 100, 100, 50))
+        testLabel.text = "TEST0\nTEST1"
+        testLabel.enlargedSize = CGSizeMake(200, 100)
+        testLabel.numberOfLines = 2
+        
+        self.view.addSubview(testLabel)
+
+        UIView.animateWithDuration(3.0,
+                                   delay: 1.0,
+                                   options: .CurveEaseInOut,
+                                   animations: {
+
+                                    testLabel.frame = CGRectMake(60, 200, 200*2, 100*2);
+            
+                                }) { (complete:Bool) in
+        }
         
     }
 
