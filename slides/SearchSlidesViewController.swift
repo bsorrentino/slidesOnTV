@@ -284,8 +284,16 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
             
             return slidehareItemsParser.rx_parse(data)
         })
-        .observeOn(MainScheduler.instance)
         .debug( "subscribe")
+        .filter({ (slide:Slideshow) -> Bool in
+        
+            if let format = slide["format"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
+
+                return format.lowercaseString=="pdf";
+            }
+            return true
+        })
+        .observeOn(MainScheduler.instance)
         .subscribe({ e in
             
 
@@ -342,16 +350,18 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         
         //item.forEach { (k, v) in print( "\(k)=\(v)") }
         
-        if let title = item["title"] {
+        if let title = item["title"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
         
             cell.label.text = title
         
         }
-        if let thumbnail = item["thumbnailxlargeurl"] {
+        
+        if let thumbnail = item["thumbnailxlargeurl"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
             
-            let s = "http:\(thumbnail)".stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            let s = "http:\(thumbnail)"
             
             //print( "[\(s)]" )
+            
             if let url = NSURL(string: s ) {
 
                 cell.loadImageUrl(url, backgroundWorkScheduler: self.backgroundWorkScheduler!)
@@ -367,14 +377,11 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         
         let item:Slideshow = filteredDataItems[indexPath.row]
        
-        if let url = item["downloadurl"]  {
+        if let url = item["downloadurl"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())  {
             
+            print( "\(url)")
             
-            let urlDecode = url.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) //.stringByRemovingPercentEncoding!
-            
-            print( "\(url) \(urlDecode)")
-            
-            if let downloadURL = NSURL(string:urlDecode) {
+            if let downloadURL = NSURL(string:url) {
                 do {
                     try downloadPresentationFormURL( downloadURL, relatedCell:cell)
                 }

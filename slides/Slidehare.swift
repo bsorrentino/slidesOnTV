@@ -38,7 +38,7 @@ func slideshareSearch( apiKey apiKey:String, sharedSecret:String, what:String ) 
         "ts": ts,
         "hash": hash,
         "what":what,
-        "fileformat": "pdf",
+        "fileformat": "pdf", // seems that doesn't work
         "download":"0",
         //"sort":"latest",
         //"file_type":"presentations"
@@ -70,18 +70,12 @@ class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
     
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
+        let properties = ["title", "thumbnailsmallurl", "thumbnailxlargeurl", "thumbnailxxlargeurl", "created", "updated", "language", "format", "downloadurl"]
         
         if currentData != nil  {
             
-            switch( elementName.lowercaseString ) {
-            case "title", "thumbnailsmallurl", "thumbnailxlargeurl", "thumbnailxxlargeurl", "created", "updated", "language", "downloadurl" :
-                currentData!.attr = elementName.lowercaseString
-                break
-            default:
-                currentData!.attr = nil
-                break
-                
-            }
+            currentData!.attr = properties.contains(elementName.lowercaseString) ? elementName.lowercaseString : nil
+
         }
         else {
             
@@ -113,7 +107,7 @@ class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         
         if elementName == "Slideshow", let data = currentData {
-            
+
             subject.onNext(data.slide)
             
             currentData = nil
