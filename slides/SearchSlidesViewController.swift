@@ -288,8 +288,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         .filter({ (slide:Slideshow) -> Bool in
         
             if let format = slide["format"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
-
-                return format.lowercaseString=="pdf";
+                return format.lowercaseString=="pdf"
             }
             return true
         })
