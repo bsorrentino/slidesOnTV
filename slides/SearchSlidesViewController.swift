@@ -137,8 +137,6 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private var labelFrame:CGRect?
-    
     // MARK: Initialization
     
     override func awakeFromNib() {
@@ -149,8 +147,6 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
         thumbnail?.clipsToBounds = false
         label?.clipsToBounds = false
         label.adjustsFontSizeToFitWidth = true
-        
-        labelFrame = label.frame
 
     }
 
@@ -159,13 +155,12 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        labelFrame = label.frame
-
         disposeBag = nil
 
     }
     
-    // MARK: UIFocusEnvironment
+    // MARxK: UIFocusEnvironment
+    
     
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
         
@@ -173,28 +168,28 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
         coordinator.addCoordinatedAnimations({
             if self.focused {
                 self.label.layer.zPosition = (self.thumbnail?.layer.zPosition)! + 1
+                
                 self.label.backgroundColor = UIColor.whiteColor()
 
-                //let h = self.label.frame.size.height ;
-               
-                //var f = self.label.frame
-                //f.size.height = 150.0
-                //f.origin.y -= 100
-                //self.label.frame = f
+                self.label.transform = CGAffineTransformConcat(
+                                            CGAffineTransformMakeScale(1.1, 2.7),
+                                            CGAffineTransformMakeTranslation(0, -50))
 
-                //self.label.transform = CGAffineTransformMakeTranslation(0, -50)
             }
             else {
-
- 
-                self.label.layer.zPosition = (self.thumbnail?.layer.zPosition)! - 1
+                
+                self.label.transform = CGAffineTransformConcat(
+                    CGAffineTransformMakeTranslation(0, 0),
+                    CGAffineTransformMakeScale(1.0, 1.0))
+                
                 self.label.backgroundColor = UIColor.clearColor()
 
-                self.label.frame = self.labelFrame!
-
-                //self.label.transform = CGAffineTransformMakeTranslation(0, 0)
+                self.label.layer.zPosition = (self.thumbnail?.layer.zPosition)! - 1
            }
-        }, completion: nil)
+        }) {
+            
+            self.label.setFontThatFitsWithSize()
+        }
         
     }
 }

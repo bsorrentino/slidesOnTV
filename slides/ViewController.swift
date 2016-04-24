@@ -11,27 +11,69 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var pushMe: UIButton!
+    @IBOutlet weak var testLabel: UILabel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    private var expand = true
+    
+    @IBAction func animateLabel(sender: AnyObject) {
         
-        let testLabel = ARLabel(frame:CGRectMake(110, 100, 100, 50))
-        testLabel.text = "TEST0\nTEST1"
-        testLabel.enlargedSize = CGSizeMake(200, 100)
-        testLabel.numberOfLines = 2
+        let frame = testLabel.frame;
+        
+        print( frame )
+
+        UIView.animateWithDuration(3.0,
+                                   delay: 1.0,
+                                   options: [.CurveLinear, .AllowAnimatedContent],
+                                   animations: {
+                                    
+                                    if( self.expand ) {
+
+                                        self.testLabel.transform = CGAffineTransformMakeScale(2.3, 1.5)
+                                        
+                                    }
+                                    else {
+                                        
+                                        self.testLabel.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                                    }
+        }) { (complete:Bool) in
+            
+            print( self.testLabel.frame )
+            
+            
+            self.expand = !self.expand
+            
+            self.testLabel.setFontThatFitsWithSize()
+        }
+        
+    }
+    
+    private func addAndAnimateLabel() {
+        
+        /*
+        let test1Label = ARLabel(frame:CGRectMake(110, 100, 100, 50))
+        test1Label.text = "TEST0\nTEST1"
+        test1Label.enlargedSize = CGSizeMake(200, 100)
+        test1Label.numberOfLines = 2
         
         self.view.addSubview(testLabel)
-
+        
         UIView.animateWithDuration(3.0,
                                    delay: 1.0,
                                    options: .CurveEaseInOut,
                                    animations: {
-
-                                    testLabel.frame = CGRectMake(60, 200, 200*2, 100*2);
-            
-                                }) { (complete:Bool) in
+                                    
+                                    test1Label.frame = CGRectMake(60, 200, 200*2, 100*2);
+                                    
+        }) { (complete:Bool) in
         }
+        */
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+
+        
         
     }
 
