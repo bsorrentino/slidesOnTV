@@ -139,6 +139,8 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     // MARK: Initialization
     
+    var font:UIFont?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -147,6 +149,8 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
         thumbnail?.clipsToBounds = false
         label?.clipsToBounds = false
         label.adjustsFontSizeToFitWidth = true
+        
+        font = label.font
 
     }
 
@@ -162,8 +166,9 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     // MARxK: UIFocusEnvironment
     
     
-    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
-        
+    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator )
+    {
+        label.font = font
         
         coordinator.addCoordinatedAnimations({
             if self.focused {
@@ -188,7 +193,9 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
            }
         }) {
             
-            self.label.setFontThatFitsWithSize()
+            if self.focused {
+                self.label.setFontThatFitsWithSize()
+            }
         }
         
     }

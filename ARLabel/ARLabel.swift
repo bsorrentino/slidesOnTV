@@ -38,8 +38,8 @@ extension  UILabel {
         let baseFont    = newFont.pointSize
         var previousH   = newFont.pointSize
         var fSize        = CGSizeZero
-        var step:CGFloat   = 0.1
-        let rect         = self.bounds
+        var step:CGFloat = 0.2
+        let rect         = self.frame
     
         repeat  {
             newFont  = UIFont.systemFontOfSize(baseFont+step)

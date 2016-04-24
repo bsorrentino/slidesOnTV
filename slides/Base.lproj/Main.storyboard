@@ -97,8 +97,7 @@
                                     <action selector="animateLabel:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="H1l-9o-dBq"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TEST 1 TEST
-TEST 2 TEST" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpb-8C-g7g">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TEST 1 TEST TEST 2 TEST" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpb-8C-g7g">
                                 <rect key="frame" x="403" y="174" width="152" height="98"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -123,7 +122,7 @@ TEST 2 TEST" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines
         <!--Collection View Controller-->
         <scene sceneID="hd5-36-nR7">
             <objects>
-                <viewController id="3Li-gA-Wtf" customClass="collectionViewFlowLayout" customModule="slides" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3Li-gA-Wtf" customClass="UIPDFCollectionViewController" customModule="slides" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Deq-BL-f34"/>
                         <viewControllerLayoutGuide type="bottom" id="Az4-5N-6X8"/>
