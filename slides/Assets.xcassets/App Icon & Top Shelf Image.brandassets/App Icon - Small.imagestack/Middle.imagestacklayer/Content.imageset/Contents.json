@@ -2,6 +2,7 @@
   "images" : [
     {
       "idiom" : "tv",
+      "filename" : "slidesontv-appicon-small.png",
       "scale" : "1x"
     }
   ],
