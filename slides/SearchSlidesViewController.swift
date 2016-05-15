@@ -334,6 +334,14 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         
         //self.collectionView?.setNeedsFocusUpdate()
         //self.collectionView?.updateFocusIfNeeded()
+        
+        
+        // SETTINGS
+        
+        Settings.subscribe(.SearchHMargins) { (newValue) -> Void in
+            print("Set Horizontal Margin was changed to \(newValue)")
+            self.collectionView?.reloadData()
+        }
 
     }
     
@@ -372,8 +380,15 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        var result =  UIEdgeInsets( top: 30, left: 30, bottom: 30, right: 30 )
     
-        return UIEdgeInsets( top: 30, left: 0, bottom: 30, right: 30 )
+        if let hm = Settings.get(.SearchHMargins) as? CGFloat {
+            
+            result.left = hm
+            result.right = hm
+        }
+        
+        return result
     }
     
     //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize

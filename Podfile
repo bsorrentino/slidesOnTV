@@ -1,6 +1,6 @@
 # Podfile
 #platform :tvos, '9.0'
-platform :ios, '8.0'
+platform :ios, '9.0'
 use_frameworks!
 
 target 'slides' do
@@ -8,6 +8,7 @@ target 'slides' do
     pod 'RxCocoa',    '~> 2.0'
     pod 'OHPDFImage'
     pod 'SnapKit'
+    pod 'SettingsKit', :git => 'https://github.com/bsorrentino/SettingsKit.git', :branch => 'develop'
     #pod 'VAProgressCircle'
     #pod 'UAProgressView'
 end
