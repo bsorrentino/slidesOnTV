@@ -146,7 +146,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
     {
-        //print("sizeForItemAtIndexPath")
         return layoutAttrs.cellSize //use height whatever you wants.
     }
 
@@ -160,7 +159,10 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             return layoutAttrs.minSpacingForCell
     }
 
-    //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets ;
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    }
+    
     //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize
     //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize
     

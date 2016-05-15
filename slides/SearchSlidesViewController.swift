@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+
 class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     // MARK: Properties
@@ -255,6 +256,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         
     }
     
+    
     // MARK: UICollectionViewController Lifecycle
 
     override public func viewDidLoad() {
@@ -354,6 +356,29 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         return cell
         
     }
+    
+    // MARK: <UICollectionViewDelegateFlowLayout>
+    
+    //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    
+    // Space between item on different row
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 10.0
+    }
+
+    // Space between item on the same row
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 10.0
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    
+        return UIEdgeInsets( top: 30, left: 0, bottom: 30, right: 30 )
+    }
+    
+    //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize
+    //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize
+
     
     // MARK: UICollectionViewDelegate
     /*
