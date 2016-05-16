@@ -60,6 +60,44 @@
 				<integer>70</integer>
 			</array>
 		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+            <key>Title</key>
+            <string>Slide Layout</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSMultiValueSpecifier</string>
+            <key>Title</key>
+            <string>Horizontal Margins (L/R)</string>
+            <key>Key</key>
+            <string>slide_h_margins</string>
+            <key>DefaultValue</key>
+            <integer>30</integer>
+            <key>Titles</key>
+            <array>
+                <string>15</string>
+                <string>20</string>
+                <string>25</string>
+                <string>30</string>
+                <string>40</string>
+                <string>50</string>
+                <string>60</string>
+                <string>70</string>
+            </array>
+            <key>Values</key>
+            <array>
+                <integer>15</integer>
+                <integer>20</integer>
+                <integer>25</integer>
+                <integer>30</integer>
+                <integer>40</integer>
+                <integer>50</integer>
+                <integer>60</integer>
+                <integer>70</integer>
+            </array>
+        </dict>
 	</array>
 </dict>
 </plist>

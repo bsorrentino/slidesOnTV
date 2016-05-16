@@ -164,7 +164,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
 
     }
     
-    // MARxK: UIFocusEnvironment
+    // MARK: UIFocusEnvironment
     
     
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator )

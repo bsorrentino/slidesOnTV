@@ -13,6 +13,7 @@ import SettingsKit
 enum Settings: SettingsKit {
   case SearchHMargins
   case SearchHMargins1
+  case SlideHMargins
 
   var identifier: String {
     switch self {
@@ -20,6 +21,8 @@ enum Settings: SettingsKit {
         return "search_h_margins"
       case .SearchHMargins1:
         return "search_h_margins_1"
+      case .SlideHMargins:
+        return "slide_h_margins"
     }
   }
 }
