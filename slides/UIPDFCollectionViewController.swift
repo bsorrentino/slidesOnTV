@@ -81,6 +81,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     @IBOutlet weak var pagesView: UICollectionView!
     
+    @IBOutlet weak var pageView: UIView!
     @IBOutlet weak var pageImageView: UIImageView!
     
     private var doc:OHPDFDocument?
@@ -123,6 +124,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
            // Show error on page
         }
         */
+        pageImageView.translatesAutoresizingMaskIntoConstraints = false
+        
         self.view.setNeedsFocusUpdate()
         self.view.updateFocusIfNeeded()
         
@@ -130,6 +133,13 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
     
     override func updateViewConstraints() {
+        pageImageView.snp_updateConstraints { (make) in
+            
+            let delta = pageView.frame.width * 0.30
+            let newWidth = pageView.frame.width - delta
+            
+            make.width.equalTo(newWidth).priorityRequired()
+        }
         
         pagesView.snp_updateConstraints { (make) -> Void in
                 let _ = view.frame
