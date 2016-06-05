@@ -133,6 +133,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z">
                                 <rect key="frame" x="45" y="25" width="32" height="1035"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" priority="250" constant="32" id="Faa-ow-7Bj"/>
                                 </constraints>
@@ -151,6 +152,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <gestureRecognizers/>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>

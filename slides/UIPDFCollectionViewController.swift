@@ -8,12 +8,15 @@
 
 import Foundation
 import SnapKit
+import RxSwift
 
 class UIPDFPageCell : UICollectionViewCell {
     
     lazy var box:UIImageView = UIImageView()
     
+    private var gestureSubscription:Disposable?
     
+
     private func initialize() {
     
         self.addSubview(box)
@@ -30,6 +33,13 @@ class UIPDFPageCell : UICollectionViewCell {
         
         
         //self.box.adjustsImageWhenAncestorFocused = true
+        let swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: nil)
+
+        gestureSubscription = swipeDownRecognizer.rx_event.subscribeNext { (event:UIGestureRecognizer) in
+            
+            print( "SWIPE DOWN" )
+        }
+
     }
     
     override init(frame: CGRect) {
@@ -46,7 +56,13 @@ class UIPDFPageCell : UICollectionViewCell {
         initialize()
         
     }
-   
+
+    deinit {
+        
+        gestureSubscription?.dispose()
+    }
+    
+ 
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
         if (self.focused)
         {
@@ -101,8 +117,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                          minSpacingForLine: CGFloat(50.0) )
     
     
-    
-    
     // MARK: view lifecycle
     
     override func viewDidLoad() {
@@ -129,10 +143,12 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         self.view.setNeedsFocusUpdate()
         self.view.updateFocusIfNeeded()
         
+
+        
     }
 
-    
     override func updateViewConstraints() {
+        
         pageImageView.snp_updateConstraints { (make) in
             
             let delta = pageView.frame.width * 0.30
