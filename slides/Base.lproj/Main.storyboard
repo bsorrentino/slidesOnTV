@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -160,7 +160,7 @@
                                     <outlet property="delegate" destination="3Li-gA-Wtf" id="HeV-2Q-lc1"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view" customClass="UIPageView" customModule="slides" customModuleProvider="target">
                                 <rect key="frame" x="82" y="5" width="1833" height="1070"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsh-Gb-3mi">
@@ -168,6 +168,7 @@
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="Xsh-Gb-3mi" firstAttribute="leading" secondItem="c9g-rB-Tbc" secondAttribute="leading" priority="250" constant="10" id="33i-uf-5Ck"/>
                                     <constraint firstAttribute="height" constant="1070" id="7Wz-IQ-fpU"/>
@@ -191,6 +192,7 @@
                         <outlet property="pageImageView" destination="Xsh-Gb-3mi" id="BMY-yq-xL5"/>
                         <outlet property="pageView" destination="c9g-rB-Tbc" id="3Jb-LK-VuR"/>
                         <outlet property="pagesView" destination="rws-Tv-h7Z" id="liw-vC-pWt"/>
+                        <outlet property="preferredFocusedView" destination="c9g-rB-Tbc" id="qk7-ML-5e6"/>
                         <outlet property="view" destination="kBg-cA-YoQ" id="RrZ-aT-N4E"/>
                     </connections>
                 </viewController>

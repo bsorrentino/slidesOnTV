@@ -10,13 +10,13 @@ import Foundation
 import SnapKit
 import RxSwift
 
+//
+//  UIPDFPageCell
+//
 class UIPDFPageCell : UICollectionViewCell {
     
     lazy var box:UIImageView = UIImageView()
     
-    private var gestureSubscription:Disposable?
-    
-
     private func initialize() {
     
         self.addSubview(box)
@@ -33,12 +33,6 @@ class UIPDFPageCell : UICollectionViewCell {
         
         
         //self.box.adjustsImageWhenAncestorFocused = true
-        let swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: nil)
-
-        gestureSubscription = swipeDownRecognizer.rx_event.subscribeNext { (event:UIGestureRecognizer) in
-            
-            print( "SWIPE DOWN" )
-        }
 
     }
     
@@ -56,12 +50,6 @@ class UIPDFPageCell : UICollectionViewCell {
         initialize()
         
     }
-
-    deinit {
-        
-        gestureSubscription?.dispose()
-    }
-    
  
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
         if (self.focused)
@@ -87,17 +75,56 @@ class UIPDFPageCell : UICollectionViewCell {
         super.prepareForReuse()
     }
     
+}
+
+//
+//  UIPDFCollectionViewController
+//
+class UIPageView : UIView {
     
+    
+    override func canBecomeFocused() -> Bool {
+        
+        print( "PageView.canBecomeFocused" );
+        return true
+    }
+    /// Asks whether the system should allow a focus update to occur.
+    override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
+        
+        print( "PageView.shouldUpdateFocusInContext" );
+        return true;
+        
+    }
+    
+    /// Called when the screen’s focusedView has been updated to a new view. Use the animation coordinator to schedule focus-related animations in response to the update.
+    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
+    {
+        print( "PageView.didUpdateFocusInContext" );
+        
+        if( self.focused ) {
+            self.layer.borderWidth = 2
+        
+            self.layer.borderColor = UIColor.redColor().CGColor
+        }
+        else {
+            self.layer.borderWidth = 0
+            
+        }
+        
+    }
     
 }
 
 
+//
+//  UIPDFCollectionViewController
+//
 class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
  
     
     @IBOutlet weak var pagesView: UICollectionView!
     
-    @IBOutlet weak var pageView: UIView!
+    @IBOutlet weak var pageView: UIPageView!
     @IBOutlet weak var pageImageView: UIImageView!
     
     private var doc:OHPDFDocument?
@@ -117,34 +144,25 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                          minSpacingForLine: CGFloat(50.0) )
     
     
+    @IBAction func swipeDown(sender:UISwipeGestureRecognizer) {
+        
+        print( "swipe down");
+    }
+    
     // MARK: view lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*
-        do {
-            let documentDirectoryURL =  try NSFileManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
-
-            //let path = NSBundle.mainBundle().pathForResource("rx1", ofType: "pdf")
-            
-            //let url = NSURL(fileURLWithPath: path!)
-            
-            let url = NSURL(string: "presentation.pdf", relativeToURL: documentDirectoryURL)
-            
-            doc = OHPDFDocument(URL: url)
-        }
-        catch {
-           // Show error on page
-        }
-        */
         pageImageView.translatesAutoresizingMaskIntoConstraints = false
-        
+ 
         self.view.setNeedsFocusUpdate()
         self.view.updateFocusIfNeeded()
         
-
+        let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeDown(_:)))
+        gesture.direction = .Down
         
+        pageView.addGestureRecognizer(gesture)
     }
 
     override func updateViewConstraints() {
@@ -195,26 +213,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
 // MARK: <UICollectionViewDelegate>
     
-    func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
-    {
-        print( "canFocusItemAtIndexPath(\(indexPath.row))" )
-        return true
-    }
-    
-    func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
-    {
-    
-        if let doc = self.doc, let i = context.nextFocusedIndexPath {
-
-            let page = doc.pageAtIndex(i.row+1)
-            
-            let vectorImage = OHVectorImage(PDFPage: page)
-            
-            self.pageImageView.image = vectorImage.renderAtSize(pageImageView.frame.size)
-            
-        }
-    }
-    
     //func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
 
     
@@ -254,8 +252,36 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     //override public func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool
     //override public func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)
+ 
+// MARK: <Focus Engine>
+ 
+    func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
+    {
+        
+        if let doc = self.doc, let i = context.nextFocusedIndexPath {
+            
+            let page = doc.pageAtIndex(i.row+1)
+            
+            let vectorImage = OHVectorImage(PDFPage: page)
+            
+            self.pageImageView.image = vectorImage.renderAtSize(pageImageView.frame.size)
+            
+        }
+    }
     
     
+    func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
+    {
+        print( "UIPDFCollectionViewController.canFocusItemAtIndexPath(\(indexPath.row))" )
+        return true
+    }
+    
+    
+    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
+        super.didUpdateFocusInContext(context, withAnimationCoordinator: coordinator)
+        
+        print( "UIPDFCollectionViewController.didUpdateFocusInContext" )
+    }
     
     
 }
