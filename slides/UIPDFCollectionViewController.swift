@@ -163,9 +163,23 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         gesture.direction = .Down
         
         pageView.addGestureRecognizer(gesture)
+        
+        
+        let settingsBar = UITabBar()
+        
+        pageView.addSubview(settingsBar)
+        
+        settingsBar.snp_makeConstraints { (make) in
+            
+            make.top.left.equalTo(pageView)
+            make.width.equalTo(pageView)
+        }
+
     }
 
+    
     override func updateViewConstraints() {
+        
         
         pageImageView.snp_updateConstraints { (make) in
             
@@ -181,6 +195,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 let w = CGFloat(layoutAttrs.numCols) * CGFloat(layoutAttrs.cellSize.width + layoutAttrs.minSpacingForCell )
                 make.width.equalTo( w ).priorityHigh()
         }
+        
         
         super.updateViewConstraints()
     }
