@@ -9,6 +9,7 @@
 import Foundation
 import SnapKit
 import RxSwift
+import RxCocoa
 
 //
 //  UIPDFPageCell
@@ -82,12 +83,13 @@ class UIPDFPageCell : UICollectionViewCell {
 //
 class UIPageView : UIView {
     
+    let settingsBar = UITabBar()
     
     override func canBecomeFocused() -> Bool {
-        
         print( "PageView.canBecomeFocused" );
         return true
     }
+    
     /// Asks whether the system should allow a focus update to occur.
     override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
         
@@ -102,17 +104,66 @@ class UIPageView : UIView {
         print( "PageView.didUpdateFocusInContext" );
         
         if( self.focused ) {
-            self.layer.borderWidth = 2
-        
-            self.layer.borderColor = UIColor.redColor().CGColor
+            
+            coordinator.addCoordinatedAnimations({ 
+
+                    UIView.animateWithDuration(0.5, animations: { 
+                        
+                        var f = self.settingsBar.frame
+                        f.size.height = 80
+                        self.settingsBar.frame = f
+                    })
+                }){
+                    self.layer.borderWidth = 2
+                
+                    self.layer.borderColor = UIColor.darkGrayColor().CGColor
+
+            }
+            
         }
         else {
-            self.layer.borderWidth = 0
+            coordinator.addCoordinatedAnimations({
+                
+                UIView.animateWithDuration(0.5, animations: {
+                    
+                    var f = self.settingsBar.frame
+                    f.size.height = 1.0
+                    self.settingsBar.frame = f
+                })
+            }){
+                self.layer.borderWidth = 0
+                
+            }
             
         }
         
     }
     
+    func setupView()->Self {
+        
+        settingsBar.backgroundColor = UIColor.darkGrayColor()
+        settingsBar.translucent = false
+        
+        settingsBar.items = [
+        
+            UITabBarItem(title: "zoom in", image: nil, tag: 1),
+            UITabBarItem(title: "zoom out", image: nil, tag: 2),
+            UITabBarItem(title: "rotate", image: nil, tag: 3)
+        ]
+        
+        
+        self.addSubview(settingsBar)
+        
+        settingsBar.snp_makeConstraints { (make) in
+            
+            make.top.left.equalTo(self).priorityRequired()
+            make.width.equalTo(self).priorityRequired()
+            make.height.equalTo(1.0).priorityRequired()
+        }
+        
+        return self
+       
+    }
 }
 
 
@@ -138,15 +189,29 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         }
     }
     
-    let layoutAttrs = (  cellSize: CGSizeMake(200,300),
+    let layoutAttrs = (  cellSize: CGSizeMake(300,300),
                          numCols: 1,
-                         minSpacingForCell : CGFloat(20.0),
+                         minSpacingForCell : CGFloat(25.0),
                          minSpacingForLine: CGFloat(50.0) )
     
+    // MARK:
     
     @IBAction func swipeDown(sender:UISwipeGestureRecognizer) {
         
         print( "swipe down");
+    }
+    
+    func showSlide(at index:UInt) {
+        if let doc = self.doc {
+            
+            let page = doc.pageAtIndex(Int(index+1))
+            
+            let vectorImage = OHVectorImage(PDFPage: page)
+            
+            self.pageImageView.image = vectorImage.renderAtSize(pageImageView.frame.size)
+            
+        }
+
     }
     
     // MARK: view lifecycle
@@ -162,38 +227,40 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeDown(_:)))
         gesture.direction = .Down
         
-        pageView.addGestureRecognizer(gesture)
+        pageView
+            .setupView()
+            .addGestureRecognizer(gesture)
         
-        
-        let settingsBar = UITabBar()
-        
-        pageView.addSubview(settingsBar)
-        
-        settingsBar.snp_makeConstraints { (make) in
-            
-            make.top.left.equalTo(pageView)
-            make.width.equalTo(pageView)
-        }
 
     }
 
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.showSlide(at: 0)
+    }
     
     override func updateViewConstraints() {
         
         
-        pageImageView.snp_updateConstraints { (make) in
+        let w = CGFloat(layoutAttrs.numCols) * CGFloat(layoutAttrs.cellSize.width + layoutAttrs.minSpacingForCell )
+        let pageViewWidth = view.frame.size.width - w
+
+        pageView.snp_updateConstraints { (make) -> Void in
             
-            let delta = pageView.frame.width * 0.30
-            let newWidth = pageView.frame.width - delta
-            
-            make.width.equalTo(newWidth).priorityRequired()
+            make.width.equalTo( pageViewWidth ).priorityRequired()
         }
         
         pagesView.snp_updateConstraints { (make) -> Void in
-                let _ = view.frame
             
-                let w = CGFloat(layoutAttrs.numCols) * CGFloat(layoutAttrs.cellSize.width + layoutAttrs.minSpacingForCell )
                 make.width.equalTo( w ).priorityHigh()
+        }
+        
+        pageImageView.snp_updateConstraints { (make) in
+            
+            let delta = pageViewWidth * 0.30
+            let newWidth = pageViewWidth - delta
+            
+            make.width.equalTo(newWidth).priorityRequired()
         }
         
         
@@ -248,6 +315,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("slide", forIndexPath:indexPath) as! UIPDFPageCell
         
         if let doc = self.doc {
+            
             let page = doc.pageAtIndex(indexPath.row+1)
         
             let vectorImage = OHVectorImage(PDFPage: page)
@@ -273,13 +341,9 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
     {
         
-        if let doc = self.doc, let i = context.nextFocusedIndexPath {
+        if let i = context.nextFocusedIndexPath {
             
-            let page = doc.pageAtIndex(i.row+1)
-            
-            let vectorImage = OHVectorImage(PDFPage: page)
-            
-            self.pageImageView.image = vectorImage.renderAtSize(pageImageView.frame.size)
+            self.showSlide(at: UInt(i.row))
             
         }
     }
