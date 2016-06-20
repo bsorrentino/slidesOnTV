@@ -85,6 +85,16 @@ class UIPageView : UIView {
     
     let settingsBar = UITabBar()
     
+    private var _preferredFocusedView:UIView?
+    
+    override weak var preferredFocusedView: UIView? {
+        
+        guard let pfv = _preferredFocusedView else {
+            return super.preferredFocusedView
+        }
+        return pfv
+    }
+
     override func canBecomeFocused() -> Bool {
         print( "PageView.canBecomeFocused" );
         return true
@@ -117,11 +127,16 @@ class UIPageView : UIView {
                     self.layer.borderWidth = 2
                 
                     self.layer.borderColor = UIColor.darkGrayColor().CGColor
+                    
+                    self._preferredFocusedView = self.settingsBar
+                    self.setNeedsFocusUpdate()
+                    self.updateFocusIfNeeded() 
+                    
 
             }
             
         }
-        else {
+        else if( self.settingsBar.focused ){
             coordinator.addCoordinatedAnimations({
                 
                 UIView.animateWithDuration(0.5, animations: {
@@ -133,6 +148,7 @@ class UIPageView : UIView {
             }){
                 self.layer.borderWidth = 0
                 
+                self._preferredFocusedView = nil
             }
             
         }
