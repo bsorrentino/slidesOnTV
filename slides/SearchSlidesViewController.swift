@@ -299,10 +299,9 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
             return slideshareSearch( apiKey: credentials["apiKey"]! as! String, sharedSecret: credentials["sharedSecret"] as! String, what: filterString )
         })
         .debug("parse")
+        .doOnNext({ (_) in self.filteredDataItems.removeAll() })
         .flatMap({ (data:NSData) -> Observable<Slideshow> in
 
-            self.filteredDataItems.removeAll()
-            
             let slidehareItemsParser = SlideshareItemsParser()
             
             return slidehareItemsParser.rx_parse(data)
@@ -318,7 +317,6 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         .observeOn(MainScheduler.instance)
         .subscribe({ e in
             
-
             if let slide = e.element {
                 
                 self.filteredDataItems.append(slide)

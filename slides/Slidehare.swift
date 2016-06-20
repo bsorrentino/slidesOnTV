@@ -11,6 +11,24 @@ import RxSwift
 import RxCocoa
 
 
+extension String {
+    func htmlDecoded()->String {
+        
+        guard (self != "") else { return self }
+        
+        var _self = self;
+        if let v = self.stringByRemovingPercentEncoding  {
+            _self = v
+        }
+        return _self
+            .stringByReplacingOccurrencesOfString( "&quot;", withString: "\"")
+            .stringByReplacingOccurrencesOfString( "&amp;" , withString: "&" )
+            .stringByReplacingOccurrencesOfString( "&apos;",    withString: "'" )
+            .stringByReplacingOccurrencesOfString( "&lt;",      withString: "<" )
+            .stringByReplacingOccurrencesOfString(  "&gt;",      withString: ">" )
+    }
+}
+
 private func SHA1( s:String! ) -> String {
     let data = s.dataUsingEncoding(NSUTF8StringEncoding)!
     
@@ -104,15 +122,22 @@ class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
         }
     }
     
+    
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         
-        if elementName == "Slideshow", let data = currentData {
+        let e = elementName.lowercaseString
+        
+        if e == "slideshow", let data = currentData {
 
             subject.onNext(data.slide)
             
             currentData = nil
-
-            //print( "\(data.slide)")
+        }
+        else if e == "title" {
+            
+            if let title =  currentData!.slide[e] {
+                currentData!.slide[e] = title.htmlDecoded()
+            }
         }
     }
     
