@@ -83,7 +83,8 @@ class UIPDFPageCell : UICollectionViewCell {
 //
 class UIPageView : UIView {
     
-    let settingsBar = UITabBar()
+    let settingsBar = UIView()
+    let zoomIn = UIButton(type: .Custom)
     
     private var _preferredFocusedView:UIView?
     
@@ -97,7 +98,8 @@ class UIPageView : UIView {
 
     override func canBecomeFocused() -> Bool {
         print( "PageView.canBecomeFocused" );
-        return true
+        
+        return _preferredFocusedView==nil
     }
     
     /// Asks whether the system should allow a focus update to occur.
@@ -113,6 +115,11 @@ class UIPageView : UIView {
     {
         print( "PageView.didUpdateFocusInContext" );
         
+        if( zoomIn.focused ) {
+            print( "zoomIn.focused");
+            return
+        }
+        
         if( self.focused ) {
             
             coordinator.addCoordinatedAnimations({ 
@@ -122,6 +129,12 @@ class UIPageView : UIView {
                         var f = self.settingsBar.frame
                         f.size.height = 80
                         self.settingsBar.frame = f
+
+                        self.settingsBar.subviews.forEach({ (v:UIView) in
+                            v.alpha = 1.0
+                        })
+                        
+                        //self.setNeedsUpdateConstraints()
                     })
                 }){
                     self.layer.borderWidth = 2
@@ -136,39 +149,53 @@ class UIPageView : UIView {
             }
             
         }
-        else if( self.settingsBar.focused ){
+        else if( !self.settingsBar.focused && self._preferredFocusedView != nil ){
             coordinator.addCoordinatedAnimations({
                 
                 UIView.animateWithDuration(0.5, animations: {
+
+                    self.settingsBar.subviews.forEach({ (v:UIView) in
+                        v.alpha = 0.0
+                    })
                     
                     var f = self.settingsBar.frame
                     f.size.height = 1.0
                     self.settingsBar.frame = f
+
+                    //self.setNeedsUpdateConstraints()
+                    
+                    
                 })
             }){
                 self.layer.borderWidth = 0
                 
                 self._preferredFocusedView = nil
+                
             }
             
         }
         
     }
     
+    let disposeBag = DisposeBag()
+    
     func setupView()->Self {
         
         settingsBar.backgroundColor = UIColor.darkGrayColor()
-        settingsBar.translucent = false
+
         
-        settingsBar.items = [
+        zoomIn.setTitle("zoom +", forState: .Normal)
+        zoomIn.backgroundColor = UIColor.clearColor()
         
-            UITabBarItem(title: "zoom in", image: nil, tag: 1),
-            UITabBarItem(title: "zoom out", image: nil, tag: 2),
-            UITabBarItem(title: "rotate", image: nil, tag: 3)
-        ]
+        zoomIn.rx_primaryAction.asDriver().driveNext {
+            print( "ZoomIn")
+        }.addDisposableTo(disposeBag)
         
+        settingsBar.addSubview(zoomIn)
         
         self.addSubview(settingsBar)
+        
+        
         
         settingsBar.snp_makeConstraints { (make) in
             
@@ -177,9 +204,25 @@ class UIPageView : UIView {
             make.height.equalTo(1.0).priorityRequired()
         }
         
+        zoomIn.snp_makeConstraints { (make) in
+            
+            //make.width.equalTo(100).priorityRequired()
+            make.height.equalTo(50 ).priorityRequired()
+            make.center.equalTo(self.settingsBar).priorityRequired()
+            make.top.equalTo(self.settingsBar).offset(15)
+            
+        }
+        
+        
         return self
        
     }
+    
+    override func updateConstraints() {
+        
+        super.updateConstraints()
+    }
+    
 }
 
 

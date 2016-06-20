@@ -4,8 +4,8 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'slides' do
-    pod 'RxSwift',    '~> 2.0'
-    pod 'RxCocoa',    '~> 2.0'
+    pod 'RxSwift',    '~> 2.5.0'
+    pod 'RxCocoa',    '~> 2.5.0'
     pod 'OHPDFImage'
     pod 'SnapKit'
     pod 'SettingsKit', :git => 'https://github.com/bsorrentino/SettingsKit.git', :branch => 'develop'
@@ -14,18 +14,18 @@ target 'slides' do
 end
 
 target 'slidesTests' do
-    pod 'RxSwift',    '~> 2.0'
-    pod 'RxCocoa',    '~> 2.0'
-    pod 'RxBlocking', '~> 2.0'
-    pod 'RxTests',    '~> 2.0'
+    pod 'RxSwift',    '~> 2.5.0'
+    pod 'RxCocoa',    '~> 2.5.0'
+    pod 'RxBlocking', '~> 2.5.0'
+    pod 'RxTests',    '~> 2.5.0'
     pod 'OHPDFImage'
 end
 
 target 'slidesUITests' do
-    pod 'RxSwift',    '~> 2.0'
-    pod 'RxCocoa',    '~> 2.0'
-    pod 'RxBlocking', '~> 2.0'
-    pod 'RxTests',    '~> 2.0'
+    pod 'RxSwift',    '~> 2.5.0'
+    pod 'RxCocoa',    '~> 2.5.0'
+    pod 'RxBlocking', '~> 2.5.0'
+    pod 'RxTests',    '~> 2.5.0'
     pod 'OHPDFImage'
     pod 'SnapKit'
     #pod 'VAProgressCircle'
