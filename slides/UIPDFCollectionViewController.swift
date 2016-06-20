@@ -185,6 +185,9 @@ class UIPageView : UIView {
 
         
         zoomIn.setTitle("zoom +", forState: .Normal)
+        zoomIn.setTitleColor( UIColor.whiteColor(), forState: .Normal)
+        zoomIn.setTitleColor( UIColor.yellowColor(), forState: .Focused)
+        
         zoomIn.backgroundColor = UIColor.clearColor()
         
         zoomIn.rx_primaryAction.asDriver().driveNext {
