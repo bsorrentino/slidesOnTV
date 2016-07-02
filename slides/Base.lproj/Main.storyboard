@@ -122,7 +122,7 @@
         <!--Collection View Controller-->
         <scene sceneID="hd5-36-nR7">
             <objects>
-                <viewController id="3Li-gA-Wtf" customClass="UIPDFCollectionViewController" customModule="slides" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UIPDFCollectionViewController" id="3Li-gA-Wtf" customClass="UIPDFCollectionViewController" customModule="slides" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Deq-BL-f34"/>
                         <viewControllerLayoutGuide type="bottom" id="Az4-5N-6X8"/>

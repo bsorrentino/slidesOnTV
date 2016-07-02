@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        window?.rootViewController = packagedSearchController()
+        window?.rootViewController = testController() //packagedSearchController()
         
         return true
     }
@@ -42,6 +42,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    func testController() -> UIViewController {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        guard let controller = storyboard.instantiateViewControllerWithIdentifier(UIPDFCollectionViewController.storyboardIdentifier) as? UIPDFCollectionViewController else {
+            fatalError("Unable to instatiate a UIPDFCollectionViewController from the storyboard.")
+        }
+    
+        if let path = NSBundle.mainBundle().pathForResource("rx1", ofType:"pdf") {
+
+            controller.documentLocation = NSURL.fileURLWithPath(path)
+        }
+
+        return controller
+    }
+    
 
     func packagedSearchController() -> UIViewController {
         // Load a `SearchResultsViewController` from its storyboard.

@@ -389,8 +389,9 @@ class UIPageView : UIView {
 //
 //  UIPDFCollectionViewController
 //
-class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
+public class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
  
+    public static let storyboardIdentifier = "UIPDFCollectionViewController"
     
     @IBOutlet weak var pagesView: UICollectionView!
     
@@ -435,7 +436,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     // MARK: view lifecycle
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         pageImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -452,12 +453,12 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override public func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.showSlide(at: 0)
     }
     
-    override func updateViewConstraints() {
+    override public func updateViewConstraints() {
         
         
         let w = CGFloat(layoutAttrs.numCols) * CGFloat(layoutAttrs.cellSize.width + layoutAttrs.minSpacingForCell )
@@ -488,22 +489,22 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
 // MARK: <UICollectionViewDelegateFlowLayout>
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
     {
         return layoutAttrs.cellSize //use height whatever you wants.
     }
 
     // Space between item on different row
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
             return layoutAttrs.minSpacingForLine
     }
     
     // Space between item on the same row
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
             return layoutAttrs.minSpacingForCell
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     }
     
@@ -518,7 +519,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
 // MARK: <UICollectionViewDataSource>
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //print( "page # \(doc.pagesCount)")
         guard let doc = self.doc else {
             return 0
@@ -527,7 +528,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("slide", forIndexPath:indexPath) as! UIPDFPageCell
@@ -544,7 +545,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     
@@ -556,7 +557,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
  
 // MARK: <Focus Engine>
  
-    func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
+    public func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
     {
         
         if let i = context.nextFocusedIndexPath {
@@ -567,14 +568,14 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
     
     
-    func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
+    public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
     {
         print( "UIPDFCollectionViewController.canFocusItemAtIndexPath(\(indexPath.row))" )
         return true
     }
     
     
-    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
+    override public func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
         super.didUpdateFocusInContext(context, withAnimationCoordinator: coordinator)
         
         print( "UIPDFCollectionViewController.didUpdateFocusInContext" )
