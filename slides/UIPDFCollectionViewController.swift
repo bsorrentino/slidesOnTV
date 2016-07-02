@@ -78,13 +78,127 @@ class UIPDFPageCell : UICollectionViewCell {
     
 }
 
+
+
+class UISettingsBarView : UIView {
+    
+
+    let zoomIn = UIButton(type: .Custom)
+    let zoomOut = UIButton(type: .Custom)
+    let rotate = UIButton(type: .Custom)
+
+    let disposeBag = DisposeBag()
+
+    let buttonSize = CGSize(width: 350, height: 50)
+
+    private func setupView() -> Self {
+        
+        guard let superview = self.superview else {
+            return self
+        }
+        
+        self.backgroundColor = UIColor.darkGrayColor()
+
+        zoomOut.setTitle("zoom -", forState: .Normal)
+        zoomOut.setTitleColor( UIColor.whiteColor(), forState: .Normal)
+        zoomOut.setTitleColor( UIColor.yellowColor(), forState: .Focused)
+        zoomOut.backgroundColor = UIColor.clearColor()
+        zoomOut.rx_primaryAction.asDriver().driveNext {
+            print( "Zoom -")
+            }.addDisposableTo(disposeBag)
+        
+        
+        zoomIn.setTitle("zoom +", forState: .Normal)
+        zoomIn.setTitleColor( UIColor.whiteColor(), forState: .Normal)
+        zoomIn.setTitleColor( UIColor.yellowColor(), forState: .Focused)
+        zoomIn.backgroundColor = UIColor.clearColor()
+        
+        zoomIn.rx_primaryAction.asDriver().driveNext {
+            print( "Zoom +")
+            }.addDisposableTo(disposeBag)
+
+        rotate.setTitle("rotate", forState: .Normal)
+        rotate.setTitleColor( UIColor.whiteColor(), forState: .Normal)
+        rotate.setTitleColor( UIColor.yellowColor(), forState: .Focused)
+        rotate.backgroundColor = UIColor.clearColor()
+        
+        rotate.rx_primaryAction.asDriver().driveNext {
+            print( "Rotate")
+            }.addDisposableTo(disposeBag)
+
+        
+        self.addSubview(zoomIn)
+        self.addSubview(zoomOut)
+        self.addSubview(rotate)
+
+        let numOfButtons = 3
+        let offsetBetweenButtons = 50
+        
+        
+        let totalWidthCoveredByButtons = (numOfButtons * Int(buttonSize.width)) + ((numOfButtons - 1)*offsetBetweenButtons)
+        
+        let offsetFormLeading = (superview.frame.size.width - CGFloat(totalWidthCoveredByButtons))/2
+        
+        print( "offsetFormLeading=\(offsetFormLeading)" )
+        
+        self.snp_makeConstraints { (make) in
+            
+            make.top.left.equalTo(superview).priorityRequired()
+            make.width.equalTo(superview).priorityRequired()
+            make.height.equalTo(1.0).priorityRequired()
+        }
+        
+        zoomIn.snp_makeConstraints { (make) in
+            
+            makeStdButtonConstraints(make: make)
+            make.leading.equalTo(self.snp_leading).offset(offsetFormLeading)
+            
+        }
+        
+        zoomOut.snp_makeConstraints { (make) in
+            
+            makeStdButtonConstraints(make: make)
+            make.leading.equalTo(zoomIn.snp_trailing).offset(offsetBetweenButtons)
+            
+            
+        }
+        rotate.snp_makeConstraints { (make) in
+            
+            makeStdButtonConstraints(make: make)
+            make.leading.equalTo(zoomOut.snp_trailing).offset(offsetBetweenButtons)
+            
+            
+        }
+        
+    
+        return self
+    }
+    
+    private func makeStdButtonConstraints( make make: ConstraintMaker ) {
+        
+        make.height.equalTo(buttonSize.height).priorityRequired()
+        make.width.equalTo(buttonSize.width).priorityRequired()
+        make.top.equalTo(self).offset(15)
+        
+    }
+    
+    override func didMoveToSuperview() {
+        setupView()
+    }
+
+    override func updateConstraints() {
+        
+        super.updateConstraints()
+    }
+
+}
+
 //
-//  UIPDFCollectionViewController
+//  UIPageView
 //
 class UIPageView : UIView {
     
-    let settingsBar = UIView()
-    let zoomIn = UIButton(type: .Custom)
+    let settingsBar = UISettingsBarView()
     
     private var _preferredFocusedView:UIView?
     
@@ -115,7 +229,7 @@ class UIPageView : UIView {
     {
         print( "PageView.didUpdateFocusInContext" );
         
-        if( zoomIn.focused ) {
+        if( settingsBar.zoomIn.focused ) {
             print( "zoomIn.focused");
             return
         }
@@ -176,48 +290,10 @@ class UIPageView : UIView {
         }
         
     }
-    
-    let disposeBag = DisposeBag()
-    
-    func setupView()->Self {
-        
-        settingsBar.backgroundColor = UIColor.darkGrayColor()
 
-        
-        zoomIn.setTitle("zoom +", forState: .Normal)
-        zoomIn.setTitleColor( UIColor.whiteColor(), forState: .Normal)
-        zoomIn.setTitleColor( UIColor.yellowColor(), forState: .Focused)
-        
-        zoomIn.backgroundColor = UIColor.clearColor()
-        
-        zoomIn.rx_primaryAction.asDriver().driveNext {
-            print( "ZoomIn")
-        }.addDisposableTo(disposeBag)
-        
-        settingsBar.addSubview(zoomIn)
+    override func didMoveToSuperview() {
         
         self.addSubview(settingsBar)
-        
-        
-        
-        settingsBar.snp_makeConstraints { (make) in
-            
-            make.top.left.equalTo(self).priorityRequired()
-            make.width.equalTo(self).priorityRequired()
-            make.height.equalTo(1.0).priorityRequired()
-        }
-        
-        zoomIn.snp_makeConstraints { (make) in
-            
-            //make.width.equalTo(100).priorityRequired()
-            make.height.equalTo(50 ).priorityRequired()
-            make.center.equalTo(self.settingsBar).priorityRequired()
-            make.top.equalTo(self.settingsBar).offset(15)
-            
-        }
-        
-        
-        return self
        
     }
     
@@ -289,9 +365,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeDown(_:)))
         gesture.direction = .Down
         
-        pageView
-            .setupView()
-            .addGestureRecognizer(gesture)
+        pageView.addGestureRecognizer(gesture)
+        
         
 
     }
