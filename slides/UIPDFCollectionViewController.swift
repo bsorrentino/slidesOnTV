@@ -82,10 +82,17 @@ class UIPDFPageCell : UICollectionViewCell {
 
 class UISettingsBarView : UIView {
     
-
-    let zoomIn = UIButton(type: .Custom)
-    let zoomOut = UIButton(type: .Custom)
-    let rotate = UIButton(type: .Custom)
+    let buttons = [ UIButton(type: .Custom), UIButton(type: .Custom), UIButton(type: .Custom) ]
+    
+    weak var zoomIn: UIButton? {
+        return buttons[0]
+    }
+    weak var zoomOut: UIButton? {
+        return buttons[1]
+    }
+    weak var rotate: UIButton? {
+        return buttons[2]
+    }
 
     let disposeBag = DisposeBag()
 
@@ -99,78 +106,82 @@ class UISettingsBarView : UIView {
         
         self.backgroundColor = UIColor.darkGrayColor()
 
-        zoomOut.setTitle("zoom -", forState: .Normal)
-        zoomOut.setTitleColor( UIColor.whiteColor(), forState: .Normal)
-        zoomOut.setTitleColor( UIColor.yellowColor(), forState: .Focused)
-        zoomOut.backgroundColor = UIColor.clearColor()
-        zoomOut.rx_primaryAction.asDriver().driveNext {
-            print( "Zoom -")
-            }.addDisposableTo(disposeBag)
+        if let zoomOut = self.zoomOut {
+            zoomOut.setTitle("zoom -", forState: .Normal)
+            zoomOut.setTitleColor( UIColor.whiteColor(), forState: .Normal)
+            zoomOut.setTitleColor( UIColor.yellowColor(), forState: .Focused)
+            zoomOut.backgroundColor = UIColor.clearColor()
+            zoomOut.rx_primaryAction.asDriver().driveNext {
+                print( "Zoom -")
+                }.addDisposableTo(disposeBag)
+        }
         
-        
-        zoomIn.setTitle("zoom +", forState: .Normal)
-        zoomIn.setTitleColor( UIColor.whiteColor(), forState: .Normal)
-        zoomIn.setTitleColor( UIColor.yellowColor(), forState: .Focused)
-        zoomIn.backgroundColor = UIColor.clearColor()
-        
-        zoomIn.rx_primaryAction.asDriver().driveNext {
-            print( "Zoom +")
-            }.addDisposableTo(disposeBag)
+        if let zoomIn = self.zoomIn {
+            zoomIn.setTitle("zoom +", forState: .Normal)
+            zoomIn.setTitleColor( UIColor.whiteColor(), forState: .Normal)
+            zoomIn.setTitleColor( UIColor.yellowColor(), forState: .Focused)
+            zoomIn.backgroundColor = UIColor.clearColor()
+            
+            zoomIn.rx_primaryAction.asDriver().driveNext {
+                print( "Zoom +")
+                }.addDisposableTo(disposeBag)
+        }
 
-        rotate.setTitle("rotate", forState: .Normal)
-        rotate.setTitleColor( UIColor.whiteColor(), forState: .Normal)
-        rotate.setTitleColor( UIColor.yellowColor(), forState: .Focused)
-        rotate.backgroundColor = UIColor.clearColor()
-        
-        rotate.rx_primaryAction.asDriver().driveNext {
-            print( "Rotate")
-            }.addDisposableTo(disposeBag)
+        if let rotate = self.rotate {
+
+            rotate.setTitle("rotate", forState: .Normal)
+            rotate.setTitleColor( UIColor.whiteColor(), forState: .Normal)
+            rotate.setTitleColor( UIColor.yellowColor(), forState: .Focused)
+            rotate.backgroundColor = UIColor.clearColor()
+            
+            rotate.rx_primaryAction.asDriver().driveNext {
+                print( "Rotate")
+                }.addDisposableTo(disposeBag)
+
+        }
 
         
-        self.addSubview(zoomIn)
-        self.addSubview(zoomOut)
-        self.addSubview(rotate)
-
-        let numOfButtons = 3
         let offsetBetweenButtons = 50
         
         
-        let totalWidthCoveredByButtons = (numOfButtons * Int(buttonSize.width)) + ((numOfButtons - 1)*offsetBetweenButtons)
+        let totalWidthCoveredByButtons = (buttons.count * Int(buttonSize.width)) + ((buttons.count - 1)*offsetBetweenButtons)
         
         let offsetFormLeading = (superview.frame.size.width - CGFloat(totalWidthCoveredByButtons))/2
-        
-        print( "offsetFormLeading=\(offsetFormLeading)" )
-        
+
         self.snp_makeConstraints { (make) in
             
             make.top.left.equalTo(superview).priorityRequired()
             make.width.equalTo(superview).priorityRequired()
             make.height.equalTo(1.0).priorityRequired()
         }
-        
-        zoomIn.snp_makeConstraints { (make) in
+
+        buttons.enumerate().forEach {
+
+            self.addSubview($1)
             
-            makeStdButtonConstraints(make: make)
-            make.leading.equalTo(self.snp_leading).offset(offsetFormLeading)
-            
+            if $0 == 0 {
+                
+                $1.snp_makeConstraints { (make) in
+                    
+                    makeStdButtonConstraints(make: make)
+                    make.leading.equalTo(self.snp_leading).offset(offsetFormLeading)
+                    
+                }
+
+            }
+            else {
+                
+                let prevButton = buttons[$0-1]
+                $1.snp_makeConstraints { (make) in
+                    
+                    makeStdButtonConstraints(make: make)
+                    make.leading.equalTo(prevButton.snp_trailing).offset(offsetBetweenButtons)
+                    
+                }
+                
+            }
         }
         
-        zoomOut.snp_makeConstraints { (make) in
-            
-            makeStdButtonConstraints(make: make)
-            make.leading.equalTo(zoomIn.snp_trailing).offset(offsetBetweenButtons)
-            
-            
-        }
-        rotate.snp_makeConstraints { (make) in
-            
-            makeStdButtonConstraints(make: make)
-            make.leading.equalTo(zoomOut.snp_trailing).offset(offsetBetweenButtons)
-            
-            
-        }
-        
-    
         return self
     }
     
@@ -191,6 +202,65 @@ class UISettingsBarView : UIView {
         super.updateConstraints()
     }
 
+// MARK: Focus Management
+    
+    private var _preferredFocusedViewIndex:Int = 0
+    
+    internal override var focused: Bool {
+        return buttons.reduce(false, combine: { (status, button) -> Bool in
+            
+            return status || button.focused;
+        })
+    }
+    
+    override weak var preferredFocusedView: UIView? {
+        
+        return buttons[_preferredFocusedViewIndex]
+    }
+   
+    
+    override func canBecomeFocused() -> Bool {
+        
+        let result = ( _preferredFocusedViewIndex >= 0 && _preferredFocusedViewIndex < buttons.count )
+        
+        print( "UISettingsBarView.canBecomeFocused:\(result)" );
+        
+        return result
+    }
+    
+    
+    override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
+        
+        let result = !( (context.focusHeading == .Left && _preferredFocusedViewIndex == 0) || (context.focusHeading == .Right && _preferredFocusedViewIndex == buttons.count - 1 ) || context.focusHeading == .Up || context.focusHeading == .Down)
+ 
+        print( "UISettingsBarView.shouldUpdateFocusInContext \(result)" )
+        
+        return result
+        
+    }
+
+    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
+        print( "UISettingsBarView.didUpdateFocusInContext:\(context.focusHeading)" );
+        
+        switch( context.focusHeading ) {
+        case UIFocusHeading.Left:
+            
+            _preferredFocusedViewIndex = _preferredFocusedViewIndex - 1
+            break
+        case UIFocusHeading.Right:
+            _preferredFocusedViewIndex = _preferredFocusedViewIndex + 1
+            break
+        default:
+            break
+        }
+        
+        self.setNeedsFocusUpdate()
+        self.updateFocusIfNeeded()
+       
+        
+    }
+    
+
 }
 
 //
@@ -199,6 +269,19 @@ class UISettingsBarView : UIView {
 class UIPageView : UIView {
     
     let settingsBar = UISettingsBarView()
+ 
+
+    override func didMoveToSuperview() {
+        
+        self.addSubview(settingsBar)
+       
+    }
+    
+    override func updateConstraints() {
+        
+        super.updateConstraints()
+    }
+    // MARK: Focus Management
     
     private var _preferredFocusedView:UIView?
     
@@ -209,18 +292,32 @@ class UIPageView : UIView {
         }
         return pfv
     }
-
+    
     override func canBecomeFocused() -> Bool {
-        print( "PageView.canBecomeFocused" );
+        let result =  _preferredFocusedView==nil
+
+
+        print( "PageView.canBecomeFocused:\(result)" );
         
-        return _preferredFocusedView==nil
+        return result
     }
     
     /// Asks whether the system should allow a focus update to occur.
     override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
         
-        print( "PageView.shouldUpdateFocusInContext" );
-        return true;
+        let result = true //!settingsBar.focused
+/*
+         if let zoomIn = settingsBar.zoomIn  {
+         
+         if  zoomIn.focused  {
+         print( "zoomIn.focused");
+         return
+         }
+         }
+*/
+        print( "PageView.shouldUpdateFocusInContext \(result)" )
+        
+        return result;
         
     }
     
@@ -229,37 +326,32 @@ class UIPageView : UIView {
     {
         print( "PageView.didUpdateFocusInContext" );
         
-        if( settingsBar.zoomIn.focused ) {
-            print( "zoomIn.focused");
-            return
-        }
-        
         if( self.focused ) {
             
-            coordinator.addCoordinatedAnimations({ 
-
-                    UIView.animateWithDuration(0.5, animations: { 
-                        
-                        var f = self.settingsBar.frame
-                        f.size.height = 80
-                        self.settingsBar.frame = f
-
-                        self.settingsBar.subviews.forEach({ (v:UIView) in
-                            v.alpha = 1.0
-                        })
-                        
-                        //self.setNeedsUpdateConstraints()
-                    })
-                }){
-                    self.layer.borderWidth = 2
+            coordinator.addCoordinatedAnimations({
                 
-                    self.layer.borderColor = UIColor.darkGrayColor().CGColor
+                UIView.animateWithDuration(0.5, animations: {
                     
-                    self._preferredFocusedView = self.settingsBar
-                    self.setNeedsFocusUpdate()
-                    self.updateFocusIfNeeded() 
+                    var f = self.settingsBar.frame
+                    f.size.height = 80
+                    self.settingsBar.frame = f
                     
-
+                    self.settingsBar.subviews.forEach({ (v:UIView) in
+                        v.alpha = 1.0
+                    })
+                    
+                    //self.setNeedsUpdateConstraints()
+                })
+            }){
+                self.layer.borderWidth = 2
+                
+                self.layer.borderColor = UIColor.darkGrayColor().CGColor
+                
+                self._preferredFocusedView = self.settingsBar
+                self.setNeedsFocusUpdate()
+                self.updateFocusIfNeeded()
+                
+                
             }
             
         }
@@ -267,7 +359,7 @@ class UIPageView : UIView {
             coordinator.addCoordinatedAnimations({
                 
                 UIView.animateWithDuration(0.5, animations: {
-
+                    
                     self.settingsBar.subviews.forEach({ (v:UIView) in
                         v.alpha = 0.0
                     })
@@ -275,7 +367,7 @@ class UIPageView : UIView {
                     var f = self.settingsBar.frame
                     f.size.height = 1.0
                     self.settingsBar.frame = f
-
+                    
                     //self.setNeedsUpdateConstraints()
                     
                     
@@ -289,17 +381,6 @@ class UIPageView : UIView {
             
         }
         
-    }
-
-    override func didMoveToSuperview() {
-        
-        self.addSubview(settingsBar)
-       
-    }
-    
-    override func updateConstraints() {
-        
-        super.updateConstraints()
     }
     
 }
