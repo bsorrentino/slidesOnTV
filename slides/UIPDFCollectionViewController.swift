@@ -205,37 +205,34 @@ class UISettingsBarView : UIView {
 // MARK: Focus Management
     
     private var _preferredFocusedViewIndex:Int = 0
-    
-    internal override var focused: Bool {
-        return buttons.reduce(false, combine: { (status, button) -> Bool in
-            
-            return status || button.focused;
-        })
-    }
+    private var _canBecomeFocused:Bool = true
     
     override weak var preferredFocusedView: UIView? {
         
-        return buttons[_preferredFocusedViewIndex]
+        return ( _canBecomeFocused ) ? buttons[_preferredFocusedViewIndex] : nil
     }
    
     
     override func canBecomeFocused() -> Bool {
         
-        let result = ( _preferredFocusedViewIndex >= 0 && _preferredFocusedViewIndex < buttons.count )
-        
-        print( "UISettingsBarView.canBecomeFocused:\(result)" );
-        
-        return result
+        return _canBecomeFocused
     }
     
     
     override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
+        print( "UISettingsBarView.shouldUpdateFocusInContext:" )
         
-        let result = !( (context.focusHeading == .Left && _preferredFocusedViewIndex == 0) || (context.focusHeading == .Right && _preferredFocusedViewIndex == buttons.count - 1 ) || context.focusHeading == .Up || context.focusHeading == .Down)
+        
+        let skip = ( (context.focusHeading == .Left && _preferredFocusedViewIndex == 0) ||
+                        (context.focusHeading == .Right && _preferredFocusedViewIndex == buttons.count - 1 ) ||
+                        (context.focusHeading == .Up || context.focusHeading == .Down))
  
-        print( "UISettingsBarView.shouldUpdateFocusInContext \(result)" )
-        
-        return result
+        if( skip ) {
+            _canBecomeFocused = false
+            self.setNeedsFocusUpdate()
+            
+        }
+        return !skip
         
     }
 
@@ -295,7 +292,7 @@ class UIPageView : UIView {
     }
     
     override func canBecomeFocused() -> Bool {
-        let result =  _preferredFocusedView==nil
+        let result =  !self.settingsBar.canBecomeFocused() || _preferredFocusedView==nil
 
 
         print( "PageView.canBecomeFocused:\(result)" );
@@ -306,19 +303,9 @@ class UIPageView : UIView {
     /// Asks whether the system should allow a focus update to occur.
     override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
         
-        let result = true //!settingsBar.focused
-/*
-         if let zoomIn = settingsBar.zoomIn  {
-         
-         if  zoomIn.focused  {
-         print( "zoomIn.focused");
-         return
-         }
-         }
-*/
         print( "PageView.shouldUpdateFocusInContext:" )
         
-        return result;
+        return true;
         
     }
     
@@ -355,7 +342,7 @@ class UIPageView : UIView {
             }
             
         }
-        else if( !self.settingsBar.focused && self._preferredFocusedView != nil ){
+        else if( !self.settingsBar.canBecomeFocused() && self._preferredFocusedView != nil ){
             coordinator.addCoordinatedAnimations({
                 
                 UIView.animateWithDuration(0.5, animations: {
@@ -373,6 +360,7 @@ class UIPageView : UIView {
                 self.layer.borderWidth = 0
                 
                 self._preferredFocusedView = nil
+                self.settingsBar._canBecomeFocused = true
                 
             }
             
