@@ -263,14 +263,11 @@ class UISettingsBarView : UIView {
 //  UIPageView
 //
 class UIPageView : UIView {
-    
-    let settingsBar = UISettingsBarView()
- 
+    let pointer:UIView = UIView( frame: CGRect(x: 0, y: 0, width: 10, height: 10))
 
     override func didMoveToSuperview() {
-        
-        self.addSubview(settingsBar)
-       
+        pointer.backgroundColor = UIColor.redColor()
+
     }
     
     override func updateConstraints() {
@@ -290,12 +287,10 @@ class UIPageView : UIView {
     }
     
     override func canBecomeFocused() -> Bool {
-        let result =  !self.settingsBar.canBecomeFocused() || _preferredFocusedView==nil
 
-
-        print( "PageView.canBecomeFocused:\(result)" );
+        print( "PageView.canBecomeFocused:" );
         
-        return result
+        return true
     }
     
     /// Asks whether the system should allow a focus update to occur.
@@ -307,65 +302,86 @@ class UIPageView : UIView {
         
     }
     
+    
+    
     /// Called when the screen’s focusedView has been updated to a new view. Use the animation coordinator to schedule focus-related animations in response to the update.
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
     {
-        print( "PageView.didUpdateFocusInContext:" );
+        print( "PageView.didUpdateFocusInContext: focused: \(self.focused)" );
         
-        if( !self.settingsBar.canBecomeFocused() && self._preferredFocusedView != nil ){
-            coordinator.addCoordinatedAnimations({
-                
-                UIView.animateWithDuration(0.5, animations: {
-                    
-                    self.settingsBar.subviews.forEach({ (v:UIView) in
-                        v.alpha = 0.0
-                    })
-                    
-                    var f = self.settingsBar.frame
-                    f.size.height = 1.0
-                    self.settingsBar.frame = f
-                    
-                })
-            }){
-                self.layer.borderWidth = 0
-                
-                self._preferredFocusedView = nil
-                self.settingsBar._canBecomeFocused = true
-                
-            }
-            
-        }
-        else if( self.focused ) {
-            
-            coordinator.addCoordinatedAnimations({
-                
-                UIView.animateWithDuration(0.5, animations: {
-                    
-                    var f = self.settingsBar.frame
-                    f.size.height = 80
-                    self.settingsBar.frame = f
-                    
-                    self.settingsBar.subviews.forEach({ (v:UIView) in
-                        v.alpha = 1.0
-                    })
-                    
-                })
-            }){
-                self.layer.borderWidth = 2
-                
-                self.layer.borderColor = UIColor.darkGrayColor().CGColor
-                
-                self._preferredFocusedView = self.settingsBar
-                self.setNeedsFocusUpdate()
-                self.updateFocusIfNeeded()
-                
-                
-            }
-            
-        }
         
     }
+
+    // MARK: Touch Handling
+
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        guard let firstTouch = touches.first else { return }
+        let locationInView = firstTouch.locationInView(firstTouch.view)
+        
+        addSubview(pointer)
+            
+        var f = pointer.frame
+        f.origin = locationInView
+        
+        pointer.frame = f
+    }
+    
+    override func  touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        print("touchesMoved ")
+    
+        guard let firstTouch = touches.first else { return }
+        
+        let locationInView = firstTouch.locationInView(firstTouch.view)
+
+        var f = pointer.frame
+        f.origin = locationInView
+        
+        pointer.frame = f
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        print("touchesEnded ")
+        pointer.removeFromSuperview()
+    
+    }
+    
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        print("touchesCancelled ")
+        pointer.removeFromSuperview()
+    
+    }
+    
+    // MARK: Event Handling
+    /*
+    override func pressesBegan(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+        for item in presses {
+            if item.type == .Select {
+                self.backgroundColor = UIColor.greenColor()
+            }
+        }
+    }
+    
+    override func pressesEnded(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+        for item in presses {
+            if item.type == .Select {
+                self.backgroundColor = UIColor.whiteColor()
+            }
+        }
+    }
+    
+    override func pressesChanged(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+        // ignored
+    }
+    
+    override func pressesCancelled(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+        for item in presses {
+            if item.type == .Select {
+                self.backgroundColor = UIColor.whiteColor()
+            }
+        }
+    }
+    */
 }
 
 
@@ -397,12 +413,6 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
                          minSpacingForCell : CGFloat(25.0),
                          minSpacingForLine: CGFloat(50.0) )
     
-    // MARK:
-    
-    @IBAction func swipeDown(sender:UISwipeGestureRecognizer) {
-        
-        print( "swipe down");
-    }
     
     func showSlide(at index:UInt) {
         if let doc = self.doc {
@@ -426,12 +436,6 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
  
         self.view.setNeedsFocusUpdate()
         self.view.updateFocusIfNeeded()
-        
-        let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeDown(_:)))
-        gesture.direction = .Down
-        
-        pageView.addGestureRecognizer(gesture)
-        
         
 
     }
