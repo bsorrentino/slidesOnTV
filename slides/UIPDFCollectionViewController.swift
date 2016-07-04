@@ -244,18 +244,19 @@ class UISettingsBarView : UIView {
         
         switch( context.focusHeading ) {
         case UIFocusHeading.Left:
-            
             _preferredFocusedViewIndex = _preferredFocusedViewIndex - 1
+            self.setNeedsFocusUpdate()
+            //self.updateFocusIfNeeded()
             break
         case UIFocusHeading.Right:
             _preferredFocusedViewIndex = _preferredFocusedViewIndex + 1
+            self.setNeedsFocusUpdate()
+            //self.updateFocusIfNeeded()
             break
         default:
             break
         }
         
-        self.setNeedsFocusUpdate()
-        self.updateFocusIfNeeded()
        
         
     }
@@ -315,7 +316,7 @@ class UIPageView : UIView {
          }
          }
 */
-        print( "PageView.shouldUpdateFocusInContext \(result)" )
+        print( "PageView.shouldUpdateFocusInContext:" )
         
         return result;
         
@@ -324,7 +325,7 @@ class UIPageView : UIView {
     /// Called when the screen’s focusedView has been updated to a new view. Use the animation coordinator to schedule focus-related animations in response to the update.
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
     {
-        print( "PageView.didUpdateFocusInContext" );
+        print( "PageView.didUpdateFocusInContext:" );
         
         if( self.focused ) {
             
@@ -340,7 +341,6 @@ class UIPageView : UIView {
                         v.alpha = 1.0
                     })
                     
-                    //self.setNeedsUpdateConstraints()
                 })
             }){
                 self.layer.borderWidth = 2
@@ -367,9 +367,6 @@ class UIPageView : UIView {
                     var f = self.settingsBar.frame
                     f.size.height = 1.0
                     self.settingsBar.frame = f
-                    
-                    //self.setNeedsUpdateConstraints()
-                    
                     
                 })
             }){
@@ -557,19 +554,16 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
  
 // MARK: <Focus Engine>
  
-    public func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
-    {
+    public func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
         
         if let i = context.nextFocusedIndexPath {
-            
             self.showSlide(at: UInt(i.row))
             
         }
     }
     
     
-    public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
-    {
+    public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         print( "UIPDFCollectionViewController.canFocusItemAtIndexPath(\(indexPath.row))" )
         return true
     }
@@ -577,7 +571,6 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
     
     override public func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
         super.didUpdateFocusInContext(context, withAnimationCoordinator: coordinator)
-        
         print( "UIPDFCollectionViewController.didUpdateFocusInContext" )
     }
     
