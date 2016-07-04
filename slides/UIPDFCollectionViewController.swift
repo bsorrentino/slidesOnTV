@@ -243,12 +243,10 @@ class UISettingsBarView : UIView {
         case UIFocusHeading.Left:
             _preferredFocusedViewIndex = _preferredFocusedViewIndex - 1
             self.setNeedsFocusUpdate()
-            //self.updateFocusIfNeeded()
             break
         case UIFocusHeading.Right:
             _preferredFocusedViewIndex = _preferredFocusedViewIndex + 1
             self.setNeedsFocusUpdate()
-            //self.updateFocusIfNeeded()
             break
         default:
             break
@@ -314,7 +312,30 @@ class UIPageView : UIView {
     {
         print( "PageView.didUpdateFocusInContext:" );
         
-        if( self.focused ) {
+        if( !self.settingsBar.canBecomeFocused() && self._preferredFocusedView != nil ){
+            coordinator.addCoordinatedAnimations({
+                
+                UIView.animateWithDuration(0.5, animations: {
+                    
+                    self.settingsBar.subviews.forEach({ (v:UIView) in
+                        v.alpha = 0.0
+                    })
+                    
+                    var f = self.settingsBar.frame
+                    f.size.height = 1.0
+                    self.settingsBar.frame = f
+                    
+                })
+            }){
+                self.layer.borderWidth = 0
+                
+                self._preferredFocusedView = nil
+                self.settingsBar._canBecomeFocused = true
+                
+            }
+            
+        }
+        else if( self.focused ) {
             
             coordinator.addCoordinatedAnimations({
                 
@@ -338,29 +359,6 @@ class UIPageView : UIView {
                 self.setNeedsFocusUpdate()
                 self.updateFocusIfNeeded()
                 
-                
-            }
-            
-        }
-        else if( !self.settingsBar.canBecomeFocused() && self._preferredFocusedView != nil ){
-            coordinator.addCoordinatedAnimations({
-                
-                UIView.animateWithDuration(0.5, animations: {
-                    
-                    self.settingsBar.subviews.forEach({ (v:UIView) in
-                        v.alpha = 0.0
-                    })
-                    
-                    var f = self.settingsBar.frame
-                    f.size.height = 1.0
-                    self.settingsBar.frame = f
-                    
-                })
-            }){
-                self.layer.borderWidth = 0
-                
-                self._preferredFocusedView = nil
-                self.settingsBar._canBecomeFocused = true
                 
             }
             
