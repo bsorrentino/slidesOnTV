@@ -263,10 +263,12 @@ class UISettingsBarView : UIView {
 //  UIPageView
 //
 class UIPageView : UIView {
-    let pointer:UIView = UIView( frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+    //let pointer:UIView = UIView( frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+    let pointer = UIImageView( image: UIImage(named: "pointer") )
 
     override func didMoveToSuperview() {
-        pointer.backgroundColor = UIColor.redColor()
+        //pointer.backgroundColor = UIColor.redColor()
+        pointer.userInteractionEnabled = false
 
     }
     
