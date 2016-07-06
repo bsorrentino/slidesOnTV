@@ -352,36 +352,7 @@ class UIPageView : UIView {
     
     }
     
-    // MARK: Event Handling
-    /*
-    override func pressesBegan(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
-        for item in presses {
-            if item.type == .Select {
-                self.backgroundColor = UIColor.greenColor()
-            }
-        }
-    }
     
-    override func pressesEnded(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
-        for item in presses {
-            if item.type == .Select {
-                self.backgroundColor = UIColor.whiteColor()
-            }
-        }
-    }
-    
-    override func pressesChanged(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
-        // ignored
-    }
-    
-    override func pressesCancelled(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
-        for item in presses {
-            if item.type == .Select {
-                self.backgroundColor = UIColor.whiteColor()
-            }
-        }
-    }
-    */
 }
 
 
@@ -398,6 +369,10 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
     @IBOutlet weak var pageImageView: UIImageView!
     
     private var doc:OHPDFDocument?
+
+    private var playPauseSubject = PublishSubject<UIPress>()
+    private let disposeBag = DisposeBag()
+
     
     var documentLocation:NSURL? {
         didSet {
@@ -427,6 +402,53 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
 
     }
     
+    // MARK: PLAY/PAUSE SLIDES
+    
+    private var _playPauseSlideShow:Disposable?
+    private var _indexPathForPreferredFocusedView:NSIndexPath?
+    
+    private func playPauseSlideShow() {
+
+        guard _playPauseSlideShow == nil else {
+            return
+        }
+        
+        let playSlides = Observable<Int>.interval(3, scheduler: MainScheduler.instance)
+            .map({ (index:Int) -> Int in
+
+                guard let prevIndex = self._indexPathForPreferredFocusedView else {
+                    return index + 1
+                }
+                return prevIndex.row + 1
+                
+            })
+            .takeWhile({ (slide:Int) -> Bool in
+                return slide < self.doc?.pagesCount
+            })
+            .takeUntil( playPauseSubject )
+            .doOnCompleted{
+                self._playPauseSlideShow?.dispose()
+                self._playPauseSlideShow = nil
+            }
+    
+        _playPauseSlideShow = playPauseSubject
+            .filter{ (press:UIPress) -> Bool in
+                return press.type == .PlayPause
+            }
+            .flatMap{ (_:UIPress) -> Observable<Int> in
+                return playSlides
+            }
+            .subscribeNext { (slide:Int) in
+                
+                let i = NSIndexPath(forRow: slide, inSection: 0)
+                self._indexPathForPreferredFocusedView = i
+                self.pagesView.selectItemAtIndexPath(i, animated: false, scrollPosition: .None)
+                self.pagesView.setNeedsFocusUpdate()
+                self.pagesView.updateFocusIfNeeded()
+            }
+        
+    }
+    
     // MARK: view lifecycle
     
     override public func viewDidLoad() {
@@ -436,8 +458,7 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
  
         self.view.setNeedsFocusUpdate()
         self.view.updateFocusIfNeeded()
-        
-
+ 
     }
 
     override public func viewDidAppear(animated: Bool) {
@@ -446,7 +467,6 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
     }
     
     override public func updateViewConstraints() {
-        
         
         let w = CGFloat(layoutAttrs.numCols) * CGFloat(layoutAttrs.cellSize.width + layoutAttrs.minSpacingForCell )
         let pageViewWidth = view.frame.size.width - w
@@ -507,7 +527,7 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
 // MARK: <UICollectionViewDataSource>
     
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //print( "page # \(doc.pagesCount)")
+
         guard let doc = self.doc else {
             return 0
         }
@@ -545,24 +565,53 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
 // MARK: <Focus Engine>
  
     public func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
-        
+        print("didUpdateFocusInContext:\(context.nextFocusedIndexPath)")
+       
         if let i = context.nextFocusedIndexPath {
             self.showSlide(at: UInt(i.row))
+            _indexPathForPreferredFocusedView = i
             
         }
     }
     
-    
     public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        print( "UIPDFCollectionViewController.canFocusItemAtIndexPath(\(indexPath.row))" )
+        print( "canFocusItemAtIndexPath(\(indexPath.row))" )
         return true
+    }
+    
+    
+    public func indexPathForPreferredFocusedViewInCollectionView(collectionView: UICollectionView) -> NSIndexPath? {
+        print("indexPathForPreferredFocusedViewInCollectionView")
+        // Return index path for selected show that you will be playing
+        return _indexPathForPreferredFocusedView
     }
     
     
     override public func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
         super.didUpdateFocusInContext(context, withAnimationCoordinator: coordinator)
-        print( "UIPDFCollectionViewController.didUpdateFocusInContext" )
     }
     
+    // MARK: Presses Handling
+    
+    override public func pressesBegan(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+        print("pressesBegan")
+        playPauseSlideShow()
+        
+        if let press = presses.first {
+            playPauseSubject.on( .Next(press) )
+        }
+    }
+    
+    override public func pressesChanged(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+        if let press = presses.first {
+            playPauseSubject.on( .Next(press) )
+        }
+    }
+    
+    override public func pressesEnded(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+    }
+    
+    override public func pressesCancelled(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+    }
     
 }
