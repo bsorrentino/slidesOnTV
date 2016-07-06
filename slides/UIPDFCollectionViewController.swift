@@ -259,16 +259,39 @@ class UISettingsBarView : UIView {
 
 }
 
+// MARK: Pointer View
+
+func setupPointerView() -> UIView {
+    //let pointer = UIImageView( image: UIImage(named: "pointer") )
+
+    let pointer:UIView = UIView( frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+    
+    pointer.backgroundColor = UIColor.magentaColor()
+    pointer.userInteractionEnabled = false
+    
+    pointer.layer.cornerRadius = 10.0
+    
+    // border
+    pointer.layer.borderColor = UIColor.lightGrayColor().CGColor
+    pointer.layer.borderWidth = 1.5
+    
+    // drop shadow
+    pointer.layer.shadowColor = UIColor.blackColor().CGColor
+    pointer.layer.shadowOpacity = 0.8
+    pointer.layer.shadowRadius = 3.0
+    pointer.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+    
+    return pointer
+}
+
 //
-//  UIPageView
+//  MARK: UIPageView
 //
 class UIPageView : UIView {
-    //let pointer:UIView = UIView( frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-    let pointer = UIImageView( image: UIImage(named: "pointer") )
+
+    let pointer:UIView = setupPointerView()
 
     override func didMoveToSuperview() {
-        //pointer.backgroundColor = UIColor.redColor()
-        pointer.userInteractionEnabled = false
 
     }
     
@@ -359,7 +382,7 @@ class UIPageView : UIView {
 
 
 //
-//  UIPDFCollectionViewController
+//  MARK: UIPDFCollectionViewController
 //
 public class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
  
