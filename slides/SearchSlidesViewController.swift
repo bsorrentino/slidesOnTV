@@ -169,6 +169,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator )
     {
+        /*
         label.font = font
         
         coordinator.addCoordinatedAnimations({
@@ -198,7 +199,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                 self.label.setFontThatFitsWithSize()
             }
         }
-        
+        */
     }
 }
 
@@ -394,12 +395,17 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
 
     
     // MARK: UICollectionViewDelegate
-    /*
-    override public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
+
+    //override public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
+ 
+    override public func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
     {
-        return true
+        guard let cell = context.nextFocusedView as? SearchSlideCollectionViewCell else {
+            return
+        }
+        print( "didUpdateFocusInContext \(cell.label.text)"  )
+        
     }
-    */
     
     override public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? SearchSlideCollectionViewCell else { fatalError("Expected to display a `DataItemCollectionViewCell`.") }
@@ -472,4 +478,5 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
             }
         }
     }
+    
 }

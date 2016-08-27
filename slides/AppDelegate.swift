@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -24,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
         
-        window?.rootViewController = testController() //packagedSearchController()
-        
+        window?.rootViewController = packagedSearchController()
+        //window?.rootViewController = testController()
         return true
     }
 
