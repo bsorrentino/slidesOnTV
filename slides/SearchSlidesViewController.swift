@@ -10,11 +10,25 @@ import RxSwift
 import RxCocoa
 
 
+class Scheduler {
+    
+    // implicit lazy
+    static var backgroundWork: ImmediateSchedulerType = {
+        
+        let operationQueue = NSOperationQueue()
+        operationQueue.maxConcurrentOperationCount = 2
+        
+        return OperationQueueScheduler(operationQueue: operationQueue)
+        
+    }()
+}
+
 class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     // MARK: Properties
 
     static let reuseIdentifier = "SearchSlideCell"
+
     
     @IBOutlet weak var label: UILabel!
     
@@ -22,7 +36,37 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     private lazy var loadingView:UAProgressView? = self.initLoadingView()
     
-    var representedDataItem: Slideshow?
+    private var _representedDataItem: Slideshow?
+    var representedDataItem: Slideshow?  {
+        
+        set {
+            
+            self._representedDataItem = newValue
+            
+            guard let item = newValue else {
+                return;
+            }
+            
+            if let title = item["title"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
+                
+                self.label.text = title
+            }
+            
+            if let thumbnail = item["thumbnailxlargeurl"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
+                
+                let s = "http:\(thumbnail)"
+                
+                if let url = NSURL(string: s ) {
+                    
+                    self.loadImageUrl(url, backgroundWorkScheduler: Scheduler.backgroundWork)
+                }
+            }
+
+        }
+        get {
+            return self._representedDataItem
+        }
+    }
     
     var disposeBag: DisposeBag?
     
@@ -204,17 +248,103 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
 }
 
 
+class DetailView : UIView {
+    
+    var originalHeight:CGFloat = 0.0
+    
+    static func loadFromNib() -> DetailView {
+        
+        let nibViews = NSBundle.mainBundle().loadNibNamed("DetailView", owner: nil, options: nil)
+        
+        for v in nibViews {
+            if let tog = v as? DetailView {
+                return tog
+            }
+        }
+        return DetailView()
+
+    }
+    override func awakeFromNib() {
+        self.originalHeight = self.frame.size.height
+    }
+ 
+    override func updateConstraints() {
+        
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        
+        if let superview = appDelegate.window  {
+            
+            
+            self.snp_updateConstraints { (make) in
+                
+                let offsetFromBottom = self.frame.size.height + 60 // dy - see AppDelegate
+                make.width.equalTo(superview)
+                make.bottom.equalTo(superview.snp_bottom).offset(-offsetFromBottom)
+                //make.leading.equalTo(superview)
+            }
+        }
+        
+        super.updateConstraints()
+    }
+    
+    func addToWindow() -> DetailView {
+ 
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        if let superview = appDelegate.window  {
+        
+            self.addTo(superview)
+        }
+        
+        return self
+    }
+    
+    func addTo(superview: UIView) -> DetailView {
+        
+        superview.addSubview( self )
+        
+        return self
+    }
+    
+    func show(item:Slideshow?) {
+        
+        self.hidden = false
+        
+        var frame = self.frame
+        
+        frame.size.height = originalHeight
+        
+        self.frame = frame
+    }
+
+    func hide() {
+        
+        self.hidden = true
+        
+        var frame = self.frame
+        
+        frame.size.height = 0
+        
+        self.frame = frame
+    }
+    
+}
+
+
+
+
 public class SearchSlidesViewController: UICollectionViewController, UISearchResultsUpdating {
     // MARK: Properties
     
     public static let storyboardIdentifier = "SearchSlidesViewController"
     
-    private var backgroundWorkScheduler: ImmediateSchedulerType?
-    
     private var filteredDataItems:[Slideshow] = []
     
-    let disposeBag = DisposeBag()
+    private lazy var detailView:DetailView = DetailView.loadFromNib()
     
+    let disposeBag = DisposeBag()
     
     let searchResultsUpdatingSubject = PublishSubject<String>()
 
@@ -260,15 +390,10 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     
     // MARK: UICollectionViewController Lifecycle
 
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let operationQueue = NSOperationQueue()
-        operationQueue.maxConcurrentOperationCount = 2
-        
-        self.backgroundWorkScheduler = OperationQueueScheduler(operationQueue: operationQueue)
-      
-    
         guard let bundlePath = NSBundle.mainBundle().pathForResource("slideshare", ofType: "plist") else {
             return
         }
@@ -276,6 +401,10 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         guard let credentials = NSDictionary(contentsOfFile: bundlePath ) else {
             return
         }
+        
+        // Initilaize DetailView
+        
+        detailView.addToWindow().hide()
         
         
 #if (arch(i386) || arch(x86_64)) && os(tvOS)
@@ -364,7 +493,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         
     }
     
-    // MARK: <UICollectionViewDelegateFlowLayout>
+    // MARK: UICollectionViewDelegateFlowLayout
     
     //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
     
@@ -400,44 +529,39 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
  
     override public func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
     {
-        guard let cell = context.nextFocusedView as? SearchSlideCollectionViewCell else {
-            return
+        
+        coordinator.addCoordinatedAnimations( {
+
+            if let cell = context.nextFocusedView as? SearchSlideCollectionViewCell  {
+                self.detailView.show( cell.representedDataItem )
+            }
+            else {
+                 self.detailView.hide()
+            }
+
+            
+        }) {
+                // on completed
         }
-        print( "didUpdateFocusInContext \(cell.label.text)"  )
         
     }
     
     override public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        guard let cell = cell as? SearchSlideCollectionViewCell else { fatalError("Expected to display a `DataItemCollectionViewCell`.") }
+        guard let cell = cell as? SearchSlideCollectionViewCell else {
+            fatalError("Expected to display a `DataItemCollectionViewCell`.")
+        }
         
         let item:Slideshow = filteredDataItems[indexPath.row]
         
-        //item.forEach { (k, v) in print( "\(k)=\(v)") }
-        
-        if let title = item["title"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
-        
-            cell.label.text = title
-        
-        }
-        
-        if let thumbnail = item["thumbnailxlargeurl"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
-            
-            let s = "http:\(thumbnail)"
-            
-            //print( "[\(s)]" )
-            
-            if let url = NSURL(string: s ) {
-
-                cell.loadImageUrl(url, backgroundWorkScheduler: self.backgroundWorkScheduler!)
-            }
-        }
-
+        cell.representedDataItem = item
+ 
     }
     
     override public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        //dismissViewControllerAnimated(true, completion: nil)
 
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? SearchSlideCollectionViewCell else { fatalError("Expected to display a `DataItemCollectionViewCell`.") }
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? SearchSlideCollectionViewCell else {
+            fatalError("Expected to display a `DataItemCollectionViewCell`.")
+        }
         
         let item:Slideshow = filteredDataItems[indexPath.row]
        
