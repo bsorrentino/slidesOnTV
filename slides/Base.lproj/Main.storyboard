@@ -34,24 +34,14 @@
                                                 <constraint firstAttribute="height" constant="350" id="hXJ-sU-Apr"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JB5-k7-71P">
-                                            <rect key="frame" x="13" y="384" width="524" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="JB5-k7-71P" firstAttribute="leading" secondItem="bqw-ys-LOW" secondAttribute="leadingMargin" constant="5" id="2Z4-ai-web"/>
                                     <constraint firstItem="VGU-w4-XSW" firstAttribute="centerX" secondItem="bqw-ys-LOW" secondAttribute="centerX" id="IQH-Ey-nub"/>
-                                    <constraint firstItem="JB5-k7-71P" firstAttribute="centerX" secondItem="bqw-ys-LOW" secondAttribute="centerX" id="RJi-yc-Qhp"/>
                                     <constraint firstItem="VGU-w4-XSW" firstAttribute="top" secondItem="bqw-ys-LOW" secondAttribute="topMargin" constant="5" id="sDf-eJ-jSa"/>
-                                    <constraint firstItem="JB5-k7-71P" firstAttribute="top" secondItem="VGU-w4-XSW" secondAttribute="bottom" constant="21" id="y3n-WR-bEL"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="label" destination="JB5-k7-71P" id="jO8-RS-YWr"/>
                                     <outlet property="thumbnail" destination="VGU-w4-XSW" id="9sp-0A-z2V"/>
                                 </connections>
                             </collectionViewCell>

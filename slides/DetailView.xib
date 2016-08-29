@@ -9,9 +9,44 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="DetailView" customModule="slides" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="1920" height="100"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="E2n-TO-h7u">
+                    <rect key="frame" x="0.0" y="0.0" width="1920" height="100"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXn-pf-ADu" userLabel="title">
+                            <rect key="frame" x="0.0" y="0.0" width="1920" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="ilg-ug-JpB"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="42" id="yrx-a5-hZf"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="35"/>
+                            <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <size key="shadowOffset" width="2" height="4"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8KF-oc-af9" userLabel="updated">
+                            <rect key="frame" x="0.0" y="50" width="1920" height="50"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="E2n-TO-h7u" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="4LM-8i-QvY"/>
+                <constraint firstItem="E2n-TO-h7u" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="H3F-oX-dDF"/>
+                <constraint firstItem="E2n-TO-h7u" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="Z1d-EH-jZr"/>
+                <constraint firstItem="E2n-TO-h7u" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="wcX-m2-r7p"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-152" y="7"/>
+            <connections>
+                <outlet property="titleLabel" destination="NXn-pf-ADu" id="yQN-Ru-wab"/>
+                <outlet property="updatedLabel" destination="8KF-oc-af9" id="PCB-9q-3NV"/>
+            </connections>
+            <point key="canvasLocation" x="-466" y="218"/>
         </view>
         <view contentMode="scaleToFill" id="6c3-Ur-s0M">
             <rect key="frame" x="0.0" y="0.0" width="570" height="346"/>
@@ -31,7 +66,7 @@
                 <constraint firstItem="JLo-oA-K9U" firstAttribute="leading" secondItem="6c3-Ur-s0M" secondAttribute="leading" constant="66" id="yl6-UW-0HQ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-1044" y="428"/>
+            <point key="canvasLocation" x="-666" y="589"/>
         </view>
     </objects>
 </document>

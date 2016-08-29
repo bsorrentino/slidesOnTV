@@ -29,9 +29,6 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
 
     static let reuseIdentifier = "SearchSlideCell"
 
-    
-    @IBOutlet weak var label: UILabel!
-    
     @IBOutlet weak var thumbnail: UIImageView?
     
     private lazy var loadingView:UAProgressView? = self.initLoadingView()
@@ -45,11 +42,6 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
             
             guard let item = newValue else {
                 return;
-            }
-            
-            if let title = item["title"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
-                
-                self.label.text = title
             }
             
             if let thumbnail = item["thumbnailxlargeurl"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
@@ -184,18 +176,12 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     // MARK: Initialization
     
-    var font:UIFont?
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         // These properties are also exposed in Interface Builder.
         thumbnail?.adjustsImageWhenAncestorFocused = true
         thumbnail?.clipsToBounds = false
-        label?.clipsToBounds = false
-        label.adjustsFontSizeToFitWidth = true
-        
-        font = label.font
 
     }
 
@@ -213,37 +199,6 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator )
     {
-        /*
-        label.font = font
-        
-        coordinator.addCoordinatedAnimations({
-            if self.focused {
-                self.label.layer.zPosition = (self.thumbnail?.layer.zPosition)! + 1
-                
-                self.label.backgroundColor = UIColor.whiteColor()
-
-                self.label.transform = CGAffineTransformConcat(
-                                            CGAffineTransformMakeScale(1.1, 2.7),
-                                            CGAffineTransformMakeTranslation(0, -50))
-
-            }
-            else {
-                
-                self.label.transform = CGAffineTransformConcat(
-                    CGAffineTransformMakeTranslation(0, 0),
-                    CGAffineTransformMakeScale(1.0, 1.0))
-                
-                self.label.backgroundColor = UIColor.clearColor()
-
-                self.label.layer.zPosition = (self.thumbnail?.layer.zPosition)! - 1
-           }
-        }) {
-            
-            if self.focused {
-                self.label.setFontThatFitsWithSize()
-            }
-        }
-        */
     }
 }
 
@@ -252,6 +207,9 @@ class DetailView : UIView {
     
     var originalHeight:CGFloat = 0.0
     
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var updatedLabel: UILabel!
     static func loadFromNib() -> DetailView {
         
         let nibViews = NSBundle.mainBundle().loadNibNamed("DetailView", owner: nil, options: nil)
@@ -279,10 +237,9 @@ class DetailView : UIView {
             
             self.snp_updateConstraints { (make) in
                 
-                let offsetFromBottom = self.frame.size.height + 60 // dy - see AppDelegate
+                make.height.equalTo(self.frame.size.height)
                 make.width.equalTo(superview)
-                make.bottom.equalTo(superview.snp_bottom).offset(-offsetFromBottom)
-                //make.leading.equalTo(superview)
+                make.bottom.equalTo(superview.snp_bottom)//.offset(-offsetFromBottom)
             }
         }
         
@@ -310,18 +267,35 @@ class DetailView : UIView {
     
     func show(item:Slideshow?) {
         
-        self.hidden = false
+        self.alpha = 1.0
+        //self.hidden = false
         
         var frame = self.frame
         
         frame.size.height = originalHeight
         
         self.frame = frame
+        
+        if let item = item {
+            
+            if let title = item["title"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
+                
+                self.titleLabel.text = title
+            }
+            
+            if let updated = item["updated"] {
+                self.updatedLabel.text = updated
+            }
+        }
+        
+        
+        setNeedsUpdateConstraints()
     }
 
     func hide() {
         
-        self.hidden = true
+        self.alpha = 0.0
+        //self.hidden = true
         
         var frame = self.frame
         
@@ -438,7 +412,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         })
         .debug( "subscribe")
         .filter({ (slide:Slideshow) -> Bool in
-        
+            print( "\(slide)" )
             if let format = slide["format"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
                 return format.lowercaseString=="pdf"
             }
