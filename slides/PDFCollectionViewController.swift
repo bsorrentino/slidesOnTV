@@ -79,186 +79,6 @@ class UIPDFPageCell : UICollectionViewCell {
 }
 
 
-
-class UISettingsBarView : UIView {
-    
-    let buttons = [ UIButton(type: .Custom), UIButton(type: .Custom), UIButton(type: .Custom) ]
-    
-    weak var zoomIn: UIButton? {
-        return buttons[0]
-    }
-    weak var zoomOut: UIButton? {
-        return buttons[1]
-    }
-    weak var rotate: UIButton? {
-        return buttons[2]
-    }
-
-    let disposeBag = DisposeBag()
-
-    let buttonSize = CGSize(width: 350, height: 50)
-
-    private func setupView() -> Self {
-        
-        guard let superview = self.superview else {
-            return self
-        }
-        
-        self.backgroundColor = UIColor.darkGrayColor()
-
-        if let zoomOut = self.zoomOut {
-            zoomOut.setTitle("zoom -", forState: .Normal)
-            zoomOut.setTitleColor( UIColor.whiteColor(), forState: .Normal)
-            zoomOut.setTitleColor( UIColor.yellowColor(), forState: .Focused)
-            zoomOut.backgroundColor = UIColor.clearColor()
-            zoomOut.rx_primaryAction.asDriver().driveNext {
-                print( "Zoom -")
-                }.addDisposableTo(disposeBag)
-        }
-        
-        if let zoomIn = self.zoomIn {
-            zoomIn.setTitle("zoom +", forState: .Normal)
-            zoomIn.setTitleColor( UIColor.whiteColor(), forState: .Normal)
-            zoomIn.setTitleColor( UIColor.yellowColor(), forState: .Focused)
-            zoomIn.backgroundColor = UIColor.clearColor()
-            
-            zoomIn.rx_primaryAction.asDriver().driveNext {
-                print( "Zoom +")
-                }.addDisposableTo(disposeBag)
-        }
-
-        if let rotate = self.rotate {
-
-            rotate.setTitle("rotate", forState: .Normal)
-            rotate.setTitleColor( UIColor.whiteColor(), forState: .Normal)
-            rotate.setTitleColor( UIColor.yellowColor(), forState: .Focused)
-            rotate.backgroundColor = UIColor.clearColor()
-            
-            rotate.rx_primaryAction.asDriver().driveNext {
-                print( "Rotate")
-                }.addDisposableTo(disposeBag)
-
-        }
-
-        
-        let offsetBetweenButtons = 50
-        
-        
-        let totalWidthCoveredByButtons = (buttons.count * Int(buttonSize.width)) + ((buttons.count - 1)*offsetBetweenButtons)
-        
-        let offsetFormLeading = (superview.frame.size.width - CGFloat(totalWidthCoveredByButtons))/2
-
-        self.snp_makeConstraints { (make) in
-            
-            make.top.left.equalTo(superview).priorityRequired()
-            make.width.equalTo(superview).priorityRequired()
-            make.height.equalTo(1.0).priorityRequired()
-        }
-
-        buttons.enumerate().forEach {
-
-            self.addSubview($1)
-            
-            if $0 == 0 {
-                
-                $1.snp_makeConstraints { (make) in
-                    
-                    makeStdButtonConstraints(make: make)
-                    make.leading.equalTo(self.snp_leading).offset(offsetFormLeading)
-                    
-                }
-
-            }
-            else {
-                
-                let prevButton = buttons[$0-1]
-                $1.snp_makeConstraints { (make) in
-                    
-                    makeStdButtonConstraints(make: make)
-                    make.leading.equalTo(prevButton.snp_trailing).offset(offsetBetweenButtons)
-                    
-                }
-                
-            }
-        }
-        
-        return self
-    }
-    
-    private func makeStdButtonConstraints( make make: ConstraintMaker ) {
-        
-        make.height.equalTo(buttonSize.height).priorityRequired()
-        make.width.equalTo(buttonSize.width).priorityRequired()
-        make.top.equalTo(self).offset(15)
-        
-    }
-    
-    override func didMoveToSuperview() {
-        setupView()
-    }
-
-    override func updateConstraints() {
-        
-        super.updateConstraints()
-    }
-
-// MARK: Focus Management
-    
-    private var _preferredFocusedViewIndex:Int = 0
-    private var _canBecomeFocused:Bool = true
-    
-    override weak var preferredFocusedView: UIView? {
-        
-        return ( _canBecomeFocused ) ? buttons[_preferredFocusedViewIndex] : nil
-    }
-   
-    
-    override func canBecomeFocused() -> Bool {
-        
-        return _canBecomeFocused
-    }
-    
-    
-    override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
-        print( "UISettingsBarView.shouldUpdateFocusInContext:" )
-        
-        
-        let skip = ( (context.focusHeading == .Left && _preferredFocusedViewIndex == 0) ||
-                        (context.focusHeading == .Right && _preferredFocusedViewIndex == buttons.count - 1 ) ||
-                        (context.focusHeading == .Up || context.focusHeading == .Down))
- 
-        if( skip ) {
-            _canBecomeFocused = false
-            self.setNeedsFocusUpdate()
-            
-        }
-        return !skip
-        
-    }
-
-    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
-        print( "UISettingsBarView.didUpdateFocusInContext:\(context.focusHeading)" );
-        
-        switch( context.focusHeading ) {
-        case UIFocusHeading.Left:
-            _preferredFocusedViewIndex = _preferredFocusedViewIndex - 1
-            self.setNeedsFocusUpdate()
-            break
-        case UIFocusHeading.Right:
-            _preferredFocusedViewIndex = _preferredFocusedViewIndex + 1
-            self.setNeedsFocusUpdate()
-            break
-        default:
-            break
-        }
-        
-       
-        
-    }
-    
-
-}
-
 // MARK: Pointer View
 
 func setupPointerView() -> UIView {
@@ -327,13 +147,10 @@ class UIPageView : UIView {
         
     }
     
-    
-    
     /// Called when the screen’s focusedView has been updated to a new view. Use the animation coordinator to schedule focus-related animations in response to the update.
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
     {
         print( "PageView.didUpdateFocusInContext: focused: \(self.focused)" );
-        
         
     }
 
@@ -398,7 +215,12 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
     private var playPauseSubject = PublishSubject<UIPress>()
     private let disposeBag = DisposeBag()
 
+    let layoutAttrs = (  cellSize: CGSizeMake(300,300),
+                         numCols: 1,
+                         minSpacingForCell : CGFloat(25.0),
+                         minSpacingForLine: CGFloat(50.0) )
     
+        
     var documentLocation:NSURL? {
         didSet {
             doc = OHPDFDocument(URL: documentLocation)
@@ -408,12 +230,6 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
         }
     }
     
-    let layoutAttrs = (  cellSize: CGSizeMake(300,300),
-                         numCols: 1,
-                         minSpacingForCell : CGFloat(25.0),
-                         minSpacingForLine: CGFloat(50.0) )
-    
-    
     func showSlide(at index:UInt) {
         if let doc = self.doc {
             
@@ -421,7 +237,8 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
             
             let vectorImage = OHVectorImage(PDFPage: page)
             
-            self.pageImageView.image = vectorImage.renderAtSize(pageImageView.frame.size)
+            let fitSize = vectorImage.sizeThatFits(pageImageView.frame.size)
+            self.pageImageView.image = vectorImage.renderAtSize(fitSize)
             
         }
 
@@ -432,9 +249,63 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
     private var _playPauseSlideShow:Disposable?
     private var _indexPathForPreferredFocusedView:NSIndexPath?
     
+    
+    private func showPagesView(originalWidth:CGFloat) {
+        
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            
+            var page_frame = self.pageView.frame
+            page_frame.origin.x += originalWidth
+            self.pageView.frame = page_frame
+
+            
+            var pages_frame = self.pagesView.frame
+            pages_frame.size.width = originalWidth
+            self.pagesView.frame = pages_frame
+            
+            
+        } ) { (completion:Bool) in
+            
+            if( completion ) {
+                self.fullpage = false
+            }
+        
+        }
+
+        
+    }
+    
+    private func hidePagesView() -> CGFloat {
+        
+        let result = self.pagesView.frame.size.width
+        
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut , animations: {
+            
+            
+            var pages_frame = self.pagesView.frame
+            pages_frame.size.width = 0
+            self.pagesView.frame = pages_frame
+            
+            var page_frame = self.pageView.frame
+            page_frame.origin.x -= result
+            self.pageView.frame = page_frame
+
+
+        }) { (completion:Bool) in
+            
+            if( completion ) {
+                self.fullpage = true
+            }
+
+        }
+    
+        return result
+    }
+    
     private func playPauseSlideShow() {
 
         guard _playPauseSlideShow == nil else {
+            // ALREADY IN PLAY
             return
         }
         
@@ -451,17 +322,25 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
                 return slide < self.doc?.pagesCount
             })
             .takeUntil( playPauseSubject )
-            .doOnCompleted{
-                self._playPauseSlideShow?.dispose()
-                self._playPauseSlideShow = nil
-            }
     
+        
+        let originalWidth =  hidePagesView()
+        
         _playPauseSlideShow = playPauseSubject
             .filter{ (press:UIPress) -> Bool in
                 return press.type == .PlayPause
             }
             .flatMap{ (_:UIPress) -> Observable<Int> in
-                return playSlides
+                
+                return playSlides.doOnCompleted{
+
+                    self.showPagesView(originalWidth)
+                    
+                    self._playPauseSlideShow?.dispose()
+                    self._playPauseSlideShow = nil
+                    
+                }
+
             }
             .subscribeNext { (slide:Int) in
                 
@@ -491,33 +370,6 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
         self.showSlide(at: 0)
     }
     
-    override public func updateViewConstraints() {
-        
-        let w = CGFloat(layoutAttrs.numCols) * CGFloat(layoutAttrs.cellSize.width + layoutAttrs.minSpacingForCell )
-        let pageViewWidth = view.frame.size.width - w
-
-        pageView.snp_updateConstraints { (make) -> Void in
-            
-            make.width.equalTo( pageViewWidth ).priorityRequired()
-        }
-        
-        pagesView.snp_updateConstraints { (make) -> Void in
-            
-                make.width.equalTo( w ).priorityHigh()
-        }
-        
-        pageImageView.snp_updateConstraints { (make) in
-            
-            let delta = pageViewWidth * 0.30
-            let newWidth = pageViewWidth - delta
-            
-            make.width.equalTo(newWidth).priorityRequired()
-        }
-        
-        
-        super.updateViewConstraints()
-    }
-
 
 // MARK: <UICollectionViewDelegateFlowLayout>
 
@@ -570,8 +422,10 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
             let page = doc.pageAtIndex(indexPath.row+1)
         
             let vectorImage = OHVectorImage(PDFPage: page)
-        
-            cell.box.image = vectorImage.renderAtSize(cell.frame.size)
+            
+            let fitSize = vectorImage.sizeThatFits(cell.frame.size)
+            
+            cell.box.image = vectorImage.renderAtSize(fitSize)
         }
         return cell;
 
@@ -620,9 +474,14 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
     
     override public func pressesBegan(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
         print("pressesBegan")
-        playPauseSlideShow()
+        
         
         if let press = presses.first {
+            
+            if press.type == .PlayPause {
+                playPauseSlideShow( )
+            }
+
             playPauseSubject.on( .Next(press) )
         }
     }
