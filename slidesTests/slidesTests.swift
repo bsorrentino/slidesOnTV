@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import TCBlobDownloadSwift
 @testable import slides
 
 class slidesTests: XCTestCase {

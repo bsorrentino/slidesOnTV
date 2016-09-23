@@ -214,7 +214,7 @@ class DetailView : UIView {
         
         let nibViews = NSBundle.mainBundle().loadNibNamed("DetailView", owner: nil, options: nil)
         
-        for v in nibViews {
+        for v in nibViews! {
             if let tog = v as? DetailView {
                 return tog
             }
