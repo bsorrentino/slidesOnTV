@@ -7,7 +7,7 @@
 //
 
 import XCTest
-//@testable import slides
+import OHPDFImage
 
 class slidesTests: XCTestCase {
     
