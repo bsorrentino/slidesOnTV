@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import slides
+//@testable import slides
 
 class slidesTests: XCTestCase {
     
@@ -20,7 +20,7 @@ class slidesTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
+    /*
     func testReadBundlePath() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
@@ -37,7 +37,7 @@ class slidesTests: XCTestCase {
         
         XCTAssertEqual(doc.pagesCount, 115, "number of page doesn't match")
     }
-    
+    */
     func testDownload() {
         
         let asyncExpectation = expectationWithDescription("longRunningFunction")
