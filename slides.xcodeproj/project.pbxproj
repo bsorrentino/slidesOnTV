@@ -91,7 +91,6 @@
 		5FD9A2F91CAD596F0065BE03 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		5FD9A2FD1CAD5CFA0065BE03 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		62406CDC06BDBFE1B2A3BC7F /* Pods-slidesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.release.xcconfig"; sourceTree = "<group>"; };
-		64436EEDA1BACA346304F88F /* Pods-slides.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods-slides.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88511214AE34C3D2A636F964 /* Pods_slidesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06B6D521CBFA23900CBE220 /* slideshare.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = slideshare.plist; path = slides/slideshare.plist; sourceTree = "<group>"; };
 		A06B6D541CBFCCA000CBE220 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -266,7 +265,6 @@
 			isa = PBXGroup;
 			children = (
 				5FD9A2F91CAD596F0065BE03 /* CloudKit.framework */,
-				64436EEDA1BACA346304F88F /* Pods-slides.framework */,
 				FA58D4741408C051257BD895 /* Pods_slides.framework */,
 				C1FA23533F2587B7E192759B /* Pods_slidesTests.framework */,
 				88511214AE34C3D2A636F964 /* Pods_slidesUITests.framework */,
@@ -352,13 +350,16 @@
 					5FD9A2CA1CAD19590065BE03 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = 48J595L9BX;
+						LastSwiftMigration = 0800;
 					};
 					5FD9A2DB1CAD19590065BE03 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 						TestTargetID = 5FD9A2CA1CAD19590065BE03;
 					};
 					5FD9A2E61CAD195A0065BE03 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 						TestTargetID = 5FD9A2CA1CAD19590065BE03;
 					};
 				};
@@ -717,6 +718,8 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "slides-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -735,6 +738,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "slides-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -747,6 +752,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slides.app/slides";
 			};
 			name = Debug;
@@ -760,6 +766,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slides.app/slides";
 			};
 			name = Release;
@@ -772,6 +779,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = slides;
 			};
 			name = Debug;
@@ -784,6 +792,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = slides;
 			};
 			name = Release;

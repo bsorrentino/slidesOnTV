@@ -188,7 +188,7 @@ class UIPageView : UIView {
     
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    override func touchesCancelled(touches: Set<UITouch>, withEvent event: UIEvent?) {
         print("touchesCancelled ")
         pointer.removeFromSuperview()
     
