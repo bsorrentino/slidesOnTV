@@ -111,8 +111,13 @@ class UIPageView : UIView {
 
     let pointer:UIView = setupPointerView()
 
+    let settingsBar = SettingsBarView()
+    
+    
     override func didMoveToSuperview() {
-
+        
+        self.addSubview(settingsBar)
+        
     }
     
     override func updateConstraints() {
@@ -132,10 +137,11 @@ class UIPageView : UIView {
     }
     
     override func canBecomeFocused() -> Bool {
+        let result =  !self.settingsBar.canBecomeFocused() || _preferredFocusedView==nil
 
-        print( "PageView.canBecomeFocused:" );
+        print( "PageView.canBecomeFocused: \(result)" );
         
-        return true
+        return result
     }
     
     /// Asks whether the system should allow a focus update to occur.
@@ -151,6 +157,44 @@ class UIPageView : UIView {
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
     {
         print( "PageView.didUpdateFocusInContext: focused: \(self.focused)" );
+        
+        
+        if( !self.settingsBar.canBecomeFocused() && self._preferredFocusedView != nil ) {
+            
+            coordinator.addCoordinatedAnimations({
+                
+                UIView.animateWithDuration(0.5, animations: {
+                    
+                    self.settingsBar.hideAnimated()
+                    
+                })
+            }){
+                self.layer.borderWidth = 0
+                
+                self._preferredFocusedView = nil
+                self.settingsBar.canBecomeFocused(true)
+                
+            }
+            
+        }
+        else if( self.focused ) {
+            
+            coordinator.addCoordinatedAnimations({
+            
+                self.settingsBar.showAnimated()
+
+            }){
+                self.layer.borderWidth = 2
+                
+                self.layer.borderColor = UIColor.darkGrayColor().CGColor
+                
+                self._preferredFocusedView = self.settingsBar
+                self.setNeedsFocusUpdate()
+                self.updateFocusIfNeeded()
+                
+            }
+            
+        }
         
     }
 

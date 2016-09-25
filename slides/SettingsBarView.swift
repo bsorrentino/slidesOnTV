@@ -28,6 +28,8 @@ class SettingsBarView : UIView {
     
     let buttonSize = CGSize(width: 350, height: 50)
     
+    // MARK: Private implementation
+    
     private func setupView() -> Self {
         
         guard let superview = self.superview else {
@@ -120,8 +122,44 @@ class SettingsBarView : UIView {
         make.height.equalTo(buttonSize.height).priorityRequired()
         make.width.equalTo(buttonSize.width).priorityRequired()
         make.top.equalTo(self).offset(15)
-        
     }
+
+    // MARK: public implementation
+    
+    func hideAnimated() {
+        
+        UIView.animateWithDuration(0.5, animations: {
+        
+            self.subviews.forEach({ (v:UIView) in
+                v.alpha = 0.0
+            })
+        
+            var f = self.frame
+            f.size.height = 1.0
+            self.frame = f
+        
+        })
+
+    
+    }
+    
+    func showAnimated() {
+        
+        UIView.animateWithDuration(0.5, animations: {
+            
+            var f = self.frame
+            f.size.height = 80
+            self.frame = f
+            
+            self.subviews.forEach({ (v:UIView) in
+                v.alpha = 1.0
+            })
+            
+        })
+
+    }
+
+    // MARK: Standard Lifecycle
     
     override func didMoveToSuperview() {
         setupView()
@@ -142,6 +180,9 @@ class SettingsBarView : UIView {
         return ( _canBecomeFocused ) ? buttons[_preferredFocusedViewIndex] : nil
     }
     
+    func canBecomeFocused( value:Bool ) {
+            _canBecomeFocused = value
+    }
     
     override func canBecomeFocused() -> Bool {
         
