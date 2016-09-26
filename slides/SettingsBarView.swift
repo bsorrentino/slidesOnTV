@@ -28,6 +28,7 @@ class SettingsBarView : UIView {
     
     let buttonSize = CGSize(width: 350, height: 50)
     
+    
     // MARK: Private implementation
     
     private func setupView() -> Self {
@@ -112,7 +113,10 @@ class SettingsBarView : UIView {
                 }
                 
             }
+            $1.alpha = 0.0
         }
+        
+        var f = self.frame ; f.size.height = 1.0 ; self.frame = f
         
         return self
     }
@@ -166,32 +170,27 @@ class SettingsBarView : UIView {
     }
     
     override func updateConstraints() {
-        
         super.updateConstraints()
     }
     
     // MARK: Focus Management
     
     private var _preferredFocusedViewIndex:Int = 0
-    private var _canBecomeFocused:Bool = true
+    private var _canBecomeFocused:Bool = false
+    
+    func canBecomeFocused( value:Bool ) {
+        _canBecomeFocused = value
+    }
     
     override weak var preferredFocusedView: UIView? {
-        
         return ( _canBecomeFocused ) ? buttons[_preferredFocusedViewIndex] : nil
     }
     
-    func canBecomeFocused( value:Bool ) {
-            _canBecomeFocused = value
-    }
-    
     override func canBecomeFocused() -> Bool {
-        
         return _canBecomeFocused
     }
     
-    
     override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
-        print( "UISettingsBarView.shouldUpdateFocusInContext:" )
         
         
         let skip = ( (context.focusHeading == .Left && _preferredFocusedViewIndex == 0) ||
@@ -200,9 +199,11 @@ class SettingsBarView : UIView {
         
         if( skip ) {
             _canBecomeFocused = false
+            self.hideAnimated()
             self.setNeedsFocusUpdate()
             
         }
+        print( "UISettingsBarView.shouldUpdateFocusInContext: \(!skip)" )
         return !skip
         
     }

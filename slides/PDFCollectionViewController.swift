@@ -79,179 +79,16 @@ class UIPDFPageCell : UICollectionViewCell {
 }
 
 
-// MARK: Pointer View
-
-func setupPointerView() -> UIView {
-    //let pointer = UIImageView( image: UIImage(named: "pointer") )
-
-    let pointer:UIView = UIView( frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-    
-    pointer.backgroundColor = UIColor.magentaColor()
-    pointer.userInteractionEnabled = false
-    
-    pointer.layer.cornerRadius = 10.0
-    
-    // border
-    pointer.layer.borderColor = UIColor.lightGrayColor().CGColor
-    pointer.layer.borderWidth = 1.5
-    
-    // drop shadow
-    pointer.layer.shadowColor = UIColor.blackColor().CGColor
-    pointer.layer.shadowOpacity = 0.8
-    pointer.layer.shadowRadius = 3.0
-    pointer.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-    
-    return pointer
-}
-
-//
-//  MARK: UIPageView
-//
-class UIPageView : UIView {
-
-    let pointer:UIView = setupPointerView()
-
-    let settingsBar = SettingsBarView()
-    
-    
-    override func didMoveToSuperview() {
-        
-        self.addSubview(settingsBar)
-        
-    }
-    
-    override func updateConstraints() {
-        
-        super.updateConstraints()
-    }
-    // MARK: Focus Management
-    
-    private var _preferredFocusedView:UIView?
-    
-    override weak var preferredFocusedView: UIView? {
-        
-        guard let pfv = _preferredFocusedView else {
-            return super.preferredFocusedView
-        }
-        return pfv
-    }
-    
-    override func canBecomeFocused() -> Bool {
-        let result =  !self.settingsBar.canBecomeFocused() || _preferredFocusedView==nil
-
-        print( "PageView.canBecomeFocused: \(result)" );
-        
-        return result
-    }
-    
-    /// Asks whether the system should allow a focus update to occur.
-    override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
-        
-        print( "PageView.shouldUpdateFocusInContext:" )
-        
-        return true;
-        
-    }
-    
-    /// Called when the screen’s focusedView has been updated to a new view. Use the animation coordinator to schedule focus-related animations in response to the update.
-    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
-    {
-        print( "PageView.didUpdateFocusInContext: focused: \(self.focused)" );
-        
-        
-        if( !self.settingsBar.canBecomeFocused() && self._preferredFocusedView != nil ) {
-            
-            coordinator.addCoordinatedAnimations({
-                
-                UIView.animateWithDuration(0.5, animations: {
-                    
-                    self.settingsBar.hideAnimated()
-                    
-                })
-            }){
-                self.layer.borderWidth = 0
-                
-                self._preferredFocusedView = nil
-                self.settingsBar.canBecomeFocused(true)
-                
-            }
-            
-        }
-        else if( self.focused ) {
-            
-            coordinator.addCoordinatedAnimations({
-            
-                self.settingsBar.showAnimated()
-
-            }){
-                self.layer.borderWidth = 2
-                
-                self.layer.borderColor = UIColor.darkGrayColor().CGColor
-                
-                self._preferredFocusedView = self.settingsBar
-                self.setNeedsFocusUpdate()
-                self.updateFocusIfNeeded()
-                
-            }
-            
-        }
-        
-    }
-
-    // MARK: Touch Handling
-
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        guard let firstTouch = touches.first else { return }
-        let locationInView = firstTouch.locationInView(firstTouch.view)
-        
-        addSubview(pointer)
-            
-        var f = pointer.frame
-        f.origin = locationInView
-        
-        pointer.frame = f
-    }
-    
-    override func  touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("touchesMoved ")
-    
-        guard let firstTouch = touches.first else { return }
-        
-        let locationInView = firstTouch.locationInView(firstTouch.view)
-
-        var f = pointer.frame
-        f.origin = locationInView
-        
-        pointer.frame = f
-    }
-    
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("touchesEnded ")
-        pointer.removeFromSuperview()
-    
-    }
-    
-    override func touchesCancelled(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("touchesCancelled ")
-        pointer.removeFromSuperview()
-    
-    }
-    
-    
-}
-
-
 //
 //  MARK: UIPDFCollectionViewController
 //
-public class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
+class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
  
-    public static let storyboardIdentifier = "UIPDFCollectionViewController"
+    static let storyboardIdentifier = "UIPDFCollectionViewController"
     
     @IBOutlet weak var pagesView: UICollectionView!
     
-    @IBOutlet weak var pageView: UIPageView!
+    @IBOutlet weak var pageView: PageView!
     @IBOutlet weak var pageImageView: UIImageView!
     
     private var doc:OHPDFDocument?
@@ -397,42 +234,82 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
         
     }
     
+    // MARK: Pointer Management
+    
+    private func setupPointer() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(togglePointer))
+        tap.numberOfTapsRequired = 2
+     
+        pageView.addGestureRecognizer(tap)
+    }
+    
+    func togglePointer() {
+        
+        pageView.showPointer = !pageView.showPointer
+    }
+    
+    // MARK: SettingsBar Management
+
+    private func setupSettingsBar() {
+
+        //let swipedown = UISwipeGestureRecognizer(target: self, action: #selector(swipeDown))
+        //swipedown.direction = .Down
+
+        let swipedown = UITapGestureRecognizer(target: self, action: #selector(swipeDown))
+        swipedown.numberOfTapsRequired = 1
+        
+        pageView.addGestureRecognizer(swipedown)
+        
+    }
+    
+    func swipeDown() {
+        print( "==> SWIPE DOWN")
+        
+        _preferredFocusedView = pageView.showSettingsBar()
+        
+        setNeedsFocusUpdate()
+        updateFocusIfNeeded()
+    }
+    
     // MARK: view lifecycle
     
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.setupPointer()
+        self.setupSettingsBar()
         
         pageImageView.translatesAutoresizingMaskIntoConstraints = false
  
-        self.view.setNeedsFocusUpdate()
-        self.view.updateFocusIfNeeded()
+        self.setNeedsFocusUpdate()
+        self.updateFocusIfNeeded()
  
     }
 
-    override public func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.showSlide(at: 0)
     }
     
 
-// MARK: <UICollectionViewDelegateFlowLayout>
+    // MARK: UICollectionViewDelegateFlowLayout
 
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
     {
         return layoutAttrs.cellSize //use height whatever you wants.
     }
 
     // Space between item on different row
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
             return layoutAttrs.minSpacingForLine
     }
     
     // Space between item on the same row
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
             return layoutAttrs.minSpacingForCell
     }
 
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     }
     
@@ -440,14 +317,14 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
     //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize
     
     
-// MARK: <UICollectionViewDelegate>
+// MARK: UICollectionViewDelegate
     
     //func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
 
     
-// MARK: <UICollectionViewDataSource>
+// MARK: UICollectionViewDataSource
     
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         guard let doc = self.doc else {
             return 0
@@ -456,7 +333,7 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
     }
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("slide", forIndexPath:indexPath) as! UIPDFPageCell
@@ -475,20 +352,38 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
 
     }
     
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     
     // The view that is returned must be retrieved from a call to -dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:
-    //override public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView
+    //override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView
     
-    //override public func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool
-    //override public func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)
+    //override func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool
+    //override func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)
  
-// MARK: <Focus Engine>
- 
-    public func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
-        print("didUpdateFocusInContext:\(context.nextFocusedIndexPath)")
+// MARK: Focus Engine
+    private var _preferredFocusedView:UIView?
+    
+    override weak var preferredFocusedView: UIView? {
+        return _preferredFocusedView
+    }
+    
+    
+    override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
+        return true
+    }
+    
+    
+    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
+    {
+        print( "view.didUpdateFocusInContext: focused: \(view.focused) - \(pageView.focused)" );
+        
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
+        print("collectionView.didUpdateFocusInContext")
        
         if let i = context.nextFocusedIndexPath {
             self.showSlide(at: UInt(i.row))
@@ -497,26 +392,21 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
         }
     }
     
-    public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        print( "canFocusItemAtIndexPath(\(indexPath.row))" )
+    func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+        print( "collectionView.canFocusItemAtIndexPath(\(indexPath.row))" )
         return true
     }
     
     
-    public func indexPathForPreferredFocusedViewInCollectionView(collectionView: UICollectionView) -> NSIndexPath? {
-        print("indexPathForPreferredFocusedViewInCollectionView")
+    func indexPathForPreferredFocusedViewInCollectionView(collectionView: UICollectionView) -> NSIndexPath? {
+        print("collectionView.indexPathForPreferredFocusedViewInCollectionView")
         // Return index path for selected show that you will be playing
         return _indexPathForPreferredFocusedView
     }
     
-    
-    override public func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
-        super.didUpdateFocusInContext(context, withAnimationCoordinator: coordinator)
-    }
-    
     // MARK: Presses Handling
     
-    override public func pressesBegan(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+    override func pressesBegan(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
         print("pressesBegan")
         
         
@@ -530,16 +420,16 @@ public class UIPDFCollectionViewController :  UIViewController, UICollectionView
         }
     }
     
-    override public func pressesChanged(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+    override func pressesChanged(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
         if let press = presses.first {
             playPauseSubject.on( .Next(press) )
         }
     }
     
-    override public func pressesEnded(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+    override func pressesEnded(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
     }
     
-    override public func pressesCancelled(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+    override func pressesCancelled(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
     }
     
 }
