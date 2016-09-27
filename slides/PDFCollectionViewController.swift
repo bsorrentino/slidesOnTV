@@ -86,8 +86,9 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
  
     static let storyboardIdentifier = "UIPDFCollectionViewController"
     
-    @IBOutlet weak var pagesView: UICollectionView!
+    @IBOutlet weak var pagesView: ThumbnailsView!
     
+    @IBOutlet weak var settingsBar: SettingsBarView!
     @IBOutlet weak var pageView: PageView!
     @IBOutlet weak var pageImageView: UIImageView!
     
@@ -237,39 +238,44 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     // MARK: Pointer Management
     
     private func setupPointer() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(togglePointer))
-        tap.numberOfTapsRequired = 2
-     
-        pageView.addGestureRecognizer(tap)
+    
     }
     
-    func togglePointer() {
-        
+    @IBAction func togglePointerOnTap(sender: UITapGestureRecognizer) {
         pageView.showPointer = !pageView.showPointer
+
     }
-    
+
     // MARK: SettingsBar Management
 
     private func setupSettingsBar() {
-
-        //let swipedown = UISwipeGestureRecognizer(target: self, action: #selector(swipeDown))
-        //swipedown.direction = .Down
-
-        let swipedown = UITapGestureRecognizer(target: self, action: #selector(swipeDown))
-        swipedown.numberOfTapsRequired = 1
         
-        pageView.addGestureRecognizer(swipedown)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSettingsBarOnTap) )
+        tap.numberOfTapsRequired = 1
+        pageView.addGestureRecognizer(tap)
         
+        settingsBar.hide(animated:false)
     }
     
-    func swipeDown() {
-        print( "==> SWIPE DOWN")
+    
+    @IBAction func toggleSettingsBarOnTap(sender: UITapGestureRecognizer) {
+        print("=> ON SINGLE TAP")
         
-        _preferredFocusedView = pageView.showSettingsBar()
+        let isVisible = self.settingsBar.showConstraints.active
         
-        setNeedsFocusUpdate()
-        updateFocusIfNeeded()
+        if isVisible {
+            settingsBar.hide(animated: true)
+        }
+        else {
+            settingsBar.show(animated: true)
+            _preferredFocusedView = self.settingsBar
+        }
     }
+    
+    
+    @IBAction func showSettingsBarOnSwipeDown( sender: UISwipeGestureRecognizer) {
+    }
+    
     
     // MARK: view lifecycle
     
@@ -281,6 +287,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         
         pageImageView.translatesAutoresizingMaskIntoConstraints = false
  
+        self._preferredFocusedView = pageView
+        
         self.setNeedsFocusUpdate()
         self.updateFocusIfNeeded()
  
@@ -363,10 +371,20 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     //override func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)
  
 // MARK: Focus Engine
-    private var _preferredFocusedView:UIView?
     
-    override weak var preferredFocusedView: UIView? {
-        return _preferredFocusedView
+    private var _preferredFocusedView:UIView? {
+        didSet {
+            self.setNeedsFocusUpdate()
+        }
+    }
+    
+    override var preferredFocusedView: UIView? {
+        
+        if let focusedView = self._preferredFocusedView {
+            return focusedView
+        }
+        
+        return super.preferredFocusedView
     }
     
     
@@ -377,7 +395,15 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
     {
-        print( "view.didUpdateFocusInContext: focused: \(view.focused) - \(pageView.focused)" );
+        print( "view.didUpdateFocusInContext: focused: \(context.nextFocusedView)" );
+
+        let isThumbnail = context.nextFocusedView is UIPDFPageCell
+        
+        if context.nextFocusedView == pageView || isThumbnail {
+            settingsBar.hide(animated: true)
+            updateViewConstraints()
+        }
+        
         
     }
     

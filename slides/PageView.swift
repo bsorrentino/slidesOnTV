@@ -9,23 +9,10 @@
 import UIKit
 
 class PageView: UIView {
-    private let settingsBar = SettingsBarView()
 
-    // MARK: settingsbar management
-
-    func showSettingsBar() -> SettingsBarView {
-        
-        settingsBar.canBecomeFocused(true)
-        settingsBar.showAnimated()
-        _preferredFocusedView = settingsBar
-        
-        return settingsBar
-    }
-    
     // MARK: standard lifecycle
     
     override func didMoveToSuperview() {
-        self.addSubview(settingsBar)
     }
     
     override func updateConstraints() {
@@ -33,24 +20,13 @@ class PageView: UIView {
     }
     
     // MARK: Focus Management
-    private var _preferredFocusedView:UIView?
-    
-    override weak var preferredFocusedView: UIView? {
-        return _preferredFocusedView
-    }
-    
-   
     override func canBecomeFocused() -> Bool {
-        print( "PageView.canBecomeFocused: \(settingsBar.focused)" );
-        
         return true
     }
     
     /// Asks whether the system should allow a focus update to occur.
     override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
-        
-        print( "PageView.shouldUpdateFocusInContext: \(settingsBar.focused)" )
-        
+        print( "PageView.shouldUpdateFocusInContext:" )
         return true
         
     }
@@ -59,10 +35,6 @@ class PageView: UIView {
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
     {
         print( "PageView.didUpdateFocusInContext: focused: \(self.focused)" );
-        
-        if self.focused  {
-            _preferredFocusedView = nil
-        }
     }
     
     // MARK: Pointer Management
