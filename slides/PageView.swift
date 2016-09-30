@@ -19,9 +19,17 @@ class PageView: UIView {
         super.updateConstraints()
     }
     
+    typealias BecomeFocusPredicate = () -> Bool
+    
+    var becomeFocusedPredicate:BecomeFocusPredicate?
+    
     // MARK: Focus Management
     override func canBecomeFocused() -> Bool {
-        return true
+        print( "PageView.canBecomeFocused:" )
+        guard let predicate = self.becomeFocusedPredicate else {
+            return true
+        }
+        return predicate()
     }
     
     /// Asks whether the system should allow a focus update to occur.

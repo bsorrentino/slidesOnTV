@@ -28,6 +28,10 @@ class SettingsBarView : UITabBar {
     
     func hide(animated animated:Bool) {
         
+        guard !self.hideConstraints.active else {
+            return
+        }
+        
         self.showConstraints.active = false
         self.hideConstraints.active = true
         
@@ -39,6 +43,9 @@ class SettingsBarView : UITabBar {
     }
     
     func show(animated animated:Bool) {
+        guard !self.showConstraints.active else {
+            return
+        }
         
         self.hideConstraints.active = false
         self.showConstraints.active = true
@@ -60,6 +67,10 @@ class SettingsBarView : UITabBar {
     }
     
     // MARK: Focus Management
+    //override func canBecomeFocused() -> Bool {
+    //    print( "UISettingsBarView.canBecomeFocused:" )
+    //    return true
+    //}
     
     override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
         print( "UISettingsBarView.shouldUpdateFocusInContext:" )

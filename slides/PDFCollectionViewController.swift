@@ -94,7 +94,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     private var doc:OHPDFDocument?
 
-    private var playPauseSubject = PublishSubject<UIPress>()
+    private var pressesSubject = PublishSubject<UIPress>()
     private let disposeBag = DisposeBag()
 
     let layoutAttrs = (  cellSize: CGSizeMake(300,300),
@@ -203,12 +203,12 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             .takeWhile({ (slide:Int) -> Bool in
                 return slide < self.doc?.pagesCount
             })
-            .takeUntil( playPauseSubject )
+            .takeUntil( pressesSubject )
     
         
         let originalWidth =  hidePagesView()
         
-        _playPauseSlideShow = playPauseSubject
+        _playPauseSlideShow = pressesSubject
             .filter{ (press:UIPress) -> Bool in
                 return press.type == .PlayPause
             }
@@ -255,6 +255,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         pageView.addGestureRecognizer(tap)
         
         settingsBar.hide(animated:false)
+        
     }
     
     
@@ -268,12 +269,13 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         }
         else {
             settingsBar.show(animated: true)
-            _preferredFocusedView = self.settingsBar
+            _preferredFocusedView = settingsBar
         }
     }
     
     
     @IBAction func showSettingsBarOnSwipeDown( sender: UISwipeGestureRecognizer) {
+    
     }
     
     
@@ -288,6 +290,12 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         pageImageView.translatesAutoresizingMaskIntoConstraints = false
  
         self._preferredFocusedView = pageView
+        
+        pageView.becomeFocusedPredicate = {
+            
+            return (self._preferredFocusedView != self.settingsBar )
+
+        }
         
         self.setNeedsFocusUpdate()
         self.updateFocusIfNeeded()
@@ -398,9 +406,19 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         print( "view.didUpdateFocusInContext: focused: \(context.nextFocusedView)" );
 
         let isThumbnail = context.nextFocusedView is UIPDFPageCell
+        let isPageView = context.nextFocusedView == pageView
         
-        if context.nextFocusedView == pageView || isThumbnail {
+        if isPageView || isThumbnail {
             settingsBar.hide(animated: true)
+            
+            if isThumbnail {
+                _preferredFocusedView = pagesView
+            }
+            else if isPageView {
+                _preferredFocusedView = pageView
+                
+            }
+            
             updateViewConstraints()
         }
         
@@ -442,13 +460,13 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 playPauseSlideShow( )
             }
 
-            playPauseSubject.on( .Next(press) )
+            pressesSubject.on( .Next(press) )
         }
     }
     
     override func pressesChanged(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
         if let press = presses.first {
-            playPauseSubject.on( .Next(press) )
+            pressesSubject.on( .Next(press) )
         }
     }
     

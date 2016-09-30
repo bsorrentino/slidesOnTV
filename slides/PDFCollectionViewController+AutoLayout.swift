@@ -36,7 +36,7 @@ extension UIPDFCollectionViewController {
     }
     
     
-    override public func updateViewConstraints() {
+    override func updateViewConstraints() {
         
         let w = (self.fullpage) ? 0 : CGFloat(layoutAttrs.numCols) * CGFloat(layoutAttrs.cellSize.width + layoutAttrs.minSpacingForCell)
         
@@ -53,9 +53,10 @@ extension UIPDFCollectionViewController {
             make.width.equalTo( w ).priorityHigh()
         }
         
+        
         pageImageView.snp_updateConstraints { (make) in
             
-            let delta = pageViewWidth * 0.30
+            let delta = pageViewWidth * 0.10
             let newWidth = pageViewWidth - delta
             
             make.width.equalTo(newWidth).priorityRequired()
