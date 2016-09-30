@@ -399,35 +399,18 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     
     override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
+        
+        if context.nextFocusedView is UIPDFPageCell {
+            settingsBar.hide(animated: true)
+        }
+        
         return true
     }
     
     
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
     {
-        print( "view.didUpdateFocusInContext: focused: \(context.nextFocusedView)" );
-
-        let isThumbnail = context.nextFocusedView is UIPDFPageCell
-        let isPageView = context.nextFocusedView == pageView
-        
-        if isPageView || isThumbnail {
-            settingsBar.hide(animated: true)
-            
-            if isThumbnail {
-                //_preferredFocusedView = pagesView
-            }
-            else if isPageView {
-                //_preferredFocusedView = pageView
-                
-            }
-            
-            updateViewConstraints()
-        }
-        else {
-            _preferredFocusedView = nil
-        }
-        
-        
+        print( "view.didUpdateFocusInContext: focused: \(context.nextFocusedView.dynamicType)" );
     }
     
     
@@ -448,7 +431,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     
     func indexPathForPreferredFocusedViewInCollectionView(collectionView: UICollectionView) -> NSIndexPath? {
-        print("collectionView.indexPathForPreferredFocusedViewInCollectionView")
+        print("collectionView.indexPathForPreferredFocusedViewInCollectionView: \(_indexPathForPreferredFocusedView)")
+        
         // Return index path for selected show that you will be playing
         return _indexPathForPreferredFocusedView
     }
@@ -463,9 +447,12 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             
             switch press.type {
                 case .PlayPause:
-                    playPauseSlideShow( ) ; break
+                    playPauseSlideShow( )
+                    break
                 case .Menu:
-                    settingsBar.hide(animated: true) ; break
+                    settingsBar.hide(animated: true) ;
+                    _preferredFocusedView = pageView
+                    break
                 default:
                     break
             }
