@@ -293,7 +293,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         
         pageView.becomeFocusedPredicate = {
             
-            return (self._preferredFocusedView != self.settingsBar )
+            return !self.settingsBar.active
 
         }
         
@@ -382,7 +382,9 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     private var _preferredFocusedView:UIView? {
         didSet {
-            self.setNeedsFocusUpdate()
+            if _preferredFocusedView != nil {
+                self.setNeedsFocusUpdate()
+            }
         }
     }
     
@@ -412,14 +414,17 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             settingsBar.hide(animated: true)
             
             if isThumbnail {
-                _preferredFocusedView = pagesView
+                //_preferredFocusedView = pagesView
             }
             else if isPageView {
-                _preferredFocusedView = pageView
+                //_preferredFocusedView = pageView
                 
             }
             
             updateViewConstraints()
+        }
+        else {
+            _preferredFocusedView = nil
         }
         
         
@@ -456,8 +461,13 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         
         if let press = presses.first {
             
-            if press.type == .PlayPause {
-                playPauseSlideShow( )
+            switch press.type {
+                case .PlayPause:
+                    playPauseSlideShow( ) ; break
+                case .Menu:
+                    settingsBar.hide(animated: true) ; break
+                default:
+                    break
             }
 
             pressesSubject.on( .Next(press) )

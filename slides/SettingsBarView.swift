@@ -54,9 +54,14 @@ class SettingsBarView : UITabBar {
             UIView.animateWithDuration(0.5) { self.superview?.layoutIfNeeded() }
         }
         
-        
     }
 
+    var active: Bool {
+        get {
+            return self.showConstraints.active
+        }
+    }
+    
     // MARK: Standard Lifecycle
     
     override func didMoveToSuperview() {
@@ -74,7 +79,7 @@ class SettingsBarView : UITabBar {
     
     override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
         print( "UISettingsBarView.shouldUpdateFocusInContext:" )
-        return true
+        return context.focusHeading == .Left || context.focusHeading == .Right
         
     }
     
