@@ -238,7 +238,10 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     // MARK: Pointer Management
     
     private func setupPointer() {
-    
+        let tap = UITapGestureRecognizer(target: self, action: #selector(togglePointerOnTap) )
+        tap.numberOfTapsRequired = 1
+        pageView.addGestureRecognizer(tap)
+        
     }
     
     @IBAction func togglePointerOnTap(sender: UITapGestureRecognizer) {
@@ -251,13 +254,18 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     private func setupSettingsBar() {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSettingsBarOnTap) )
-        tap.numberOfTapsRequired = 1
+        tap.numberOfTapsRequired = 2
+        tap.enabled = false
         pageView.addGestureRecognizer(tap)
-        
+
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(showSettingsBarOnSwipeDown) )
+        swipe.direction = .Down
+        tap.enabled = true
+        pageView.addGestureRecognizer(swipe)
+
         settingsBar.hide(animated:false)
         
     }
-    
     
     @IBAction func toggleSettingsBarOnTap(sender: UITapGestureRecognizer) {
         print("=> ON SINGLE TAP")
@@ -275,6 +283,14 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     
     @IBAction func showSettingsBarOnSwipeDown( sender: UISwipeGestureRecognizer) {
+        print("=> ON SWIPE DOWN")
+        
+        guard self.settingsBar.showConstraints.active else {
+            return
+        }
+
+        settingsBar.show(animated: true)
+        _preferredFocusedView = settingsBar
     
     }
     
