@@ -8,37 +8,24 @@
 
 import Foundation
 
+let layoutAttrs = (  cellSize: CGSizeMake(300,300),
+                     numCols: 1,
+                     minSpacingForCell : CGFloat(25.0),
+                     minSpacingForLine: CGFloat(50.0) )
 
 extension UIPDFCollectionViewController {
-
-    private struct AssociatedKeys {
-        static var fullpage = "is_fullpage"
-    }
     
-    //this lets us check to see if the item is supposed to be displayed or not
-    var fullpage : Bool {
+    
+    var thumbnailsWidth:CGFloat {
         get {
-            guard let number = objc_getAssociatedObject(self, &AssociatedKeys.fullpage) as? NSNumber else {
-                return false
-            }
-            return number.boolValue
-        }
-        
-        set(value) {
-            objc_setAssociatedObject(self,
-                                     &AssociatedKeys.fullpage,
-                                     NSNumber(bool: value),
-                                     objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            
-            self.view.setNeedsUpdateConstraints()
-
+            return  CGFloat(layoutAttrs.numCols) *
+                    CGFloat(layoutAttrs.cellSize.width + layoutAttrs.minSpacingForCell)
         }
     }
-    
     
     override func updateViewConstraints() {
         
-        let w = (self.fullpage) ? 0 : CGFloat(layoutAttrs.numCols) * CGFloat(layoutAttrs.cellSize.width + layoutAttrs.minSpacingForCell)
+        let w = (self.fullpage) ? 0 : self.thumbnailsWidth
         
         
         let pageViewWidth = view.frame.size.width - w

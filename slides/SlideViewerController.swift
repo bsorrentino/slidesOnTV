@@ -97,12 +97,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     private var pressesSubject = PublishSubject<UIPress>()
     private let disposeBag = DisposeBag()
 
-    let layoutAttrs = (  cellSize: CGSizeMake(300,300),
-                         numCols: 1,
-                         minSpacingForCell : CGFloat(25.0),
-                         minSpacingForLine: CGFloat(50.0) )
-    
-        
     var documentLocation:NSURL? {
         didSet {
             doc = OHPDFDocument(URL: documentLocation)
@@ -132,57 +126,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     private var _indexPathForPreferredFocusedView:NSIndexPath?
     
     
-    private func showPagesView(originalWidth:CGFloat) {
-        
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            
-            var page_frame = self.pageView.frame
-            page_frame.origin.x += originalWidth
-            self.pageView.frame = page_frame
-
-            
-            var pages_frame = self.pagesView.frame
-            pages_frame.size.width = originalWidth
-            self.pagesView.frame = pages_frame
-            
-            
-        } ) { (completion:Bool) in
-            
-            if( completion ) {
-                self.fullpage = false
-            }
-        
-        }
-
-        
-    }
-    
-    private func hidePagesView() -> CGFloat {
-        
-        let result = self.pagesView.frame.size.width
-        
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut , animations: {
-            
-            
-            var pages_frame = self.pagesView.frame
-            pages_frame.size.width = 0
-            self.pagesView.frame = pages_frame
-            
-            var page_frame = self.pageView.frame
-            page_frame.origin.x -= result
-            self.pageView.frame = page_frame
-
-
-        }) { (completion:Bool) in
-            
-            if( completion ) {
-                self.fullpage = true
-            }
-
-        }
-    
-        return result
-    }
     
     private func playPauseSlideShow() {
 
@@ -206,7 +149,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             .takeUntil( pressesSubject )
     
         
-        let originalWidth =  hidePagesView()
+        self.fullpage = true
         
         _playPauseSlideShow = pressesSubject
             .filter{ (press:UIPress) -> Bool in
@@ -216,8 +159,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 
                 return playSlides.doOnCompleted{
 
-                    self.showPagesView(originalWidth)
-                    
                     self._playPauseSlideShow?.dispose()
                     self._playPauseSlideShow = nil
                     
@@ -241,6 +182,10 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         let tap = UITapGestureRecognizer(target: self, action: #selector(togglePointerOnTap) )
         tap.numberOfTapsRequired = 1
         pageView.addGestureRecognizer(tap)
+        
+        NSNotificationCenter.defaultCenter().rx_notification(SettingsBarView.Notifications.HIDDEN).bindNext { (n:NSNotification) in
+            tap.enabled = n.object as! Bool
+        }.addDisposableTo(disposeBag)
         
     }
     
@@ -285,7 +230,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     @IBAction func showSettingsBarOnSwipeDown( sender: UISwipeGestureRecognizer) {
         print("=> ON SWIPE DOWN")
         
-        guard self.settingsBar.showConstraints.active else {
+        guard self.settingsBar.hideConstraints.active else {
             return
         }
 
@@ -300,8 +245,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setupPointer()
         self.setupSettingsBar()
+        self.setupPointer()
         
         pageImageView.translatesAutoresizingMaskIntoConstraints = false
  

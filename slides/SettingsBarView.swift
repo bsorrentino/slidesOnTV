@@ -10,7 +10,13 @@ import Foundation
 import RxSwift
 import SnapKit
 
+
+
 class SettingsBarView : UITabBar {
+    
+    class Notifications {
+        static let HIDDEN = "settings.hidden"
+    }
     
     // MARK: public implementation
     
@@ -39,6 +45,7 @@ class SettingsBarView : UITabBar {
             UIView.animateWithDuration(0.5) { self.superview?.layoutIfNeeded() }
         }
         
+        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.HIDDEN, object: true)
         
     }
     
@@ -53,6 +60,8 @@ class SettingsBarView : UITabBar {
         if animated {
             UIView.animateWithDuration(0.5) { self.superview?.layoutIfNeeded() }
         }
+
+        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.HIDDEN, object: false)
         
     }
 
