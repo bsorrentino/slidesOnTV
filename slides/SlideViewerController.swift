@@ -201,7 +201,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSettingsBarOnTap) )
         tap.numberOfTapsRequired = 2
         tap.enabled = false
-        pageView.addGestureRecognizer(tap)
+        //pageView.addGestureRecognizer(tap)
 
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(showSettingsBarOnSwipeDown) )
         swipe.direction = .Down
@@ -209,6 +209,20 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         pageView.addGestureRecognizer(swipe)
 
         settingsBar.hide(animated:false)
+        
+        self.settingsBar.rx_didPressItem
+            .asDriver()
+            .driveNext { (item:Int ) in
+                print( "select \(item)")
+                
+                switch item {
+                case 1: // toggle fullscreen
+                    self.fullpage = !self.fullpage
+                    break;
+                default:
+                    break
+                }
+        }.addDisposableTo(disposeBag)
         
     }
     
@@ -296,8 +310,9 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
 // MARK: UICollectionViewDelegate
     
-    //func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
-
+    //func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    //    print( "didSelectItemAtIndexPath: \(indexPath)" )
+    //}
     
 // MARK: UICollectionViewDataSource
     

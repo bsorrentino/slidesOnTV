@@ -8,15 +8,17 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 import SnapKit
 
 
-
-class SettingsBarView : UITabBar {
+class SettingsBarView : UITabBar, UITabBarDelegate {
     
     class Notifications {
         static let HIDDEN = "settings.hidden"
     }
+    
+    let hiddenSubject = PublishSubject<Bool>()
     
     // MARK: public implementation
     
@@ -44,7 +46,8 @@ class SettingsBarView : UITabBar {
         if animated {
             UIView.animateWithDuration(0.5) { self.superview?.layoutIfNeeded() }
         }
-        
+
+        hiddenSubject.onNext(true)
         NSNotificationCenter.defaultCenter().postNotificationName(Notifications.HIDDEN, object: true)
         
     }
@@ -61,6 +64,7 @@ class SettingsBarView : UITabBar {
             UIView.animateWithDuration(0.5) { self.superview?.layoutIfNeeded() }
         }
 
+        hiddenSubject.onNext(false)
         NSNotificationCenter.defaultCenter().postNotificationName(Notifications.HIDDEN, object: false)
         
     }
@@ -70,8 +74,58 @@ class SettingsBarView : UITabBar {
             return self.showConstraints.active
         }
     }
+
+    // MARK: RX 
+    
+    var rx_didPressItem: ControlEvent<Int> {
+        
+        let first = self.rx_didSelectItem.map { (item:UITabBarItem) -> Int in
+            return item.tag
+        }
+        
+        let second = hiddenSubject.filter { (hidden:Bool) -> Bool in
+                return !hidden
+            }
+            .map { (hidden:Bool) -> Int in
+                return 0
+            }
+        
+        let result =  [first, second]
+            .toObservable()
+            .merge()
+            .scan( (key:0, step:0), accumulator: { (last, item:Int) -> (key:Int, step:Int) in
+                
+                var step = 1
+                if item == last.key {
+                    step = last.step + 1
+                }
+                
+                return (key:item, step:step)
+            })
+            .doOnNext{ (key, step) in
+                print( "key: \(key) step: \(step)")
+            }
+            .filter { (item) -> Bool in
+                return item.step >= 2
+            }
+            .map { (key, step) -> Int in
+                return key
+            }
+
+        return ControlEvent<Int>( events: result)
+    }
     
     // MARK: Standard Lifecycle
+    
+    override func awakeFromNib() {
+    }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     override func didMoveToSuperview() {
     }

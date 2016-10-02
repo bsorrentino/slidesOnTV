@@ -8,6 +8,9 @@
 
 import XCTest
 import OHPDFImage
+import RxSwift
+import RxBlocking
+
 
 class slidesTests: XCTestCase {
     
@@ -38,6 +41,35 @@ class slidesTests: XCTestCase {
         XCTAssertEqual(doc.pagesCount, 115, "number of page doesn't match")
     }
     */
+    
+    func testScan() throws {
+
+        typealias SelectInfo = (key:Int, step:Int)
+        
+        let stream = [1,2,1,1,2,3,3].toObservable()
+
+        let result = try stream.scan( (key:0, step:0), accumulator: { (last:SelectInfo, item:Int) -> SelectInfo in
+            
+                let result:SelectInfo = (key:item, step:(last.key == item) ? last.step + 1 : 1 )
+            
+                return result
+            })
+            .doOnNext({ (item:SelectInfo) in
+                print("SCAN RESULT: \(item)")
+            })
+            .filter({ (item:SelectInfo) -> Bool in
+                return item.step >= 2
+            })
+            .map({ (key, step) -> Int in
+                return key
+            })
+            .toBlocking()
+            .first()
+
+        XCTAssertEqual(result, 1)
+    
+    }
+    
     func testDownload() {
         
         let asyncExpectation = expectationWithDescription("longRunningFunction")

@@ -33,6 +33,9 @@
 		5FD9A2E11CAD195A0065BE03 /* slidesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2E01CAD195A0065BE03 /* slidesTests.swift */; };
 		5FD9A2EC1CAD195A0065BE03 /* slidesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2EB1CAD195A0065BE03 /* slidesUITests.swift */; };
 		5FF0DE0D1D99B033001CEC34 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF0DE0C1D99B033001CEC34 /* PageView.swift */; };
+		5FF877C61DA1210E0050153C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF877C21DA11F950050153C /* RxSwift.framework */; };
+		5FF877C91DA1210E0050153C /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF877C71DA1210E0050153C /* RxBlocking.framework */; };
+		5FF877CA1DA1210F0050153C /* RxTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF877C81DA1210E0050153C /* RxTests.framework */; };
 		690D8636BB9D9EF50EE6D2CF /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA58D4741408C051257BD895 /* Pods_slides.framework */; };
 		A06B6D531CBFA23900CBE220 /* slideshare.plist in Resources */ = {isa = PBXBuildFile; fileRef = A06B6D521CBFA23900CBE220 /* slideshare.plist */; };
 		A0889C3C1CE8F4430050094D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A0889C3B1CE8F4430050094D /* Settings.bundle */; };
@@ -96,6 +99,10 @@
 		5FD9A2F91CAD596F0065BE03 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		5FD9A2FD1CAD5CFA0065BE03 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		5FF0DE0C1D99B033001CEC34 /* PageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
+		5FF877C21DA11F950050153C /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Build/Products/Debug-appletvsimulator/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
+		5FF877C31DA11F950050153C /* RxTests.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTests.framework; path = "Pods/../build/Debug-appletvos/RxTests/RxTests.framework"; sourceTree = "<group>"; };
+		5FF877C71DA1210E0050153C /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = "Build/Products/Debug-appletvsimulator/RxBlocking/RxBlocking.framework"; sourceTree = "<group>"; };
+		5FF877C81DA1210E0050153C /* RxTests.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTests.framework; path = "Build/Products/Debug-appletvsimulator/RxTests/RxTests.framework"; sourceTree = "<group>"; };
 		62406CDC06BDBFE1B2A3BC7F /* Pods-slidesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.release.xcconfig"; sourceTree = "<group>"; };
 		88511214AE34C3D2A636F964 /* Pods_slidesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06B6D521CBFA23900CBE220 /* slideshare.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = slideshare.plist; path = slides/slideshare.plist; sourceTree = "<group>"; };
@@ -123,6 +130,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FF877C91DA1210E0050153C /* RxBlocking.framework in Frameworks */,
+				5FF877CA1DA1210F0050153C /* RxTests.framework in Frameworks */,
+				5FF877C61DA1210E0050153C /* RxSwift.framework in Frameworks */,
 				159B8B422568BB3DF670FC55 /* Pods_slidesTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,6 +291,10 @@
 		A8CBADC199C577F1E16802A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5FF877C71DA1210E0050153C /* RxBlocking.framework */,
+				5FF877C81DA1210E0050153C /* RxTests.framework */,
+				5FF877C21DA11F950050153C /* RxSwift.framework */,
+				5FF877C31DA11F950050153C /* RxTests.framework */,
 				5FD9A2F91CAD596F0065BE03 /* CloudKit.framework */,
 				FA58D4741408C051257BD895 /* Pods_slides.framework */,
 				C1FA23533F2587B7E192759B /* Pods_slidesTests.framework */,
@@ -768,12 +782,20 @@
 			baseConfigurationReference = CD0C312159396BDFEFD44CE4 /* Pods-slidesTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
+					"$(PROJECT_DIR)/build/Debug-appletvos/RxTests",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxBlocking",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxTests",
+				);
 				INFOPLIST_FILE = slidesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slides.app/slides";
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -782,12 +804,20 @@
 			baseConfigurationReference = 62406CDC06BDBFE1B2A3BC7F /* Pods-slidesTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
+					"$(PROJECT_DIR)/build/Debug-appletvos/RxTests",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxBlocking",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxTests",
+				);
 				INFOPLIST_FILE = slidesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slides.app/slides";
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};

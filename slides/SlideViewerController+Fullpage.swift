@@ -31,10 +31,10 @@ extension UIPDFCollectionViewController {
                                      objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             
             if newValue {
-                showThumbnails()
+                hideThumbnails()
             }
             else {
-                hideThumbnails()
+                showThumbnails()
             }
             self.view.setNeedsUpdateConstraints()
             
@@ -42,16 +42,18 @@ extension UIPDFCollectionViewController {
     }
     
     private func showThumbnails() {
-        
+        print( "showThumbnails")
         UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             
+            let w = self.thumbnailsWidth
+            
             var page_frame = self.pageView.frame
-            page_frame.origin.x += self.thumbnailsWidth
+            page_frame.origin.x += w
             self.pageView.frame = page_frame
             
             
             var pages_frame = self.pagesView.frame
-            pages_frame.size.width = self.thumbnailsWidth
+            pages_frame.size.width = w
             self.pagesView.frame = pages_frame
             
             
@@ -63,11 +65,11 @@ extension UIPDFCollectionViewController {
     }
     
     private func hideThumbnails()  {
+        print( "hideThumbnails")
         
         let width = self.pagesView.frame.size.width
         
         UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut , animations: {
-            
             
             var pages_frame = self.pagesView.frame
             pages_frame.size.width = 0

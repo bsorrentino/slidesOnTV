@@ -158,8 +158,8 @@
                                     <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <items>
-                                            <tabBarItem systemItem="favorites" id="J0v-Ag-eYI"/>
-                                            <tabBarItem systemItem="more" id="HRj-nf-1WF"/>
+                                            <tabBarItem tag="1" title="Toggle Fullscreen" id="J0v-Ag-eYI"/>
+                                            <tabBarItem tag="2" systemItem="search" id="HRj-nf-1WF"/>
                                         </items>
                                     </tabBar>
                                 </subviews>
