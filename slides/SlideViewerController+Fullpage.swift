@@ -29,7 +29,10 @@ extension UIPDFCollectionViewController {
                                      &AssociatedKeys.fullpage,
                                      NSNumber(bool: newValue),
                                      objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+
+            self.settingsBar.hide(animated: true, preferredFocusedView: pageView)
             
+
             if newValue {
                 hideThumbnails()
             }

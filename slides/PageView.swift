@@ -25,11 +25,14 @@ class PageView: UIView {
     
     // MARK: Focus Management
     override func canBecomeFocused() -> Bool {
-        print( "PageView.canBecomeFocused:" )
         guard let predicate = self.becomeFocusedPredicate else {
+            print( "PageView.canBecomeFocused: true" )
             return true
         }
-        return predicate()
+        let result = predicate()
+        print( "PageView.canBecomeFocused: \(result)" )
+
+        return result
     }
     
     /// Asks whether the system should allow a focus update to occur.

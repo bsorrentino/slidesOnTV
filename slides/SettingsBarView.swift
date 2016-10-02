@@ -14,11 +14,7 @@ import SnapKit
 
 class SettingsBarView : UITabBar, UITabBarDelegate {
     
-    class Notifications {
-        static let HIDDEN = "settings.hidden"
-    }
-    
-    let hiddenSubject = PublishSubject<Bool>()
+    let hiddenSubject = PublishSubject<(hidden:Bool,preferredFocusedView:UIView?)>()
     
     // MARK: public implementation
     
@@ -34,7 +30,7 @@ class SettingsBarView : UITabBar, UITabBarDelegate {
         return h
     }()
     
-    func hide(animated animated:Bool) {
+    func hide(animated animated:Bool, preferredFocusedView:UIView? = nil) {
         
         guard !self.hideConstraints.active else {
             return
@@ -47,8 +43,7 @@ class SettingsBarView : UITabBar, UITabBarDelegate {
             UIView.animateWithDuration(0.5) { self.superview?.layoutIfNeeded() }
         }
 
-        hiddenSubject.onNext(true)
-        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.HIDDEN, object: true)
+        hiddenSubject.onNext(( hidden:true, preferredFocusedView:preferredFocusedView) )
         
     }
     
@@ -64,8 +59,7 @@ class SettingsBarView : UITabBar, UITabBarDelegate {
             UIView.animateWithDuration(0.5) { self.superview?.layoutIfNeeded() }
         }
 
-        hiddenSubject.onNext(false)
-        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.HIDDEN, object: false)
+        hiddenSubject.onNext(( hidden:false, preferredFocusedView:self) )
         
     }
 
@@ -77,16 +71,20 @@ class SettingsBarView : UITabBar, UITabBarDelegate {
 
     // MARK: RX 
     
+    var rx_didHidden: ControlEvent<(hidden:Bool,preferredFocusedView:UIView?)> {
+        return ControlEvent<(hidden:Bool,preferredFocusedView:UIView?)>( events: hiddenSubject )
+    }
+    
     var rx_didPressItem: ControlEvent<Int> {
-        
         let first = self.rx_didSelectItem.map { (item:UITabBarItem) -> Int in
             return item.tag
         }
         
-        let second = hiddenSubject.filter { (hidden:Bool) -> Bool in
-                return !hidden
-            }
-            .map { (hidden:Bool) -> Int in
+        let second = hiddenSubject
+            //.filter { (hidden:Bool) -> Bool in
+            //    return !hidden
+            //}
+            .map { (hidden:Bool,preferredFocusedView:UIView?) -> Int in
                 return 0
             }
         
@@ -102,11 +100,11 @@ class SettingsBarView : UITabBar, UITabBarDelegate {
                 
                 return (key:item, step:step)
             })
-            .doOnNext{ (key, step) in
-                print( "key: \(key) step: \(step)")
-            }
             .filter { (item) -> Bool in
                 return item.step >= 2
+            }
+            .doOnNext{ (key, step) in
+                print( "key: \(key) step: \(step)")
             }
             .map { (key, step) -> Int in
                 return key

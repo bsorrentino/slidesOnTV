@@ -169,9 +169,12 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 
                 let i = NSIndexPath(forRow: slide, inSection: 0)
                 self._indexPathForPreferredFocusedView = i
+    
+                self.showSlide(at: UInt(i.row))
+
                 self.pagesView.selectItemAtIndexPath(i, animated: false, scrollPosition: .None)
-                self.pagesView.setNeedsFocusUpdate()
-                self.pagesView.updateFocusIfNeeded()
+                //self.pagesView.setNeedsFocusUpdate()
+                //self.pagesView.updateFocusIfNeeded()
             }
         
     }
@@ -183,8 +186,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         tap.numberOfTapsRequired = 1
         pageView.addGestureRecognizer(tap)
         
-        NSNotificationCenter.defaultCenter().rx_notification(SettingsBarView.Notifications.HIDDEN).bindNext { (n:NSNotification) in
-            tap.enabled = n.object as! Bool
+        settingsBar.rx_didHidden.subscribeNext { (hidden:Bool,preferredFocusedView:UIView?) in
+            tap.enabled = hidden
         }.addDisposableTo(disposeBag)
         
     }
@@ -208,10 +211,13 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         tap.enabled = true
         pageView.addGestureRecognizer(swipe)
 
-        settingsBar.hide(animated:false)
+        settingsBar.hide(animated:false, preferredFocusedView: pageView)
         
         self.settingsBar.rx_didPressItem
             .asDriver()
+            .filter({ (_:Int) -> Bool in
+                return self.settingsBar.active
+            })
             .driveNext { (item:Int ) in
                 print( "select \(item)")
                 
@@ -223,6 +229,14 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                     break
                 }
         }.addDisposableTo(disposeBag)
+
+        settingsBar.rx_didHidden.subscribeNext { (hidden:Bool,preferredFocusedView:UIView?) in
+            
+            if let _preferredFocusedView = preferredFocusedView  {
+                self._preferredFocusedView = _preferredFocusedView
+            }
+            
+        }.addDisposableTo(disposeBag)
         
     }
     
@@ -232,11 +246,10 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         let isVisible = self.settingsBar.showConstraints.active
         
         if isVisible {
-            settingsBar.hide(animated: true)
+            settingsBar.hide(animated: true, preferredFocusedView: pageView)
         }
         else {
             settingsBar.show(animated: true)
-            _preferredFocusedView = settingsBar
         }
     }
     
@@ -249,7 +262,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         }
 
         settingsBar.show(animated: true)
-        _preferredFocusedView = settingsBar
     
     }
     
@@ -264,8 +276,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         
         pageImageView.translatesAutoresizingMaskIntoConstraints = false
  
-        self._preferredFocusedView = pageView
-        
         pageView.becomeFocusedPredicate = {
             
             return !self.settingsBar.active
@@ -310,9 +320,9 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
 // MARK: UICollectionViewDelegate
     
-    //func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    //    print( "didSelectItemAtIndexPath: \(indexPath)" )
-    //}
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print( "didSelectItemAtIndexPath: \(indexPath)" )
+    }
     
 // MARK: UICollectionViewDataSource
     
@@ -377,7 +387,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
         
         if context.nextFocusedView is UIPDFPageCell {
-            settingsBar.hide(animated: true)
+            settingsBar.hide(animated: true, preferredFocusedView:self.pagesView)
         }
         
         return true
@@ -426,8 +436,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                     playPauseSlideShow( )
                     break
                 case .Menu:
-                    settingsBar.hide(animated: true) ;
-                    _preferredFocusedView = pageView
+                    settingsBar.hide(animated: true, preferredFocusedView: pageView) ;
                     break
                 default:
                     break
