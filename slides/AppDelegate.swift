@@ -25,10 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
         
-        //window?.rootViewController = packagedSearchController()
+        window?.rootViewController = packagedSearchController()
         
         // ONLY FOR TEST PURPOSE
-        window?.rootViewController = testController()
+        //window?.rootViewController = testController()
         
         return true
     }

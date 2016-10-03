@@ -108,7 +108,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-289" y="1178"/>
+            <point key="canvasLocation" x="-1060" y="1440"/>
         </scene>
         <!--Collection View Controller-->
         <scene sceneID="hd5-36-nR7">
@@ -207,6 +207,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="0AE-4I-NyF"/>
+        <segue reference="xUO-Iz-NFC"/>
     </inferredMetricsTieBreakers>
 </document>

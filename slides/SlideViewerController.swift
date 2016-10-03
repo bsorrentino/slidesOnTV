@@ -125,9 +125,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     private var _playPauseSlideShow:Disposable?
     private var _indexPathForPreferredFocusedView:NSIndexPath?
     
-    
-    
-    private func playPauseSlideShow() {
+    @IBAction func playPauseSlideShow() {
 
         guard _playPauseSlideShow == nil else {
             // ALREADY IN PLAY
@@ -151,19 +149,11 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         
         self.fullpage = true
         
-        _playPauseSlideShow = pressesSubject
-            .filter{ (press:UIPress) -> Bool in
-                return press.type == .PlayPause
-            }
-            .flatMap{ (_:UIPress) -> Observable<Int> in
-                
-                return playSlides.doOnCompleted{
-
-                    self._playPauseSlideShow?.dispose()
-                    self._playPauseSlideShow = nil
-                    
-                }
-
+        _playPauseSlideShow = playSlides.doOnCompleted{
+            
+            self._playPauseSlideShow?.dispose()
+            self._playPauseSlideShow = nil
+            
             }
             .subscribeNext { (slide:Int) in
                 
@@ -204,11 +194,15 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSettingsBarOnTap) )
         tap.numberOfTapsRequired = 2
         tap.enabled = false
-        //pageView.addGestureRecognizer(tap)
+        pageView.addGestureRecognizer(tap)
 
+        let menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
+        menuTap.allowedPressTypes = [UIPressType.Menu.rawValue]
+        view.addGestureRecognizer(menuTap)
+        
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(showSettingsBarOnSwipeDown) )
         swipe.direction = .Down
-        tap.enabled = true
+        swipe.enabled = true
         pageView.addGestureRecognizer(swipe)
 
         settingsBar.hide(animated:false, preferredFocusedView: pageView)
@@ -235,9 +229,16 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             if let _preferredFocusedView = preferredFocusedView  {
                 self._preferredFocusedView = _preferredFocusedView
             }
+            menuTap.enabled = !hidden
             
         }.addDisposableTo(disposeBag)
         
+    }
+    
+    @IBAction func menuTapped(sender: UITapGestureRecognizer) {
+        print("=> MENU TAPPED")
+        self.settingsBar.hide(animated: true, preferredFocusedView: pageView)
+
     }
     
     @IBAction func toggleSettingsBarOnTap(sender: UITapGestureRecognizer) {
@@ -270,6 +271,10 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let playPauseTap = UITapGestureRecognizer(target: self, action: #selector(playPauseSlideShow))
+        playPauseTap.allowedPressTypes = [UIPressType.PlayPause.rawValue]
+        view.addGestureRecognizer(playPauseTap)
         
         self.setupSettingsBar()
         self.setupPointer()
@@ -426,36 +431,30 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     // MARK: Presses Handling
     
     override func pressesBegan(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
-        print("pressesBegan")
-        
-        
-        if let press = presses.first {
-            
-            switch press.type {
-                case .PlayPause:
-                    playPauseSlideShow( )
-                    break
-                case .Menu:
-                    settingsBar.hide(animated: true, preferredFocusedView: pageView) ;
-                    break
-                default:
-                    break
-            }
+        print("view.pressesBegan")
 
-            pressesSubject.on( .Next(press) )
+        guard let press = presses.first else {
+            super.pressesBegan(presses, withEvent: event)
+            return
         }
-    }
-    
-    override func pressesChanged(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
-        if let press = presses.first {
-            pressesSubject.on( .Next(press) )
-        }
+
+        pressesSubject.on( .Next(press) )
+        super.pressesBegan(presses, withEvent: event)
+        
     }
     
     override func pressesEnded(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+        print("view.pressesEnded")
+        super.pressesEnded(presses, withEvent: event)
+    }
+    
+    
+    override func pressesChanged(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+        super.pressesChanged(presses, withEvent: event)
     }
     
     override func pressesCancelled(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+        super.pressesCancelled(presses, withEvent: event)
     }
     
 }
