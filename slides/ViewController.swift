@@ -48,8 +48,7 @@ class ViewController: UIViewController {
     }
     
     private func addAndAnimateLabel() {
-        
-        /*
+    /*
         let test1Label = ARLabel(frame:CGRectMake(110, 100, 100, 50))
         test1Label.text = "TEST0\nTEST1"
         test1Label.enlargedSize = CGSizeMake(200, 100)
@@ -66,15 +65,13 @@ class ViewController: UIViewController {
                                     
         }) { (complete:Bool) in
         }
-        */
+    */
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        
-        
     }
 
     override func didReceiveMemoryWarning() {

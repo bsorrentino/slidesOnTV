@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <deployment identifier="tvOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Search Slides View Controller-->
@@ -12,7 +14,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="REr-mv-HBi">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.9215686917" green="0.9215686917" blue="0.9215686917" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.9021296501159668" green="0.90210270881652832" blue="0.90211796760559082" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="b6o-ub-zc6">
                             <size key="itemSize" width="550" height="450"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -28,14 +30,12 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VGU-w4-XSW">
-                                            <rect key="frame" x="25" y="13" width="500" height="350"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="500" id="2US-PI-tKE"/>
                                                 <constraint firstAttribute="height" constant="350" id="hXJ-sU-Apr"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
                                     <constraint firstItem="VGU-w4-XSW" firstAttribute="centerX" secondItem="bqw-ys-LOW" secondAttribute="centerX" id="IQH-Ey-nub"/>
@@ -72,7 +72,6 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r8N-Wn-L1s">
-                                <rect key="frame" x="846" y="497" width="229" height="86"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="Push Me"/>
                                 <connections>
@@ -80,7 +79,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6k-4J-PNR">
-                                <rect key="frame" x="863" y="180" width="195" height="86"/>
+                                <frame key="frameInset" minX="863" minY="180" width="195" height="86"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
@@ -88,13 +88,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TEST 1 TEST TEST 2 TEST" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpb-8C-g7g">
-                                <rect key="frame" x="403" y="174" width="152" height="98"/>
+                                <frame key="frameInset" minX="403" minY="174" width="152" height="98"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="r8N-Wn-L1s" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="JMK-DT-hQv"/>
                             <constraint firstItem="r8N-Wn-L1s" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xbH-on-Huj"/>
@@ -107,7 +108,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-289" y="1178"/>
+            <point key="canvasLocation" x="-1060" y="1440"/>
         </scene>
         <!--Collection View Controller-->
         <scene sceneID="hd5-36-nR7">
@@ -121,9 +122,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z">
-                                <rect key="frame" x="20" y="0.0" width="32" height="1080"/>
-                                <color key="backgroundColor" white="0.903503418" alpha="1" colorSpace="calibratedWhite"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z" customClass="ThumbnailsView" customModule="slides" customModuleProvider="target">
+                                <color key="backgroundColor" red="0.90350341796875" green="0.90350341796875" blue="0.90350341796875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" priority="250" constant="32" id="Faa-ow-7Bj"/>
@@ -141,7 +141,6 @@
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="22" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <gestureRecognizers/>
                                     </collectionViewCell>
@@ -151,23 +150,33 @@
                                     <outlet property="delegate" destination="3Li-gA-Wtf" id="HeV-2Q-lc1"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view" customClass="UIPageView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="57" y="0.0" width="1858" height="1080"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view" customClass="PageView" customModule="slides" customModuleProvider="target">
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsh-Gb-3mi">
-                                        <rect key="frame" x="10" y="0.0" width="1838" height="1080"/>
+                                        <gestureRecognizers/>
                                     </imageView>
+                                    <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <items>
+                                            <tabBarItem tag="1" title="Toggle Fullscreen" id="J0v-Ag-eYI"/>
+                                            <tabBarItem tag="2" systemItem="search" id="HRj-nf-1WF"/>
+                                        </items>
+                                    </tabBar>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="Xsh-Gb-3mi" firstAttribute="leading" secondItem="c9g-rB-Tbc" secondAttribute="leading" priority="250" constant="10" id="33i-uf-5Ck"/>
                                     <constraint firstItem="Xsh-Gb-3mi" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="top" priority="250" id="Dvl-CJ-3Uv"/>
                                     <constraint firstItem="Xsh-Gb-3mi" firstAttribute="centerY" secondItem="c9g-rB-Tbc" secondAttribute="centerY" id="Q0P-nV-Ek7"/>
+                                    <constraint firstItem="etP-sG-wAf" firstAttribute="width" secondItem="c9g-rB-Tbc" secondAttribute="width" id="X1M-EL-UBs"/>
                                     <constraint firstItem="Xsh-Gb-3mi" firstAttribute="centerX" secondItem="c9g-rB-Tbc" secondAttribute="centerX" id="Y1U-sV-8z7"/>
+                                    <constraint firstItem="etP-sG-wAf" firstAttribute="leading" secondItem="c9g-rB-Tbc" secondAttribute="leading" id="iT0-Hl-G5F"/>
+                                    <constraint firstItem="etP-sG-wAf" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="top" id="oYr-JB-Bz5"/>
                                 </constraints>
                             </view>
                         </subviews>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Az4-5N-6X8" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="bottom" id="2kT-aJ-h2v"/>
                             <constraint firstItem="c9g-rB-Tbc" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" id="C92-cY-9jO"/>
@@ -183,6 +192,7 @@
                         <outlet property="pageView" destination="c9g-rB-Tbc" id="3Jb-LK-VuR"/>
                         <outlet property="pagesView" destination="rws-Tv-h7Z" id="liw-vC-pWt"/>
                         <outlet property="preferredFocusedView" destination="c9g-rB-Tbc" id="qk7-ML-5e6"/>
+                        <outlet property="settingsBar" destination="etP-sG-wAf" id="qRz-j8-1RW"/>
                         <outlet property="view" destination="kBg-cA-YoQ" id="RrZ-aT-N4E"/>
                     </connections>
                 </viewController>
@@ -191,7 +201,12 @@
             <point key="canvasLocation" x="2024" y="1949"/>
         </scene>
     </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <nil key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="0AE-4I-NyF"/>
+        <segue reference="xUO-Iz-NFC"/>
     </inferredMetricsTieBreakers>
 </document>

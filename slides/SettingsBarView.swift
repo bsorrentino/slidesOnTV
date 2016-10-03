@@ -8,182 +8,144 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 import SnapKit
 
-class SettingsBarView : UIView {
+
+class SettingsBarView : UITabBar, UITabBarDelegate {
     
-    let buttons = [ UIButton(type: .Custom), UIButton(type: .Custom), UIButton(type: .Custom) ]
+    let hiddenSubject = PublishSubject<(hidden:Bool,preferredFocusedView:UIView?)>()
     
-    weak var zoomIn: UIButton? {
-        return buttons[0]
+    // MARK: public implementation
+    
+    lazy var showConstraints:NSLayoutConstraint = {
+        let h =  self.heightAnchor.constraintEqualToConstant( 140.0)
+        h.priority = 1000
+        return h
+    }()
+    
+    lazy var hideConstraints:NSLayoutConstraint = {
+        let h =  self.heightAnchor.constraintEqualToConstant(1.0)
+        h.priority = 1000
+        return h
+    }()
+    
+    func hide(animated animated:Bool, preferredFocusedView:UIView? = nil) {
+        
+        guard !self.hideConstraints.active else {
+            return
+        }
+        
+        self.showConstraints.active = false
+        self.hideConstraints.active = true
+        
+        if animated {
+            UIView.animateWithDuration(0.5) { self.superview?.layoutIfNeeded() }
+        }
+
+        hiddenSubject.onNext(( hidden:true, preferredFocusedView:preferredFocusedView) )
+        
     }
-    weak var zoomOut: UIButton? {
-        return buttons[1]
+    
+    func show(animated animated:Bool) {
+        guard !self.showConstraints.active else {
+            return
+        }
+        
+        self.hideConstraints.active = false
+        self.showConstraints.active = true
+        
+        if animated {
+            UIView.animateWithDuration(0.5) { self.superview?.layoutIfNeeded() }
+        }
+
+        hiddenSubject.onNext(( hidden:false, preferredFocusedView:self) )
+        
     }
-    weak var rotate: UIButton? {
-        return buttons[2]
+
+    var active: Bool {
+        get {
+            return self.showConstraints.active
+        }
+    }
+
+    // MARK: RX 
+    
+    var rx_didHidden: ControlEvent<(hidden:Bool,preferredFocusedView:UIView?)> {
+        return ControlEvent<(hidden:Bool,preferredFocusedView:UIView?)>( events: hiddenSubject )
     }
     
-    let disposeBag = DisposeBag()
-    
-    let buttonSize = CGSize(width: 350, height: 50)
-    
-    private func setupView() -> Self {
-        
-        guard let superview = self.superview else {
-            return self
+    var rx_didPressItem: ControlEvent<Int> {
+        let first = self.rx_didSelectItem.map { (item:UITabBarItem) -> Int in
+            return item.tag
         }
         
-        self.backgroundColor = UIColor.darkGrayColor()
+        let second = hiddenSubject
+            //.filter { (hidden:Bool) -> Bool in
+            //    return !hidden
+            //}
+            .map { (hidden:Bool,preferredFocusedView:UIView?) -> Int in
+                return 0
+            }
         
-        if let zoomOut = self.zoomOut {
-            zoomOut.setTitle("zoom -", forState: .Normal)
-            zoomOut.setTitleColor( UIColor.whiteColor(), forState: .Normal)
-            zoomOut.setTitleColor( UIColor.yellowColor(), forState: .Focused)
-            zoomOut.backgroundColor = UIColor.clearColor()
-            zoomOut.rx_primaryAction.asDriver().driveNext {
-                print( "Zoom -")
-                }.addDisposableTo(disposeBag)
-        }
-        
-        if let zoomIn = self.zoomIn {
-            zoomIn.setTitle("zoom +", forState: .Normal)
-            zoomIn.setTitleColor( UIColor.whiteColor(), forState: .Normal)
-            zoomIn.setTitleColor( UIColor.yellowColor(), forState: .Focused)
-            zoomIn.backgroundColor = UIColor.clearColor()
-            
-            zoomIn.rx_primaryAction.asDriver().driveNext {
-                print( "Zoom +")
-                }.addDisposableTo(disposeBag)
-        }
-        
-        if let rotate = self.rotate {
-            
-            rotate.setTitle("rotate", forState: .Normal)
-            rotate.setTitleColor( UIColor.whiteColor(), forState: .Normal)
-            rotate.setTitleColor( UIColor.yellowColor(), forState: .Focused)
-            rotate.backgroundColor = UIColor.clearColor()
-            
-            rotate.rx_primaryAction.asDriver().driveNext {
-                print( "Rotate")
-                }.addDisposableTo(disposeBag)
-            
-        }
-        
-        
-        let offsetBetweenButtons = 50
-        
-        
-        let totalWidthCoveredByButtons = (buttons.count * Int(buttonSize.width)) + ((buttons.count - 1)*offsetBetweenButtons)
-        
-        let offsetFormLeading = (superview.frame.size.width - CGFloat(totalWidthCoveredByButtons))/2
-        
-        self.snp_makeConstraints { (make) in
-            
-            make.top.left.equalTo(superview).priorityRequired()
-            make.width.equalTo(superview).priorityRequired()
-            make.height.equalTo(1.0).priorityRequired()
-        }
-        
-        buttons.enumerate().forEach {
-            
-            self.addSubview($1)
-            
-            if $0 == 0 {
+        let result =  [first, second]
+            .toObservable()
+            .merge()
+            .scan( (key:0, step:0), accumulator: { (last, item:Int) -> (key:Int, step:Int) in
                 
-                $1.snp_makeConstraints { (make) in
-                    
-                    makeStdButtonConstraints(make: make)
-                    make.leading.equalTo(self.snp_leading).offset(offsetFormLeading)
-                    
+                var step = 1
+                if item == last.key {
+                    step = last.step + 1
                 }
                 
+                return (key:item, step:step)
+            })
+            .filter { (item) -> Bool in
+                return item.step >= 2
             }
-            else {
-                
-                let prevButton = buttons[$0-1]
-                $1.snp_makeConstraints { (make) in
-                    
-                    makeStdButtonConstraints(make: make)
-                    make.leading.equalTo(prevButton.snp_trailing).offset(offsetBetweenButtons)
-                    
-                }
-                
+            .doOnNext{ (key, step) in
+                print( "key: \(key) step: \(step)")
             }
-        }
-        
-        return self
+            .map { (key, step) -> Int in
+                return key
+            }
+
+        return ControlEvent<Int>( events: result)
     }
     
-    private func makeStdButtonConstraints( make make: ConstraintMaker ) {
-        
-        make.height.equalTo(buttonSize.height).priorityRequired()
-        make.width.equalTo(buttonSize.width).priorityRequired()
-        make.top.equalTo(self).offset(15)
-        
+    // MARK: Standard Lifecycle
+    
+    override func awakeFromNib() {
+    }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     override func didMoveToSuperview() {
-        setupView()
     }
     
     override func updateConstraints() {
-        
         super.updateConstraints()
     }
     
     // MARK: Focus Management
-    
-    private var _preferredFocusedViewIndex:Int = 0
-    private var _canBecomeFocused:Bool = true
-    
-    override weak var preferredFocusedView: UIView? {
-        
-        return ( _canBecomeFocused ) ? buttons[_preferredFocusedViewIndex] : nil
-    }
-    
-    
-    override func canBecomeFocused() -> Bool {
-        
-        return _canBecomeFocused
-    }
-    
+    //override func canBecomeFocused() -> Bool {
+    //    print( "UISettingsBarView.canBecomeFocused:" )
+    //    return true
+    //}
     
     override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
         print( "UISettingsBarView.shouldUpdateFocusInContext:" )
-        
-        
-        let skip = ( (context.focusHeading == .Left && _preferredFocusedViewIndex == 0) ||
-            (context.focusHeading == .Right && _preferredFocusedViewIndex == buttons.count - 1 ) ||
-            (context.focusHeading == .Up || context.focusHeading == .Down))
-        
-        if( skip ) {
-            _canBecomeFocused = false
-            self.setNeedsFocusUpdate()
-            
-        }
-        return !skip
+        return context.focusHeading == .Left || context.focusHeading == .Right
         
     }
     
     override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
         print( "UISettingsBarView.didUpdateFocusInContext:\(context.focusHeading)" );
-        
-        switch( context.focusHeading ) {
-        case UIFocusHeading.Left:
-            _preferredFocusedViewIndex = _preferredFocusedViewIndex - 1
-            self.setNeedsFocusUpdate()
-            break
-        case UIFocusHeading.Right:
-            _preferredFocusedViewIndex = _preferredFocusedViewIndex + 1
-            self.setNeedsFocusUpdate()
-            break
-        default:
-            break
-        }
-        
-        
-        
     }
     
     
