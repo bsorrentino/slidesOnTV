@@ -1,0 +1,6 @@
+framework module OHPDFImage {
+  umbrella header "OHPDFImage-umbrella.h"
+
+  export *
+  module * { export * }
+}
