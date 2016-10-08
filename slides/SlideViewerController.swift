@@ -128,11 +128,14 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     @IBAction func playPauseSlideShow() {
 
         guard _playPauseSlideShow == nil else {
-            // ALREADY IN PLAY
+            self._playPauseSlideShow?.dispose()
+            self._playPauseSlideShow = nil
             return
         }
+
+        self.fullpage = true
         
-        let playSlides = Observable<Int>.interval(3, scheduler: MainScheduler.instance)
+        _playPauseSlideShow = Observable<Int>.interval(3, scheduler: MainScheduler.instance)
             .map({ (index:Int) -> Int in
 
                 guard let prevIndex = self._indexPathForPreferredFocusedView else {
@@ -144,16 +147,12 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             .takeWhile({ (slide:Int) -> Bool in
                 return slide < self.doc?.pagesCount
             })
-            .takeUntil( pressesSubject )
-    
-        
-        self.fullpage = true
-        
-        _playPauseSlideShow = playSlides.doOnCompleted{
-            
-            self._playPauseSlideShow?.dispose()
-            self._playPauseSlideShow = nil
-            
+            .takeUntil( pressesSubject.filter { (press:UIPress) -> Bool in
+                press.type != UIPressType.PlayPause
+            })
+            .doOnCompleted{
+                self._playPauseSlideShow?.dispose()
+                self._playPauseSlideShow = nil
             }
             .subscribeNext { (slide:Int) in
                 
@@ -198,6 +197,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
         let menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
         menuTap.allowedPressTypes = [UIPressType.Menu.rawValue]
+        menuTap.enabled = false
         view.addGestureRecognizer(menuTap)
         
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(showSettingsBarOnSwipeDown) )
@@ -272,9 +272,9 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let playPauseTap = UITapGestureRecognizer(target: self, action: #selector(playPauseSlideShow))
-        playPauseTap.allowedPressTypes = [UIPressType.PlayPause.rawValue]
-        view.addGestureRecognizer(playPauseTap)
+        //let playPauseTap = UITapGestureRecognizer(target: self, action: #selector(playPauseSlideShow))
+        //playPauseTap.allowedPressTypes = [UIPressType.PlayPause.rawValue]
+        //view.addGestureRecognizer(playPauseTap)
         
         self.setupSettingsBar()
         self.setupPointer()
@@ -433,18 +433,46 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     override func pressesBegan(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
         print("view.pressesBegan")
 
-        guard let press = presses.first else {
-            super.pressesBegan(presses, withEvent: event)
-            return
+        if let press = presses.first {
+            
+            switch press.type {
+            case .PlayPause:
+                playPauseSlideShow()
+                break
+            default:
+                pressesSubject.on( .Next(press) )
+                break
+            }
+
         }
 
-        pressesSubject.on( .Next(press) )
         super.pressesBegan(presses, withEvent: event)
         
     }
     
     override func pressesEnded(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
         print("view.pressesEnded")
+        
+        if let press = presses.first {
+            
+            switch press.type {
+            case .PlayPause:
+                break
+            case .LeftArrow:
+                if self.fullpage {
+                    print( "PREV SLIDE" )
+                }
+                break
+            case .RightArrow:
+                if self.fullpage {
+                    print( "NEXT SLIDE" )
+                }
+                break
+            default:
+                break
+            }
+        }
+        
         super.pressesEnded(presses, withEvent: event)
     }
     
