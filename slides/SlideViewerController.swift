@@ -459,10 +459,14 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             case .PlayPause:
                 break
             case .LeftArrow:
-                print( "PREV SLIDE" )
+                if self.fullpage {
+                    print( "PREV SLIDE" )
+                }
                 break
             case .RightArrow:
-                print( "NEXT SLIDE" )
+                if self.fullpage {
+                    print( "NEXT SLIDE" )
+                }
                 break
             default:
                 break
