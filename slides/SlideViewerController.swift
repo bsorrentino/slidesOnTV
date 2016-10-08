@@ -198,6 +198,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
         let menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
         menuTap.allowedPressTypes = [UIPressType.Menu.rawValue]
+        menuTap.enabled = false
         view.addGestureRecognizer(menuTap)
         
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(showSettingsBarOnSwipeDown) )
