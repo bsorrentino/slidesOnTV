@@ -24,11 +24,12 @@ extension UIPDFCollectionViewController {
         }
         
         set {
-
+            self.willChangeValueForKey("fullpage")
             objc_setAssociatedObject(self,
                                      &AssociatedKeys.fullpage,
                                      NSNumber(bool: newValue),
                                      objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            self.didChangeValueForKey("fullpage")
 
             self.settingsBar.hide(animated: true, preferredFocusedView: pageView)
             

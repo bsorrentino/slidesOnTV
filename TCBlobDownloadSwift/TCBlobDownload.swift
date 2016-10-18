@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias progressionHandler = ((progress: Float, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) -> Void)!
+public typealias progressionHandler = (( progress: Float, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) -> Void)!
 public typealias completionHandler = ((error: NSError?, location: NSURL?) -> Void)!
 
 public class TCBlobDownload {
