@@ -10,7 +10,7 @@ import Foundation
 import SnapKit
 import RxSwift
 import RxCocoa
-
+import RxSwiftExt
 //
 //  UIPDFPageCell
 //
@@ -265,7 +265,24 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         settingsBar.show(animated: true)
     
     }
+
+    // MARK: Setup Manual Next Prev page
     
+    private func setupNextPrev() {
+   
+        let fullpageObserver =
+            self.rx_observe(Bool.self, "fullpage")
+            .distinctUntilChanged{ (lhs:Bool?, rhs:Bool?) -> Bool in
+                return lhs! == rhs!
+            }
+            .skipWhile { (value:Bool?) -> Bool in
+                return value == nil
+            }
+            .map { (value:Bool?) -> Bool in
+                return !value!
+            }
+        pressesSubject
+    }
     
     // MARK: view lifecycle
     
@@ -278,6 +295,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         
         self.setupSettingsBar()
         self.setupPointer()
+        self.setupNextPrev()
         
         pageImageView.translatesAutoresizingMaskIntoConstraints = false
  
@@ -289,6 +307,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         
         self.setNeedsFocusUpdate()
         self.updateFocusIfNeeded()
+        
+        
  
     }
 

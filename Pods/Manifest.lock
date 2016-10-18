@@ -5,6 +5,8 @@ PODS:
   - RxCocoa (2.6.0):
     - RxSwift (~> 2.5)
   - RxSwift (2.6.0)
+  - RxSwiftExt (1.1):
+    - RxSwift (~> 2.4)
   - RxTests (2.6.0):
     - RxSwift (~> 2.5)
   - SettingsKit (0.1.0)
@@ -15,6 +17,7 @@ DEPENDENCIES:
   - RxBlocking (~> 2.6.0)
   - RxCocoa (~> 2.6.0)
   - RxSwift (~> 2.6.0)
+  - RxSwiftExt
   - RxTests (~> 2.6.0)
   - SettingsKit (from `https://github.com/bsorrentino/SettingsKit.git`, branch `develop`)
   - SnapKit
@@ -34,10 +37,11 @@ SPEC CHECKSUMS:
   RxBlocking: f2e0a7e74d5e9d3029d2b1118e2af01f583fbdd8
   RxCocoa: 89ab00d5753502520227940e3a0e0a0413683c6b
   RxSwift: 77f3a0b15324baa7a1c9bfa9f199648a82424e26
+  RxSwiftExt: 01c16dd9916215e2d41d5755e2ec9d6119ec2ee8
   RxTests: cdcc379c70e80089a8bc2c99515223339d1c3b81
   SettingsKit: a682389b9bf71bfa897bd93bd667c4b2a731e321
   SnapKit: 2756fe24b706367af224c9c508d2f9166d03354c
 
-PODFILE CHECKSUM: 1add4290222409acdf695a175f5e3448b9184ccd
+PODFILE CHECKSUM: 9684e11ed9b1f407c85eb49ea812a38bb9bbfcd7
 
 COCOAPODS: 1.0.1
