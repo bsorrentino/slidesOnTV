@@ -157,9 +157,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             .subscribeNext { (slide:Int) in
                 
                 let i = NSIndexPath(forRow: slide, inSection: 0)
-                self._indexPathForPreferredFocusedView = i
-    
-                self.showSlide(at: UInt(i.row))
+                
+                self.showSlide(at: UInt(i.row)) ; self._indexPathForPreferredFocusedView = i
 
                 self.pagesView.selectItemAtIndexPath(i, animated: false, scrollPosition: .None)
                 //self.pagesView.setNeedsFocusUpdate()
@@ -275,13 +274,55 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             .distinctUntilChanged{ (lhs:Bool?, rhs:Bool?) -> Bool in
                 return lhs! == rhs!
             }
-            .skipWhile { (value:Bool?) -> Bool in
-                return value == nil
-            }
             .map { (value:Bool?) -> Bool in
-                return !value!
+                print( "FULLPAGE \(value!)" )
+                return value!
             }
+        
         pressesSubject
+            .filter { (press:UIPress) -> Bool in
+                return press.type == .LeftArrow || press.type == .RightArrow
+            }
+            .pausable( fullpageObserver )
+            .subscribeNext { (press:UIPress) in
+                
+                guard let pagesCount = self.doc?.pagesCount else {
+                    return
+                }
+                
+                var slide = 0
+                
+                if let index = self._indexPathForPreferredFocusedView  {
+                    slide = index.row
+                }
+                
+                switch press.type {
+                case .LeftArrow where slide == 0:
+                    print( "REACH TOP" )
+                    return
+                case .RightArrow where slide == pagesCount - 1:
+                    print( "REACH BOTTOM" )
+                    return
+                case .LeftArrow:
+                    slide = slide - 1;
+                    print( "PREV SLIDE FROM OBSERVABLE" )
+                    break
+                case .RightArrow:
+                    slide = slide + 1;
+                    print( "NEXT SLIDE FROM OBSERVABLE" )
+                    break
+                default:
+                    break
+                }
+                
+                let i = NSIndexPath(forRow: slide, inSection: 0)
+
+                self.showSlide(at: UInt(i.row)) ; self._indexPathForPreferredFocusedView = i
+                
+                self.pagesView.selectItemAtIndexPath(i, animated: false, scrollPosition: .None)
+
+
+            }.addDisposableTo(disposeBag)
     }
     
     // MARK: view lifecycle
@@ -429,8 +470,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         print("collectionView.didUpdateFocusInContext")
        
         if let i = context.nextFocusedIndexPath {
-            self.showSlide(at: UInt(i.row))
-            _indexPathForPreferredFocusedView = i
+            self.showSlide(at: UInt(i.row)) ; _indexPathForPreferredFocusedView = i
             
         }
     }
@@ -460,7 +500,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 playPauseSlideShow()
                 break
             default:
-                pressesSubject.on( .Next(press) )
+                //pressesSubject.on( .Next(press) )
                 break
             }
 
@@ -478,17 +518,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             switch press.type {
             case .PlayPause:
                 break
-            case .LeftArrow:
-                if self.fullpage {
-                    print( "PREV SLIDE" )
-                }
-                break
-            case .RightArrow:
-                if self.fullpage {
-                    print( "NEXT SLIDE" )
-                }
-                break
             default:
+                pressesSubject.on( .Next(press) )
                 break
             }
         }
