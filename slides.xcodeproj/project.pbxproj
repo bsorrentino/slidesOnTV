@@ -7,19 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0AB92151611FC149EB92EE94 /* Pods_slidesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CEAE4D88AEAB5D623C3164 /* Pods_slidesUITests.framework */; };
-		33D761E6916A282409CDCE07 /* Pods_slidesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6DCD0FDC052FE187C356366 /* Pods_slidesTests.framework */; };
 		5F3BF0021D8688850073EFCB /* SlideViewerController+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */; };
 		5F3E17321DB8C9EE00AED17C /* OHPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */; };
 		5F3E17331DB8C9EE00AED17C /* OHPDFPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172D1DB8C9EE00AED17C /* OHPDFPage.m */; };
 		5F3E17341DB8C9EE00AED17C /* OHVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172F1DB8C9EE00AED17C /* OHVectorImage.m */; };
 		5F3E17351DB8C9EE00AED17C /* UIImage+OHPDF.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E17311DB8C9EE00AED17C /* UIImage+OHPDF.m */; };
 		5F3E18061DB91D3200AED17C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F829C6E1DB6CE2F0058EA03 /* CloudKit.framework */; };
-		5F3E18181DB91F8B00AED17C /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E18111DB91EFE00AED17C /* RxCocoa.framework */; };
-		5F3E18191DB91F8B00AED17C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E18091DB91D4900AED17C /* RxSwift.framework */; };
-		5F3E181A1DB91F8B00AED17C /* RxSwiftExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E180A1DB91D4900AED17C /* RxSwiftExt.framework */; };
-		5F3E181B1DB91F8B00AED17C /* SettingsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E180B1DB91D4900AED17C /* SettingsKit.framework */; };
-		5F3E181C1DB91F8B00AED17C /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E180C1DB91D4900AED17C /* SnapKit.framework */; };
+		5F3E18361DB9541A00AED17C /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E18311DB9541A00AED17C /* RxCocoa.framework */; };
+		5F3E18371DB9541A00AED17C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E18321DB9541A00AED17C /* RxSwift.framework */; };
+		5F3E18381DB9541A00AED17C /* RxSwiftExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E18331DB9541A00AED17C /* RxSwiftExt.framework */; };
+		5F3E18391DB9541A00AED17C /* SettingsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E18341DB9541A00AED17C /* SettingsKit.framework */; };
+		5F3E183A1DB9541A00AED17C /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E18351DB9541A00AED17C /* SnapKit.framework */; };
 		5F4515A71CC2F112004C4004 /* TCBlobDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */; };
 		5F4515A81CC2F112004C4004 /* TCBlobDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */; };
 		5F4515AB1CC2F355004C4004 /* TCBlobDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */; };
@@ -70,7 +68,6 @@
 		29922D394E25E590CB68BD7B /* Settings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = slides/Settings.swift; sourceTree = SOURCE_ROOT; };
 		3CADED520A0132122567DBAF /* Pods-slidesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4B74BAF74AE103B2AC4E9103 /* Pods-slides.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.release.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.release.xcconfig"; sourceTree = "<group>"; };
-		53CEAE4D88AEAB5D623C3164 /* Pods_slidesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SlideViewerController+AutoLayout.swift"; sourceTree = "<group>"; };
 		5F3E17291DB8C9EE00AED17C /* OHPDFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDFDocument.h; path = OHPDFImage/OHPDFDocument.h; sourceTree = "<group>"; };
 		5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OHPDFDocument.m; path = OHPDFImage/OHPDFDocument.m; sourceTree = "<group>"; };
@@ -81,12 +78,11 @@
 		5F3E172F1DB8C9EE00AED17C /* OHVectorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OHVectorImage.m; path = OHPDFImage/OHVectorImage.m; sourceTree = "<group>"; };
 		5F3E17301DB8C9EE00AED17C /* UIImage+OHPDF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+OHPDF.h"; path = "OHPDFImage/UIImage+OHPDF.h"; sourceTree = "<group>"; };
 		5F3E17311DB8C9EE00AED17C /* UIImage+OHPDF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+OHPDF.m"; path = "OHPDFImage/UIImage+OHPDF.m"; sourceTree = "<group>"; };
-		5F3E18071DB91D3200AED17C /* Pods_slides.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_slides.framework; path = "Build/Products/Release-appletvos/Pods_slides.framework"; sourceTree = "<group>"; };
-		5F3E18091DB91D4900AED17C /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Build/Products/Release-appletvos/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
-		5F3E180A1DB91D4900AED17C /* RxSwiftExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwiftExt.framework; path = "Build/Products/Release-appletvos/RxSwiftExt/RxSwiftExt.framework"; sourceTree = "<group>"; };
-		5F3E180B1DB91D4900AED17C /* SettingsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SettingsKit.framework; path = "Build/Products/Release-appletvos/SettingsKit/SettingsKit.framework"; sourceTree = "<group>"; };
-		5F3E180C1DB91D4900AED17C /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Build/Products/Release-appletvos/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
-		5F3E18111DB91EFE00AED17C /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "Build/Products/Release-appletvos/RxCocoa/RxCocoa.framework"; sourceTree = "<group>"; };
+		5F3E18311DB9541A00AED17C /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "Pods/../build/Debug-appletvos/RxCocoa/RxCocoa.framework"; sourceTree = "<group>"; };
+		5F3E18321DB9541A00AED17C /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Pods/../build/Debug-appletvos/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
+		5F3E18331DB9541A00AED17C /* RxSwiftExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwiftExt.framework; path = "Pods/../build/Debug-appletvos/RxSwiftExt/RxSwiftExt.framework"; sourceTree = "<group>"; };
+		5F3E18341DB9541A00AED17C /* SettingsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SettingsKit.framework; path = "Pods/../build/Debug-appletvos/SettingsKit/SettingsKit.framework"; sourceTree = "<group>"; };
+		5F3E18351DB9541A00AED17C /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Pods/../build/Debug-appletvos/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
 		5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCBlobDownload.swift; sourceTree = "<group>"; };
 		5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCBlobDownloadManager.swift; sourceTree = "<group>"; };
 		5F4515A61CC2F112004C4004 /* TCBlobDownloadSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBlobDownloadSwift.h; sourceTree = "<group>"; };
@@ -127,10 +123,8 @@
 		A06B6D561CBFCEA800CBE220 /* SLIDESHARE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = SLIDESHARE.md; sourceTree = "<group>"; };
 		A0889C3B1CE8F4430050094D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = slides/Settings.bundle; sourceTree = "<group>"; };
 		A0C8B3E61CCCC8CF007352B6 /* ARLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARLabel.swift; sourceTree = "<group>"; };
-		A53031EFC2E7D31B7945E2B3 /* Pods_slides.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slides.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C555331529587B8A9D9CCD2B /* Pods-slides.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.debug.xcconfig"; sourceTree = "<group>"; };
 		CD0C312159396BDFEFD44CE4 /* Pods-slidesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.debug.xcconfig"; sourceTree = "<group>"; };
-		E6DCD0FDC052FE187C356366 /* Pods_slidesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,11 +132,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F3E18181DB91F8B00AED17C /* RxCocoa.framework in Frameworks */,
-				5F3E18191DB91F8B00AED17C /* RxSwift.framework in Frameworks */,
-				5F3E181A1DB91F8B00AED17C /* RxSwiftExt.framework in Frameworks */,
-				5F3E181B1DB91F8B00AED17C /* SettingsKit.framework in Frameworks */,
-				5F3E181C1DB91F8B00AED17C /* SnapKit.framework in Frameworks */,
+				5F3E18361DB9541A00AED17C /* RxCocoa.framework in Frameworks */,
+				5F3E18371DB9541A00AED17C /* RxSwift.framework in Frameworks */,
+				5F3E18381DB9541A00AED17C /* RxSwiftExt.framework in Frameworks */,
+				5F3E18391DB9541A00AED17C /* SettingsKit.framework in Frameworks */,
+				5F3E183A1DB9541A00AED17C /* SnapKit.framework in Frameworks */,
 				5F3E18061DB91D3200AED17C /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,7 +145,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33D761E6916A282409CDCE07 /* Pods_slidesTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,7 +152,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AB92151611FC149EB92EE94 /* Pods_slidesUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,16 +319,12 @@
 		A8CBADC199C577F1E16802A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5F3E18111DB91EFE00AED17C /* RxCocoa.framework */,
-				5F3E18091DB91D4900AED17C /* RxSwift.framework */,
-				5F3E180A1DB91D4900AED17C /* RxSwiftExt.framework */,
-				5F3E180B1DB91D4900AED17C /* SettingsKit.framework */,
-				5F3E180C1DB91D4900AED17C /* SnapKit.framework */,
-				5F3E18071DB91D3200AED17C /* Pods_slides.framework */,
+				5F3E18311DB9541A00AED17C /* RxCocoa.framework */,
+				5F3E18321DB9541A00AED17C /* RxSwift.framework */,
+				5F3E18331DB9541A00AED17C /* RxSwiftExt.framework */,
+				5F3E18341DB9541A00AED17C /* SettingsKit.framework */,
+				5F3E18351DB9541A00AED17C /* SnapKit.framework */,
 				5F829C6E1DB6CE2F0058EA03 /* CloudKit.framework */,
-				A53031EFC2E7D31B7945E2B3 /* Pods_slides.framework */,
-				E6DCD0FDC052FE187C356366 /* Pods_slidesTests.framework */,
-				53CEAE4D88AEAB5D623C3164 /* Pods_slidesUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -733,6 +721,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -773,6 +762,16 @@
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwiftExt",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SettingsKit",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SnapKit",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -870,6 +869,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -900,7 +900,7 @@
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxCocoa",
@@ -908,6 +908,21 @@
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwiftExt",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SettingsKit",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SnapKit",
+					"$(PROJECT_DIR)/build/Debug-appletvos/RxCocoa",
+					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwift",
+					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwiftExt",
+					"$(PROJECT_DIR)/build/Debug-appletvos/SettingsKit",
+					"$(PROJECT_DIR)/build/Debug-appletvos/SnapKit",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
