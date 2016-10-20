@@ -7,17 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AB92151611FC149EB92EE94 /* Pods_slidesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53CEAE4D88AEAB5D623C3164 /* Pods_slidesUITests.framework */; };
+		33D761E6916A282409CDCE07 /* Pods_slidesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6DCD0FDC052FE187C356366 /* Pods_slidesTests.framework */; };
 		5F3BF0021D8688850073EFCB /* SlideViewerController+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */; };
+		5F3E17321DB8C9EE00AED17C /* OHPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */; };
+		5F3E17331DB8C9EE00AED17C /* OHPDFPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172D1DB8C9EE00AED17C /* OHPDFPage.m */; };
+		5F3E17341DB8C9EE00AED17C /* OHVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172F1DB8C9EE00AED17C /* OHVectorImage.m */; };
+		5F3E17351DB8C9EE00AED17C /* UIImage+OHPDF.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E17311DB8C9EE00AED17C /* UIImage+OHPDF.m */; };
+		5F3E18061DB91D3200AED17C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F829C6E1DB6CE2F0058EA03 /* CloudKit.framework */; };
+		5F3E18181DB91F8B00AED17C /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E18111DB91EFE00AED17C /* RxCocoa.framework */; };
+		5F3E18191DB91F8B00AED17C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E18091DB91D4900AED17C /* RxSwift.framework */; };
+		5F3E181A1DB91F8B00AED17C /* RxSwiftExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E180A1DB91D4900AED17C /* RxSwiftExt.framework */; };
+		5F3E181B1DB91F8B00AED17C /* SettingsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E180B1DB91D4900AED17C /* SettingsKit.framework */; };
+		5F3E181C1DB91F8B00AED17C /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3E180C1DB91D4900AED17C /* SnapKit.framework */; };
 		5F4515A71CC2F112004C4004 /* TCBlobDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */; };
 		5F4515A81CC2F112004C4004 /* TCBlobDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */; };
 		5F4515AB1CC2F355004C4004 /* TCBlobDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */; };
 		5F4515AC1CC2F355004C4004 /* TCBlobDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */; };
 		5F57DE0B1CC3DCCF00D5F1B8 /* TWRProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F57DE0A1CC3DCCF00D5F1B8 /* TWRProgressView.m */; };
 		5F57DE131CC42B7500D5F1B8 /* UAProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F57DE101CC42B7500D5F1B8 /* UAProgressView.m */; };
-		5F6DDBB61DB6DA4700A3470C /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6DDBB51DB6DA4700A3470C /* Pods_slides.framework */; };
-		5F6DDBB81DB6DACA00A3470C /* Pods_slidesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6DDBB71DB6DACA00A3470C /* Pods_slidesTests.framework */; };
-		5F6DDBBA1DB6DAD100A3470C /* Pods_slidesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6DDBB91DB6DAD100A3470C /* Pods_slidesUITests.framework */; };
-		5F829C6F1DB6CE2F0058EA03 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F829C6E1DB6CE2F0058EA03 /* CloudKit.framework */; };
 		5F90B6091D9AC6DC00615BA4 /* ThumbnailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F90B6081D9AC6DC00615BA4 /* ThumbnailsView.swift */; };
 		5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */; };
 		5F9623531CBBF94900F61D9C /* Slidehare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9623521CBBF94900F61D9C /* Slidehare.swift */; };
@@ -33,12 +41,6 @@
 		5FD9A2D61CAD19590065BE03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D51CAD19590065BE03 /* Assets.xcassets */; };
 		5FD9A2E11CAD195A0065BE03 /* slidesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2E01CAD195A0065BE03 /* slidesTests.swift */; };
 		5FD9A2EC1CAD195A0065BE03 /* slidesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2EB1CAD195A0065BE03 /* slidesUITests.swift */; };
-		5FE04D4F1DB6DC03004E4B72 /* OHPDFImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE04D4E1DB6DC03004E4B72 /* OHPDFImage.framework */; };
-		5FE04D511DB6DC1A004E4B72 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE04D501DB6DC1A004E4B72 /* RxSwift.framework */; };
-		5FE04D561DB6DC31004E4B72 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE04D521DB6DC31004E4B72 /* RxCocoa.framework */; };
-		5FE04D571DB6DC31004E4B72 /* RxSwiftExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE04D531DB6DC31004E4B72 /* RxSwiftExt.framework */; };
-		5FE04D581DB6DC31004E4B72 /* SettingsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE04D541DB6DC31004E4B72 /* SettingsKit.framework */; };
-		5FE04D591DB6DC31004E4B72 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE04D551DB6DC31004E4B72 /* SnapKit.framework */; };
 		5FF0DE0D1D99B033001CEC34 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF0DE0C1D99B033001CEC34 /* PageView.swift */; };
 		A06B6D531CBFA23900CBE220 /* slideshare.plist in Resources */ = {isa = PBXBuildFile; fileRef = A06B6D521CBFA23900CBE220 /* slideshare.plist */; };
 		A0889C3C1CE8F4430050094D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A0889C3B1CE8F4430050094D /* Settings.bundle */; };
@@ -68,7 +70,23 @@
 		29922D394E25E590CB68BD7B /* Settings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = slides/Settings.swift; sourceTree = SOURCE_ROOT; };
 		3CADED520A0132122567DBAF /* Pods-slidesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4B74BAF74AE103B2AC4E9103 /* Pods-slides.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.release.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.release.xcconfig"; sourceTree = "<group>"; };
+		53CEAE4D88AEAB5D623C3164 /* Pods_slidesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SlideViewerController+AutoLayout.swift"; sourceTree = "<group>"; };
+		5F3E17291DB8C9EE00AED17C /* OHPDFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDFDocument.h; path = OHPDFImage/OHPDFDocument.h; sourceTree = "<group>"; };
+		5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OHPDFDocument.m; path = OHPDFImage/OHPDFDocument.m; sourceTree = "<group>"; };
+		5F3E172B1DB8C9EE00AED17C /* OHPDFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDFImage.h; path = OHPDFImage/OHPDFImage.h; sourceTree = "<group>"; };
+		5F3E172C1DB8C9EE00AED17C /* OHPDFPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDFPage.h; path = OHPDFImage/OHPDFPage.h; sourceTree = "<group>"; };
+		5F3E172D1DB8C9EE00AED17C /* OHPDFPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OHPDFPage.m; path = OHPDFImage/OHPDFPage.m; sourceTree = "<group>"; };
+		5F3E172E1DB8C9EE00AED17C /* OHVectorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHVectorImage.h; path = OHPDFImage/OHVectorImage.h; sourceTree = "<group>"; };
+		5F3E172F1DB8C9EE00AED17C /* OHVectorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OHVectorImage.m; path = OHPDFImage/OHVectorImage.m; sourceTree = "<group>"; };
+		5F3E17301DB8C9EE00AED17C /* UIImage+OHPDF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+OHPDF.h"; path = "OHPDFImage/UIImage+OHPDF.h"; sourceTree = "<group>"; };
+		5F3E17311DB8C9EE00AED17C /* UIImage+OHPDF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+OHPDF.m"; path = "OHPDFImage/UIImage+OHPDF.m"; sourceTree = "<group>"; };
+		5F3E18071DB91D3200AED17C /* Pods_slides.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_slides.framework; path = "Build/Products/Release-appletvos/Pods_slides.framework"; sourceTree = "<group>"; };
+		5F3E18091DB91D4900AED17C /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Build/Products/Release-appletvos/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
+		5F3E180A1DB91D4900AED17C /* RxSwiftExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwiftExt.framework; path = "Build/Products/Release-appletvos/RxSwiftExt/RxSwiftExt.framework"; sourceTree = "<group>"; };
+		5F3E180B1DB91D4900AED17C /* SettingsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SettingsKit.framework; path = "Build/Products/Release-appletvos/SettingsKit/SettingsKit.framework"; sourceTree = "<group>"; };
+		5F3E180C1DB91D4900AED17C /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Build/Products/Release-appletvos/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
+		5F3E18111DB91EFE00AED17C /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "Build/Products/Release-appletvos/RxCocoa/RxCocoa.framework"; sourceTree = "<group>"; };
 		5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCBlobDownload.swift; sourceTree = "<group>"; };
 		5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCBlobDownloadManager.swift; sourceTree = "<group>"; };
 		5F4515A61CC2F112004C4004 /* TCBlobDownloadSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBlobDownloadSwift.h; sourceTree = "<group>"; };
@@ -77,9 +95,6 @@
 		5F57DE0A1CC3DCCF00D5F1B8 /* TWRProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWRProgressView.m; sourceTree = "<group>"; };
 		5F57DE0F1CC42B7500D5F1B8 /* UAProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAProgressView.h; sourceTree = "<group>"; };
 		5F57DE101CC42B7500D5F1B8 /* UAProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAProgressView.m; sourceTree = "<group>"; };
-		5F6DDBB51DB6DA4700A3470C /* Pods_slides.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_slides.framework; path = "Build/Products/Debug-appletvsimulator/Pods_slides.framework"; sourceTree = "<group>"; };
-		5F6DDBB71DB6DACA00A3470C /* Pods_slidesTests.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_slidesTests.framework; path = "Pods/../build/Debug-appletvos/Pods_slidesTests.framework"; sourceTree = "<group>"; };
-		5F6DDBB91DB6DAD100A3470C /* Pods_slidesUITests.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_slidesUITests.framework; path = "Pods/../build/Debug-appletvos/Pods_slidesUITests.framework"; sourceTree = "<group>"; };
 		5F829C6E1DB6CE2F0058EA03 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		5F90B6081D9AC6DC00615BA4 /* ThumbnailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailsView.swift; sourceTree = "<group>"; };
 		5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSlidesViewController.swift; sourceTree = "<group>"; };
@@ -105,12 +120,6 @@
 		5FD9A2EB1CAD195A0065BE03 /* slidesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slidesUITests.swift; sourceTree = "<group>"; };
 		5FD9A2ED1CAD195A0065BE03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5FD9A2FD1CAD5CFA0065BE03 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		5FE04D4E1DB6DC03004E4B72 /* OHPDFImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHPDFImage.framework; path = "Build/Products/Debug-appletvsimulator/OHPDFImage/OHPDFImage.framework"; sourceTree = "<group>"; };
-		5FE04D501DB6DC1A004E4B72 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Build/Products/Debug-appletvsimulator/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
-		5FE04D521DB6DC31004E4B72 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "Build/Products/Debug-appletvsimulator/RxCocoa/RxCocoa.framework"; sourceTree = "<group>"; };
-		5FE04D531DB6DC31004E4B72 /* RxSwiftExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwiftExt.framework; path = "Build/Products/Debug-appletvsimulator/RxSwiftExt/RxSwiftExt.framework"; sourceTree = "<group>"; };
-		5FE04D541DB6DC31004E4B72 /* SettingsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SettingsKit.framework; path = "Build/Products/Debug-appletvsimulator/SettingsKit/SettingsKit.framework"; sourceTree = "<group>"; };
-		5FE04D551DB6DC31004E4B72 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Build/Products/Debug-appletvsimulator/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
 		5FF0DE0C1D99B033001CEC34 /* PageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		62406CDC06BDBFE1B2A3BC7F /* Pods-slidesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.release.xcconfig"; sourceTree = "<group>"; };
 		A06B6D521CBFA23900CBE220 /* slideshare.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = slideshare.plist; path = slides/slideshare.plist; sourceTree = "<group>"; };
@@ -118,8 +127,10 @@
 		A06B6D561CBFCEA800CBE220 /* SLIDESHARE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = SLIDESHARE.md; sourceTree = "<group>"; };
 		A0889C3B1CE8F4430050094D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = slides/Settings.bundle; sourceTree = "<group>"; };
 		A0C8B3E61CCCC8CF007352B6 /* ARLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARLabel.swift; sourceTree = "<group>"; };
+		A53031EFC2E7D31B7945E2B3 /* Pods_slides.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slides.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C555331529587B8A9D9CCD2B /* Pods-slides.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.debug.xcconfig"; sourceTree = "<group>"; };
 		CD0C312159396BDFEFD44CE4 /* Pods-slidesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E6DCD0FDC052FE187C356366 /* Pods_slidesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,14 +138,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FE04D561DB6DC31004E4B72 /* RxCocoa.framework in Frameworks */,
-				5FE04D571DB6DC31004E4B72 /* RxSwiftExt.framework in Frameworks */,
-				5FE04D581DB6DC31004E4B72 /* SettingsKit.framework in Frameworks */,
-				5FE04D591DB6DC31004E4B72 /* SnapKit.framework in Frameworks */,
-				5FE04D511DB6DC1A004E4B72 /* RxSwift.framework in Frameworks */,
-				5FE04D4F1DB6DC03004E4B72 /* OHPDFImage.framework in Frameworks */,
-				5F6DDBB61DB6DA4700A3470C /* Pods_slides.framework in Frameworks */,
-				5F829C6F1DB6CE2F0058EA03 /* CloudKit.framework in Frameworks */,
+				5F3E18181DB91F8B00AED17C /* RxCocoa.framework in Frameworks */,
+				5F3E18191DB91F8B00AED17C /* RxSwift.framework in Frameworks */,
+				5F3E181A1DB91F8B00AED17C /* RxSwiftExt.framework in Frameworks */,
+				5F3E181B1DB91F8B00AED17C /* SettingsKit.framework in Frameworks */,
+				5F3E181C1DB91F8B00AED17C /* SnapKit.framework in Frameworks */,
+				5F3E18061DB91D3200AED17C /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F6DDBB81DB6DACA00A3470C /* Pods_slidesTests.framework in Frameworks */,
+				33D761E6916A282409CDCE07 /* Pods_slidesTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,7 +159,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F6DDBBA1DB6DAD100A3470C /* Pods_slidesUITests.framework in Frameworks */,
+				0AB92151611FC149EB92EE94 /* Pods_slidesUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +177,22 @@
 				3CADED520A0132122567DBAF /* Pods-slidesUITests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		5F3E17261DB8C9BE00AED17C /* OHPDFImage */ = {
+			isa = PBXGroup;
+			children = (
+				5F3E17291DB8C9EE00AED17C /* OHPDFDocument.h */,
+				5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */,
+				5F3E172B1DB8C9EE00AED17C /* OHPDFImage.h */,
+				5F3E172C1DB8C9EE00AED17C /* OHPDFPage.h */,
+				5F3E172D1DB8C9EE00AED17C /* OHPDFPage.m */,
+				5F3E172E1DB8C9EE00AED17C /* OHVectorImage.h */,
+				5F3E172F1DB8C9EE00AED17C /* OHVectorImage.m */,
+				5F3E17301DB8C9EE00AED17C /* UIImage+OHPDF.h */,
+				5F3E17311DB8C9EE00AED17C /* UIImage+OHPDF.m */,
+			);
+			name = OHPDFImage;
 			sourceTree = "<group>";
 		};
 		5F4515A31CC2F112004C4004 /* TCBlobDownloadSwift */ = {
@@ -209,6 +234,7 @@
 		5FD9A2C21CAD19590065BE03 = {
 			isa = PBXGroup;
 			children = (
+				5F3E17261DB8C9BE00AED17C /* OHPDFImage */,
 				5FCB2B2D1D7392CC007B8DA5 /* MyPlayground.playground */,
 				A0889C3B1CE8F4430050094D /* Settings.bundle */,
 				A00824031CC94A9B00C9BE8F /* ARLabel */,
@@ -301,16 +327,16 @@
 		A8CBADC199C577F1E16802A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5FE04D521DB6DC31004E4B72 /* RxCocoa.framework */,
-				5FE04D531DB6DC31004E4B72 /* RxSwiftExt.framework */,
-				5FE04D541DB6DC31004E4B72 /* SettingsKit.framework */,
-				5FE04D551DB6DC31004E4B72 /* SnapKit.framework */,
-				5FE04D501DB6DC1A004E4B72 /* RxSwift.framework */,
-				5FE04D4E1DB6DC03004E4B72 /* OHPDFImage.framework */,
-				5F6DDBB91DB6DAD100A3470C /* Pods_slidesUITests.framework */,
-				5F6DDBB71DB6DACA00A3470C /* Pods_slidesTests.framework */,
-				5F6DDBB51DB6DA4700A3470C /* Pods_slides.framework */,
+				5F3E18111DB91EFE00AED17C /* RxCocoa.framework */,
+				5F3E18091DB91D4900AED17C /* RxSwift.framework */,
+				5F3E180A1DB91D4900AED17C /* RxSwiftExt.framework */,
+				5F3E180B1DB91D4900AED17C /* SettingsKit.framework */,
+				5F3E180C1DB91D4900AED17C /* SnapKit.framework */,
+				5F3E18071DB91D3200AED17C /* Pods_slides.framework */,
 				5F829C6E1DB6CE2F0058EA03 /* CloudKit.framework */,
+				A53031EFC2E7D31B7945E2B3 /* Pods_slides.framework */,
+				E6DCD0FDC052FE187C356366 /* Pods_slidesTests.framework */,
+				53CEAE4D88AEAB5D623C3164 /* Pods_slidesUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -369,6 +395,7 @@
 				5FD9A2E41CAD195A0065BE03 /* Frameworks */,
 				5FD9A2E51CAD195A0065BE03 /* Resources */,
 				2D593E7D910CBF99A24A43D2 /* [CP] Copy Pods Resources */,
+				4D08255B845C76B57FCCB0A8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -501,7 +528,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4D08255B845C76B57FCCB0A8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		58E34D02EB8B6356CBE2EA9C /* [CP] Copy Pods Resources */ = {
@@ -546,7 +588,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A0889C3D1CE8F4AA0050094D /* ShellScript */ = {
@@ -576,7 +618,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		EF82CCA0A9859E65D3BA3EDE /* [CP] Embed Pods Frameworks */ = {
@@ -613,10 +655,14 @@
 				5F4515A71CC2F112004C4004 /* TCBlobDownload.swift in Sources */,
 				5FD9A2CF1CAD19590065BE03 /* AppDelegate.swift in Sources */,
 				5FB6D3861CAEF8B100D7AA80 /* SlideViewerController.swift in Sources */,
+				5F3E17331DB8C9EE00AED17C /* OHPDFPage.m in Sources */,
 				5F3BF0021D8688850073EFCB /* SlideViewerController+AutoLayout.swift in Sources */,
+				5F3E17321DB8C9EE00AED17C /* OHPDFDocument.m in Sources */,
 				5F57DE0B1CC3DCCF00D5F1B8 /* TWRProgressView.m in Sources */,
 				C3F8E7A31B2D198534D793D2 /* Settings.swift in Sources */,
+				5F3E17341DB8C9EE00AED17C /* OHVectorImage.m in Sources */,
 				5FF0DE0D1D99B033001CEC34 /* PageView.swift in Sources */,
+				5F3E17351DB8C9EE00AED17C /* UIImage+OHPDF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,6 +735,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -698,6 +745,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = appletvos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 3;
@@ -717,14 +765,14 @@
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/OHPDFImage",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxCocoa",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SettingsKit",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SnapKit",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -852,14 +900,14 @@
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/OHPDFImage",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxCocoa",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SettingsKit",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SnapKit",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

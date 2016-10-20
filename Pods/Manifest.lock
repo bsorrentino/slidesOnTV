@@ -1,5 +1,4 @@
 PODS:
-  - OHPDFImage (3.2.1)
   - RxBlocking (2.6.0):
     - RxSwift (~> 2.5)
   - RxCocoa (2.6.0):
@@ -9,18 +8,17 @@ PODS:
     - RxSwift (~> 2.4)
   - RxTests (2.6.0):
     - RxSwift (~> 2.5)
-  - SettingsKit (0.1.0)
-  - SnapKit (0.21.0)
+  - SettingsKit (0.2.0)
+  - SnapKit (0.22.0)
 
 DEPENDENCIES:
-  - OHPDFImage
-  - RxBlocking (~> 2.6.0)
-  - RxCocoa (~> 2.6.0)
-  - RxSwift (~> 2.6.0)
+  - RxBlocking (= 2.6.0)
+  - RxCocoa (= 2.6.0)
+  - RxSwift (= 2.6.0)
   - RxSwiftExt (from `https://github.com/RxSwiftCommunity/RxSwiftExt`, tag `1.2`)
-  - RxTests (~> 2.6.0)
+  - RxTests (= 2.6.0)
   - SettingsKit (from `https://github.com/bsorrentino/SettingsKit.git`, branch `develop`)
-  - SnapKit
+  - SnapKit (= 0.22.0)
 
 EXTERNAL SOURCES:
   RxSwiftExt:
@@ -35,19 +33,18 @@ CHECKOUT OPTIONS:
     :git: https://github.com/RxSwiftCommunity/RxSwiftExt
     :tag: '1.2'
   SettingsKit:
-    :commit: 364118586b88d81b191a1f18ae22512df3db1634
+    :commit: 05656a6bb6adcf773e005fcbde1d1421c85723a1
     :git: https://github.com/bsorrentino/SettingsKit.git
 
 SPEC CHECKSUMS:
-  OHPDFImage: b5ad5d7d99f4fbadaa8740cc3d1009f1a0b34ef0
   RxBlocking: f2e0a7e74d5e9d3029d2b1118e2af01f583fbdd8
   RxCocoa: 89ab00d5753502520227940e3a0e0a0413683c6b
   RxSwift: 77f3a0b15324baa7a1c9bfa9f199648a82424e26
   RxSwiftExt: f26dd04453d68193124d98684261c6721b5e141a
   RxTests: cdcc379c70e80089a8bc2c99515223339d1c3b81
-  SettingsKit: a682389b9bf71bfa897bd93bd667c4b2a731e321
-  SnapKit: 2756fe24b706367af224c9c508d2f9166d03354c
+  SettingsKit: 2a7ad1ddf95faed14ddf93c670c9e6fec65ec8be
+  SnapKit: 0dd2fd157330f1ea11fd84da13e6be8a7a22bae0
 
-PODFILE CHECKSUM: 92faeacc678580e302b5ee9ce854370021bcfe02
+PODFILE CHECKSUM: d9f2ccc7f17cfc4301e33d43d049ca01c9376949
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1
