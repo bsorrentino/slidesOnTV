@@ -1,4 +1,7 @@
 # SlidesOnTV
+
+[![GitHub release](https://img.shields.io/github/release/slidesOnTV/rubidium.svg)]()
+
 Present Slides on TV - for Apple tvOS
 
 The application's purpose is to make easy and comfortable (from your sofa)  to watch the presentations on your TV.
@@ -17,3 +20,10 @@ Such application gathers presentations over internet (at moment only from slides
 
 Note:
 > At the moment only PDF format is supported
+
+### App Store
+Available on AppStore - see it on [itunes](https://itunes.apple.com/us/app/slidesontv/id1166964658?mt=8)
+
+### App Preview
+
+See [App Preview (30s)](https://github.com/bsorrentino/slidesOnTV/master/mediamanager/slideontv-preview-30s.mov)
