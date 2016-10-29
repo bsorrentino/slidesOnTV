@@ -26,4 +26,4 @@ Available on AppStore - see it on [itunes](https://itunes.apple.com/us/app/slide
 
 ### App Preview
 
-See [App Preview (30s)](https://github.com/bsorrentino/slidesOnTV/master/mediamanager/slideontv-preview-30s.mov)
+Download [App Preview (30s) - 13M](https://github.com/bsorrentino/slidesOnTV/blob/master/mediamanager/slideontv-preview-30s.mov?raw=true)
