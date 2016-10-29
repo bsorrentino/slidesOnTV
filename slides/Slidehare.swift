@@ -1,0 +1,166 @@
+//
+//  Slidehare.swift
+//  slideshare
+//
+//  Created by softphone on 10/04/16.
+//  Copyright © 2016 Bartolomeo Sorrentino. All rights reserved.
+//
+
+import Foundation
+import RxSwift
+import RxCocoa
+
+
+extension String {
+    func htmlDecoded()->String {
+        
+        guard (self != "") else { return self }
+        
+        var _self = self;
+        if let v = self.stringByRemovingPercentEncoding  {
+            _self = v
+        }
+        return _self
+            .stringByReplacingOccurrencesOfString( "&quot;", withString: "\"")
+            .stringByReplacingOccurrencesOfString( "&amp;" , withString: "&" )
+            .stringByReplacingOccurrencesOfString( "&apos;",    withString: "'" )
+            .stringByReplacingOccurrencesOfString( "&lt;",      withString: "<" )
+            .stringByReplacingOccurrencesOfString(  "&gt;",      withString: ">" )
+    }
+}
+
+private func SHA1( s:String! ) -> String {
+    let data = s.dataUsingEncoding(NSUTF8StringEncoding)!
+    
+    var digest = [UInt8](count:Int(CC_SHA1_DIGEST_LENGTH), repeatedValue: 0)
+    
+    CC_SHA1(data.bytes, CC_LONG(data.length), &digest)
+    
+    let hexBytes = digest.map { String(format: "%02hhx", $0) }
+    
+    return hexBytes.joinWithSeparator("")
+}
+
+func slideshareSearch( apiKey apiKey:String, sharedSecret:String, what:String ) ->  Observable<NSData> {
+    
+    let allowedCharacters = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
+    
+    let ts = String(NSDate().timeIntervalSince1970)
+    
+    let ss = String(format: "%@%@", sharedSecret, ts)
+    
+    let hash = SHA1(ss)
+    
+    let params:Dictionary<String,String> = [
+        "api_key":apiKey,
+        "ts": ts,
+        "hash": hash,
+        "what":what,
+        "fileformat": "pdf", // seems that doesn't work
+        "download":"0",
+        //"sort":"latest",
+        //"file_type":"presentations"
+    ]
+    
+    let queryString =  params.map { (key, value) -> String in
+        let percentEscapedKey = key.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacters)!
+        let percentEscapedValue = value.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacters)!
+        return "\(percentEscapedKey)=\(percentEscapedValue)"
+        }.joinWithSeparator("&")
+    
+    let requestURL = NSURL(string: String(format:"https://www.slideshare.net/api/2/search_slideshows?q=%@", queryString))!
+    
+    let request = NSURLRequest(URL: requestURL)
+    
+    return NSURLSession.sharedSession().rx_data(request)
+    
+}
+
+
+typealias Slideshow = Dictionary<String,String>
+
+class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
+    
+    var currentData:(slide:Slideshow, attr:String?)?
+    
+    var subject = PublishSubject<Slideshow>()
+    
+    
+    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+        
+        let properties = ["title", "thumbnailsmallurl", "thumbnailxlargeurl", "thumbnailxxlargeurl", "created", "updated", "language", "format", "downloadurl"]
+        
+        if currentData != nil  {
+            
+            currentData!.attr = properties.contains(elementName.lowercaseString) ? elementName.lowercaseString : nil
+
+        }
+        else {
+            
+            if( elementName == "Slideshow" ) {
+                //print( "start \(elementName) - \(attributeDict)")
+                currentData = (slide:Slideshow(), attr:nil)
+            }
+        }
+        
+    }
+    
+    func parser(parser: NSXMLParser, foundCharacters string: String) {
+        
+        if let data = currentData, let attr = data.attr {
+    
+            if let v = data.slide[attr] {
+
+                currentData!.slide[attr] = v + string
+                
+            }
+            else {
+                currentData!.slide[attr] = string
+                
+            }
+            
+        }
+    }
+    
+    
+    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        
+        let e = elementName.lowercaseString
+        
+        if e == "slideshow", let data = currentData {
+
+            subject.onNext(data.slide)
+            
+            currentData = nil
+        }
+        else if e == "title" {
+            
+            if let title =  currentData!.slide[e] {
+                currentData!.slide[e] = title.htmlDecoded()
+            }
+        }
+    }
+    
+    func parserDidEndDocument(parser: NSXMLParser) {
+        subject.onCompleted()
+    }
+    
+    func rx_parse( data:NSData! ) -> Observable<Slideshow> {
+        
+        return Observable.create{ observer in
+            
+            let parser = NSXMLParser(data: data)
+            parser.delegate = self
+            
+            let subscription = self.subject.subscribe(observer);
+            
+            parser.parse()
+
+            return AnonymousDisposable {
+                //print("Disposed")
+                subscription.dispose()
+            }
+        }
+    }
+}
+
