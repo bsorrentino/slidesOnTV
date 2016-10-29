@@ -84,18 +84,12 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "$BUILT_PRODUCTS_DIR/OHPDFImage/OHPDFImage.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/RxCocoa/RxCocoa.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxSwift/RxSwift.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/SnapKit/SnapKit.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxBlocking/RxBlocking.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxTests/RxTests.framework"
 fi
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "$BUILT_PRODUCTS_DIR/OHPDFImage/OHPDFImage.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/RxCocoa/RxCocoa.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxSwift/RxSwift.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/SnapKit/SnapKit.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxBlocking/RxBlocking.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxTests/RxTests.framework"
 fi

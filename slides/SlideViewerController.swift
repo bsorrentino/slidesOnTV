@@ -500,7 +500,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 playPauseSlideShow()
                 break
             default:
-                //pressesSubject.on( .Next(press) )
+                pressesSubject.on( .Next(press) )
                 break
             }
 
@@ -512,18 +512,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     override func pressesEnded(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
         print("view.pressesEnded")
-        
-        if let press = presses.first {
-            
-            switch press.type {
-            case .PlayPause:
-                break
-            default:
-                pressesSubject.on( .Next(press) )
-                break
-            }
-        }
-        
         super.pressesEnded(presses, withEvent: event)
     }
     

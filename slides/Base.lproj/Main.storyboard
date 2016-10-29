@@ -159,9 +159,9 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <items>
                                             <tabBarItem tag="1" title="Toggle Fullscreen" id="J0v-Ag-eYI"/>
-                                            <tabBarItem tag="2" title="Zoom+" id="Mgh-57-m5N"/>
-                                            <tabBarItem tag="3" title="Zoom-" id="DLk-td-vjh"/>
-                                            <tabBarItem tag="4" systemItem="search" id="HRj-nf-1WF"/>
+                                            <tabBarItem tag="2" enabled="NO" title="Zoom+" id="Mgh-57-m5N"/>
+                                            <tabBarItem tag="3" enabled="NO" title="Zoom-" id="DLk-td-vjh"/>
+                                            <tabBarItem tag="4" enabled="NO" systemItem="search" id="HRj-nf-1WF"/>
                                         </items>
                                     </tabBar>
                                 </subviews>
