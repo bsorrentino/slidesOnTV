@@ -1,6 +1,6 @@
 # SlidesOnTV
 
-[![GitHub release](https://img.shields.io/github/release/slidesOnTV/rubidium.svg)]()
+[![Latest Release](https://img.shields.io/github/release/bsorrentino/slidesOnTV.svg)]()
 
 Present Slides on TV - for Apple tvOS
 
