@@ -2,7 +2,7 @@
 
 [![Latest Release](https://img.shields.io/github/release/bsorrentino/slidesOnTV.svg)](https://github.com/bsorrentino/slidesOnTV/releases)
 
-Present Slides on TV - for Apple tvOS
+Presents Slides on TV - for Apple tvOS
 
 The application's purpose is to make easy and comfortable (from your sofa)  to watch the presentations on your TV.
 
