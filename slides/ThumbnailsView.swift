@@ -13,16 +13,16 @@ class ThumbnailsView: UICollectionView {
     // MARK: Focus Management
     
     /// Asks whether the system should allow a focus update to occur.
-    override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
+    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
         print( "ThumbnailsView.shouldUpdateFocusInContext:" )
         return true
         
     }
     
     /// Called when the screen’s focusedView has been updated to a new view. Use the animation coordinator to schedule focus-related animations in response to the update.
-    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator)
     {
-        print( "ThumbnailsView.didUpdateFocusInContext: focused: \(self.focused)" );
+        print( "ThumbnailsView.didUpdateFocusInContext: focused: \(self.isFocused)" );
     }
     
     /*
