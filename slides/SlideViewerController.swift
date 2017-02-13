@@ -11,6 +11,19 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import RxSwiftExt
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 //
 //  UIPDFPageCell
 //
@@ -18,11 +31,11 @@ class UIPDFPageCell : UICollectionViewCell {
     
     lazy var box:UIImageView = UIImageView()
     
-    private func initialize() {
+    fileprivate func initialize() {
     
         self.addSubview(box)
         
-         box.snp_makeConstraints { (make) -> Void in
+         box.snp.makeConstraints { (make) -> Void in
             make.width.height.equalTo(self)
             make.top.equalTo(self)
             make.bottom.equalTo(self)
@@ -52,8 +65,8 @@ class UIPDFPageCell : UICollectionViewCell {
         
     }
  
-    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
-        if (self.focused)
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        if (self.isFocused)
         {
             self.box.adjustsImageWhenAncestorFocused = true
         }
@@ -92,14 +105,14 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     @IBOutlet weak var pageView: PageView!
     @IBOutlet weak var pageImageView: UIImageView!
     
-    private var doc:OHPDFDocument?
+    fileprivate var doc:OHPDFDocument?
 
-    private var pressesSubject = PublishSubject<UIPress>()
-    private let disposeBag = DisposeBag()
+    fileprivate var pressesSubject = PublishSubject<UIPress>()
+    fileprivate let disposeBag = DisposeBag()
 
-    var documentLocation:NSURL? {
+    var documentLocation:URL? {
         didSet {
-            doc = OHPDFDocument(URL: documentLocation)
+            doc = OHPDFDocument(url: documentLocation)
             if( pagesView != nil ) {
                 pagesView.reloadData()    
             }
@@ -109,12 +122,12 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     func showSlide(at index:UInt) {
         if let doc = self.doc {
             
-            let page = doc.pageAtIndex(Int(index+1))
+            let page = doc.page(at: Int(index+1))
             
-            let vectorImage = OHVectorImage(PDFPage: page)
+            let vectorImage = OHVectorImage(pdfPage: page)
             
-            let fitSize = vectorImage.sizeThatFits(pageImageView.frame.size)
-            self.pageImageView.image = vectorImage.renderAtSize(fitSize)
+            let fitSize = vectorImage?.sizeThatFits(pageImageView.frame.size)
+            self.pageImageView.image = vectorImage?.render(at: fitSize!)
             
         }
 
@@ -122,8 +135,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     // MARK: PLAY/PAUSE SLIDES
     
-    private var _playPauseSlideShow:Disposable?
-    private var _indexPathForPreferredFocusedView:NSIndexPath?
+    fileprivate var _playPauseSlideShow:Disposable?
+    fileprivate var _indexPathForPreferredFocusedView:IndexPath?
     
     @IBAction func playPauseSlideShow() {
 
@@ -148,60 +161,60 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 return slide < self.doc?.pagesCount
             })
             .takeUntil( pressesSubject.filter { (press:UIPress) -> Bool in
-                press.type != UIPressType.PlayPause
+                press.type != UIPressType.playPause
             })
-            .doOnCompleted{
+            .do( onCompleted:{
                 self._playPauseSlideShow?.dispose()
                 self._playPauseSlideShow = nil
-            }
-            .subscribeNext { (slide:Int) in
+            })
+            .subscribe( onNext: { (slide:Int) in
                 
-                let i = NSIndexPath(forRow: slide, inSection: 0)
+                let i = IndexPath(row: slide, section: 0)
                 
                 self.showSlide(at: UInt(i.row)) ; self._indexPathForPreferredFocusedView = i
 
-                self.pagesView.selectItemAtIndexPath(i, animated: false, scrollPosition: .None)
+                self.pagesView.selectItem(at: i, animated: false, scrollPosition: UICollectionViewScrollPosition())
                 //self.pagesView.setNeedsFocusUpdate()
                 //self.pagesView.updateFocusIfNeeded()
-            }
+            })
         
     }
     
     // MARK: Pointer Management
     
-    private func setupPointer() {
+    fileprivate func setupPointer() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(togglePointerOnTap) )
         tap.numberOfTapsRequired = 1
         pageView.addGestureRecognizer(tap)
         
-        settingsBar.rx_didHidden.subscribeNext { (hidden:Bool,preferredFocusedView:UIView?) in
-            tap.enabled = hidden
-        }.addDisposableTo(disposeBag)
+        settingsBar.rx_didHidden.subscribe( onNext: { (hidden:Bool,preferredFocusedView:UIView?) in
+            tap.isEnabled = hidden
+        }).addDisposableTo(disposeBag)
         
     }
     
-    @IBAction func togglePointerOnTap(sender: UITapGestureRecognizer) {
+    @IBAction func togglePointerOnTap(_ sender: UITapGestureRecognizer) {
         pageView.showPointer = !pageView.showPointer
 
     }
 
     // MARK: SettingsBar Management
 
-    private func setupSettingsBar() {
+    fileprivate func setupSettingsBar() {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSettingsBarOnTap) )
         tap.numberOfTapsRequired = 2
-        tap.enabled = false
+        tap.isEnabled = false
         pageView.addGestureRecognizer(tap)
 
         let menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
-        menuTap.allowedPressTypes = [UIPressType.Menu.rawValue]
-        menuTap.enabled = false
+        menuTap.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
+        menuTap.isEnabled = false
         view.addGestureRecognizer(menuTap)
         
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(showSettingsBarOnSwipeDown) )
-        swipe.direction = .Down
-        swipe.enabled = true
+        swipe.direction = .down
+        swipe.isEnabled = true
         pageView.addGestureRecognizer(swipe)
 
         settingsBar.hide(animated:false, preferredFocusedView: pageView)
@@ -211,7 +224,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             .filter({ (_:Int) -> Bool in
                 return self.settingsBar.active
             })
-            .driveNext { (item:Int ) in
+            .drive( onNext: { (item:Int ) in
                 print( "select \(item)")
                 
                 switch item {
@@ -221,29 +234,29 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 default:
                     break
                 }
-        }.addDisposableTo(disposeBag)
+        }).addDisposableTo(disposeBag)
 
-        settingsBar.rx_didHidden.subscribeNext { (hidden:Bool,preferredFocusedView:UIView?) in
+        settingsBar.rx_didHidden.subscribe( onNext: { [weak self] (hidden:Bool,preferredFocusedView:UIView?) in
             
-            if let _preferredFocusedView = preferredFocusedView  {
-                self._preferredFocusedView = _preferredFocusedView
+            if let _preferredFocusedView = preferredFocusedView {
+                self?._preferredFocusedView = _preferredFocusedView
             }
-            menuTap.enabled = !hidden
+            menuTap.isEnabled = !hidden
             
-        }.addDisposableTo(disposeBag)
+        }).addDisposableTo(disposeBag)
         
     }
     
-    @IBAction func menuTapped(sender: UITapGestureRecognizer) {
+    @IBAction func menuTapped(_ sender: UITapGestureRecognizer) {
         print("=> MENU TAPPED")
         self.settingsBar.hide(animated: true, preferredFocusedView: pageView)
 
     }
     
-    @IBAction func toggleSettingsBarOnTap(sender: UITapGestureRecognizer) {
+    @IBAction func toggleSettingsBarOnTap(_ sender: UITapGestureRecognizer) {
         print("=> ON SINGLE TAP")
         
-        let isVisible = self.settingsBar.showConstraints.active
+        let isVisible = self.settingsBar.showConstraints.isActive
         
         if isVisible {
             settingsBar.hide(animated: true, preferredFocusedView: pageView)
@@ -254,10 +267,10 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
     
     
-    @IBAction func showSettingsBarOnSwipeDown( sender: UISwipeGestureRecognizer) {
+    @IBAction func showSettingsBarOnSwipeDown( _ sender: UISwipeGestureRecognizer) {
         print("=> ON SWIPE DOWN")
         
-        guard self.settingsBar.hideConstraints.active else {
+        guard self.settingsBar.hideConstraints.isActive else {
             return
         }
 
@@ -267,10 +280,10 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
     // MARK: Setup Manual Next Prev page
     
-    private func setupNextPrev() {
+    fileprivate func setupNextPrev() {
    
         let fullpageObserver =
-            self.rx_observe(Bool.self, "fullpage")
+            self.rx.observe(Bool.self, "fullpage")
             .distinctUntilChanged{ (lhs:Bool?, rhs:Bool?) -> Bool in
                 return lhs! == rhs!
             }
@@ -281,10 +294,10 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         
         pressesSubject
             .filter { (press:UIPress) -> Bool in
-                return press.type == .LeftArrow || press.type == .RightArrow
+                return press.type == .leftArrow || press.type == .rightArrow
             }
             .pausable( fullpageObserver )
-            .subscribeNext { (press:UIPress) in
+            .subscribe( onNext: { (press:UIPress) in
                 
                 guard let pagesCount = self.doc?.pagesCount else {
                     return
@@ -297,17 +310,17 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 }
                 
                 switch press.type {
-                case .LeftArrow where slide == 0:
+                case .leftArrow where slide == 0:
                     print( "REACH TOP" )
                     return
-                case .RightArrow where slide == pagesCount - 1:
+                case .rightArrow where slide == pagesCount - 1:
                     print( "REACH BOTTOM" )
                     return
-                case .LeftArrow:
+                case .leftArrow:
                     slide = slide - 1;
                     print( "PREV SLIDE FROM OBSERVABLE" )
                     break
-                case .RightArrow:
+                case .rightArrow:
                     slide = slide + 1;
                     print( "NEXT SLIDE FROM OBSERVABLE" )
                     break
@@ -315,14 +328,14 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                     break
                 }
                 
-                let i = NSIndexPath(forRow: slide, inSection: 0)
+                let i = IndexPath(row: slide, section: 0)
 
                 self.showSlide(at: UInt(i.row)) ; self._indexPathForPreferredFocusedView = i
                 
-                self.pagesView.selectItemAtIndexPath(i, animated: false, scrollPosition: .None)
+                self.pagesView.selectItem(at: i, animated: false, scrollPosition: UICollectionViewScrollPosition())
 
 
-            }.addDisposableTo(disposeBag)
+            }).addDisposableTo(disposeBag)
     }
     
     // MARK: view lifecycle
@@ -353,7 +366,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
  
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.showSlide(at: 0)
     }
@@ -361,22 +374,22 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
     // MARK: UICollectionViewDelegateFlowLayout
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {
         return layoutAttrs.cellSize //use height whatever you wants.
     }
 
     // Space between item on different row
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
             return layoutAttrs.minSpacingForLine
     }
     
     // Space between item on the same row
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
             return layoutAttrs.minSpacingForCell
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     }
     
@@ -386,13 +399,13 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
 // MARK: UICollectionViewDelegate
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print( "didSelectItemAtIndexPath: \(indexPath)" )
     }
     
 // MARK: UICollectionViewDataSource
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         guard let doc = self.doc else {
             return 0
@@ -401,26 +414,26 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("slide", forIndexPath:indexPath) as! UIPDFPageCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "slide", for:indexPath) as! UIPDFPageCell
         
         if let doc = self.doc {
             
-            let page = doc.pageAtIndex(indexPath.row+1)
+            let page = doc.page(at: indexPath.row+1)
         
-            let vectorImage = OHVectorImage(PDFPage: page)
+            let vectorImage = OHVectorImage(pdfPage: page)
             
-            let fitSize = vectorImage.sizeThatFits(cell.frame.size)
+            let fitSize = vectorImage?.sizeThatFits(cell.frame.size)
             
-            cell.box.image = vectorImage.renderAtSize(fitSize)
+            cell.box.image = vectorImage?.render(at: fitSize!)
         }
         return cell;
 
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
@@ -432,7 +445,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
  
 // MARK: Focus Engine
     
-    private var _preferredFocusedView:UIView? {
+    fileprivate var _preferredFocusedView:UIView? {
         didSet {
             if _preferredFocusedView != nil {
                 self.setNeedsFocusUpdate()
@@ -450,7 +463,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
     
     
-    override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
+    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
         
         if context.nextFocusedView is UIPDFPageCell {
             settingsBar.hide(animated: true, preferredFocusedView:self.pagesView)
@@ -460,13 +473,13 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
     
     
-    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator)
     {
-        print( "view.didUpdateFocusInContext: focused: \(context.nextFocusedView.dynamicType)" );
+        print( "view.didUpdateFocusInContext: focused: \(type(of: context.nextFocusedView))" );
     }
     
     
-    func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
+    func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         print("collectionView.didUpdateFocusInContext")
        
         if let i = context.nextFocusedIndexPath {
@@ -475,13 +488,13 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         }
     }
     
-    func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
         print( "collectionView.canFocusItemAtIndexPath(\(indexPath.row))" )
         return true
     }
     
     
-    func indexPathForPreferredFocusedViewInCollectionView(collectionView: UICollectionView) -> NSIndexPath? {
+    func indexPathForPreferredFocusedView(in collectionView: UICollectionView) -> IndexPath? {
         print("collectionView.indexPathForPreferredFocusedViewInCollectionView: \(_indexPathForPreferredFocusedView)")
         
         // Return index path for selected show that you will be playing
@@ -490,38 +503,38 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     // MARK: Presses Handling
     
-    override func pressesBegan(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         print("view.pressesBegan")
 
         if let press = presses.first {
             
             switch press.type {
-            case .PlayPause:
+            case .playPause:
                 playPauseSlideShow()
                 break
             default:
-                pressesSubject.on( .Next(press) )
+                pressesSubject.on( .next(press) )
                 break
             }
 
         }
 
-        super.pressesBegan(presses, withEvent: event)
+        super.pressesBegan(presses, with: event)
         
     }
     
-    override func pressesEnded(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
+    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         print("view.pressesEnded")
-        super.pressesEnded(presses, withEvent: event)
+        super.pressesEnded(presses, with: event)
     }
     
     
-    override func pressesChanged(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
-        super.pressesChanged(presses, withEvent: event)
+    override func pressesChanged(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        super.pressesChanged(presses, with: event)
     }
     
-    override func pressesCancelled(presses: Set<UIPress>, withEvent event: UIPressesEvent?) {
-        super.pressesCancelled(presses, withEvent: event)
+    override func pressesCancelled(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        super.pressesCancelled(presses, with: event)
     }
     
 }

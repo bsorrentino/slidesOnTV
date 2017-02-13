@@ -17,45 +17,46 @@ extension String {
         guard (self != "") else { return self }
         
         var _self = self;
-        if let v = self.stringByRemovingPercentEncoding  {
+        if let v = self.removingPercentEncoding  {
             _self = v
         }
         return _self
-            .stringByReplacingOccurrencesOfString( "&quot;", withString: "\"")
-            .stringByReplacingOccurrencesOfString( "&amp;" , withString: "&" )
-            .stringByReplacingOccurrencesOfString( "&apos;",    withString: "'" )
-            .stringByReplacingOccurrencesOfString( "&lt;",      withString: "<" )
-            .stringByReplacingOccurrencesOfString(  "&gt;",      withString: ">" )
+            .replacingOccurrences( of: "&quot;", with: "\"")
+            .replacingOccurrences( of: "&amp;" , with: "&" )
+            .replacingOccurrences( of: "&apos;",    with: "'" )
+            .replacingOccurrences( of: "&lt;",      with: "<" )
+            .replacingOccurrences(  of: "&gt;",      with: ">" )
     }
 }
 
-private func SHA1( s:String! ) -> String {
-    let data = s.dataUsingEncoding(NSUTF8StringEncoding)!
+private func SHA1( _ s:String! ) -> String {
+    let data = s.data(using: String.Encoding.utf8)!
     
-    var digest = [UInt8](count:Int(CC_SHA1_DIGEST_LENGTH), repeatedValue: 0)
+    var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
     
-    CC_SHA1(data.bytes, CC_LONG(data.length), &digest)
+    CC_SHA1((data as NSData).bytes, CC_LONG(data.count), &digest)
     
     let hexBytes = digest.map { String(format: "%02hhx", $0) }
     
-    return hexBytes.joinWithSeparator("")
+    return hexBytes.joined(separator: "")
 }
 
-func slideshareSearch( apiKey apiKey:String, sharedSecret:String, what:String ) ->  Observable<NSData> {
+func slideshareSearch( apiKey:String, sharedSecret:String, query:String ) ->  Observable<Data> {
     
-    let allowedCharacters = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
+    let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
     
-    let ts = String(NSDate().timeIntervalSince1970)
+    let ts = String(Date().timeIntervalSince1970)
     
     let ss = String(format: "%@%@", sharedSecret, ts)
     
     let hash = SHA1(ss)
     
     let params:Dictionary<String,String> = [
+        "q":query,
         "api_key":apiKey,
         "ts": ts,
         "hash": hash,
-        "what":what,
+        //"what":"tag",
         "fileformat": "pdf", // seems that doesn't work
         "download":"0",
         //"sort":"latest",
@@ -63,36 +64,48 @@ func slideshareSearch( apiKey apiKey:String, sharedSecret:String, what:String ) 
     ]
     
     let queryString =  params.map { (key, value) -> String in
-        let percentEscapedKey = key.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacters)!
-        let percentEscapedValue = value.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacters)!
+        let percentEscapedKey = key.addingPercentEncoding(withAllowedCharacters: allowedCharacters)!
+        let percentEscapedValue = value.addingPercentEncoding(withAllowedCharacters: allowedCharacters)!
         return "\(percentEscapedKey)=\(percentEscapedValue)"
-        }.joinWithSeparator("&")
+        }.joined(separator: "&")
     
-    let requestURL = NSURL(string: String(format:"https://www.slideshare.net/api/2/search_slideshows?q=%@", queryString))!
+    let requestURL = URL(string: String(format:"https://www.slideshare.net/api/2/search_slideshows?%@", queryString))!
     
-    let request = NSURLRequest(URL: requestURL)
+    //print( "requestURL\n\(requestURL)!")
+
+    let request = URLRequest(url: requestURL)
     
-    return NSURLSession.sharedSession().rx_data(request)
+    return URLSession.shared.rx.data(request: request)
     
 }
 
 
 typealias Slideshow = Dictionary<String,String>
 
-class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
+class SlideshareItemsParser : NSObject, XMLParserDelegate {
     
     var currentData:(slide:Slideshow, attr:String?)?
     
     var subject = PublishSubject<Slideshow>()
     
     
-    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
-        let properties = ["title", "thumbnailsmallurl", "thumbnailxlargeurl", "thumbnailxxlargeurl", "created", "updated", "language", "format", "downloadurl"]
+        let properties = [
+            "title",
+            "thumbnailsmallurl",
+            "thumbnailxlargeurl",
+            "thumbnailxxlargeurl",
+            "created",
+            "updated",
+            "language",
+            "format",
+            "downloadurl"
+        ]
         
         if currentData != nil  {
             
-            currentData!.attr = properties.contains(elementName.lowercaseString) ? elementName.lowercaseString : nil
+            currentData!.attr = properties.contains(elementName.lowercased()) ? elementName.lowercased() : nil
 
         }
         else {
@@ -105,7 +118,7 @@ class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
         
     }
     
-    func parser(parser: NSXMLParser, foundCharacters string: String) {
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
         
         if let data = currentData, let attr = data.attr {
     
@@ -123,9 +136,9 @@ class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
     }
     
     
-    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         
-        let e = elementName.lowercaseString
+        let e = elementName.lowercased()
         
         if e == "slideshow", let data = currentData {
 
@@ -141,25 +154,27 @@ class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
         }
     }
     
-    func parserDidEndDocument(parser: NSXMLParser) {
+    func parserDidEndDocument(_ parser: XMLParser) {
         subject.onCompleted()
     }
     
-    func rx_parse( data:NSData! ) -> Observable<Slideshow> {
+    func rx_parse( _ data:Data! ) -> Observable<Slideshow> {
+        
+        //let ss = String(data: data!, encoding: .utf8) ; print( "parse \(ss)")
         
         return Observable.create{ observer in
             
-            let parser = NSXMLParser(data: data)
+            let parser = XMLParser(data: data)
             parser.delegate = self
             
             let subscription = self.subject.subscribe(observer);
             
             parser.parse()
 
-            return AnonymousDisposable {
+            return Disposables.create(with: {
                 //print("Disposed")
                 subscription.dispose()
-            }
+            })
         }
     }
 }

@@ -10,11 +10,11 @@
 extension  UILabel {
 
     
-    private func calculateSizeWithFont( font:UIFont,  text:NSString, constrainedToSize:CGSize ) -> CGSize {
+    fileprivate func calculateSizeWithFont( _ font:UIFont,  text:NSString, constrainedToSize:CGSize ) -> CGSize {
         let attributesDictionary:Dictionary<String,AnyObject> = [NSFontAttributeName:font]
         
-        let frame = text.boundingRectWithSize(constrainedToSize,
-                                              options: .UsesLineFragmentOrigin, //| .UsesFontLeading,
+        let frame = text.boundingRect(with: constrainedToSize,
+                                              options: .usesLineFragmentOrigin, //| .UsesFontLeading,
                                               attributes:attributesDictionary,
                                               context:nil)
     
@@ -29,31 +29,32 @@ extension  UILabel {
         // by a small amount, because otherwise the text would be, in some cases, drawn beyond label boundaries.
         
         guard let templateText = self.text else {
-            return CGSizeZero;
+            return CGSize.zero;
 
         }
     
         var newFont = self.font
     
-        let baseFont    = newFont.pointSize
-        var previousH   = newFont.pointSize
-        var fSize        = CGSizeZero
+        let baseFont    = newFont?.pointSize
+        var previousH   = newFont?.pointSize
+        var fSize        = CGSize.zero
         var step:CGFloat = 0.2
         let rect         = self.frame
     
         repeat  {
-            newFont  = UIFont.systemFontOfSize(baseFont+step)
+            newFont  = UIFont.systemFont(ofSize: baseFont!+step)
         
-            fSize   = self.calculateSizeWithFont( newFont, text:templateText, constrainedToSize:rect.size )
+            fSize   = self.calculateSizeWithFont( newFont!, text:templateText as NSString, constrainedToSize:rect.size )
         
-            if(fSize.height + newFont.lineHeight > rect.size.height ) {
+            if(fSize.height + (newFont?.lineHeight)! > rect.size.height ) {
         
-                newFont  =   UIFont.systemFontOfSize(previousH)
-                fSize   =   CGSizeMake(fSize.width, previousH)
+                newFont  =   UIFont.systemFont(ofSize: previousH!)
+                fSize   =   CGSize(width: fSize.width, height: previousH!)
                 break
             }
             else {
-                previousH = baseFont + step++
+                step += 1
+                previousH = baseFont! + step
             }
         
         } while (true);

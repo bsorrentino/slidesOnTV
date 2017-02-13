@@ -19,44 +19,44 @@ class SettingsBarView : UITabBar, UITabBarDelegate {
     // MARK: public implementation
     
     lazy var showConstraints:NSLayoutConstraint = {
-        let h =  self.heightAnchor.constraintEqualToConstant( 140.0)
+        let h =  self.heightAnchor.constraint( equalToConstant: 140.0)
         h.priority = 1000
         return h
     }()
     
     lazy var hideConstraints:NSLayoutConstraint = {
-        let h =  self.heightAnchor.constraintEqualToConstant(1.0)
+        let h =  self.heightAnchor.constraint(equalToConstant: 1.0)
         h.priority = 1000
         return h
     }()
     
-    func hide(animated animated:Bool, preferredFocusedView:UIView? = nil) {
+    func hide(animated:Bool, preferredFocusedView:UIView? = nil) {
         
-        guard !self.hideConstraints.active else {
+        guard !self.hideConstraints.isActive else {
             return
         }
         
-        self.showConstraints.active = false
-        self.hideConstraints.active = true
+        self.showConstraints.isActive = false
+        self.hideConstraints.isActive = true
         
         if animated {
-            UIView.animateWithDuration(0.5) { self.superview?.layoutIfNeeded() }
+            UIView.animate(withDuration: 0.5, animations: { self.superview?.layoutIfNeeded() }) 
         }
 
         hiddenSubject.onNext(( hidden:true, preferredFocusedView:preferredFocusedView) )
         
     }
     
-    func show(animated animated:Bool) {
-        guard !self.showConstraints.active else {
+    func show(animated:Bool) {
+        guard !self.showConstraints.isActive else {
             return
         }
         
-        self.hideConstraints.active = false
-        self.showConstraints.active = true
+        self.hideConstraints.isActive = false
+        self.showConstraints.isActive = true
         
         if animated {
-            UIView.animateWithDuration(0.5) { self.superview?.layoutIfNeeded() }
+            UIView.animate(withDuration: 0.5, animations: { self.superview?.layoutIfNeeded() }) 
         }
 
         hiddenSubject.onNext(( hidden:false, preferredFocusedView:self) )
@@ -65,7 +65,7 @@ class SettingsBarView : UITabBar, UITabBarDelegate {
 
     var active: Bool {
         get {
-            return self.showConstraints.active
+            return self.showConstraints.isActive
         }
     }
 
@@ -76,7 +76,7 @@ class SettingsBarView : UITabBar, UITabBarDelegate {
     }
     
     var rx_didPressItem: ControlEvent<Int> {
-        let first = self.rx_didSelectItem.map { (item:UITabBarItem) -> Int in
+        let first = super.rx.didSelectItem.map { (item:UITabBarItem) -> Int in
             return item.tag
         }
         
@@ -88,8 +88,7 @@ class SettingsBarView : UITabBar, UITabBarDelegate {
                 return 0
             }
         
-        let result =  [first, second]
-            .toObservable()
+        let result =  Observable.from([first, second])
             .merge()
             .scan( (key:0, step:0), accumulator: { (last, item:Int) -> (key:Int, step:Int) in
                 
@@ -103,9 +102,9 @@ class SettingsBarView : UITabBar, UITabBarDelegate {
             .filter { (item) -> Bool in
                 return item.step >= 2
             }
-            .doOnNext{ (key, step) in
+            .do( onNext: { (key, step) in
                 print( "key: \(key) step: \(step)")
-            }
+            })
             .map { (key, step) -> Int in
                 return key
             }
@@ -138,13 +137,13 @@ class SettingsBarView : UITabBar, UITabBarDelegate {
     //    return true
     //}
     
-    override func shouldUpdateFocusInContext(context: UIFocusUpdateContext) -> Bool {
+    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
         print( "UISettingsBarView.shouldUpdateFocusInContext:" )
-        return context.focusHeading == .Left || context.focusHeading == .Right
+        return context.focusHeading == .left || context.focusHeading == .right
         
     }
     
-    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator) {
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         print( "UISettingsBarView.didUpdateFocusInContext:\(context.focusHeading)" );
     }
     

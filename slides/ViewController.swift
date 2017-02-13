@@ -13,27 +13,27 @@ class ViewController: UIViewController {
     @IBOutlet weak var pushMe: UIButton!
     @IBOutlet weak var testLabel: UILabel!
     
-    private var expand = true
+    fileprivate var expand = true
     
-    @IBAction func animateLabel(sender: AnyObject) {
+    @IBAction func animateLabel(_ sender: AnyObject) {
         
         let frame = testLabel.frame;
         
         print( frame )
 
-        UIView.animateWithDuration(3.0,
+        UIView.animate(withDuration: 3.0,
                                    delay: 1.0,
-                                   options: [.CurveLinear, .AllowAnimatedContent],
+                                   options: [.curveLinear, .allowAnimatedContent],
                                    animations: {
                                     
                                     if( self.expand ) {
 
-                                        self.testLabel.transform = CGAffineTransformMakeScale(2.3, 1.5)
+                                        self.testLabel.transform = CGAffineTransform(scaleX: 2.3, y: 1.5)
                                         
                                     }
                                     else {
                                         
-                                        self.testLabel.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                                        self.testLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                                     }
         }) { (complete:Bool) in
             
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         
     }
     
-    private func addAndAnimateLabel() {
+    fileprivate func addAndAnimateLabel() {
     /*
         let test1Label = ARLabel(frame:CGRectMake(110, 100, 100, 50))
         test1Label.text = "TEST0\nTEST1"

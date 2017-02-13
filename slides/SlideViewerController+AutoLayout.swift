@@ -8,7 +8,7 @@
 
 import Foundation
 
-let layoutAttrs = (  cellSize: CGSizeMake(300,300),
+let layoutAttrs = (  cellSize: CGSize(width: 300,height: 300),
                      numCols: 1,
                      minSpacingForCell : CGFloat(25.0),
                      minSpacingForLine: CGFloat(50.0) )
@@ -30,23 +30,22 @@ extension UIPDFCollectionViewController {
         
         let pageViewWidth = view.frame.size.width - w
         
-        pageView.snp_updateConstraints { (make) -> Void in
-            
-            make.width.equalTo( pageViewWidth ).priorityRequired()
+        pageView.snp.updateConstraints { (make) -> Void in
+            make.width.equalTo( pageViewWidth ).priority( 1000 ) // required
         }
         
-        pagesView.snp_updateConstraints { (make) -> Void in
+        pagesView.snp.updateConstraints { (make) -> Void in
             
-            make.width.equalTo( w ).priorityHigh()
+            make.width.equalTo( w ).priority( 750 ) // high
         }
         
         
-        pageImageView.snp_updateConstraints { (make) in
+        pageImageView.snp.updateConstraints { (make) in
             
             let delta = pageViewWidth * 0.10
             let newWidth = pageViewWidth - delta
             
-            make.width.equalTo(newWidth).priorityRequired()
+            make.width.equalTo(newWidth).priority( 1000 ) // required
         }
         
         
