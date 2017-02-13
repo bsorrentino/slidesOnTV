@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import OHPDFImage
+//import OHPDFImage
 import RxSwift
 import RxBlocking
 
@@ -46,7 +46,7 @@ class slidesTests: XCTestCase {
 
         typealias SelectInfo = (key:Int, step:Int)
         
-        let stream = [1,2,1,1,2,3,3].toObservable()
+        let stream = Observable.from([1,2,1,1,2,3,3])
 
         let result = try stream.scan( (key:0, step:0), accumulator: { (last:SelectInfo, item:Int) -> SelectInfo in
             
@@ -54,7 +54,7 @@ class slidesTests: XCTestCase {
             
                 return result
             })
-            .doOnNext({ (item:SelectInfo) in
+            .do( onNext: { (item:SelectInfo) in
                 print("SCAN RESULT: \(item)")
             })
             .filter({ (item:SelectInfo) -> Bool in

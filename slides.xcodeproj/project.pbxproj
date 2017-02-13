@@ -805,17 +805,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxTests",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxBlocking",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxTests",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxTest",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxCocoa",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxBlocking",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxCocoa",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwift",
-					"$(PROJECT_DIR)/build/Debug-appletvos/OHPDFImage",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwiftExt",
-					"$(PROJECT_DIR)/build/Debug-appletvos",
 				);
 				INFOPLIST_FILE = slidesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -946,17 +939,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxTests",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxBlocking",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxTests",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxTest",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxCocoa",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxBlocking",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxCocoa",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwift",
-					"$(PROJECT_DIR)/build/Debug-appletvos/OHPDFImage",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwiftExt",
-					"$(PROJECT_DIR)/build/Debug-appletvos",
 				);
 				INFOPLIST_FILE = slidesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
