@@ -72,15 +72,15 @@ class slidesTests: XCTestCase {
     
     func testDownload() {
         
-        let asyncExpectation = expectationWithDescription("longRunningFunction")
+        let asyncExpectation = expectation(description: "longRunningFunction")
         
         let url = "http://publications.gbdirect.co.uk/c_book/thecbook.pdf"
         
-        let downloadURL = NSURL(string: url)
+        let downloadURL = URL(string: url)
         
         XCTAssertNotNil(downloadURL)
         
-        let documentDirectoryURL =  try! NSFileManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let documentDirectoryURL =  try! FileManager().url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
         XCTAssertNotNil(documentDirectoryURL)
         
@@ -98,7 +98,7 @@ class slidesTests: XCTestCase {
                 asyncExpectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(60) { error in
+        self.waitForExpectations(timeout: 60) { error in
             
             XCTAssertNil(error, "Something went horribly wrong")
             
@@ -108,7 +108,7 @@ class slidesTests: XCTestCase {
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measureBlock {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }
