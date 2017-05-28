@@ -24,7 +24,7 @@ class SearchStoryboardSegue: UIStoryboardSegue {
             
             let searchContainer = packagedSearchController( searchResultsController: searchResultsController )
 
-            searchNavigationController.setViewControllers([searchContainer], animated: true)
+            searchNavigationController.setViewControllers([searchContainer], animated: false)
             
 
             super.perform()

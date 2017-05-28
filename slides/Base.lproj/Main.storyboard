@@ -153,7 +153,7 @@
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="Search"/>
                                 <connections>
-                                    <segue destination="FdI-hl-j4w" kind="presentation" identifier="search" customClass="SearchStoryboardSegue" customModule="slides" customModuleProvider="target" id="1LB-py-oD7"/>
+                                    <segue destination="FdI-hl-j4w" kind="presentation" identifier="search" customClass="SearchStoryboardSegue" customModule="slides" customModuleProvider="target" modalTransitionStyle="flipHorizontal" id="1LB-py-oD7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qVF-Y2-tBh">
