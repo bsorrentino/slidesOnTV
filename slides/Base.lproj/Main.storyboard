@@ -163,7 +163,7 @@
                                     <constraint firstAttribute="height" constant="130" id="fws-sv-idY"/>
                                 </constraints>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                <state key="normal" title="Preferences"/>
+                                <state key="normal" title="Favourites"/>
                             </button>
                         </subviews>
                         <constraints>
