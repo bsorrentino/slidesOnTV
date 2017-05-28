@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="0eX-xm-M2A">
+    <device id="appleTV" orientation="landscape">
+        <adaptation id="light"/>
+    </device>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="fMC-A8-57C">
+            <objects>
+                <navigationController id="FdI-hl-j4w" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="i15-sm-PYu">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="145"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="z98-6z-T2C" kind="relationship" relationship="rootViewController" id="lK3-rO-zUJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GjQ-5s-crd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1109" y="557"/>
+        </scene>
         <!--Search Slides View Controller-->
         <scene sceneID="Wk3-GZ-6lP">
             <objects>
@@ -30,6 +49,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VGU-w4-XSW">
+                                            <rect key="frame" x="25" y="13" width="500" height="350"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="500" id="2US-PI-tKE"/>
                                                 <constraint firstAttribute="height" constant="350" id="hXJ-sU-Apr"/>
@@ -51,13 +71,14 @@
                             <outlet property="delegate" destination="z98-6z-T2C" id="ETE-z0-XST"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" id="Mpx-OZ-SNb"/>
                     <connections>
                         <segue destination="3Li-gA-Wtf" kind="show" identifier="showPresentation" id="0AE-4I-NyF"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obw-uW-T4U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="195" y="-492"/>
+            <point key="canvasLocation" x="1077" y="71"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -72,6 +93,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r8N-Wn-L1s">
+                                <rect key="frame" x="846" y="497" width="229" height="86"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="Push Me"/>
                                 <connections>
@@ -79,7 +101,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6k-4J-PNR">
-                                <frame key="frameInset" minX="863" minY="180" width="195" height="86"/>
+                                <rect key="frame" x="863" y="180" width="195" height="86"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="Button"/>
@@ -88,7 +110,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TEST 1 TEST TEST 2 TEST" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpb-8C-g7g">
-                                <frame key="frameInset" minX="403" minY="174" width="152" height="98"/>
+                                <rect key="frame" x="403" y="174" width="152" height="98"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -108,7 +130,55 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1060" y="1440"/>
+            <point key="canvasLocation" x="-2255" y="3803"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="w3e-IU-T7I">
+            <objects>
+                <viewController id="0eX-xm-M2A" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="709-Zk-DLE"/>
+                        <viewControllerLayoutGuide type="bottom" id="fUh-YJ-8lz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zxx-gF-rQT">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bAH-PL-ucG">
+                                <rect key="frame" x="817" y="363" width="287" height="130"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="RyV-mv-1iU"/>
+                                    <constraint firstAttribute="width" constant="287" id="xQG-9I-cvk"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Search"/>
+                                <connections>
+                                    <segue destination="FdI-hl-j4w" kind="presentation" identifier="search" customClass="SearchStoryboardSegue" customModule="slides" customModuleProvider="target" id="1LB-py-oD7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qVF-Y2-tBh">
+                                <rect key="frame" x="817" y="595" width="287" height="130"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="287" id="IX4-Cu-Hxu"/>
+                                    <constraint firstAttribute="height" constant="130" id="fws-sv-idY"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                <state key="normal" title="Preferences"/>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="qVF-Y2-tBh" firstAttribute="width" secondItem="bAH-PL-ucG" secondAttribute="width" id="6BP-Ik-sdX"/>
+                            <constraint firstItem="bAH-PL-ucG" firstAttribute="centerX" secondItem="zxx-gF-rQT" secondAttribute="centerX" id="I1J-gX-ruZ"/>
+                            <constraint firstItem="qVF-Y2-tBh" firstAttribute="leading" secondItem="bAH-PL-ucG" secondAttribute="leading" id="e8t-Ep-vEx"/>
+                            <constraint firstItem="bAH-PL-ucG" firstAttribute="top" secondItem="709-Zk-DLE" secondAttribute="bottom" constant="363" id="hVL-Fa-9Ig"/>
+                            <constraint firstItem="qVF-Y2-tBh" firstAttribute="height" secondItem="bAH-PL-ucG" secondAttribute="height" id="hfI-tS-LFn"/>
+                            <constraint firstItem="qVF-Y2-tBh" firstAttribute="top" secondItem="bAH-PL-ucG" secondAttribute="bottom" constant="102" id="wFy-Te-GUK"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2n2-Z2-g3w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3228" y="-492"/>
         </scene>
         <!--Collection View Controller-->
         <scene sceneID="hd5-36-nR7">
@@ -123,6 +193,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z" customClass="ThumbnailsView" customModule="slides" customModuleProvider="target">
+                                <rect key="frame" x="20" y="145" width="32" height="935"/>
                                 <color key="backgroundColor" red="0.90350341796875" green="0.90350341796875" blue="0.90350341796875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -151,11 +222,14 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view" customClass="PageView" customModule="slides" customModuleProvider="target">
+                                <rect key="frame" x="57" y="145" width="1858" height="935"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsh-Gb-3mi">
+                                        <rect key="frame" x="10" y="0.0" width="1838" height="935"/>
                                         <gestureRecognizers/>
                                     </imageView>
                                     <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="1858" height="140"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <items>
                                             <tabBarItem tag="1" title="Toggle Fullscreen" id="J0v-Ag-eYI"/>
@@ -200,7 +274,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1U8-9K-Gmt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2024" y="1949"/>
+            <point key="canvasLocation" x="2968" y="3586"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -209,6 +283,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xUO-Iz-NFC"/>
+        <segue reference="0AE-4I-NyF"/>
     </inferredMetricsTieBreakers>
 </document>

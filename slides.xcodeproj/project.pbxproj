@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FF9F2D13CDF8A9F545C23BD /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F461D52AA3D9A66BFAC24D /* Pods_slides.framework */; };
+		591CB496FE74875BBC05B96F /* Pods_slidesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6807EB71A8C645CEB5979B8 /* Pods_slidesUITests.framework */; };
+		5F0C443E1EDB607D00B098A1 /* SearchStoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */; };
+		5F35BE3E1ED0941D00B644B1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */; };
 		5F3BF0021D8688850073EFCB /* SlideViewerController+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */; };
 		5F3E17321DB8C9EE00AED17C /* OHPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */; };
 		5F3E17331DB8C9EE00AED17C /* OHPDFPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172D1DB8C9EE00AED17C /* OHPDFPage.m */; };
@@ -40,6 +44,7 @@
 		5FD9A2E11CAD195A0065BE03 /* slidesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2E01CAD195A0065BE03 /* slidesTests.swift */; };
 		5FD9A2EC1CAD195A0065BE03 /* slidesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2EB1CAD195A0065BE03 /* slidesUITests.swift */; };
 		5FF0DE0D1D99B033001CEC34 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF0DE0C1D99B033001CEC34 /* PageView.swift */; };
+		99218CF361536F7ED9A34114 /* Pods_slidesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 405EB764B71F02D54D2B3B5E /* Pods_slidesTests.framework */; };
 		A06B6D531CBFA23900CBE220 /* slideshare.plist in Resources */ = {isa = PBXBuildFile; fileRef = A06B6D521CBFA23900CBE220 /* slideshare.plist */; };
 		A0889C3C1CE8F4430050094D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A0889C3B1CE8F4430050094D /* Settings.bundle */; };
 		A0C8B3E71CCCC8CF007352B6 /* ARLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8B3E61CCCC8CF007352B6 /* ARLabel.swift */; };
@@ -67,7 +72,10 @@
 		06BA7C51FC30362AA6716B11 /* Pods-slidesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		29922D394E25E590CB68BD7B /* Settings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = slides/Settings.swift; sourceTree = SOURCE_ROOT; };
 		3CADED520A0132122567DBAF /* Pods-slidesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests.release.xcconfig"; sourceTree = "<group>"; };
+		405EB764B71F02D54D2B3B5E /* Pods_slidesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B74BAF74AE103B2AC4E9103 /* Pods-slides.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.release.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.release.xcconfig"; sourceTree = "<group>"; };
+		5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStoryboardSegue.swift; sourceTree = "<group>"; };
+		5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SlideViewerController+AutoLayout.swift"; sourceTree = "<group>"; };
 		5F3E17291DB8C9EE00AED17C /* OHPDFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDFDocument.h; path = OHPDFImage/OHPDFDocument.h; sourceTree = "<group>"; };
 		5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OHPDFDocument.m; path = OHPDFImage/OHPDFDocument.m; sourceTree = "<group>"; };
@@ -125,7 +133,9 @@
 		A0889C3B1CE8F4430050094D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = slides/Settings.bundle; sourceTree = "<group>"; };
 		A0C8B3E61CCCC8CF007352B6 /* ARLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARLabel.swift; sourceTree = "<group>"; };
 		C555331529587B8A9D9CCD2B /* Pods-slides.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.debug.xcconfig"; sourceTree = "<group>"; };
+		C5F461D52AA3D9A66BFAC24D /* Pods_slides.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slides.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD0C312159396BDFEFD44CE4 /* Pods-slidesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D6807EB71A8C645CEB5979B8 /* Pods_slidesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +150,7 @@
 				5F88A55F1E521170007E3FFC /* SettingsKit.framework in Frameworks */,
 				5F88A5601E521170007E3FFC /* SnapKit.framework in Frameworks */,
 				5F3E18061DB91D3200AED17C /* CloudKit.framework in Frameworks */,
+				0FF9F2D13CDF8A9F545C23BD /* Pods_slides.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99218CF361536F7ED9A34114 /* Pods_slidesTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				591CB496FE74875BBC05B96F /* Pods_slidesUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +291,8 @@
 				5FB37BF41D7352140081D8C4 /* DetailView.xib */,
 				5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */,
 				5FB609EB1DA03CB000051347 /* SlideViewerController+Fullpage.swift */,
+				5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */,
+				5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";
@@ -328,6 +343,9 @@
 				5F88A5591E521170007E3FFC /* SettingsKit.framework */,
 				5F88A55A1E521170007E3FFC /* SnapKit.framework */,
 				5F829C6E1DB6CE2F0058EA03 /* CloudKit.framework */,
+				C5F461D52AA3D9A66BFAC24D /* Pods_slides.framework */,
+				405EB764B71F02D54D2B3B5E /* Pods_slidesTests.framework */,
+				D6807EB71A8C645CEB5979B8 /* Pods_slidesUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -647,8 +665,10 @@
 				5FB6D3861CAEF8B100D7AA80 /* SlideViewerController.swift in Sources */,
 				5F3E17331DB8C9EE00AED17C /* OHPDFPage.m in Sources */,
 				5F3BF0021D8688850073EFCB /* SlideViewerController+AutoLayout.swift in Sources */,
+				5F0C443E1EDB607D00B098A1 /* SearchStoryboardSegue.swift in Sources */,
 				5F3E17321DB8C9EE00AED17C /* OHPDFDocument.m in Sources */,
 				5F57DE0B1CC3DCCF00D5F1B8 /* TWRProgressView.m in Sources */,
+				5F35BE3E1ED0941D00B644B1 /* MainViewController.swift in Sources */,
 				C3F8E7A31B2D198534D793D2 /* Settings.swift in Sources */,
 				5F3E17341DB8C9EE00AED17C /* OHVectorImage.m in Sources */,
 				5FF0DE0D1D99B033001CEC34 /* PageView.swift in Sources */,
