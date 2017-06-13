@@ -64,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         if let path = Bundle.main.path(forResource: "rx1", ofType:"pdf") {
 
-            controller.documentLocation = URL(fileURLWithPath: path)
+            controller.documentInfo?.location = URL(fileURLWithPath: path)
         }
 
         return controller

@@ -92,11 +92,19 @@ class UIPDFPageCell : UICollectionViewCell {
 }
 
 
+enum SettingsBarItem : Int {
+    
+    case UNKNOWN = 0
+    case FULL_SCREEN = 1
+    case ADD_TO_FAVORITE = 2
+    
+}
 //
 //  MARK: UIPDFCollectionViewController
 //
 class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
- 
+    
+
     static let storyboardIdentifier = "UIPDFCollectionViewController"
     
     @IBOutlet weak var pagesView: ThumbnailsView!
@@ -110,11 +118,13 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     fileprivate var pressesSubject = PublishSubject<UIPress>()
     fileprivate let disposeBag = DisposeBag()
 
-    var documentLocation:URL? {
+    var documentInfo:DocumentInfo? {
         didSet {
-            doc = OHPDFDocument(url: documentLocation)
-            if( pagesView != nil ) {
-                pagesView.reloadData()    
+            if let location = documentInfo?.location {
+                doc = OHPDFDocument(url: location)
+                if( pagesView != nil ) {
+                    pagesView.reloadData()
+                }
             }
         }
     }
@@ -135,8 +145,19 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     // MARK: PLAY/PAUSE SLIDES
     
+    
     fileprivate var _playPauseSlideShow:Disposable?
     fileprivate var _indexPathForPreferredFocusedView:IndexPath?
+
+    fileprivate var currentPageIndex:Int {
+        get {
+            guard let index = self._indexPathForPreferredFocusedView else {
+                return 1
+            }
+            return index.row
+            
+        }
+    }
     
     @IBAction func playPauseSlideShow() {
 
@@ -219,22 +240,52 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
         settingsBar.hide(animated:false, preferredFocusedView: pageView)
         
-        self.settingsBar.rx_didPressItem
-            .asDriver()
-            .filter({ (_:Int) -> Bool in
-                return self.settingsBar.active
-            })
-            .drive( onNext: { (item:Int ) in
-                print( "select \(item)")
+        
+        let rxFavoriteStoreDeferred = Completable.deferred { () -> PrimitiveSequence<CompletableTrait, Never> in
+            guard let documentInfo = self.documentInfo else {
+                return Completable.empty()
+            }
                 
-                switch item {
-                case 1: // toggle fullscreen
-                    self.fullpage = !self.fullpage
-                    break;
-                default:
-                    break
+            return rxFavoriteStore(data: documentInfo).do( onCompleted: {
+
+                print("Favorite stored")
+                self.settingsBar.hide(animated: true, preferredFocusedView: self.pageView)
+                
+            })
+                
+        
+        }
+        
+        let rxToggleFullPageDeferred = Completable.deferred { () -> PrimitiveSequence<CompletableTrait, Never> in
+            
+            self.fullpage = !self.fullpage
+
+            return Completable.empty()
+        }
+        
+        self.settingsBar.rx_didPressItem
+            .filter { (_:Int) -> Bool in self.settingsBar.active }
+            .map { (item:Int) -> SettingsBarItem  in
+                guard let value = SettingsBarItem(rawValue: item) else {
+                    return .UNKNOWN
                 }
-        }).addDisposableTo(disposeBag)
+                return value
+            }
+            .observeOn(MainScheduler.asyncInstance)
+            .flatMap { (item ) -> Completable in
+                switch item {
+                case .FULL_SCREEN: // toggle fullscreen
+                    return rxToggleFullPageDeferred;
+                case .ADD_TO_FAVORITE:
+                    return rxFavoriteStoreDeferred;
+                default:
+                    return Completable.empty()
+                }
+            }
+            .subscribe( onCompleted:{
+                print( "==> COMPLETED" )
+            })
+            .addDisposableTo(disposeBag)
 
         settingsBar.rx_didHidden.subscribe( onNext: { [weak self] (hidden:Bool,preferredFocusedView:UIView?) in
             

@@ -9,6 +9,11 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+class DocumentField {
+    
+    static let Title = "title"
+    static let DownloadUrl = "downloadurl"
+}
 
 class Scheduler {
     
@@ -202,6 +207,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     }
 }
 
+typealias DocumentInfo = ( location:URL, url:URL, title:String )
 
 class DetailView : UIView {
     
@@ -323,13 +329,13 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     let searchResultsUpdatingSubject = PublishSubject<String>()
 
     
-    func downloadPresentationFormURL( _ downloadURL:URL, relatedCell:SearchSlideCollectionViewCell ) throws {
+    func downloadPresentationFormURL( _ downloadURL:URL, documentTitle:String?, relatedCell:SearchSlideCollectionViewCell ) throws {
         
         let documentDirectoryURL =  try FileManager().url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
        
         relatedCell.showProgress()
         
-        TCBlobDownloadManager.sharedInstance.downloadFileAtURL(downloadURL,
+        let _ = TCBlobDownloadManager.sharedInstance.downloadFileAtURL(downloadURL,
                                                                toDirectory: documentDirectoryURL,
                                                                withName: "presentation.pdf",
                                                                progression:
@@ -350,9 +356,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
                 }
                 else {
                     
-                    //print( "Download completed at location \(location)")
-                    
-                    self.performSegue(withIdentifier: "showPresentation", sender: location)
+                    self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:location!, url:downloadURL, title:documentTitle!) )
                 }
                 relatedCell.resetProgress()
             }
@@ -431,7 +435,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
                         
                         let title = slide["title"]
                         
-                        print( "\(title)")
+                        print( "\(title ?? "title is nil!")")
                         
                         self.collectionView?.reloadData()
                     //}
@@ -449,7 +453,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         // SETTINGS
         
         Settings.subscribe(setting: .SearchHMargins) { (newValue) -> Void in
-            print("Set Horizontal Margin was changed to \(newValue)")
+            print("Set Horizontal Margin was changed to \(String(describing: newValue))")
             self.collectionView?.reloadData()
         }
 
@@ -547,13 +551,13 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         
         let item:Slideshow = filteredDataItems[indexPath.row]
        
-        if let url = item["downloadurl"]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)  {
+        if let url = item[DocumentField.DownloadUrl]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)  {
             
             print( "\(url)")
             
             if let downloadURL = URL(string:url) {
                 do {
-                    try downloadPresentationFormURL( downloadURL, relatedCell:cell)
+                    try downloadPresentationFormURL( downloadURL, documentTitle: item[DocumentField.Title], relatedCell:cell)
                 }
                 catch {
                     print( "error downloading url")
@@ -575,11 +579,11 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     
     override open func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let location = sender as? URL {
+        if let info = sender as? DocumentInfo {
             
             if let destinationViewController = segue.destination as? UIPDFCollectionViewController {
                 
-                destinationViewController.documentLocation = location
+                destinationViewController.documentInfo = info
 
             }
         }
