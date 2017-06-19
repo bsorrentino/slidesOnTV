@@ -546,7 +546,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     
     func indexPathForPreferredFocusedView(in collectionView: UICollectionView) -> IndexPath? {
-        print("collectionView.indexPathForPreferredFocusedViewInCollectionView: \(_indexPathForPreferredFocusedView)")
+        print("collectionView.indexPathForPreferredFocusedViewInCollectionView: \(String(describing: _indexPathForPreferredFocusedView))")
         
         // Return index path for selected show that you will be playing
         return _indexPathForPreferredFocusedView

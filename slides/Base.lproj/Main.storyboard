@@ -256,11 +256,12 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="5R8-Bp-FJq" id="q9q-d1-O4P"/>
+                        <segue destination="3Li-gA-Wtf" kind="show" identifier="showFavoritePresentation" id="V1I-rp-vwY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RQF-sP-SVN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3883" y="2786"/>
+            <point key="canvasLocation" x="-3883" y="2697"/>
         </scene>
         <!--Collection View Controller-->
         <scene sceneID="hd5-36-nR7">
@@ -369,6 +370,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xUO-Iz-NFC"/>
+        <segue reference="V1I-rp-vwY"/>
     </inferredMetricsTieBreakers>
 </document>

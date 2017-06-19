@@ -24,9 +24,11 @@ func rxFavoriteStore( data:DocumentInfo ) -> Completable {
     
     return Completable.create { (completable) -> Disposable in
         
-       let key = NSUUID().uuidString
+       let key = data.id //NSUUID().uuidString
         
-       NSUbiquitousKeyValueStore.default().set( [ "url":"\(data.url)", "title":data.title ], forKey: key )
+       NSUbiquitousKeyValueStore.default().set(
+        [ "dummy":"", "title":data.title ],
+        forKey: key )
         
         completable(.completed)
         

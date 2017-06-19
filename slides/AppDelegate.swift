@@ -8,6 +8,10 @@
 
 import UIKit
 
+// Make String confrom to Error protocol
+extension String: Error {}
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

@@ -44,7 +44,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                 return;
             }
             
-            if let thumbnail = item[DocumentField.Thumbnailxlargeurl]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
+            if let thumbnail = item[DocumentField.ThumbnailXL]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
                 
                 let s = "http:\(thumbnail)"
                 
@@ -202,7 +202,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     }
 }
 
-typealias DocumentInfo = ( location:URL, url:URL, title:String )
+typealias DocumentInfo = ( location:URL, id:String, title:String )
 
 class DetailView : UIView {
     
@@ -324,7 +324,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     let searchResultsUpdatingSubject = PublishSubject<String>()
 
     
-    func downloadPresentationFormURL( _ downloadURL:URL, documentTitle:String?, relatedCell:SearchSlideCollectionViewCell ) throws {
+    func downloadPresentationFormURL( _ downloadURL:URL, item:Slideshow, relatedCell:SearchSlideCollectionViewCell ) throws {
         
         let documentDirectoryURL =  try FileManager().url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
        
@@ -351,7 +351,10 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
                 }
                 else {
                     
-                    self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:location!, url:downloadURL, title:documentTitle!) )
+                    let title = item[DocumentField.Title] ?? ""
+                    let id = item[DocumentField.ID] ?? "unknown" // raise error
+                    
+                    self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:location!, id:id, title:title) )
                 }
                 relatedCell.resetProgress()
             }
@@ -552,7 +555,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
             
             if let downloadURL = URL(string:url) {
                 do {
-                    try downloadPresentationFormURL( downloadURL, documentTitle: item[DocumentField.Title], relatedCell:cell)
+                    try downloadPresentationFormURL( downloadURL, item: item, relatedCell:cell)
                 }
                 catch {
                     print( "error downloading url")

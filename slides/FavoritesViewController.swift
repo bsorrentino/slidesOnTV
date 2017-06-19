@@ -52,7 +52,28 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
          */
         
         let itemSelected = tableView.rx.itemSelected
-        let valueSelected = tableView.rx.modelSelected(FavoriteData.self)
+        
+        let modelSelected =
+            tableView.rx.modelSelected(FavoriteData.self)
+        
+        let valueSelected =  modelSelected
+            .flatMap { (element) -> Observable<Slideshow> in
+                
+                let getSlideData =  rxSlideshareCredentials()
+                    .flatMap { (credentials) in
+                        rxSlideshareGet(credentials:credentials, id: element.key)
+                    }
+                
+                
+                return getSlideData.asObservable()
+                    .flatMap { (data:Data) -> Observable<Slideshow> in
+                        
+                        let slidehareItemsParser = SlideshareItemsParser()
+                        
+                        return slidehareItemsParser.rx_parse(data)
+                }
+
+            }
         
         Observable.combineLatest( itemSelected, valueSelected )
             .subscribe { [weak self] (value) in
@@ -62,11 +83,11 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
                 }
                 if let cell = self?.tableView?.cellForRow(at: element.0) as? UIFavoriteCell {
                     
-                    let data:FavoriteData = element.1
+                    let data:Slideshow = element.1
                     
                     do {
                         
-                    try self?.downloadPresentationFormURL( element:data, relatedCell:cell )
+                    try self?.downloadPresentationFormURL( item:data, relatedCell:cell )
                     
                     }
                     catch( let e  ) {
@@ -119,19 +140,18 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
     //
     // MARK: Download and Show Presentation
     //
-    func downloadPresentationFormURL( element:FavoriteData, relatedCell:UIFavoriteCell ) throws {
-        guard let data = element.value as? [String:String],
-            let url = data["url"],
-            let documentTitle = data["title"]
+    func downloadPresentationFormURL( item:Slideshow, relatedCell:UIFavoriteCell ) throws {
+        guard let documentId = item[DocumentField.ID],
+            let documentTitle = item[DocumentField.Title]
             else
         {
                 return
         }
         
-        guard let downloadURL = URL( string:url ) else {
+        guard let url = item[DocumentField.DownloadUrl]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), let downloadURL = URL(string:url) else {
             return
         }
-        
+
         let documentDirectoryURL =  try FileManager().url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         
         
@@ -140,12 +160,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
                                                                        withName: "presentation.pdf",
                                                                        progression:
             { (progress, totalBytesWritten, totalBytesExpectedToWrite) in
-                
-                //let percentage = round( Float((totalBytesWritten * 100)/totalBytesExpectedToWrite) )
-                //print( "\(progress) - \(totalBytesWritten) - \(totalBytesExpectedToWrite) %: \(percentage)" )
-                //relatedCell.setProgress( percentage )
-                
-                //relatedCell.setProgress(progress)
                 
                 if let progressView = relatedCell.selectedBackgroundView as? UIProgressView {
                     
@@ -162,7 +176,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
             }
             else {
                 
-                self.performSegue(withIdentifier: "showFavoritePresentation", sender: DocumentInfo( location:location!, url:downloadURL, title:documentTitle) )
+                self.performSegue(withIdentifier: "showFavoritePresentation", sender: DocumentInfo( location:location!, id:documentId, title:documentTitle) )
             }
         }
         
@@ -170,4 +184,18 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         
     }
     
+    // MARK: Segue
+    
+    override open func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let info = sender as? DocumentInfo {
+            
+            if let destinationViewController = segue.destination as? UIPDFCollectionViewController {
+                
+                destinationViewController.documentInfo = info
+                
+            }
+        }
+    }
+
 }

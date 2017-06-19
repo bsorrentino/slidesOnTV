@@ -16,9 +16,28 @@ class DocumentField {
     static let DownloadUrl = "downloadurl"
     static let ID = "id"
     static let URL = "url" // permalink
+    static let Created = "created"
     static let Updated = "updated"
     static let Format = "format"
-    static let Thumbnailxlargeurl = "thumbnailxlargeurl"
+    static let Language = "language"
+    static let ThumbnailS = "thumbnailsmallurl"
+    static let ThumbnailXL = "thumbnailxlargeurl"
+    static let ThumbnailXXL = "thumbnailxxlargeurl"
+    
+    static let names = [
+        Title,
+        DownloadUrl,
+        ID,
+        URL,
+        Updated,
+        Format,
+        ThumbnailXL,
+        ThumbnailXXL,
+        ThumbnailS,
+        Created,
+        Language
+    ]
+
 }
 
 
@@ -52,42 +71,99 @@ private func SHA1( _ s:String! ) -> String {
     return hexBytes.joined(separator: "")
 }
 
-func rxSlideshareGet( apiKey:String, sharedSecret:String, id:String ) -> Single<Data> {
-    
-    return Single.never()
-}
+private let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
 
-func rxSlideshareSearch( apiKey:String, sharedSecret:String, query:String ) ->  Observable<Data> {
-    
-    let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
+private func prepareQueryString( apiKey:String,
+                      sharedSecret:String,
+                      _ params:[String:String] ) -> String
+{
     
     let ts = String(Date().timeIntervalSince1970)
     
     let ss = String(format: "%@%@", sharedSecret, ts)
     
-    let hash = SHA1(ss)
-    
-    let params:Dictionary<String,String> = [
-        "q":query,
+    let hash =  SHA1(ss)
+
+    var result = [
         "api_key":apiKey,
-        "ts": ts,
-        "hash": hash,
-        //"what":"tag",
-        "fileformat": "pdf", // seems that doesn't work
-        "download":"0",
-        //"sort":"latest",
-        //"file_type":"presentations"
+        "ts":ts,
+        "hash":hash
     ]
+    for (k, v) in params {
+        result[k] = v
+    }
     
-    let queryString =  params.map { (key, value) -> String in
+    let queryString =  result.map { (key, value) -> String in
         let percentEscapedKey = key.addingPercentEncoding(withAllowedCharacters: allowedCharacters)!
         let percentEscapedValue = value.addingPercentEncoding(withAllowedCharacters: allowedCharacters)!
         return "\(percentEscapedKey)=\(percentEscapedValue)"
         }.joined(separator: "&")
+
+    return queryString
+}
+
+typealias SlideshareCredentials = (apikey:String, ssecret:String)
+
+func rxSlideshareCredentials() -> Single<SlideshareCredentials> {
+    guard let bundlePath = Bundle.main.path(forResource: "slideshare", ofType: "plist") else {
+        return Single.error( "cannot find bundle 'slideshare.plist'")
+    }
     
-    let requestURL = URL(string: String(format:"https://www.slideshare.net/api/2/search_slideshows?%@", queryString))!
+    guard let credentials = NSDictionary(contentsOfFile: bundlePath ) else {
+        return Single.error( "cannot load credential from bundle 'slideshare.plist'")
+    }
     
-    //print( "requestURL\n\(requestURL)!")
+    guard let apikey = credentials["apiKey"] as? String else {
+        return Single.error( "cannot find 'apiKey' in bundle 'slideshare.plist'")
+        
+    }
+    guard let ssecret = credentials["sharedSecret"]  as? String else {
+        return Single.error( "cannot find 'sharedSecret' in bundle 'slideshare.plist'")
+        
+    }
+    
+    return Single.just( (apikey:apikey, ssecret:ssecret))
+
+}
+
+func rxSlideshareGet( credentials:SlideshareCredentials, id:String ) -> Single<Data> {
+    
+    let qs = prepareQueryString( apiKey:credentials.apikey,
+                                 sharedSecret:credentials.ssecret,
+                            [
+                                    "slideshow_id":id,
+                                    "slideshow_url":""
+                            ])
+    
+    
+    guard let requestURL = URL(string: String(format:"https://www.slideshare.net/api/2/get_slideshow?%@", qs)) else
+    {
+        return Single.error( "error creating requestURL" )
+    }
+    
+    
+    let request = URLRequest(url: requestURL)
+    
+    return URLSession.shared.rx.data(request: request).asSingle()
+}
+
+func rxSlideshareSearch( apiKey:String, sharedSecret:String, query:String ) ->  Observable<Data> {
+    
+    let qs = prepareQueryString( apiKey:apiKey,
+                                 sharedSecret:sharedSecret,
+                                 [
+                                    "q":query,
+                                    //"what":"tag",
+                                    "fileformat": "pdf", // seems that doesn't work
+                                    "download":"0",
+                                    //"sort":"latest",
+                                    //"file_type":"presentations"
+                                ])
+    
+    guard let requestURL = URL(string: String(format:"https://www.slideshare.net/api/2/search_slideshows?%@", qs)) else
+    {
+        return Observable.error( "error creating requestURL" )
+    }
 
     let request = URLRequest(url: requestURL)
     
@@ -96,7 +172,7 @@ func rxSlideshareSearch( apiKey:String, sharedSecret:String, query:String ) ->  
 }
 
 
-typealias Slideshow = Dictionary<String,String>
+typealias Slideshow = [String:String]
 
 class SlideshareItemsParser : NSObject, XMLParserDelegate {
     
@@ -107,21 +183,10 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
-        let properties = [
-            "title",
-            "thumbnailsmallurl",
-            "thumbnailxlargeurl",
-            "thumbnailxxlargeurl",
-            "created",
-            "updated",
-            "language",
-            "format",
-            "downloadurl"
-        ]
         
         if currentData != nil  {
             
-            currentData!.attr = properties.contains(elementName.lowercased()) ? elementName.lowercased() : nil
+            currentData!.attr = DocumentField.names.contains(elementName.lowercased()) ? elementName.lowercased() : nil
 
         }
         else {
