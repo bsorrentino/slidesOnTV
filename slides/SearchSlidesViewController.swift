@@ -9,11 +9,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class DocumentField {
-    
-    static let Title = "title"
-    static let DownloadUrl = "downloadurl"
-}
 
 class Scheduler {
     
@@ -49,7 +44,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                 return;
             }
             
-            if let thumbnail = item["thumbnailxlargeurl"]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
+            if let thumbnail = item[DocumentField.Thumbnailxlargeurl]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
                 
                 let s = "http:\(thumbnail)"
                 
@@ -284,12 +279,12 @@ class DetailView : UIView {
         
         if let item = item {
             
-            if let title = item["title"]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
+            if let title = item[DocumentField.Title]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
                 
                 self.titleLabel.text = title
             }
             
-            if let updated = item["updated"] {
+            if let updated = item[DocumentField.Updated] {
                 self.updatedLabel.text = updated
             }
         }
@@ -404,7 +399,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         .debug("slideshareSearch")
         .flatMap( {  (filterString) -> Observable<Data> in
         
-            return slideshareSearch(
+            return rxSlideshareSearch(
                         apiKey: credentials["apiKey"]! as! String,
                         sharedSecret: credentials["sharedSecret"] as! String,
                         query: filterString )
@@ -420,7 +415,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         .debug( "subscribe")
         .filter({ (slide:Slideshow) -> Bool in
             print( "\(slide)" )
-            if let format = slide["format"]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
+            if let format = slide[DocumentField.Format]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
                 return format.lowercased()=="pdf"
             }
             return true
@@ -433,7 +428,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
                         
                         self.filteredDataItems.append(slide)
                         
-                        let title = slide["title"]
+                        let title = slide[DocumentField.Title]
                         
                         print( "\(title ?? "title is nil!")")
                         

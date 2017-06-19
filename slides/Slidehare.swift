@@ -10,6 +10,17 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+class DocumentField {
+    
+    static let Title = "title"
+    static let DownloadUrl = "downloadurl"
+    static let ID = "id"
+    static let URL = "url" // permalink
+    static let Updated = "updated"
+    static let Format = "format"
+    static let Thumbnailxlargeurl = "thumbnailxlargeurl"
+}
+
 
 extension String {
     func htmlDecoded()->String {
@@ -41,7 +52,12 @@ private func SHA1( _ s:String! ) -> String {
     return hexBytes.joined(separator: "")
 }
 
-func slideshareSearch( apiKey:String, sharedSecret:String, query:String ) ->  Observable<Data> {
+func rxSlideshareGet( apiKey:String, sharedSecret:String, id:String ) -> Single<Data> {
+    
+    return Single.never()
+}
+
+func rxSlideshareSearch( apiKey:String, sharedSecret:String, query:String ) ->  Observable<Data> {
     
     let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
     
