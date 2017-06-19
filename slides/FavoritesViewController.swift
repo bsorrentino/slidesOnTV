@@ -121,8 +121,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
     //
     func downloadPresentationFormURL( element:FavoriteData, relatedCell:UIFavoriteCell ) throws {
         guard let data = element.value as? [String:String],
-            let url = data["url"] as? String,
-            let documentTitle = data["title"] as? String
+            let url = data["url"],
+            let documentTitle = data["title"]
             else
         {
                 return
@@ -146,6 +146,12 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
                 //relatedCell.setProgress( percentage )
                 
                 //relatedCell.setProgress(progress)
+                
+                if let progressView = relatedCell.selectedBackgroundView as? UIProgressView {
+                    
+                    print( "\(progress)")
+                    progressView.progress = progress
+                }
         })
         { (error, location) in
             
@@ -156,9 +162,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
             }
             else {
                 
-                self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:location!, url:downloadURL, title:documentTitle) )
+                self.performSegue(withIdentifier: "showFavoritePresentation", sender: DocumentInfo( location:location!, url:downloadURL, title:documentTitle) )
             }
-            //relatedCell.resetProgress()
         }
         
         
