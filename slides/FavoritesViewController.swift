@@ -10,6 +10,18 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+
+class UIFavoriteCell : UITableViewCell {
+
+    required  init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        selectedBackgroundView = UIProgressView()
+    }
+    
+}
+
+
 class FavoritesViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
 
@@ -19,20 +31,53 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         /*
+         tableView.rx.itemSelected
+         .subscribe(  onNext: { [weak self] value in
+         })
+         .disposed(by: disposeBag)
+
+        
         tableView.rx
-            .modelSelected(String.self)
+            .modelSelected(FavoriteData.self)
             .subscribe(onNext:  { value in
             })
             .disposed(by: disposeBag)
         
-        tableView.rx
-            .itemAccessoryButtonTapped
-            .subscribe(onNext: { indexPath in
-            })
-            .disposed(by: disposeBag)
-        */
+         tableView.rx
+         .itemAccessoryButtonTapped
+         .subscribe(onNext: { indexPath in
+         })
+         .disposed(by: disposeBag)
+         */
+        
+        let itemSelected = tableView.rx.itemSelected
+        let valueSelected = tableView.rx.modelSelected(FavoriteData.self)
+        
+        Observable.combineLatest( itemSelected, valueSelected )
+            .subscribe { [weak self] (value) in
+ 
+                guard let element = value.element else {
+                    return
+                }
+                if let cell = self?.tableView?.cellForRow(at: element.0) as? UIFavoriteCell {
+                    
+                    let data:FavoriteData = element.1
+                    
+                    do {
+                        
+                    try self?.downloadPresentationFormURL( element:data, relatedCell:cell )
+                    
+                    }
+                    catch( let e  ) {
+                        print( "error downloading presentation \(e)")
+                    }
+                }
+
+                
+
+            }.disposed(by: disposeBag)
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -46,7 +91,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         let favoriteItems = rxFavorites().toArray()
         
         bindTo = favoriteItems
-            .bind(to: tableView.rx.items(cellIdentifier: "favoriteCell", cellType: UITableViewCell.self)) { (row, element, cell) in
+            .bind(to: tableView.rx.items(cellIdentifier: "favoriteCell", cellType: UIFavoriteCell.self)) { (row, element, cell) in
                 
                 if let data = element.value as? [String:String], let title = data["title"] {
                     
@@ -71,4 +116,53 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
     }
     */
 
+    //
+    // MARK: Download and Show Presentation
+    //
+    func downloadPresentationFormURL( element:FavoriteData, relatedCell:UIFavoriteCell ) throws {
+        guard let data = element.value as? [String:String],
+            let url = data["url"] as? String,
+            let documentTitle = data["title"] as? String
+            else
+        {
+                return
+        }
+        
+        guard let downloadURL = URL( string:url ) else {
+            return
+        }
+        
+        let documentDirectoryURL =  try FileManager().url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        
+        
+        let _ = TCBlobDownloadManager.sharedInstance.downloadFileAtURL(downloadURL,
+                                                                       toDirectory: documentDirectoryURL,
+                                                                       withName: "presentation.pdf",
+                                                                       progression:
+            { (progress, totalBytesWritten, totalBytesExpectedToWrite) in
+                
+                //let percentage = round( Float((totalBytesWritten * 100)/totalBytesExpectedToWrite) )
+                //print( "\(progress) - \(totalBytesWritten) - \(totalBytesExpectedToWrite) %: \(percentage)" )
+                //relatedCell.setProgress( percentage )
+                
+                //relatedCell.setProgress(progress)
+        })
+        { (error, location) in
+            
+            
+            if let error = error {
+                
+                debugPrint(error)
+            }
+            else {
+                
+                self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:location!, url:downloadURL, title:documentTitle) )
+            }
+            //relatedCell.resetProgress()
+        }
+        
+        
+        
+    }
+    
 }
