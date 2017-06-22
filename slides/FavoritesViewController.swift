@@ -12,13 +12,46 @@ import RxCocoa
 
 
 class UIFavoriteCell : UITableViewCell {
+    @IBOutlet var commandButtons: [UIButton]!
 
     required  init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        selectedBackgroundView = UIProgressView()
+        //selectedBackgroundView = UIProgressView()
+
     }
     
+    private var _preferredFocusEnvironments:[UIFocusEnvironment]?
+    
+    override var preferredFocusEnvironments : [UIFocusEnvironment] {
+        return _preferredFocusEnvironments ?? super.preferredFocusEnvironments
+    }
+    
+    func select() {
+        let firstButton = commandButtons[0]
+        _preferredFocusEnvironments = [firstButton]
+        setNeedsFocusUpdate()
+    }
+    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+        print( "UIFavoriteCell.shouldUpdateFocusInContext: \(context.focusHeading)" )
+        
+        if context.focusHeading == .up || context.focusHeading == .down {
+            _preferredFocusEnvironments = []
+            return true
+        }
+        
+        if context.focusHeading == .left || context.focusHeading == .right {
+            let tag = context.nextFocusedView?.tag
+            
+            let button =  (tag == 0 ) ? commandButtons[1] : commandButtons[0];
+            
+            _preferredFocusEnvironments = [button]
+            return true
+        }
+        
+        return false
+    }
+
 }
 
 
@@ -51,6 +84,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
          .disposed(by: disposeBag)
          */
         
+        
         let itemSelected = tableView.rx.itemSelected
         
         let modelSelected =
@@ -58,6 +92,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         
         let valueSelected =  modelSelected
             .flatMap { (element) -> Observable<Slideshow> in
+                
                 
                 let getSlideData =  rxSlideshareCredentials()
                     .flatMap { (credentials) in
@@ -75,7 +110,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
 
             }
         
-        Observable.combineLatest( itemSelected, valueSelected )
+        Observable.combineLatest( itemSelected, /*valueSelected*/ Observable.just( [] ) )
             .subscribe { [weak self] (value) in
  
                 guard let element = value.element else {
@@ -83,6 +118,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
                 }
                 if let cell = self?.tableView?.cellForRow(at: element.0) as? UIFavoriteCell {
                     
+                    cell.select()
+                    
+                    /*
                     let data:Slideshow = element.1
                     
                     do {
@@ -93,6 +131,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
                     catch( let e  ) {
                         print( "error downloading presentation \(e)")
                     }
+                    */
                 }
 
                 
@@ -116,13 +155,12 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
                 
                 if let data = element.value as? [String:String], let title = data["title"] {
                     
-                    cell.textLabel?.textAlignment = .center
+                    cell.textLabel?.textAlignment = .left
                     cell.textLabel?.text = "\(title) @ row \(row)"
                     
                 }
             }
     }
-    
     override func viewDidDisappear(_ animated: Bool) {
         bindTo?.dispose()
     }
