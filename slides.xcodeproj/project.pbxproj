@@ -20,6 +20,7 @@
 		5F4515A81CC2F112004C4004 /* TCBlobDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */; };
 		5F4515AB1CC2F355004C4004 /* TCBlobDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */; };
 		5F4515AC1CC2F355004C4004 /* TCBlobDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */; };
+		5F4C49901F00FB9700269C50 /* FavoritesCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4C498F1F00FB9700269C50 /* FavoritesCommandView.swift */; };
 		5F57DE0B1CC3DCCF00D5F1B8 /* TWRProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F57DE0A1CC3DCCF00D5F1B8 /* TWRProgressView.m */; };
 		5F57DE131CC42B7500D5F1B8 /* UAProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F57DE101CC42B7500D5F1B8 /* UAProgressView.m */; };
 		5F5AC0481EF088C200E2A561 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5AC0471EF088C200E2A561 /* FavoritesViewController.swift */; };
@@ -91,6 +92,7 @@
 		5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCBlobDownloadManager.swift; sourceTree = "<group>"; };
 		5F4515A61CC2F112004C4004 /* TCBlobDownloadSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBlobDownloadSwift.h; sourceTree = "<group>"; };
 		5F4515A91CC2F277004C4004 /* Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-dev.plist"; sourceTree = "<group>"; };
+		5F4C498F1F00FB9700269C50 /* FavoritesCommandView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesCommandView.swift; sourceTree = "<group>"; };
 		5F57DE091CC3DCCF00D5F1B8 /* TWRProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWRProgressView.h; sourceTree = "<group>"; };
 		5F57DE0A1CC3DCCF00D5F1B8 /* TWRProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWRProgressView.m; sourceTree = "<group>"; };
 		5F57DE0F1CC42B7500D5F1B8 /* UAProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAProgressView.h; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 				5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */,
 				5F8A17121EF0365E0005B086 /* Favorites.swift */,
 				5F5AC0471EF088C200E2A561 /* FavoritesViewController.swift */,
+				5F4C498F1F00FB9700269C50 /* FavoritesCommandView.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";
@@ -666,6 +669,7 @@
 				5F90B6091D9AC6DC00615BA4 /* ThumbnailsView.swift in Sources */,
 				5F8A17131EF0365E0005B086 /* Favorites.swift in Sources */,
 				5FB609EC1DA03CB000051347 /* SlideViewerController+Fullpage.swift in Sources */,
+				5F4C49901F00FB9700269C50 /* FavoritesCommandView.swift in Sources */,
 				5F9623531CBBF94900F61D9C /* Slidehare.swift in Sources */,
 				A0C8B3E71CCCC8CF007352B6 /* ARLabel.swift in Sources */,
 				5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */,
