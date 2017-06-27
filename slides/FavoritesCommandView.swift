@@ -10,6 +10,7 @@ import UIKit
 
 class FavoritesCommandView: UIView {
 
+    @IBOutlet var commandButton: [UIButton]!
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -20,39 +21,26 @@ class FavoritesCommandView: UIView {
     */
     
     
-    /*
-    @IBOutlet var commandButtons: [UIButton]!
-
-    private var _preferredFocusEnvironments:[UIFocusEnvironment]?
+    private var _preferredFocusIndex:Int = 0
     
     override var preferredFocusEnvironments : [UIFocusEnvironment] {
-        return _preferredFocusEnvironments ?? super.preferredFocusEnvironments
+        return [ commandButton[_preferredFocusIndex] ]
     }
     
-    func select() {
-        let firstButton = commandButtons[0]
-        _preferredFocusEnvironments = [firstButton]
-        setNeedsFocusUpdate()
-    }
     override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
-        print( "UIFavoriteCell.shouldUpdateFocusInContext: \(context.focusHeading)" )
+        
+        print( "\(String(describing: type(of: self))).shouldUpdateFocus: \(describing(context.focusHeading))" )
         
         if context.focusHeading == .up || context.focusHeading == .down {
-            _preferredFocusEnvironments = []
-            return true
+            _preferredFocusIndex = 0
         }
-        
-        if context.focusHeading == .left || context.focusHeading == .right {
+        else if context.focusHeading == .left || context.focusHeading == .right {
             let tag = context.nextFocusedView?.tag
-            
-            let button =  (tag == 0 ) ? commandButtons[1] : commandButtons[0];
-            
-            _preferredFocusEnvironments = [button]
-            return true
+            _preferredFocusIndex =  (tag == 0 ) ? 1 : 0;
         }
         
-        return false
+        return true
     }
     
-    */
+    
 }

@@ -13,12 +13,66 @@ import RxCocoa
 
 class UIFavoriteCell : UITableViewCell {
 
+    
     required  init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
     }
     
+    private var _preferredFocusEnvironments:[UIFocusEnvironment]?
+    
+    override var preferredFocusEnvironments : [UIFocusEnvironment] {
+        return _preferredFocusEnvironments ?? super.preferredFocusEnvironments
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        print( "setSelected \(selected)")
+        super.setSelected(selected, animated: animated)
+        
+        if selected {
+            _preferredFocusEnvironments = [self.selectedBackgroundView!]
+        }
+        else {
+            self.selectedBackgroundView?.removeFromSuperview()
+            _preferredFocusEnvironments = nil
+        }
+        setNeedsFocusUpdate()
+        updateFocusIfNeeded()
+    }
+    
+    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+        
+        print( "\(String(describing: type(of: self))).shouldUpdateFocus: \(describing(context.focusHeading))" )
 
+        if context.focusHeading == .left || context.focusHeading == .right {
+            if context.nextFocusedView == self {
+                // GAIN FOCUS
+                
+            } else if context.previouslyFocusedView == self {
+                // LOST FOCUS
+            }
+            self.selectedBackgroundView?.setNeedsFocusUpdate()
+            
+        }
+        return true
+    }
+    
+    /*
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        super.didUpdateFocus(in: context, with: coordinator)
+        
+        if context.nextFocusedView == self {
+            // GAIN FOCUS
+            
+            print( "GAIN FOCUS \(self.textLabel?.text ?? "undef")")
+
+        } else if context.previouslyFocusedView == self {
+            // LOST FOCUS
+
+            print( "LOST FOCUS \(self.textLabel?.text ?? "undef")")
+        }
+    }
+    */
 }
 
 
@@ -27,7 +81,18 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
 
     let disposeBag = DisposeBag()
     
-    
+    fileprivate var _currentSelection:IndexPath?
+    fileprivate var currentSelection:IndexPath? {
+        get {
+            return _currentSelection
+        }
+        set {
+            _currentSelection = newValue
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -86,8 +151,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
                 if let cell = self?.tableView?.cellForRow(at: element.0) as? UIFavoriteCell {
                     
                     
-                    //cell.select()
-                    
+                    self?.currentSelection = element.0
+                
                     /*
                     let data:Slideshow = element.1
                     
@@ -101,8 +166,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
                     }
                     */
                 }
-
-                
 
             }.disposed(by: disposeBag)
 
@@ -208,8 +271,29 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
 
 extension FavoritesViewController {
     
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return 100
+
+        return 80
     }
+    
+    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+        
+        print( "\(String(describing: type(of: self))).shouldUpdateFocus: \(describing(context.focusHeading))" )
+        
+        if context.focusHeading == .up || context.focusHeading == .down {
+            
+            //
+            // CHECK IF THE FOCUS COMING FROM "FavoritesCommandView" 
+            //
+            if  let _ = context.previouslyFocusedView as? UIButton,
+                let selectedIndex = self.tableView.indexPathForSelectedRow
+            {
+                print( "selectedIndex \(selectedIndex)")
+                self.tableView.deselectRow(at: selectedIndex, animated: true)
+            }
+        }
+        return true
+    }
+    
 }

@@ -297,6 +297,11 @@
                         <constraint firstItem="3iS-L4-wkI" firstAttribute="centerY" secondItem="bIm-xb-tA1" secondAttribute="centerY" id="pda-Kt-A8l"/>
                         <constraint firstItem="3iS-L4-wkI" firstAttribute="baseline" secondItem="bIm-xb-tA1" secondAttribute="baseline" id="q2p-PS-LBB"/>
                     </constraints>
+                    <connections>
+                        <outletCollection property="commandButton" destination="3iS-L4-wkI" collectionClass="NSMutableArray" id="EaD-ux-dyS"/>
+                        <outletCollection property="commandButton" destination="bIm-xb-tA1" collectionClass="NSMutableArray" id="Rjk-C6-xjN"/>
+                        <outletCollection property="commandButton" destination="bIm-xb-tA1" collectionClass="NSMutableArray" id="KCC-AG-EnW"/>
+                    </connections>
                 </view>
             </objects>
             <point key="canvasLocation" x="-3883" y="2697"/>

@@ -8,6 +8,18 @@
 
 import UIKit
 
+func describing( _ fh: UIFocusHeading ) -> String {
+    switch( fh ) {
+    case UIFocusHeading.up: return "up"
+    case UIFocusHeading.down: return "down"
+    case UIFocusHeading.left: return "down"
+    case UIFocusHeading.right: return "right"
+    case UIFocusHeading.next: return "next"
+    case UIFocusHeading.previous: return "previous"
+    default:return "undef"
+    }
+}
+
 // Make String confrom to Error protocol
 extension String: Error {}
 
