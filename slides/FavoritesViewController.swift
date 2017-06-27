@@ -93,6 +93,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         }
     }
 
+    let favoriteItems: Variable<[FavoriteData]> = Variable([])
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -141,28 +143,38 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
 
             }
         
+        var onRemove:Disposable?
+
         Observable.combineLatest( itemSelected, modelSelected )
             .subscribe { [weak self] (value) in
- 
+                
+                onRemove?.dispose()
+                
+                guard let _self = self else {
+                    return
+                }
                 guard let element = value.element else {
                     return
                 }
                 
-                if let cell = self?.tableView?.cellForRow(at: element.0) as? UIFavoriteCell {
+                
+                if let cell = _self.tableView?.cellForRow(at: element.0) as? UIFavoriteCell {
                     
-                    
-                    self?.currentSelection = element.0
+
+                    _self.currentSelection = element.0
                     
                     if let commandView = cell.selectedBackgroundView as? FavoritesCommandView {
                         
-                        let _ = commandView
+                        onRemove = commandView
                             .removeButton
                             .subscribe( onNext: { _ in
-                                    self?.bindTo?.dispose()
-                                    favoriteRemove(key: element.1.key, synchronize: true )
-                                    self?.bindTo = self?.rxReloadData()
+                                favoriteRemove(key: element.1.key, synchronize: true )
+                                _self.tableView.beginUpdates()
+                                _self.tableView.deleteRows(at: [element.0], with: .none)
+                                _self.favoriteItems.value.remove(at: element.0.row)
+                                _self.tableView.endUpdates()
                                 
-                                })
+                            })
                                 
                         
                     }
@@ -193,9 +205,10 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
     private var bindTo:Disposable?
     
     private func rxReloadData() -> Disposable {
-        let favoriteItems = rxFavorites().toArray()
+        favoriteItems.value.append(contentsOf: favorites() )
         
         return favoriteItems
+        .asObservable()
         .bind(to: tableView.rx.items(cellIdentifier: "favoriteCell", cellType: UIFavoriteCell.self)) { (row, element, cell) in
         
                 if let data = element.value as? [String:String], let title = data["title"] {
