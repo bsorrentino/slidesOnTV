@@ -12,6 +12,7 @@ import RxCocoa
 
 typealias FavoriteData = ( key:String, value:Any )
 
+
 func rxFavorites() -> Observable<FavoriteData> {
     let sequence = NSUbiquitousKeyValueStore.default().dictionaryRepresentation.enumerated()
     
@@ -19,6 +20,30 @@ func rxFavorites() -> Observable<FavoriteData> {
     
 }
 
+func favoriteRemove( key:String, synchronize:Bool = false ) {
+
+    NSUbiquitousKeyValueStore.default().removeObject(forKey: key)
+    
+    if( synchronize ) {
+        NSUbiquitousKeyValueStore.default().synchronize()
+    } 
+}
+
+func rxFavoriteRemove( key:String ) -> Completable {
+
+    return Completable.create { (completable) -> Disposable in
+        
+        NSUbiquitousKeyValueStore.default().removeObject(forKey: key)
+        completable(.completed)
+        
+        
+        return Disposables.create {
+            
+            NSUbiquitousKeyValueStore.default().synchronize()
+        }
+    }
+
+}
 
 func rxFavoriteStore( data:DocumentInfo ) -> Completable {
     

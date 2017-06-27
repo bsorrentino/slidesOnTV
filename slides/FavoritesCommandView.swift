@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class FavoritesCommandView: UIView {
 
@@ -19,7 +21,6 @@ class FavoritesCommandView: UIView {
     }
   
     */
-    
     
     private var _preferredFocusIndex:Int = 0
     
@@ -42,5 +43,12 @@ class FavoritesCommandView: UIView {
         return true
     }
     
+    var downloadButton:ControlEvent<Void> {
+        return commandButton[0].rx.primaryAction;
+    }
+
+    var removeButton:ControlEvent<Void> {
+        return commandButton[1].rx.primaryAction;
+    }
     
 }

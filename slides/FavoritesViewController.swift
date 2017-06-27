@@ -96,6 +96,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.setEditing(true, animated: false)
         /*
          tableView.rx.itemSelected
          .subscribe(  onNext: { [weak self] value in
@@ -125,12 +126,10 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         let valueSelected =  modelSelected
             .flatMap { (element) -> Observable<Slideshow> in
                 
-                
                 let getSlideData =  rxSlideshareCredentials()
                     .flatMap { (credentials) in
                         rxSlideshareGet(credentials:credentials, id: element.key)
                     }
-                
                 
                 return getSlideData.asObservable()
                     .flatMap { (data:Data) -> Observable<Slideshow> in
@@ -142,16 +141,31 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
 
             }
         
-        Observable.combineLatest( itemSelected, /*valueSelected*/ Observable.just( [] ) )
+        Observable.combineLatest( itemSelected, modelSelected )
             .subscribe { [weak self] (value) in
  
                 guard let element = value.element else {
                     return
                 }
+                
                 if let cell = self?.tableView?.cellForRow(at: element.0) as? UIFavoriteCell {
                     
                     
                     self?.currentSelection = element.0
+                    
+                    if let commandView = cell.selectedBackgroundView as? FavoritesCommandView {
+                        
+                        let _ = commandView
+                            .removeButton
+                            .subscribe( onNext: { _ in
+                                    self?.bindTo?.dispose()
+                                    favoriteRemove(key: element.1.key, synchronize: true )
+                                    self?.bindTo = self?.rxReloadData()
+                                
+                                })
+                                
+                        
+                    }
                 
                     /*
                     let data:Slideshow = element.1
@@ -178,20 +192,25 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
     
     private var bindTo:Disposable?
     
-    override func viewWillAppear(_ animated: Bool) {
+    private func rxReloadData() -> Disposable {
         let favoriteItems = rxFavorites().toArray()
         
-        bindTo = favoriteItems
-            .bind(to: tableView.rx.items(cellIdentifier: "favoriteCell", cellType: UIFavoriteCell.self)) { (row, element, cell) in
-                
+        return favoriteItems
+        .bind(to: tableView.rx.items(cellIdentifier: "favoriteCell", cellType: UIFavoriteCell.self)) { (row, element, cell) in
+        
                 if let data = element.value as? [String:String], let title = data["title"] {
-                    
-                    cell.textLabel?.textAlignment = .left
-                    cell.textLabel?.text = "\(title) @ row \(row)"
-                    
-                }
+                
+                cell.textLabel?.textAlignment = .left
+                cell.textLabel?.text = "\(title) @ row \(row)"
+        
             }
+        }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        bindTo = rxReloadData()
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         bindTo?.dispose()
     }
@@ -295,5 +314,6 @@ extension FavoritesViewController {
         }
         return true
     }
+
     
 }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 func describing( _ fh: UIFocusHeading ) -> String {
     switch( fh ) {
@@ -45,6 +47,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // ONLY FOR TEST PURPOSE
         //window?.rootViewController = testController()
+        
+        let testFavorites:[DocumentInfo] = [
+            DocumentInfo( location:URL(string:"http://pippo.com")!, id:"1", title:"test1" ),
+            DocumentInfo( location:URL(string:"http://pippo.com")!, id:"2", title:"test2" ),
+            DocumentInfo( location:URL(string:"http://pippo.com")!, id:"3", title:"test3" ),
+            DocumentInfo( location:URL(string:"http://pippo.com")!, id:"4", title:"test4" ),
+            DocumentInfo( location:URL(string:"http://pippo.com")!, id:"5", title:"test5" )
+        ]
+        
+        let _ = Observable.from(testFavorites).flatMap {
+            (d) in
+            
+            return rxFavoriteStore(data: d)
+        }
+        .subscribe( onCompleted: {
+                print( "inserted")
+            })
         
         return true
     }

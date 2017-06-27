@@ -297,8 +297,8 @@
 				5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */,
 				5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */,
 				5F8A17121EF0365E0005B086 /* Favorites.swift */,
-				5F5AC0471EF088C200E2A561 /* FavoritesViewController.swift */,
 				5F4C498F1F00FB9700269C50 /* FavoritesCommandView.swift */,
+				5F5AC0471EF088C200E2A561 /* FavoritesViewController.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";

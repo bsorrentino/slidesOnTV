@@ -299,7 +299,6 @@
                     </constraints>
                     <connections>
                         <outletCollection property="commandButton" destination="3iS-L4-wkI" collectionClass="NSMutableArray" id="EaD-ux-dyS"/>
-                        <outletCollection property="commandButton" destination="bIm-xb-tA1" collectionClass="NSMutableArray" id="Rjk-C6-xjN"/>
                         <outletCollection property="commandButton" destination="bIm-xb-tA1" collectionClass="NSMutableArray" id="KCC-AG-EnW"/>
                     </connections>
                 </view>

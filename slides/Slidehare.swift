@@ -12,17 +12,17 @@ import RxCocoa
 
 class DocumentField {
     
-    static let Title = "title"
-    static let DownloadUrl = "downloadurl"
-    static let ID = "id"
-    static let URL = "url" // permalink
-    static let Created = "created"
-    static let Updated = "updated"
-    static let Format = "format"
-    static let Language = "language"
-    static let ThumbnailS = "thumbnailsmallurl"
-    static let ThumbnailXL = "thumbnailxlargeurl"
-    static let ThumbnailXXL = "thumbnailxxlargeurl"
+    static let Title            = "title"
+    static let DownloadUrl      = "downloadurl"
+    static let ID               = "id"
+    static let URL              = "url" // permalink
+    static let Created          = "created"
+    static let Updated          = "updated"
+    static let Format           = "format"
+    static let Language         = "language"
+    static let ThumbnailS       = "thumbnailsmallurl"
+    static let ThumbnailXL      = "thumbnailxlargeurl"
+    static let ThumbnailXXL     = "thumbnailxxlargeurl"
     
     static let names = [
         Title,
