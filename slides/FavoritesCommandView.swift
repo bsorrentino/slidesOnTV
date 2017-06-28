@@ -21,7 +21,9 @@ class FavoritesCommandView: UIView {
     }
   
     */
+
     
+    /*
     private var _preferredFocusIndex:Int = 0
     
     override var preferredFocusEnvironments : [UIFocusEnvironment] {
@@ -36,12 +38,14 @@ class FavoritesCommandView: UIView {
             _preferredFocusIndex = 0
         }
         else if context.focusHeading == .left || context.focusHeading == .right {
-            let tag = context.nextFocusedView?.tag
+            let tag = context.previouslyFocusedView?.tag
+            
             _preferredFocusIndex =  (tag == 0 ) ? 1 : 0;
         }
         
         return true
     }
+    */
     
     var downloadButton:ControlEvent<Void> {
         return commandButton[0].rx.primaryAction;

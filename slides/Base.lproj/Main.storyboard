@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="tvOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -226,7 +225,7 @@
                                     <constraint firstItem="v7O-9N-PuX" firstAttribute="leading" secondItem="edm-Cu-azw" secondAttribute="leading" constant="212" id="vs5-lr-8Ew"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="66" sectionHeaderHeight="66" sectionFooterHeight="66" translatesAutoresizingMaskIntoConstraints="NO" id="5R8-Bp-FJq">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" rowHeight="66" sectionHeaderHeight="66" sectionFooterHeight="66" translatesAutoresizingMaskIntoConstraints="NO" id="5R8-Bp-FJq">
                                 <rect key="frame" x="91" y="100" width="1738" height="985"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -240,9 +239,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="1722" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="selectedBackgroundView" destination="UAo-pM-QPU" id="nkl-3Z-i8d"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -265,41 +261,28 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RQF-sP-SVN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <view contentMode="scaleToFill" id="UAo-pM-QPU" customClass="FavoritesCommandView" customModule="slides" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="1912" height="128"/>
+                    <rect key="frame" x="0.0" y="0.0" width="410" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bIm-xb-tA1" userLabel="removeButton">
-                            <rect key="frame" x="1714" y="32" width="178" height="64"/>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bIm-xb-tA1" userLabel="removeButton">
+                            <rect key="frame" x="213" y="2" width="128" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="bIm-xb-tA1" secondAttribute="height" multiplier="89:32" id="Tmb-FF-ICF"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="italicSystem" pointSize="20"/>
                             <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                            <state key="normal" title="Delete"/>
+                            <state key="normal" backgroundImage="delete"/>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3iS-L4-wkI" userLabel="downloadButton">
-                            <rect key="frame" x="1518" y="33" width="175" height="63"/>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3iS-L4-wkI" userLabel="downloadButton">
+                            <rect key="frame" x="64" y="2" width="128" height="124"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.25098040700000002" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="3iS-L4-wkI" secondAttribute="height" multiplier="89:32" id="eah-Hs-rNV"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="italicSystem" pointSize="19"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                             <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                            <state key="normal" title="Download"/>
+                            <state key="normal" backgroundImage="download"/>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="trailing" secondItem="bIm-xb-tA1" secondAttribute="trailing" constant="20" id="29K-Jz-j1F"/>
-                        <constraint firstItem="3iS-L4-wkI" firstAttribute="centerY" secondItem="UAo-pM-QPU" secondAttribute="centerY" id="Nqk-2H-cV2"/>
-                        <constraint firstItem="bIm-xb-tA1" firstAttribute="leading" secondItem="3iS-L4-wkI" secondAttribute="trailing" constant="21" id="PEN-oN-8Hm"/>
-                        <constraint firstItem="3iS-L4-wkI" firstAttribute="centerY" secondItem="bIm-xb-tA1" secondAttribute="centerY" id="pda-Kt-A8l"/>
-                        <constraint firstItem="3iS-L4-wkI" firstAttribute="baseline" secondItem="bIm-xb-tA1" secondAttribute="baseline" id="q2p-PS-LBB"/>
-                    </constraints>
                     <connections>
-                        <outletCollection property="commandButton" destination="3iS-L4-wkI" collectionClass="NSMutableArray" id="EaD-ux-dyS"/>
-                        <outletCollection property="commandButton" destination="bIm-xb-tA1" collectionClass="NSMutableArray" id="KCC-AG-EnW"/>
+                        <outletCollection property="commandButton" destination="3iS-L4-wkI" collectionClass="NSMutableArray" id="tcm-d8-VTP"/>
+                        <outletCollection property="commandButton" destination="bIm-xb-tA1" collectionClass="NSMutableArray" id="RYA-Ry-GY0"/>
                     </connections>
                 </view>
             </objects>
@@ -404,6 +387,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="delete" width="128" height="128"/>
+        <image name="download" width="128" height="128"/>
         <image name="favorite" width="54" height="54"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

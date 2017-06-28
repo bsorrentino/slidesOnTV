@@ -11,74 +11,11 @@ import RxSwift
 import RxCocoa
 
 
-class UIFavoriteCell : UITableViewCell {
-
-    
-    required  init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-    }
-    
-    private var _preferredFocusEnvironments:[UIFocusEnvironment]?
-    
-    override var preferredFocusEnvironments : [UIFocusEnvironment] {
-        return _preferredFocusEnvironments ?? super.preferredFocusEnvironments
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        print( "setSelected \(selected)")
-        super.setSelected(selected, animated: animated)
-        
-        if selected {
-            _preferredFocusEnvironments = [self.selectedBackgroundView!]
-        }
-        else {
-            self.selectedBackgroundView?.removeFromSuperview()
-            _preferredFocusEnvironments = nil
-        }
-        setNeedsFocusUpdate()
-        updateFocusIfNeeded()
-    }
-    
-    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
-        
-        print( "\(String(describing: type(of: self))).shouldUpdateFocus: \(describing(context.focusHeading))" )
-
-        if context.focusHeading == .left || context.focusHeading == .right {
-            if context.nextFocusedView == self {
-                // GAIN FOCUS
-                
-            } else if context.previouslyFocusedView == self {
-                // LOST FOCUS
-            }
-            self.selectedBackgroundView?.setNeedsFocusUpdate()
-            
-        }
-        return true
-    }
-    
-    /*
-    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        super.didUpdateFocus(in: context, with: coordinator)
-        
-        if context.nextFocusedView == self {
-            // GAIN FOCUS
-            
-            print( "GAIN FOCUS \(self.textLabel?.text ?? "undef")")
-
-        } else if context.previouslyFocusedView == self {
-            // LOST FOCUS
-
-            print( "LOST FOCUS \(self.textLabel?.text ?? "undef")")
-        }
-    }
-    */
-}
-
 
 class FavoritesViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
 
+    let updateFocusSubject = PublishSubject<IndexPath>()
     let disposeBag = DisposeBag()
     
     fileprivate var _currentSelection:IndexPath?
@@ -98,7 +35,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.setEditing(true, animated: false)
         /*
          tableView.rx.itemSelected
          .subscribe(  onNext: { [weak self] value in
@@ -117,13 +53,43 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
          .subscribe(onNext: { indexPath in
          })
          .disposed(by: disposeBag)
+
+         
          */
+
+        let itemDeselected  = tableView.rx.itemDeselected
+            .do( onNext: { (value) in
+                print( "item deselected")
+            })
         
+        /*
+        updateFocusSubject.subscribe(onNext: { (selectedIndex) in
+            
+            
+            if let cell = self.tableView?.cellForRow(at: selectedIndex) as? UIFavoriteCell {
+                cell.setEditing( false, animated: false)
+            }
+            self.tableView.deselectRow(at: selectedIndex, animated: true)
+
+        }).disposed(by: disposeBag)
+        */
+        itemDeselected.subscribe(onNext: { (selectedIndex) in
+            
+            
+            if let cell = self.tableView?.cellForRow(at: selectedIndex) as? UIFavoriteCell {
+                cell.setEditing( false, animated: true)
+            }
+            //self.tableView.deselectRow(at: selectedIndex, animated: true)
+            
+        }).disposed(by: disposeBag)
         
-        let itemSelected = tableView.rx.itemSelected
+        let itemSelected    = tableView.rx.itemSelected
+            .do( onNext: { (value) in
+                print( "item selected")
+            })
         
-        let modelSelected =
-            tableView.rx.modelSelected(FavoriteData.self)
+        let modelSelected = tableView.rx.modelSelected(FavoriteData.self)
+
         
         let valueSelected =  modelSelected
             .flatMap { (element) -> Observable<Slideshow> in
@@ -143,41 +109,12 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
 
             }
         
-        var onRemove:Disposable?
-
         Observable.combineLatest( itemSelected, modelSelected )
             .subscribe { [weak self] (value) in
                 
-                onRemove?.dispose()
+            
+                self?.showEditMenu()
                 
-                guard let _self = self else {
-                    return
-                }
-                guard let element = value.element else {
-                    return
-                }
-                
-                
-                if let cell = _self.tableView?.cellForRow(at: element.0) as? UIFavoriteCell {
-                    
-
-                    _self.currentSelection = element.0
-                    
-                    if let commandView = cell.selectedBackgroundView as? FavoritesCommandView {
-                        
-                        onRemove = commandView
-                            .removeButton
-                            .subscribe( onNext: { _ in
-                                favoriteRemove(key: element.1.key, synchronize: true )
-                                _self.tableView.beginUpdates()
-                                _self.tableView.deleteRows(at: [element.0], with: .none)
-                                _self.favoriteItems.value.remove(at: element.0.row)
-                                _self.tableView.endUpdates()
-                                
-                            })
-                                
-                        
-                    }
                 
                     /*
                     let data:Slideshow = element.1
@@ -191,20 +128,13 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
                         print( "error downloading presentation \(e)")
                     }
                     */
-                }
-
             }.disposed(by: disposeBag)
 
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     private var bindTo:Disposable?
     
-    private func rxReloadData() -> Disposable {
+    private func rxLoadData() -> Disposable {
         favoriteItems.value.append(contentsOf: favorites() )
         
         return favoriteItems
@@ -220,24 +150,33 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+    func showEditMenu() {
+        let allertController = UIAlertController(title: "TITLE", message: "MESSAGE", preferredStyle: .actionSheet)
+        
+        // Cancel action (is invisible, but enables escape)
+        //allertController.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: nil))
+        allertController.addAction(UIAlertAction(title: "DOWNLOAD", style: .default, handler: nil))
+        allertController.addAction(UIAlertAction(title: "DELETE", style: .destructive, handler: nil))
+        
+        self.present(allertController, animated: true, completion: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
-        bindTo = rxReloadData()
+        super.viewWillAppear(animated)
+        
+        bindTo = rxLoadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
         bindTo?.dispose()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     //
     // MARK: Download and Show Presentation
     //
@@ -285,7 +224,15 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         
     }
     
-    // MARK: Segue
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        /*
+        if indexPath  == currentSelection { return 160 }
+        */
+        return 80
+    }
+    
+    // MARK: SEGUE
     
     override open func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -299,34 +246,74 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         }
     }
 
+    // MARK: MEM MANAGEMENT
+
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
 }
+
+// MARK EDIT EXTENSION
+
+/*
+extension FavoritesViewController {
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        
+        return .none
+    }
+    
+
+}
+*/
+
+// MARK: FOCUS EXTENSION
 
 extension FavoritesViewController {
     
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        return 80
-    }
+    
     
     override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
         
         print( "\(String(describing: type(of: self))).shouldUpdateFocus: \(describing(context.focusHeading))" )
         
         if context.focusHeading == .up || context.focusHeading == .down {
+            print( "\(String(describing: tableView.indexPathForSelectedRow))")
+            guard let selectedIndex = tableView.indexPathForSelectedRow else { return true }
+            
+            updateFocusSubject.onNext(selectedIndex)
             
             //
             // CHECK IF THE FOCUS COMING FROM "FavoritesCommandView" 
             //
+            /*
             if  let _ = context.previouslyFocusedView as? UIButton,
                 let selectedIndex = self.tableView.indexPathForSelectedRow
             {
                 print( "selectedIndex \(selectedIndex)")
+                
+                if let cell = tableView?.cellForRow(at: currentSelection!) as? UIFavoriteCell {
+                    cell.setEditing( false, animated: true )
+                }
+                self.currentSelection = nil
+
                 self.tableView.deselectRow(at: selectedIndex, animated: true)
+                
             }
+            */
         }
         return true
     }
-
+    
     
 }

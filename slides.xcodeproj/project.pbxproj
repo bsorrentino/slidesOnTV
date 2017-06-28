@@ -10,6 +10,7 @@
 		0FF9F2D13CDF8A9F545C23BD /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F461D52AA3D9A66BFAC24D /* Pods_slides.framework */; };
 		591CB496FE74875BBC05B96F /* Pods_slidesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6807EB71A8C645CEB5979B8 /* Pods_slidesUITests.framework */; };
 		5F0C443E1EDB607D00B098A1 /* SearchStoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */; };
+		5F15D3EA1F03C4C2002F03AC /* FavoriteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */; };
 		5F35BE3E1ED0941D00B644B1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */; };
 		5F3BF0021D8688850073EFCB /* SlideViewerController+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */; };
 		5F3E17321DB8C9EE00AED17C /* OHPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */; };
@@ -77,6 +78,7 @@
 		405EB764B71F02D54D2B3B5E /* Pods_slidesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B74BAF74AE103B2AC4E9103 /* Pods-slides.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.release.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.release.xcconfig"; sourceTree = "<group>"; };
 		5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStoryboardSegue.swift; sourceTree = "<group>"; };
+		5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewCell.swift; sourceTree = "<group>"; };
 		5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SlideViewerController+AutoLayout.swift"; sourceTree = "<group>"; };
 		5F3E17291DB8C9EE00AED17C /* OHPDFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDFDocument.h; path = OHPDFImage/OHPDFDocument.h; sourceTree = "<group>"; };
@@ -297,8 +299,9 @@
 				5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */,
 				5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */,
 				5F8A17121EF0365E0005B086 /* Favorites.swift */,
-				5F4C498F1F00FB9700269C50 /* FavoritesCommandView.swift */,
 				5F5AC0471EF088C200E2A561 /* FavoritesViewController.swift */,
+				5F4C498F1F00FB9700269C50 /* FavoritesCommandView.swift */,
+				5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";
@@ -686,6 +689,7 @@
 				5F57DE0B1CC3DCCF00D5F1B8 /* TWRProgressView.m in Sources */,
 				5F35BE3E1ED0941D00B644B1 /* MainViewController.swift in Sources */,
 				C3F8E7A31B2D198534D793D2 /* Settings.swift in Sources */,
+				5F15D3EA1F03C4C2002F03AC /* FavoriteViewCell.swift in Sources */,
 				5F3E17341DB8C9EE00AED17C /* OHVectorImage.m in Sources */,
 				5FF0DE0D1D99B033001CEC34 /* PageView.swift in Sources */,
 				5F3E17351DB8C9EE00AED17C /* UIImage+OHPDF.m in Sources */,
