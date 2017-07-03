@@ -178,11 +178,17 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
     
     var currentData:(slide:Slideshow, attr:String?)?
     
+    var currentError:String?
+    
     var subject = PublishSubject<Slideshow>()
     
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
+        if elementName == "SlideShareServiceError" {
+            currentError = ""
+            return
+        }
         
         if currentData != nil  {
             
@@ -200,6 +206,10 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
     }
     
     func parser(_ parser: XMLParser, foundCharacters string: String) {
+        
+        if let err = currentError {
+            currentError = err + string
+        }
         
         if let data = currentData, let attr = data.attr {
     
@@ -219,6 +229,8 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         
+        if currentError != nil { return }
+        
         let e = elementName.lowercased()
         
         if e == "slideshow", let data = currentData {
@@ -236,7 +248,23 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
     }
     
     func parserDidEndDocument(_ parser: XMLParser) {
+        
+        if let err = currentError {
+            subject.onError( err )
+            return
+        }
+        
         subject.onCompleted()
+    }
+    
+    
+    func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
+        subject.onError(parseError)
+    }
+    
+    
+    func parser(_ parser: XMLParser, validationErrorOccurred validationError: Error) {
+        subject.onError(validationError)
     }
     
     func rx_parse( _ data:Data! ) -> Observable<Slideshow> {

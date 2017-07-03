@@ -16,6 +16,18 @@ class UIFavoriteCell : UITableViewCell {
         
     }
     
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        if  let selectedView = self.selectedBackgroundView as? FavoritesCommandView,
+            let progressView = selectedView.downloadProgressView {
+            
+            progressView.progress = 0.0
+        }
+        
+    }
+
     /*
      private var _preferredFocusEnvironments:[UIFocusEnvironment]? {
      didSet {

@@ -239,6 +239,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="1722" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="selectedBackgroundView" destination="UAo-pM-QPU" id="xRV-CD-lAO"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -261,28 +264,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RQF-sP-SVN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <view contentMode="scaleToFill" id="UAo-pM-QPU" customClass="FavoritesCommandView" customModule="slides" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="410" height="128"/>
+                    <rect key="frame" x="0.0" y="0.0" width="1738" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bIm-xb-tA1" userLabel="removeButton">
-                            <rect key="frame" x="213" y="2" width="128" height="128"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                            <state key="normal" backgroundImage="delete"/>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3iS-L4-wkI" userLabel="downloadButton">
-                            <rect key="frame" x="64" y="2" width="128" height="124"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.25098040700000002" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                            <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                            <state key="normal" backgroundImage="download"/>
-                        </button>
+                        <progressView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="d1P-w6-oGO">
+                            <rect key="frame" x="0.0" y="0.0" width="1738" height="128"/>
+                            <color key="progressTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </progressView>
                     </subviews>
+                    <constraints>
+                        <constraint firstItem="d1P-w6-oGO" firstAttribute="height" secondItem="UAo-pM-QPU" secondAttribute="height" id="1bl-8c-v4R"/>
+                        <constraint firstItem="d1P-w6-oGO" firstAttribute="width" secondItem="UAo-pM-QPU" secondAttribute="width" id="DKy-Oc-0je"/>
+                        <constraint firstItem="d1P-w6-oGO" firstAttribute="leading" secondItem="UAo-pM-QPU" secondAttribute="leading" id="eD3-w8-weZ"/>
+                        <constraint firstItem="d1P-w6-oGO" firstAttribute="centerY" secondItem="UAo-pM-QPU" secondAttribute="centerY" id="rej-Vu-fSE"/>
+                    </constraints>
                     <connections>
-                        <outletCollection property="commandButton" destination="3iS-L4-wkI" collectionClass="NSMutableArray" id="tcm-d8-VTP"/>
-                        <outletCollection property="commandButton" destination="bIm-xb-tA1" collectionClass="NSMutableArray" id="RYA-Ry-GY0"/>
+                        <outlet property="downloadProgressView" destination="d1P-w6-oGO" id="msU-jI-5kW"/>
                     </connections>
                 </view>
             </objects>
@@ -387,8 +384,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="delete" width="128" height="128"/>
-        <image name="download" width="128" height="128"/>
         <image name="favorite" width="54" height="54"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

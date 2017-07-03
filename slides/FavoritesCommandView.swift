@@ -12,7 +12,7 @@ import RxCocoa
 
 class FavoritesCommandView: UIView {
 
-    @IBOutlet var commandButton: [UIButton]!
+    @IBOutlet weak var downloadProgressView: UIProgressView!
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -46,13 +46,5 @@ class FavoritesCommandView: UIView {
         return true
     }
     */
-    
-    var downloadButton:ControlEvent<Void> {
-        return commandButton[0].rx.primaryAction;
-    }
-
-    var removeButton:ControlEvent<Void> {
-        return commandButton[1].rx.primaryAction;
-    }
-    
+        
 }
