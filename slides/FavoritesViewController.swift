@@ -37,7 +37,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
 
         /*
          tableView.rx.itemSelected
-         .subscribe(  onNext: { [weak self] value in
+         .subscribe(  onNext: { [unowned self] value in
          })
          .disposed(by: disposeBag)
 
@@ -77,13 +77,12 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         
         Observable.combineLatest( modelSelected,itemSelected )
             .subscribeOn(MainScheduler.instance)
-            .subscribe { [weak self] (value) in
+            .subscribe { [unowned self] (value) in
                 
-                guard   let strongSelf  = self else { return }
                 guard   let index       = value.element?.1,
                         let data        = value.element?.0 else { return }
                 
-                strongSelf.showEditMenu( data:data, selectedIndex:index )
+                self.showEditMenu( data:data, selectedIndex:index )
                 
             }.disposed(by: disposeBag)
         
@@ -181,11 +180,11 @@ extension FavoritesViewController {
         
         
         alertController.addAction(UIAlertAction(title: "CANCEL", style: .cancel ))
-        alertController.addAction(UIAlertAction(title: "DOWNLOAD", style: .default) { [weak self] (value) in
-            self?.downloadAction.onNext(value)
+        alertController.addAction(UIAlertAction(title: "DOWNLOAD", style: .default) { [unowned self] (value) in
+            self.downloadAction.onNext(value)
         })
-        alertController.addAction(UIAlertAction(title: "DELETE", style: .destructive) { [weak self] (value) in
-            self?.deleteAction.onNext(value)
+        alertController.addAction(UIAlertAction(title: "DELETE", style: .destructive) { [unowned self] (value) in
+            self.deleteAction.onNext(value)
         })
         
         return alertController
@@ -213,11 +212,11 @@ extension FavoritesViewController {
                         }
                         .catchErrorJustReturn([DocumentField.ID:data.key])
             }
-            .subscribe( onNext: { [weak self] (slide:Slideshow) in
+            .subscribe( onNext: { [unowned self] (slide:Slideshow) in
 
                 do {
                     
-                    try self?.downloadPresentationFormURL( item:slide, relatedCell:cell )
+                    try self.downloadPresentationFormURL( item:slide, relatedCell:cell )
                     
                 }
                 catch( let e  ) {
@@ -228,15 +227,13 @@ extension FavoritesViewController {
             .addDisposableTo(alertDisposeBag!)
         
 
-        deleteAction.subscribe( onNext: { [weak self] (value) in
-    
-                    guard let strongSelf  = self else { return }
+        deleteAction.subscribe( onNext: { [unowned self] (value) in
             
                     favoriteRemove(key: data.key, synchronize: true)
-                    strongSelf.favoriteItems.value.remove(at: selectedIndex.row)
-                    //strongSelf.tableView.beginUpdates()
-                    //strongSelf.tableView.deleteRows(at: [selectedIndex], with: .fade)
-                    //strongSelf.tableView.endUpdates()
+                    self.favoriteItems.value.remove(at: selectedIndex.row)
+                    //self.tableView.beginUpdates()
+                    //self.tableView.deleteRows(at: [selectedIndex], with: .fade)
+                    //self.tableView.endUpdates()
 
                 })
             .addDisposableTo(alertDisposeBag!)
@@ -270,15 +267,15 @@ extension FavoritesViewController {
                                                                        toDirectory: documentDirectoryURL,
                                                                        withName: "presentation.pdf",
                                                                        progression:
-            { [weak self] (progress, totalBytesWritten, totalBytesExpectedToWrite) in
+            { [unowned self] (progress, totalBytesWritten, totalBytesExpectedToWrite) in
 
-                if let progressView = self?.downloadProgressView(from: relatedCell) {
+                if let progressView = self.downloadProgressView(from: relatedCell) {
                     
                     print( "\(progress)")
                     progressView.progress = progress
                 }
         })
-        { [weak self] (error, location) in
+        { [unowned self] (error, location) in
             
             
             if let error = error {
@@ -287,7 +284,7 @@ extension FavoritesViewController {
             }
             else {
                 
-                self?.performSegue(withIdentifier: "showFavoritePresentation",
+                self.performSegue(withIdentifier: "showFavoritePresentation",
                                   sender: DocumentInfo( location:location!, id:documentId, title:documentTitle) )
             }
         }
