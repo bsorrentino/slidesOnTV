@@ -44,7 +44,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                 return;
             }
             
-            if let thumbnail = item["thumbnailxlargeurl"]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
+            if let thumbnail = item[DocumentField.ThumbnailXL]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
                 
                 let s = "http:\(thumbnail)"
                 
@@ -202,6 +202,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     }
 }
 
+typealias DocumentInfo = ( location:URL, id:String, title:String )
 
 class DetailView : UIView {
     
@@ -278,12 +279,12 @@ class DetailView : UIView {
         
         if let item = item {
             
-            if let title = item["title"]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
+            if let title = item[DocumentField.Title]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
                 
                 self.titleLabel.text = title
             }
             
-            if let updated = item["updated"] {
+            if let updated = item[DocumentField.Updated] {
                 self.updatedLabel.text = updated
             }
         }
@@ -323,13 +324,13 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     let searchResultsUpdatingSubject = PublishSubject<String>()
 
     
-    func downloadPresentationFormURL( _ downloadURL:URL, relatedCell:SearchSlideCollectionViewCell ) throws {
+    func downloadPresentationFormURL( _ downloadURL:URL, item:Slideshow, relatedCell:SearchSlideCollectionViewCell ) throws {
         
         let documentDirectoryURL =  try FileManager().url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
        
         relatedCell.showProgress()
         
-        TCBlobDownloadManager.sharedInstance.downloadFileAtURL(downloadURL,
+        let _ = TCBlobDownloadManager.sharedInstance.downloadFileAtURL(downloadURL,
                                                                toDirectory: documentDirectoryURL,
                                                                withName: "presentation.pdf",
                                                                progression:
@@ -350,9 +351,10 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
                 }
                 else {
                     
-                    //print( "Download completed at location \(location)")
+                    let title = item[DocumentField.Title] ?? ""
+                    let id = item[DocumentField.ID] ?? "unknown" // raise error
                     
-                    self.performSegue(withIdentifier: "showPresentation", sender: location)
+                    self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:location!, id:id, title:title) )
                 }
                 relatedCell.resetProgress()
             }
@@ -400,7 +402,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         .debug("slideshareSearch")
         .flatMap( {  (filterString) -> Observable<Data> in
         
-            return slideshareSearch(
+            return rxSlideshareSearch(
                         apiKey: credentials["apiKey"]! as! String,
                         sharedSecret: credentials["sharedSecret"] as! String,
                         query: filterString )
@@ -416,7 +418,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         .debug( "subscribe")
         .filter({ (slide:Slideshow) -> Bool in
             print( "\(slide)" )
-            if let format = slide["format"]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
+            if let format = slide[DocumentField.Format]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
                 return format.lowercased()=="pdf"
             }
             return true
@@ -429,9 +431,9 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
                         
                         self.filteredDataItems.append(slide)
                         
-                        let title = slide["title"]
+                        let title = slide[DocumentField.Title]
                         
-                        print( "\(title)")
+                        print( "\(title ?? "title is nil!")")
                         
                         self.collectionView?.reloadData()
                     //}
@@ -449,7 +451,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         // SETTINGS
         
         Settings.subscribe(setting: .SearchHMargins) { (newValue) -> Void in
-            print("Set Horizontal Margin was changed to \(newValue)")
+            print("Set Horizontal Margin was changed to \(String(describing: newValue))")
             self.collectionView?.reloadData()
         }
 
@@ -547,13 +549,13 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         
         let item:Slideshow = filteredDataItems[indexPath.row]
        
-        if let url = item["downloadurl"]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)  {
+        if let url = item[DocumentField.DownloadUrl]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)  {
             
             print( "\(url)")
             
             if let downloadURL = URL(string:url) {
                 do {
-                    try downloadPresentationFormURL( downloadURL, relatedCell:cell)
+                    try downloadPresentationFormURL( downloadURL, item: item, relatedCell:cell)
                 }
                 catch {
                     print( "error downloading url")
@@ -575,11 +577,11 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     
     override open func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let location = sender as? URL {
+        if let info = sender as? DocumentInfo {
             
             if let destinationViewController = segue.destination as? UIPDFCollectionViewController {
                 
-                destinationViewController.documentLocation = location
+                destinationViewController.documentInfo = info
 
             }
         }

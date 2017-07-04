@@ -5,22 +5,21 @@ use_frameworks!
 project 'slides.xcodeproj'
 
 target 'slides' do
-    pod 'RxSwift',    '3.2.0'
-    pod 'RxCocoa',    '3.2.0'
-    #pod 'RxSwiftExt', :git => 'https://github.com/RxSwiftCommunity/RxSwiftExt', :tag => '1.2'
-    pod 'RxSwiftExt', '2.1.0'
+    pod 'RxSwift',    '3.5.0'
+    pod 'RxCocoa',    '3.5.0'
+    pod 'RxSwiftExt'
     pod 'SnapKit',    '3.1.2'
     pod 'SettingsKit', :git => 'https://github.com/bsorrentino/SettingsKit.git', :branch => 'develop'
 end
 
 target 'slidesTests' do
-    pod 'RxBlocking', '3.2.0'
-    pod 'RxTest',     '3.2.0'
+    pod 'RxBlocking', '3.5.0'
+    pod 'RxTest',     '3.5.0'
 end
 
 target 'slidesUITests' do
-    pod 'RxBlocking', '3.2.0'
-    pod 'RxTest',     '3.2.0'
+    pod 'RxBlocking', '3.5.0'
+    pod 'RxTest',     '3.5.0'
 end
 
 post_install do |installer|

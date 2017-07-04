@@ -7,6 +7,44 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+
+
+func associatedObject<ValueType: AnyObject>(
+    base: AnyObject,
+    key: UnsafePointer<UInt8>,
+    initialiser: () -> ValueType)
+    -> ValueType {
+        if let associated = objc_getAssociatedObject(base, key)
+            as? ValueType { return associated }
+        let associated = initialiser()
+        objc_setAssociatedObject(base, key, associated,
+                                 .OBJC_ASSOCIATION_RETAIN)
+        return associated
+}
+
+func associateObject<ValueType: AnyObject>(
+    base: AnyObject,
+    key: UnsafePointer<UInt8>,
+    value: ValueType) {
+    objc_setAssociatedObject(base, key, value,
+                             .OBJC_ASSOCIATION_RETAIN)
+}
+func describing( _ fh: UIFocusHeading ) -> String {
+    switch( fh ) {
+    case UIFocusHeading.up: return "up"
+    case UIFocusHeading.down: return "down"
+    case UIFocusHeading.left: return "down"
+    case UIFocusHeading.right: return "right"
+    case UIFocusHeading.next: return "next"
+    case UIFocusHeading.previous: return "previous"
+    default:return "undef"
+    }
+}
+
+// Make String confrom to Error protocol
+extension String: Error {}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,10 +63,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
         
-        window?.rootViewController = packagedSearchController()
+        //window?.rootViewController = packagedSearchController()
         
         // ONLY FOR TEST PURPOSE
         //window?.rootViewController = testController()
+        
+        let testFavorites:[DocumentInfo] = [
+            DocumentInfo( location:URL(string:"http://pippo.com")!, id:"1", title:"test1" ),
+            DocumentInfo( location:URL(string:"http://pippo.com")!, id:"2", title:"test2" ),
+            DocumentInfo( location:URL(string:"http://pippo.com")!, id:"3", title:"test3" ),
+            DocumentInfo( location:URL(string:"http://pippo.com")!, id:"4", title:"test4" ),
+            DocumentInfo( location:URL(string:"http://pippo.com")!, id:"5", title:"test5" )
+        ]
+        
+        let _ = Observable.from(testFavorites).flatMap {
+            (d) in
+            
+            return rxFavoriteStore(data: d)
+        }
+        .subscribe( onCompleted: {
+                print( "inserted")
+            })
         
         return true
     }
@@ -64,7 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         if let path = Bundle.main.path(forResource: "rx1", ofType:"pdf") {
 
-            controller.documentLocation = URL(fileURLWithPath: path)
+            controller.documentInfo?.location = URL(fileURLWithPath: path)
         }
 
         return controller
@@ -96,4 +151,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return searchNavigationController
     }
 }
+
 
