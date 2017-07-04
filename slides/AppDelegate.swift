@@ -10,6 +10,27 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+
+func associatedObject<ValueType: AnyObject>(
+    base: AnyObject,
+    key: UnsafePointer<UInt8>,
+    initialiser: () -> ValueType)
+    -> ValueType {
+        if let associated = objc_getAssociatedObject(base, key)
+            as? ValueType { return associated }
+        let associated = initialiser()
+        objc_setAssociatedObject(base, key, associated,
+                                 .OBJC_ASSOCIATION_RETAIN)
+        return associated
+}
+
+func associateObject<ValueType: AnyObject>(
+    base: AnyObject,
+    key: UnsafePointer<UInt8>,
+    value: ValueType) {
+    objc_setAssociatedObject(base, key, value,
+                             .OBJC_ASSOCIATION_RETAIN)
+}
 func describing( _ fh: UIFocusHeading ) -> String {
     switch( fh ) {
     case UIFocusHeading.up: return "up"
@@ -24,7 +45,6 @@ func describing( _ fh: UIFocusHeading ) -> String {
 
 // Make String confrom to Error protocol
 extension String: Error {}
-
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -131,4 +151,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return searchNavigationController
     }
 }
+
 

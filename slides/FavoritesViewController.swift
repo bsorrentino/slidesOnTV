@@ -134,12 +134,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: ALERT ACTION
-    
-    fileprivate var alertDisposeBag:DisposeBag?
-    fileprivate let downloadAction = PublishSubject<UIAlertAction>();
-    fileprivate let deleteAction = PublishSubject<UIAlertAction>();
-    
 }
 
 // MARK EDIT EXTENSION
@@ -162,7 +156,43 @@ extension FavoritesViewController {
 
 // MARK: ACTIONS
 
+private var alertDisposeBagKey: UInt8 = 0
+private var deleteActionKey: UInt8 = 0
+private var downloadActionKey: UInt8 = 0
+
 extension FavoritesViewController {
+    
+    var alertDisposeBag: DisposeBag {
+        get {
+            return associatedObject(base:self, key: &alertDisposeBagKey) { // Set the initial value of the var
+                return DisposeBag()
+            }
+        }
+        set {
+            associateObject(base:self, key: &alertDisposeBagKey, value: newValue)
+        }
+    }
+  var deleteAction: PublishSubject<UIAlertAction> {
+        get {
+            return associatedObject(base:self, key: &deleteActionKey) { // Set the initial value of the var
+                return PublishSubject<UIAlertAction>()
+            }
+        }
+        set {
+            associateObject(base:self, key: &deleteActionKey, value: newValue)
+        }
+    }
+
+    var downloadAction: PublishSubject<UIAlertAction> {
+        get {
+            return associatedObject(base:self, key: &downloadActionKey) { // Set the initial value of the var
+                return PublishSubject<UIAlertAction>()
+            }
+        }
+        set {
+            associateObject(base:self, key: &downloadActionKey, value: newValue)
+        }
+    }
 
     fileprivate func downloadProgressView( from: UIFavoriteCell ) -> UIProgressView? {
         guard  let selectedView = from.selectedBackgroundView as? FavoritesCommandView,
@@ -203,28 +233,48 @@ extension FavoritesViewController {
                         .flatMap { (credentials) in
                             rxSlideshareGet(credentials:credentials, id: data.key)
                         }
-                        .asObservable()
-                        .flatMap { (data:Data) -> Observable<Slideshow> in
+                        .flatMap { (data:Data) -> Single<Slideshow> in
                             
                             let slidehareItemsParser = SlideshareItemsParser()
                             
-                            return slidehareItemsParser.rx_parse(data)
+                            return slidehareItemsParser.rx_parse(data).asSingle()
                         }
-                        .catchErrorJustReturn([DocumentField.ID:data.key])
+                        .catchError { (error) in
+                                Single.just([DocumentField.ID:data.key])
+                        }
             }
-            .subscribe( onNext: { [unowned self] (slide:Slideshow) in
-
-                do {
-                    
-                    try self.downloadPresentationFormURL( item:slide, relatedCell:cell )
-                    
-                }
-                catch( let e  ) {
-                    print( "error downloading presentation \(e)")
-                }
-            
+            .do(onNext: { (slide) in
+                self.tableView.isUserInteractionEnabled = false
             })
-            .addDisposableTo(alertDisposeBag!)
+            .flatMap { [unowned self] (slide:Slideshow) in
+                rxDownloadPresentationFormURL( item:slide )
+                    { [unowned self] (progress, totalBytesWritten, totalBytesExpectedToWrite) in
+                        
+                        if let progressView = self.downloadProgressView(from: cell) {
+                            
+                            print( "\(progress)")
+                            progressView.progress = progress
+                        }
+                    }
+   
+            }
+            .subscribe(
+                onNext: { [unowned self] (value) in
+                    
+                    self.tableView.isUserInteractionEnabled = true
+                    
+                    guard   let documentId = value.0[DocumentField.ID],
+                        let documentTitle = value.0[DocumentField.Title],
+                        let location = value.1  else { return  }
+
+                    self.performSegue(withIdentifier: "showFavoritePresentation",
+                                    sender: DocumentInfo( location:location, id:documentId, title:documentTitle) )
+                    
+                },
+                onError: { (err) in
+                    self.tableView.isUserInteractionEnabled = true
+                })
+            .addDisposableTo(alertDisposeBag)
         
 
         deleteAction.subscribe( onNext: { [unowned self] (value) in
@@ -236,7 +286,7 @@ extension FavoritesViewController {
                     //self.tableView.endUpdates()
 
                 })
-            .addDisposableTo(alertDisposeBag!)
+            .addDisposableTo(alertDisposeBag)
 
 
         var title:String?
@@ -250,49 +300,7 @@ extension FavoritesViewController {
         self.present(alertController, animated: true, completion: nil)
     }
    
-    //
-    // MARK: Download and Show Presentation
-    //
-    
-    func downloadPresentationFormURL( item:Slideshow, relatedCell:UIFavoriteCell ) throws {
-        guard   let documentId = item[DocumentField.ID],
-            let documentTitle = item[DocumentField.Title] else { return }
         
-        guard   let url = item[DocumentField.DownloadUrl]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
-            let downloadURL = URL(string:url) else { return }
-        
-        let documentDirectoryURL =  try FileManager().url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        
-        let _ = TCBlobDownloadManager.sharedInstance.downloadFileAtURL(downloadURL,
-                                                                       toDirectory: documentDirectoryURL,
-                                                                       withName: "presentation.pdf",
-                                                                       progression:
-            { [unowned self] (progress, totalBytesWritten, totalBytesExpectedToWrite) in
-
-                if let progressView = self.downloadProgressView(from: relatedCell) {
-                    
-                    print( "\(progress)")
-                    progressView.progress = progress
-                }
-        })
-        { [unowned self] (error, location) in
-            
-            
-            if let error = error {
-                
-                debugPrint(error)
-            }
-            else {
-                
-                self.performSegue(withIdentifier: "showFavoritePresentation",
-                                  sender: DocumentInfo( location:location!, id:documentId, title:documentTitle) )
-            }
-        }
-        
-        
-        
-    }
-    
     
 }
 

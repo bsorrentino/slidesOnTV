@@ -235,7 +235,7 @@
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="favoriteCell" rowHeight="100" id="oFn-tD-ByK" customClass="UIFavoriteCell" customModule="slides" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="66" width="1738" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oFn-tD-ByK" id="pxr-vC-BDR">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="oFn-tD-ByK" id="pxr-vC-BDR">
                                             <rect key="frame" x="0.0" y="0.0" width="1722" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
@@ -263,15 +263,18 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RQF-sP-SVN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="UAo-pM-QPU" customClass="FavoritesCommandView" customModule="slides" customModuleProvider="target">
+                <view userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleToFill" id="UAo-pM-QPU" customClass="FavoritesCommandView" customModule="slides" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="1738" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <progressView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="d1P-w6-oGO">
                             <rect key="frame" x="0.0" y="0.0" width="1738" height="128"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <color key="progressTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </progressView>
                     </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="d1P-w6-oGO" firstAttribute="height" secondItem="UAo-pM-QPU" secondAttribute="height" id="1bl-8c-v4R"/>
                         <constraint firstItem="d1P-w6-oGO" firstAttribute="width" secondItem="UAo-pM-QPU" secondAttribute="width" id="DKy-Oc-0je"/>

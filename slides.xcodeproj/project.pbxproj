@@ -40,6 +40,7 @@
 		5FB6540A1D82E7E600E6E2F2 /* SettingsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB654091D82E7E600E6E2F2 /* SettingsBarView.swift */; };
 		5FB6D3861CAEF8B100D7AA80 /* SlideViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */; };
 		5FC7A4AD1CAD8D0700530CB0 /* rx1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */; };
+		5FCCC36E1F0BF205002ADBEC /* Slideshare+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */; };
 		5FD9A2CF1CAD19590065BE03 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */; };
 		5FD9A2D11CAD19590065BE03 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D01CAD19590065BE03 /* ViewController.swift */; };
 		5FD9A2D41CAD19590065BE03 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D21CAD19590065BE03 /* Main.storyboard */; };
@@ -118,6 +119,7 @@
 		5FC7A4A51CAD8A8F00530CB0 /* slides-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "slides-Bridging-Header.h"; sourceTree = "<group>"; };
 		5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = rx1.pdf; path = assets/rx1.pdf; sourceTree = "<group>"; };
 		5FCB2B2D1D7392CC007B8DA5 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Slideshare+Download.swift"; sourceTree = "<group>"; };
 		5FD9A2CB1CAD19590065BE03 /* slides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slides.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5FD9A2D01CAD19590065BE03 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				5FF0DE0B1D99AF79001CEC34 /* viewer */,
 				5F4515A91CC2F277004C4004 /* Info-dev.plist */,
 				5F9623521CBBF94900F61D9C /* Slidehare.swift */,
+				5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */,
 				5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */,
 				5FD9A2D01CAD19590065BE03 /* ViewController.swift */,
 				5FD9A2D21CAD19590065BE03 /* Main.storyboard */,
@@ -673,6 +676,7 @@
 				5F8A17131EF0365E0005B086 /* Favorites.swift in Sources */,
 				5FB609EC1DA03CB000051347 /* SlideViewerController+Fullpage.swift in Sources */,
 				5F4C49901F00FB9700269C50 /* FavoritesCommandView.swift in Sources */,
+				5FCCC36E1F0BF205002ADBEC /* Slideshare+Download.swift in Sources */,
 				5F9623531CBBF94900F61D9C /* Slidehare.swift in Sources */,
 				A0C8B3E71CCCC8CF007352B6 /* ARLabel.swift in Sources */,
 				5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */,

@@ -13,16 +13,17 @@ import RxCocoa
 class FavoritesCommandView: UIView {
 
     @IBOutlet weak var downloadProgressView: UIProgressView!
-    /*
+   
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
+    /*
     override func draw(_ rect: CGRect) {
         // Drawing code
     }
   
     */
 
-    
+    // MARK: FOCUS MANAGEMENT
     /*
     private var _preferredFocusIndex:Int = 0
     
