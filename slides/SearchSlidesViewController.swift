@@ -322,50 +322,8 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     let disposeBag = DisposeBag()
     
     let searchResultsUpdatingSubject = PublishSubject<String>()
-
-    
-    func downloadPresentationFormURL( _ downloadURL:URL, item:Slideshow, relatedCell:SearchSlideCollectionViewCell ) throws {
-        
-        let documentDirectoryURL =  try FileManager().url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-       
-        relatedCell.showProgress()
-        
-        let _ = TCBlobDownloadManager.sharedInstance.downloadFileAtURL(downloadURL,
-                                                               toDirectory: documentDirectoryURL,
-                                                               withName: "presentation.pdf",
-                                                               progression:
-            { (progress, totalBytesWritten, totalBytesExpectedToWrite) in
-                
-                //let percentage = round( Float((totalBytesWritten * 100)/totalBytesExpectedToWrite) )
-                //print( "\(progress) - \(totalBytesWritten) - \(totalBytesExpectedToWrite) %: \(percentage)" )
-                //relatedCell.setProgress( percentage )
-                
-                relatedCell.setProgress(progress)
-            })
-            { (error, location) in
-
-                
-                if let error = error {
-                 
-                    debugPrint(error)
-                }
-                else {
-                    
-                    let title = item[DocumentField.Title] ?? ""
-                    let id = item[DocumentField.ID] ?? "unknown" // raise error
-                    
-                    self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:location!, id:id, title:title) )
-                }
-                relatedCell.resetProgress()
-            }
-        
-
-        
-    }
-    
     
     // MARK: UICollectionViewController Lifecycle
-
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -548,21 +506,24 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         }
         
         let item:Slideshow = filteredDataItems[indexPath.row]
-       
-        if let url = item[DocumentField.DownloadUrl]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)  {
-            
-            print( "\(url)")
-            
-            if let downloadURL = URL(string:url) {
-                do {
-                    try downloadPresentationFormURL( downloadURL, item: item, relatedCell:cell)
-                }
-                catch {
-                    print( "error downloading url")
-                }
-            }
-        }
         
+        rxDownloadPresentationFormURL( item:item ) { (progress, totalBytesWritten, totalBytesExpectedToWrite) in
+            
+            cell.setProgress(progress)
+        }
+        .do( onSubscribe: { cell.showProgress() }, onDispose: { cell.resetProgress() } )
+        .subscribe(onSuccess: { (value:(Slideshow,URL?)) in
+        
+            let title = item[DocumentField.Title] ?? ""
+            let id = item[DocumentField.ID] ?? "unknown" // raise error
+            
+            self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:value.1!, id:id, title:title) )
+    
+        }) { (err) in
+            
+            print( "error downloading url")
+        }.addDisposableTo(disposeBag)
+       
     }
     
     // MARK: UISearchResultsUpdating
