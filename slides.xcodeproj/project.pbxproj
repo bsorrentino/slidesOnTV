@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0FF9F2D13CDF8A9F545C23BD /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F461D52AA3D9A66BFAC24D /* Pods_slides.framework */; };
-		591CB496FE74875BBC05B96F /* Pods_slidesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6807EB71A8C645CEB5979B8 /* Pods_slidesUITests.framework */; };
 		5F0C443E1EDB607D00B098A1 /* SearchStoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */; };
 		5F15D3EA1F03C4C2002F03AC /* FavoriteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */; };
 		5F35BE3E1ED0941D00B644B1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */; };
@@ -25,12 +23,6 @@
 		5F57DE0B1CC3DCCF00D5F1B8 /* TWRProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F57DE0A1CC3DCCF00D5F1B8 /* TWRProgressView.m */; };
 		5F57DE131CC42B7500D5F1B8 /* UAProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F57DE101CC42B7500D5F1B8 /* UAProgressView.m */; };
 		5F5AC0481EF088C200E2A561 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5AC0471EF088C200E2A561 /* FavoritesViewController.swift */; };
-		5F88A55B1E521170007E3FFC /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F88A5551E521170007E3FFC /* Pods_slides.framework */; };
-		5F88A55C1E521170007E3FFC /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F88A5561E521170007E3FFC /* RxCocoa.framework */; };
-		5F88A55D1E521170007E3FFC /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F88A5571E521170007E3FFC /* RxSwift.framework */; };
-		5F88A55E1E521170007E3FFC /* RxSwiftExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F88A5581E521170007E3FFC /* RxSwiftExt.framework */; };
-		5F88A55F1E521170007E3FFC /* SettingsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F88A5591E521170007E3FFC /* SettingsKit.framework */; };
-		5F88A5601E521170007E3FFC /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F88A55A1E521170007E3FFC /* SnapKit.framework */; };
 		5F8A17131EF0365E0005B086 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A17121EF0365E0005B086 /* Favorites.swift */; };
 		5F90B6091D9AC6DC00615BA4 /* ThumbnailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F90B6081D9AC6DC00615BA4 /* ThumbnailsView.swift */; };
 		5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */; };
@@ -40,6 +32,11 @@
 		5FB6540A1D82E7E600E6E2F2 /* SettingsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB654091D82E7E600E6E2F2 /* SettingsBarView.swift */; };
 		5FB6D3861CAEF8B100D7AA80 /* SlideViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */; };
 		5FC7A4AD1CAD8D0700530CB0 /* rx1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */; };
+		5FC9C8E61F0CCD4800811E24 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC9C8E51F0CCD4800811E24 /* RxSwift.framework */; };
+		5FC9C8E81F0CCD5C00811E24 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC9C8E71F0CCD5C00811E24 /* RxCocoa.framework */; };
+		5FC9C8EA1F0CCD6F00811E24 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC9C8E91F0CCD6F00811E24 /* SnapKit.framework */; };
+		5FC9C8EC1F0CCD8200811E24 /* RxSwiftExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC9C8EB1F0CCD8200811E24 /* RxSwiftExt.framework */; };
+		5FC9C8EE1F0CCD8A00811E24 /* SettingsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC9C8ED1F0CCD8A00811E24 /* SettingsKit.framework */; };
 		5FCCC36E1F0BF205002ADBEC /* Slideshare+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */; };
 		5FD9A2CF1CAD19590065BE03 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */; };
 		5FD9A2D11CAD19590065BE03 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D01CAD19590065BE03 /* ViewController.swift */; };
@@ -48,7 +45,6 @@
 		5FD9A2E11CAD195A0065BE03 /* slidesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2E01CAD195A0065BE03 /* slidesTests.swift */; };
 		5FD9A2EC1CAD195A0065BE03 /* slidesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2EB1CAD195A0065BE03 /* slidesUITests.swift */; };
 		5FF0DE0D1D99B033001CEC34 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF0DE0C1D99B033001CEC34 /* PageView.swift */; };
-		99218CF361536F7ED9A34114 /* Pods_slidesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 405EB764B71F02D54D2B3B5E /* Pods_slidesTests.framework */; };
 		A06B6D531CBFA23900CBE220 /* slideshare.plist in Resources */ = {isa = PBXBuildFile; fileRef = A06B6D521CBFA23900CBE220 /* slideshare.plist */; };
 		A0889C3C1CE8F4430050094D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A0889C3B1CE8F4430050094D /* Settings.bundle */; };
 		A0C8B3E71CCCC8CF007352B6 /* ARLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8B3E61CCCC8CF007352B6 /* ARLabel.swift */; };
@@ -76,7 +72,6 @@
 		06BA7C51FC30362AA6716B11 /* Pods-slidesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		29922D394E25E590CB68BD7B /* Settings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = slides/Settings.swift; sourceTree = SOURCE_ROOT; };
 		3CADED520A0132122567DBAF /* Pods-slidesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests.release.xcconfig"; sourceTree = "<group>"; };
-		405EB764B71F02D54D2B3B5E /* Pods_slidesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B74BAF74AE103B2AC4E9103 /* Pods-slides.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.release.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.release.xcconfig"; sourceTree = "<group>"; };
 		5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStoryboardSegue.swift; sourceTree = "<group>"; };
 		5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewCell.swift; sourceTree = "<group>"; };
@@ -101,12 +96,6 @@
 		5F57DE0F1CC42B7500D5F1B8 /* UAProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAProgressView.h; sourceTree = "<group>"; };
 		5F57DE101CC42B7500D5F1B8 /* UAProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAProgressView.m; sourceTree = "<group>"; };
 		5F5AC0471EF088C200E2A561 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
-		5F88A5551E521170007E3FFC /* Pods_slides.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_slides.framework; path = "Pods/../build/Debug-appletvos/Pods_slides.framework"; sourceTree = "<group>"; };
-		5F88A5561E521170007E3FFC /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "Pods/../build/Debug-appletvos/RxCocoa/RxCocoa.framework"; sourceTree = "<group>"; };
-		5F88A5571E521170007E3FFC /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Pods/../build/Debug-appletvos/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
-		5F88A5581E521170007E3FFC /* RxSwiftExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwiftExt.framework; path = "Pods/../build/Debug-appletvos/RxSwiftExt/RxSwiftExt.framework"; sourceTree = "<group>"; };
-		5F88A5591E521170007E3FFC /* SettingsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SettingsKit.framework; path = "Pods/../build/Debug-appletvos/SettingsKit/SettingsKit.framework"; sourceTree = "<group>"; };
-		5F88A55A1E521170007E3FFC /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Pods/../build/Debug-appletvos/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
 		5F8A17121EF0365E0005B086 /* Favorites.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		5F90B6081D9AC6DC00615BA4 /* ThumbnailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailsView.swift; sourceTree = "<group>"; };
 		5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSlidesViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +107,11 @@
 		5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideViewerController.swift; sourceTree = "<group>"; };
 		5FC7A4A51CAD8A8F00530CB0 /* slides-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "slides-Bridging-Header.h"; sourceTree = "<group>"; };
 		5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = rx1.pdf; path = assets/rx1.pdf; sourceTree = "<group>"; };
+		5FC9C8E51F0CCD4800811E24 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Build/Products/Debug-appletvos/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
+		5FC9C8E71F0CCD5C00811E24 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "Build/Products/Debug-appletvos/RxCocoa/RxCocoa.framework"; sourceTree = "<group>"; };
+		5FC9C8E91F0CCD6F00811E24 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Build/Products/Debug-appletvos/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
+		5FC9C8EB1F0CCD8200811E24 /* RxSwiftExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwiftExt.framework; path = "Build/Products/Debug-appletvos/RxSwiftExt/RxSwiftExt.framework"; sourceTree = "<group>"; };
+		5FC9C8ED1F0CCD8A00811E24 /* SettingsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SettingsKit.framework; path = "Build/Products/Debug-appletvos/SettingsKit/SettingsKit.framework"; sourceTree = "<group>"; };
 		5FCB2B2D1D7392CC007B8DA5 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Slideshare+Download.swift"; sourceTree = "<group>"; };
 		5FD9A2CB1CAD19590065BE03 /* slides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slides.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,9 +135,7 @@
 		A0889C3B1CE8F4430050094D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = slides/Settings.bundle; sourceTree = "<group>"; };
 		A0C8B3E61CCCC8CF007352B6 /* ARLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARLabel.swift; sourceTree = "<group>"; };
 		C555331529587B8A9D9CCD2B /* Pods-slides.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.debug.xcconfig"; sourceTree = "<group>"; };
-		C5F461D52AA3D9A66BFAC24D /* Pods_slides.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slides.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD0C312159396BDFEFD44CE4 /* Pods-slidesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.debug.xcconfig"; sourceTree = "<group>"; };
-		D6807EB71A8C645CEB5979B8 /* Pods_slidesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,13 +143,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F88A55B1E521170007E3FFC /* Pods_slides.framework in Frameworks */,
-				5F88A55C1E521170007E3FFC /* RxCocoa.framework in Frameworks */,
-				5F88A55D1E521170007E3FFC /* RxSwift.framework in Frameworks */,
-				5F88A55E1E521170007E3FFC /* RxSwiftExt.framework in Frameworks */,
-				5F88A55F1E521170007E3FFC /* SettingsKit.framework in Frameworks */,
-				5F88A5601E521170007E3FFC /* SnapKit.framework in Frameworks */,
-				0FF9F2D13CDF8A9F545C23BD /* Pods_slides.framework in Frameworks */,
+				5FC9C8EE1F0CCD8A00811E24 /* SettingsKit.framework in Frameworks */,
+				5FC9C8EC1F0CCD8200811E24 /* RxSwiftExt.framework in Frameworks */,
+				5FC9C8EA1F0CCD6F00811E24 /* SnapKit.framework in Frameworks */,
+				5FC9C8E81F0CCD5C00811E24 /* RxCocoa.framework in Frameworks */,
+				5FC9C8E61F0CCD4800811E24 /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,7 +155,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99218CF361536F7ED9A34114 /* Pods_slidesTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +162,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				591CB496FE74875BBC05B96F /* Pods_slidesUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,15 +336,11 @@
 		A8CBADC199C577F1E16802A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5F88A5551E521170007E3FFC /* Pods_slides.framework */,
-				5F88A5561E521170007E3FFC /* RxCocoa.framework */,
-				5F88A5571E521170007E3FFC /* RxSwift.framework */,
-				5F88A5581E521170007E3FFC /* RxSwiftExt.framework */,
-				5F88A5591E521170007E3FFC /* SettingsKit.framework */,
-				5F88A55A1E521170007E3FFC /* SnapKit.framework */,
-				C5F461D52AA3D9A66BFAC24D /* Pods_slides.framework */,
-				405EB764B71F02D54D2B3B5E /* Pods_slidesTests.framework */,
-				D6807EB71A8C645CEB5979B8 /* Pods_slidesUITests.framework */,
+				5FC9C8ED1F0CCD8A00811E24 /* SettingsKit.framework */,
+				5FC9C8EB1F0CCD8200811E24 /* RxSwiftExt.framework */,
+				5FC9C8E91F0CCD6F00811E24 /* SnapKit.framework */,
+				5FC9C8E71F0CCD5C00811E24 /* RxCocoa.framework */,
+				5FC9C8E51F0CCD4800811E24 /* RxSwift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -808,6 +792,11 @@
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SettingsKit",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SettingsKit",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -946,6 +935,11 @@
 					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwift",
 					"$(PROJECT_DIR)/build/Debug-appletvos/SettingsKit",
 					"$(PROJECT_DIR)/build/Debug-appletvos/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SettingsKit",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
