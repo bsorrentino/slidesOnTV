@@ -24,7 +24,7 @@ func rxDownloadPresentationFormURL( item:Slideshow, progression: progressionHand
     
     return Single<(Slideshow,URL?)>.create() { (single) in
         
-        var downloadTask:TCBlobDownload?
+        var downloadTask:TCBlobDownload? 
         
         do {
             
@@ -54,6 +54,7 @@ func rxDownloadPresentationFormURL( item:Slideshow, progression: progressionHand
         }
         
         return Disposables.create {
+            print( "CANCELLING DOWNLOAD TASK \(String(describing: downloadTask))")
             downloadTask?.cancel();
         }
     }

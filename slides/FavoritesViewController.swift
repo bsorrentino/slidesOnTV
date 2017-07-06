@@ -32,6 +32,28 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
 
     let favoriteItems: Variable<[FavoriteData]> = Variable([])
 
+
+    // MARK: MENU GESTURE MANAGEMENT
+    var downloadDispose:Disposable?
+    var deleteDispose:Disposable?
+
+    var menuTap:UITapGestureRecognizer?
+    
+    private func overrideMenuTap( _ enabled:Bool = false ) {
+        menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
+        menuTap?.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
+        menuTap?.isEnabled = enabled
+        view.addGestureRecognizer(menuTap!)
+        
+    }
+    
+    @IBAction func menuTapped(_ sender: UITapGestureRecognizer) {
+        downloadDispose?.dispose()
+        deleteDispose?.dispose()
+    }
+
+    // MARK: STANDARD LIFECYCLE
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -101,7 +123,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         
         favoriteItems.value.append(contentsOf: favorites() )
 
-        
+        overrideMenuTap()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -134,6 +156,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
 }
 
 // MARK EDIT EXTENSION
@@ -156,23 +179,13 @@ extension FavoritesViewController {
 
 // MARK: ACTIONS
 
-private var alertDisposeBagKey: UInt8 = 0
 private var deleteActionKey: UInt8 = 0
 private var downloadActionKey: UInt8 = 0
 
+
 extension FavoritesViewController {
-    
-    var alertDisposeBag: DisposeBag {
-        get {
-            return associatedObject(base:self, key: &alertDisposeBagKey) { // Set the initial value of the var
-                return DisposeBag()
-            }
-        }
-        set {
-            associateObject(base:self, key: &alertDisposeBagKey, value: newValue)
-        }
-    }
-  var deleteAction: PublishSubject<UIAlertAction> {
+
+    var deleteAction: PublishSubject<UIAlertAction> {
         get {
             return associatedObject(base:self, key: &deleteActionKey) { // Set the initial value of the var
                 return PublishSubject<UIAlertAction>()
@@ -225,9 +238,10 @@ extension FavoritesViewController {
         
         guard let cell = self.tableView?.cellForRow(at: selectedIndex) as? UIFavoriteCell  else { return }
         
-        alertDisposeBag = DisposeBag()
+        downloadDispose?.dispose()
+        deleteDispose?.dispose()
         
-        downloadAction.flatMap { (value) in
+        downloadDispose = downloadAction.flatMap { (value) in
             
             return rxSlideshareCredentials()
                         .flatMap { (credentials) in
@@ -243,9 +257,18 @@ extension FavoritesViewController {
                                 Single.just([DocumentField.ID:data.key])
                         }
             }
-            .do(onNext: { (slide) in
-                self.tableView.isUserInteractionEnabled = false
-            })
+            .do(
+                onNext: { [unowned self] (slide) in
+                    self.tableView.isUserInteractionEnabled = false
+                    self.menuTap?.isEnabled = true
+                },
+                onDispose: {
+                    cell.setSelected(false, animated: false)
+                    self.tableView.isUserInteractionEnabled = true
+                    self.menuTap?.isEnabled = false
+
+                }
+            )
             .flatMap { [unowned self] (slide:Slideshow) in
                 rxDownloadPresentationFormURL( item:slide )
                     { [unowned self] (progress, totalBytesWritten, totalBytesExpectedToWrite) in
@@ -262,6 +285,7 @@ extension FavoritesViewController {
                 onNext: { [unowned self] (value) in
                     
                     self.tableView.isUserInteractionEnabled = true
+                    self.menuTap?.isEnabled = false
                     
                     guard   let documentId = value.0[DocumentField.ID],
                         let documentTitle = value.0[DocumentField.Title],
@@ -273,11 +297,11 @@ extension FavoritesViewController {
                 },
                 onError: { (err) in
                     self.tableView.isUserInteractionEnabled = true
+                    self.menuTap?.isEnabled = false
                 })
-            .addDisposableTo(alertDisposeBag)
         
 
-        deleteAction.subscribe( onNext: { [unowned self] (value) in
+        deleteDispose = deleteAction.subscribe( onNext: { [unowned self] (value) in
             
                     favoriteRemove(key: data.key, synchronize: true)
                     self.favoriteItems.value.remove(at: selectedIndex.row)
@@ -286,7 +310,6 @@ extension FavoritesViewController {
                     //self.tableView.endUpdates()
 
                 })
-            .addDisposableTo(alertDisposeBag)
 
 
         var title:String?
