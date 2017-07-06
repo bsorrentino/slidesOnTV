@@ -238,7 +238,9 @@ extension FavoritesViewController {
         
         alertDisposeBag = DisposeBag()
         
-        downloadAction.flatMap { (value) in
+        downloadAction
+            .take(1)
+            .flatMap { (value) in
             
             return rxSlideshareCredentials()
                         .flatMap { (credentials) in
@@ -258,11 +260,6 @@ extension FavoritesViewController {
                 onNext: { [unowned self] (slide) in
                     self.tableView.isUserInteractionEnabled = false
                     self.menuTap?.isEnabled = true
-                },
-                onDispose: { [unowned self] in
-                    self.tableView.isUserInteractionEnabled = true
-                    self.menuTap?.isEnabled = false
-
                 }
             )
             .flatMap { [unowned self] (slide:Slideshow) in
@@ -277,6 +274,13 @@ extension FavoritesViewController {
                     }
    
             }
+            .do(
+                onDispose: { [unowned self] in
+                    self.tableView.isUserInteractionEnabled = true
+                    self.menuTap?.isEnabled = false
+                    
+                }
+            )
             .subscribe(
                 onNext: { [unowned self] (value) in
                     
@@ -298,7 +302,9 @@ extension FavoritesViewController {
                 .addDisposableTo(alertDisposeBag!)
         
 
-        deleteAction.subscribe( onNext: { [unowned self] (value) in
+        deleteAction
+            .take(1)
+            .subscribe( onNext: { [unowned self] (value) in
             
                     favoriteRemove(key: data.key, synchronize: true)
                     self.favoriteItems.value.remove(at: selectedIndex.row)
