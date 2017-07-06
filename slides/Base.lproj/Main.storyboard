@@ -303,7 +303,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z" customClass="ThumbnailsView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="20" y="0.0" width="32" height="1080"/>
+                                <rect key="frame" x="20" y="145" width="32" height="935"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -332,10 +332,10 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view" customClass="PageView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="57" y="0.0" width="1858" height="1080"/>
+                                <rect key="frame" x="57" y="145" width="1858" height="935"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsh-Gb-3mi">
-                                        <rect key="frame" x="10" y="0.0" width="1838" height="1080"/>
+                                        <rect key="frame" x="10" y="0.0" width="1838" height="935"/>
                                         <gestureRecognizers/>
                                     </imageView>
                                     <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
@@ -397,6 +397,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="V1I-rp-vwY"/>
+        <segue reference="0AE-4I-NyF"/>
     </inferredMetricsTieBreakers>
 </document>
