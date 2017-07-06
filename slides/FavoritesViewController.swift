@@ -34,8 +34,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
 
 
     // MARK: MENU GESTURE MANAGEMENT
-    var downloadDispose:Disposable?
-    var deleteDispose:Disposable?
+    var alertDisposeBag:DisposeBag?
 
     var menuTap:UITapGestureRecognizer?
     
@@ -48,8 +47,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
     }
     
     @IBAction func menuTapped(_ sender: UITapGestureRecognizer) {
-        downloadDispose?.dispose()
-        deleteDispose?.dispose()
+        alertDisposeBag = nil
     }
 
     // MARK: STANDARD LIFECYCLE
@@ -238,10 +236,9 @@ extension FavoritesViewController {
         
         guard let cell = self.tableView?.cellForRow(at: selectedIndex) as? UIFavoriteCell  else { return }
         
-        downloadDispose?.dispose()
-        deleteDispose?.dispose()
+        alertDisposeBag = DisposeBag()
         
-        downloadDispose = downloadAction.flatMap { (value) in
+        downloadAction.flatMap { (value) in
             
             return rxSlideshareCredentials()
                         .flatMap { (credentials) in
@@ -262,8 +259,7 @@ extension FavoritesViewController {
                     self.tableView.isUserInteractionEnabled = false
                     self.menuTap?.isEnabled = true
                 },
-                onDispose: {
-                    cell.setSelected(false, animated: false)
+                onDispose: { [unowned self] in
                     self.tableView.isUserInteractionEnabled = true
                     self.menuTap?.isEnabled = false
 
@@ -299,9 +295,10 @@ extension FavoritesViewController {
                     self.tableView.isUserInteractionEnabled = true
                     self.menuTap?.isEnabled = false
                 })
+                .addDisposableTo(alertDisposeBag!)
         
 
-        deleteDispose = deleteAction.subscribe( onNext: { [unowned self] (value) in
+        deleteAction.subscribe( onNext: { [unowned self] (value) in
             
                     favoriteRemove(key: data.key, synchronize: true)
                     self.favoriteItems.value.remove(at: selectedIndex.row)
@@ -310,6 +307,7 @@ extension FavoritesViewController {
                     //self.tableView.endUpdates()
 
                 })
+                .addDisposableTo(alertDisposeBag!)
 
 
         var title:String?
