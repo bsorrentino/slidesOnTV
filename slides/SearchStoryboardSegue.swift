@@ -42,7 +42,7 @@ class SearchStoryboardSegue: UIStoryboardSegue {
         
         // Contain the `UISearchController` in a `UISearchContainerViewController`.
         let searchContainer = UISearchContainerViewController(searchController: searchController)
-        searchContainer.title = NSLocalizedString("Search for slides", comment: "")
+        //searchContainer.title = NSLocalizedString("Search for slides", comment: "")
         
         return searchContainer
         
