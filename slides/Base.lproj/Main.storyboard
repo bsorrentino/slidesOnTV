@@ -163,7 +163,7 @@
                                     <constraint firstAttribute="height" constant="130" id="fws-sv-idY"/>
                                 </constraints>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                <state key="normal" title="Favorites"/>
+                                <state key="normal" title="Favourites"/>
                                 <connections>
                                     <segue destination="7MQ-SL-prb" kind="show" id="Ucl-Wu-SU9"/>
                                 </connections>
@@ -196,13 +196,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="edm-Cu-azw">
-                                <rect key="frame" x="648" y="-30" width="624" height="120"/>
+                                <rect key="frame" x="624" y="-30" width="672" height="120"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7O-9N-PuX">
-                                        <rect key="frame" x="212" y="8" width="302" height="100"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favourites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7O-9N-PuX">
+                                        <rect key="frame" x="212" y="8" width="350" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="9DM-YX-81v"/>
-                                            <constraint firstAttribute="width" constant="302" id="Whb-Qg-LgL"/>
+                                            <constraint firstAttribute="width" constant="350" id="Whb-Qg-LgL"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <nil key="textColor"/>
@@ -220,7 +220,7 @@
                                     <constraint firstItem="v7O-9N-PuX" firstAttribute="leading" secondItem="n4Z-8O-JNm" secondAttribute="trailing" id="EhB-nR-q7M"/>
                                     <constraint firstAttribute="height" constant="120" id="GCU-8f-Vir"/>
                                     <constraint firstItem="n4Z-8O-JNm" firstAttribute="centerY" secondItem="edm-Cu-azw" secondAttribute="centerY" id="SeH-9m-Z4t"/>
-                                    <constraint firstAttribute="width" constant="624" id="f0L-yv-MTl"/>
+                                    <constraint firstAttribute="width" constant="672" id="f0L-yv-MTl"/>
                                     <constraint firstItem="v7O-9N-PuX" firstAttribute="top" secondItem="edm-Cu-azw" secondAttribute="topMargin" id="vfi-XZ-xO9"/>
                                     <constraint firstItem="v7O-9N-PuX" firstAttribute="leading" secondItem="edm-Cu-azw" secondAttribute="leading" constant="212" id="vs5-lr-8Ew"/>
                                 </constraints>
@@ -301,7 +301,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z" customClass="ThumbnailsView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="20" y="0.0" width="32" height="1080"/>
+                                <rect key="frame" x="20" y="145" width="32" height="935"/>
                                 <color key="backgroundColor" red="0.90350341796875" green="0.90350341796875" blue="0.90350341796875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -330,10 +330,10 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view" customClass="PageView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="57" y="0.0" width="1858" height="1080"/>
+                                <rect key="frame" x="57" y="145" width="1858" height="935"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsh-Gb-3mi">
-                                        <rect key="frame" x="10" y="0.0" width="1838" height="1080"/>
+                                        <rect key="frame" x="10" y="0.0" width="1838" height="935"/>
                                         <gestureRecognizers/>
                                     </imageView>
                                     <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
@@ -341,7 +341,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <items>
                                             <tabBarItem tag="1" title="Toggle Fullscreen" id="J0v-Ag-eYI"/>
-                                            <tabBarItem tag="2" title="Add to Favorite" image="favorite" id="itz-Ku-sMH"/>
+                                            <tabBarItem tag="2" title="Add to Favourite" image="favorite" id="itz-Ku-sMH"/>
                                             <tabBarItem tag="3" enabled="NO" title="Zoom+" id="Mgh-57-m5N"/>
                                             <tabBarItem tag="4" enabled="NO" title="Zoom-" id="DLk-td-vjh"/>
                                             <tabBarItem tag="5" enabled="NO" systemItem="search" id="HRj-nf-1WF"/>
@@ -395,6 +395,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="V1I-rp-vwY"/>
+        <segue reference="0AE-4I-NyF"/>
     </inferredMetricsTieBreakers>
 </document>
