@@ -352,7 +352,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
             TVOSToastHintText(element:
                 [ToastElement.stringType("Press the "),
                  ToastElement.remoteButtonType(.MenuBlack),
-                 ToastElement.stringType(" button to cancel dowload")])
+                 ToastElement.stringType(" button to cancel download")])
         
         
         downloadDispose = rxDownloadFromURL( presentation:item )

@@ -241,7 +241,7 @@ extension FavoritesViewController {
             TVOSToastHintText(element:
                 [ToastElement.stringType("Press the "),
                  ToastElement.remoteButtonType(.MenuBlack),
-                 ToastElement.stringType(" button to cancel dowload")])
+                 ToastElement.stringType(" button to cancel download")])
         
         alertDisposeBag = DisposeBag()
         
