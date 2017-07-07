@@ -9,9 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-
-
-
+import TVOSToast
 
 class FavoritesViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
@@ -235,35 +233,45 @@ extension FavoritesViewController {
     func showEditMenu( data:FavoriteData, selectedIndex:IndexPath ) {
         
         guard let cell = self.tableView?.cellForRow(at: selectedIndex) as? UIFavoriteCell  else { return }
+
+        let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 800, height: 80))
+        toast.style.position = TVOSToastPosition.bottomRight(insets: 0)
+        
+        toast.hintText =
+            TVOSToastHintText(element:
+                [ToastElement.stringType("Press the "),
+                 ToastElement.remoteButtonType(.MenuBlack),
+                 ToastElement.stringType(" button to cancel dowload")])
         
         alertDisposeBag = DisposeBag()
         
         downloadAction
             .take(1)
-            .flatMap { (value) in
-            
-            return rxSlideshareCredentials()
-                        .flatMap { (credentials) in
-                            rxSlideshareGet(credentials:credentials, id: data.key)
-                        }
-                        .flatMap { (data:Data) -> Single<Slideshow> in
-                            
-                            let slidehareItemsParser = SlideshareItemsParser()
-                            
-                            return slidehareItemsParser.rx_parse(data).asSingle()
-                        }
-                        .catchError { (error) in
-                                Single.just([DocumentField.ID:data.key])
-                        }
-            }
             .do(
                 onNext: { [unowned self] (slide) in
                     self.tableView.isUserInteractionEnabled = false
                     self.menuTap?.isEnabled = true
+                    self.presentToast(toast)
                 }
             )
+            .flatMap { (value) in
+            
+                rxSlideshareCredentials()
+                    .flatMap { (credentials) in
+                        rxSlideshareGet(credentials:credentials, id: data.key)
+                    }
+                    .flatMap { (data:Data) -> Single<Slideshow> in
+                        
+                        let slidehareItemsParser = SlideshareItemsParser()
+                        
+                        return slidehareItemsParser.rx_parse(data).asSingle()
+                    }
+                    .catchError { (error) in
+                            Single.just([DocumentField.ID:data.key])
+                    }
+            }
             .flatMap { [unowned self] (slide:Slideshow) in
-                rxDownloadPresentationFormURL( item:slide )
+                rxDownloadFromURL( presentation:slide )
                     { [unowned self] (progress, totalBytesWritten, totalBytesExpectedToWrite) in
                         
                         if let progressView = self.downloadProgressView(from: cell) {
@@ -272,12 +280,14 @@ extension FavoritesViewController {
                             progressView.progress = progress
                         }
                     }
-   
             }
             .do(
                 onDispose: { [unowned self] in
                     self.tableView.isUserInteractionEnabled = true
                     self.menuTap?.isEnabled = false
+                    if let progressView = self.downloadProgressView(from: cell) {
+                        progressView.progress = 0
+                    }
                     
                 }
             )

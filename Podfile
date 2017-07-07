@@ -10,6 +10,7 @@ target 'slides' do
     pod 'RxSwiftExt'
     pod 'SnapKit',    '3.1.2'
     pod 'SettingsKit', :git => 'https://github.com/bsorrentino/SettingsKit.git', :branch => 'develop'
+    pod 'TVOSToast'
 end
 
 target 'slidesTests' do

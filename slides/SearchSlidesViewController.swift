@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
-
+import TVOSToast
 
 class Scheduler {
     
@@ -323,7 +323,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     
     let searchResultsUpdatingSubject = PublishSubject<String>()
     
-    // MARK: MENU GESTURE MANAGEMENT
+    // MARK: DOWNLOAD MANAGEMENT
     
     var downloadDispose:Disposable?
     
@@ -342,6 +342,55 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         downloadDispose = nil
     }
     
+    fileprivate func rxDownload( presentation item:Slideshow, showOnCell cell:SearchSlideCollectionViewCell ) {
+        
+        let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 800, height: 80))
+        //toast.style.position = TVOSToastPosition.topRight(insets: 0)
+        toast.style.position = TVOSToastPosition.top(insets: -10)
+        
+        toast.hintText =
+            TVOSToastHintText(element:
+                [ToastElement.stringType("Press the "),
+                 ToastElement.remoteButtonType(.MenuBlack),
+                 ToastElement.stringType(" button to cancel dowload")])
+        
+        
+        downloadDispose = rxDownloadFromURL( presentation:item )
+        {
+            (progress, totalBytesWritten, totalBytesExpectedToWrite) in
+            
+            cell.setProgress(progress)
+            }
+            .do(
+                onError: { [unowned self] (err) in
+                    self.collectionView?.isUserInteractionEnabled = true
+                    self.menuTap?.isEnabled = false
+                },
+                onSubscribe: { [unowned self] in
+                    self.collectionView?.isUserInteractionEnabled = false
+                    self.menuTap?.isEnabled = true
+                    self.presentToast(toast)
+                    cell.showProgress()
+                },
+                onDispose: { [unowned self] in
+                    self.collectionView?.isUserInteractionEnabled = true
+                    self.menuTap?.isEnabled = false
+                    cell.resetProgress()
+                }
+            )
+            .subscribe(onSuccess: { (value:(Slideshow,URL?)) in
+                
+                let title = item[DocumentField.Title] ?? ""
+                let id = item[DocumentField.ID] ?? "unknown" // raise error
+                
+                self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:value.1!, id:id, title:title) )
+                
+            }) { (err) in
+                
+                print( "error downloading url")
+        }
+
+    }
     // MARK: UICollectionViewController Lifecycle
     
     override open func viewDidLoad() {
@@ -528,41 +577,8 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         
         let item:Slideshow = filteredDataItems[indexPath.row]
         
-        downloadDispose = rxDownloadPresentationFormURL( item:item )
-        {
-            (progress, totalBytesWritten, totalBytesExpectedToWrite) in
-            
-            cell.setProgress(progress)
-        }
-        .do(
-            onError: { [unowned self] (err) in
-                self.collectionView?.isUserInteractionEnabled = true
-                self.menuTap?.isEnabled = false
-            
-            },
-            onSubscribe: { [unowned self] in
-                self.collectionView?.isUserInteractionEnabled = false
-                self.menuTap?.isEnabled = true
-                cell.showProgress()
-            },
-            onDispose: { [unowned self] in
-                self.collectionView?.isUserInteractionEnabled = true
-                self.menuTap?.isEnabled = false
-                cell.resetProgress()
-            }
-        )
-        .subscribe(onSuccess: { (value:(Slideshow,URL?)) in
+        rxDownload(presentation: item, showOnCell: cell)
         
-            let title = item[DocumentField.Title] ?? ""
-            let id = item[DocumentField.ID] ?? "unknown" // raise error
-            
-            self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:value.1!, id:id, title:title) )
-    
-        }) { (err) in
-            
-            print( "error downloading url")
-        }
-       
     }
     
     // MARK: UISearchResultsUpdating

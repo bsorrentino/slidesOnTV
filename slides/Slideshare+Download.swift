@@ -11,11 +11,12 @@ import RxSwift
 import RxCocoa
 
 
+
 //
 // MARK: Download Presentation
 //
 
-func rxDownloadPresentationFormURL( item:Slideshow, progression: progressionHandler? ) -> Single<(Slideshow,URL?)> {
+func rxDownloadFromURL( presentation item:Slideshow, progression: progressionHandler? ) -> Single<(Slideshow,URL?)> {
     
     guard   let url = item[DocumentField.DownloadUrl]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
         let downloadURL = URL(string:url) else {
