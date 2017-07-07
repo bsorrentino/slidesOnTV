@@ -323,6 +323,25 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     
     let searchResultsUpdatingSubject = PublishSubject<String>()
     
+    // MARK: MENU GESTURE MANAGEMENT
+    
+    var downloadDispose:Disposable?
+    
+    var menuTap:UITapGestureRecognizer?
+    
+    private func overrideMenuTap( _ enabled:Bool = false ) {
+        menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
+        menuTap?.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
+        menuTap?.isEnabled = enabled
+        view.addGestureRecognizer(menuTap!)
+        
+    }
+    
+    @IBAction func menuTapped(_ sender: UITapGestureRecognizer) {
+        downloadDispose?.dispose()
+        downloadDispose = nil
+    }
+    
     // MARK: UICollectionViewController Lifecycle
     
     override open func viewDidLoad() {
@@ -339,6 +358,8 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         // Initilaize DetailView
         
         detailView.addToWindow().hide()
+        
+        overrideMenuTap()
         
         
 #if (arch(i386) || arch(x86_64)) && os(tvOS)
@@ -507,11 +528,29 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         
         let item:Slideshow = filteredDataItems[indexPath.row]
         
-        rxDownloadPresentationFormURL( item:item ) { (progress, totalBytesWritten, totalBytesExpectedToWrite) in
+        downloadDispose = rxDownloadPresentationFormURL( item:item )
+        {
+            (progress, totalBytesWritten, totalBytesExpectedToWrite) in
             
             cell.setProgress(progress)
         }
-        .do( onSubscribe: { cell.showProgress() }, onDispose: { cell.resetProgress() } )
+        .do(
+            onError: { [unowned self] (err) in
+                self.collectionView?.isUserInteractionEnabled = true
+                self.menuTap?.isEnabled = false
+            
+            },
+            onSubscribe: { [unowned self] in
+                self.collectionView?.isUserInteractionEnabled = false
+                self.menuTap?.isEnabled = true
+                cell.showProgress()
+            },
+            onDispose: { [unowned self] in
+                self.collectionView?.isUserInteractionEnabled = true
+                self.menuTap?.isEnabled = false
+                cell.resetProgress()
+            }
+        )
         .subscribe(onSuccess: { (value:(Slideshow,URL?)) in
         
             let title = item[DocumentField.Title] ?? ""
@@ -522,7 +561,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         }) { (err) in
             
             print( "error downloading url")
-        }.addDisposableTo(disposeBag)
+        }
        
     }
     
