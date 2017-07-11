@@ -351,7 +351,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         toast.hintText =
             TVOSToastHintText(element:
                 [ToastElement.stringType("Press the "),
-                 ToastElement.remoteButtonType(.MenuBlack),
+                 ToastElement.remoteButtonType(.MenuWhite),
                  ToastElement.stringType(" button to cancel download")])
         
         
