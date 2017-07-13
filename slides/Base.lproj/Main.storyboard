@@ -132,10 +132,10 @@
             </objects>
             <point key="canvasLocation" x="-3883" y="5577"/>
         </scene>
-        <!--View Controller-->
+        <!--Main Menu View Controller-->
         <scene sceneID="w3e-IU-T7I">
             <objects>
-                <viewController id="0eX-xm-M2A" sceneMemberID="viewController">
+                <viewController id="0eX-xm-M2A" customClass="MainMenuViewController" customModule="slides" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="709-Zk-DLE"/>
                         <viewControllerLayoutGuide type="bottom" id="fUh-YJ-8lz"/>
@@ -145,37 +145,46 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bAH-PL-ucG">
-                                <rect key="frame" x="817" y="363" width="287" height="130"/>
+                                <rect key="frame" x="785" y="363" width="350" height="130"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="RyV-mv-1iU"/>
-                                    <constraint firstAttribute="width" constant="287" id="xQG-9I-cvk"/>
+                                    <constraint firstAttribute="width" constant="350" id="xQG-9I-cvk"/>
                                 </constraints>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                <state key="normal" title="Search"/>
+                                <state key="normal" title="Search" image="presentation"/>
                                 <connections>
                                     <segue destination="FdI-hl-j4w" kind="show" identifier="search" customClass="SearchStoryboardSegue" customModule="slides" customModuleProvider="target" id="1LB-py-oD7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qVF-Y2-tBh">
-                                <rect key="frame" x="817" y="595" width="287" height="130"/>
+                                <rect key="frame" x="785" y="595" width="350" height="130"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="287" id="IX4-Cu-Hxu"/>
+                                    <constraint firstAttribute="width" priority="250" constant="300" id="IX4-Cu-Hxu"/>
                                     <constraint firstAttribute="height" constant="130" id="fws-sv-idY"/>
                                 </constraints>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                <state key="normal" title="Favourites"/>
+                                <state key="normal" title="Favourites" image="favorite"/>
                                 <connections>
                                     <segue destination="7MQ-SL-prb" kind="show" id="Ucl-Wu-SU9"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tv" translatesAutoresizingMaskIntoConstraints="NO" id="Ytj-TJ-Hjk">
+                                <rect key="frame" x="436" y="58" width="1048" height="1100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1048" id="4LZ-7Y-Oxi"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                         <constraints>
                             <constraint firstItem="qVF-Y2-tBh" firstAttribute="width" secondItem="bAH-PL-ucG" secondAttribute="width" id="6BP-Ik-sdX"/>
                             <constraint firstItem="bAH-PL-ucG" firstAttribute="centerX" secondItem="zxx-gF-rQT" secondAttribute="centerX" id="I1J-gX-ruZ"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="Ytj-TJ-Hjk" secondAttribute="bottom" constant="-78" id="dVZ-OE-fx9"/>
                             <constraint firstItem="qVF-Y2-tBh" firstAttribute="leading" secondItem="bAH-PL-ucG" secondAttribute="leading" id="e8t-Ep-vEx"/>
+                            <constraint firstItem="Ytj-TJ-Hjk" firstAttribute="centerX" secondItem="qVF-Y2-tBh" secondAttribute="centerX" id="h63-FW-qwi"/>
                             <constraint firstItem="bAH-PL-ucG" firstAttribute="top" secondItem="709-Zk-DLE" secondAttribute="bottom" constant="363" id="hVL-Fa-9Ig"/>
                             <constraint firstItem="qVF-Y2-tBh" firstAttribute="height" secondItem="bAH-PL-ucG" secondAttribute="height" id="hfI-tS-LFn"/>
+                            <constraint firstItem="Ytj-TJ-Hjk" firstAttribute="top" secondItem="709-Zk-DLE" secondAttribute="bottom" constant="58" id="kWu-1W-sPG"/>
                             <constraint firstItem="qVF-Y2-tBh" firstAttribute="top" secondItem="bAH-PL-ucG" secondAttribute="bottom" constant="102" id="wFy-Te-GUK"/>
                         </constraints>
                     </view>
@@ -390,6 +399,8 @@
     </scenes>
     <resources>
         <image name="favorite" width="54" height="54"/>
+        <image name="presentation" width="76" height="57"/>
+        <image name="tv" width="128" height="128"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
