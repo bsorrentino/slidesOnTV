@@ -7,17 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5F06EFB51F175F8900B8D23B /* TVOSToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB21F175F2E00B8D23B /* TVOSToast.framework */; };
-		5F06EFBD1F175F8900B8D23B /* ManualLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB61F175F8900B8D23B /* ManualLayout.framework */; };
-		5F06EFBE1F175F8900B8D23B /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB71F175F8900B8D23B /* Pods_slides.framework */; };
-		5F06EFBF1F175F8900B8D23B /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB81F175F8900B8D23B /* RxCocoa.framework */; };
-		5F06EFC01F175F8900B8D23B /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB91F175F8900B8D23B /* RxSwift.framework */; };
-		5F06EFC11F175F8900B8D23B /* RxSwiftExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFBA1F175F8900B8D23B /* RxSwiftExt.framework */; };
-		5F06EFC21F175F8900B8D23B /* SettingsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFBB1F175F8900B8D23B /* SettingsKit.framework */; };
-		5F06EFC31F175F8900B8D23B /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFBC1F175F8900B8D23B /* SnapKit.framework */; };
 		5F06EFC71F17610400B8D23B /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */; };
 		5F0C443E1EDB607D00B098A1 /* SearchStoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */; };
 		5F15D3EA1F03C4C2002F03AC /* FavoriteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */; };
+		5F1DBB131F1A87BD00DF4C87 /* ManualLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB61F175F8900B8D23B /* ManualLayout.framework */; };
+		5F1DBB141F1A87BD00DF4C87 /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB71F175F8900B8D23B /* Pods_slides.framework */; };
+		5F1DBB151F1A87BD00DF4C87 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB81F175F8900B8D23B /* RxCocoa.framework */; };
+		5F1DBB161F1A87BD00DF4C87 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB91F175F8900B8D23B /* RxSwift.framework */; };
+		5F1DBB171F1A87BD00DF4C87 /* RxSwiftExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFBA1F175F8900B8D23B /* RxSwiftExt.framework */; };
+		5F1DBB181F1A87BD00DF4C87 /* SettingsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFBB1F175F8900B8D23B /* SettingsKit.framework */; };
+		5F1DBB191F1A87BD00DF4C87 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFBC1F175F8900B8D23B /* SnapKit.framework */; };
+		5F1DBB1A1F1A87BD00DF4C87 /* TVOSToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB21F175F2E00B8D23B /* TVOSToast.framework */; };
+		5F1DBB1C1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1DBB1B1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift */; };
 		5F35BE3E1ED0941D00B644B1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */; };
 		5F3BF0021D8688850073EFCB /* SlideViewerController+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */; };
 		5F3E17321DB8C9EE00AED17C /* OHPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */; };
@@ -88,6 +89,7 @@
 		5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStoryboardSegue.swift; sourceTree = "<group>"; };
 		5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewCell.swift; sourceTree = "<group>"; };
+		5F1DBB1B1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideViewerStoryboardSegue.swift; sourceTree = "<group>"; };
 		5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SlideViewerController+AutoLayout.swift"; sourceTree = "<group>"; };
 		5F3E17291DB8C9EE00AED17C /* OHPDFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDFDocument.h; path = OHPDFImage/OHPDFDocument.h; sourceTree = "<group>"; };
@@ -151,14 +153,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F06EFBD1F175F8900B8D23B /* ManualLayout.framework in Frameworks */,
-				5F06EFBE1F175F8900B8D23B /* Pods_slides.framework in Frameworks */,
-				5F06EFBF1F175F8900B8D23B /* RxCocoa.framework in Frameworks */,
-				5F06EFC01F175F8900B8D23B /* RxSwift.framework in Frameworks */,
-				5F06EFC11F175F8900B8D23B /* RxSwiftExt.framework in Frameworks */,
-				5F06EFC21F175F8900B8D23B /* SettingsKit.framework in Frameworks */,
-				5F06EFC31F175F8900B8D23B /* SnapKit.framework in Frameworks */,
-				5F06EFB51F175F8900B8D23B /* TVOSToast.framework in Frameworks */,
+				5F1DBB131F1A87BD00DF4C87 /* ManualLayout.framework in Frameworks */,
+				5F1DBB141F1A87BD00DF4C87 /* Pods_slides.framework in Frameworks */,
+				5F1DBB151F1A87BD00DF4C87 /* RxCocoa.framework in Frameworks */,
+				5F1DBB161F1A87BD00DF4C87 /* RxSwift.framework in Frameworks */,
+				5F1DBB171F1A87BD00DF4C87 /* RxSwiftExt.framework in Frameworks */,
+				5F1DBB181F1A87BD00DF4C87 /* SettingsKit.framework in Frameworks */,
+				5F1DBB191F1A87BD00DF4C87 /* SnapKit.framework in Frameworks */,
+				5F1DBB1A1F1A87BD00DF4C87 /* TVOSToast.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +301,7 @@
 				5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */,
 				5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */,
 				5FB609EB1DA03CB000051347 /* SlideViewerController+Fullpage.swift */,
+				5F1DBB1B1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift */,
 				5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */,
 				5F8A17121EF0365E0005B086 /* Favorites.swift */,
 				5F5AC0471EF088C200E2A561 /* FavoritesViewController.swift */,
@@ -674,6 +677,7 @@
 				5F90B6091D9AC6DC00615BA4 /* ThumbnailsView.swift in Sources */,
 				5F8A17131EF0365E0005B086 /* Favorites.swift in Sources */,
 				5F06EFC71F17610400B8D23B /* MainMenuViewController.swift in Sources */,
+				5F1DBB1C1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift in Sources */,
 				5FB609EC1DA03CB000051347 /* SlideViewerController+Fullpage.swift in Sources */,
 				5F4C49901F00FB9700269C50 /* FavoritesCommandView.swift in Sources */,
 				5FCCC36E1F0BF205002ADBEC /* Slideshare+Download.swift in Sources */,
