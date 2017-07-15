@@ -25,10 +25,11 @@ extension UIPDFCollectionViewController {
     
     override func updateViewConstraints() {
         
+        let frame_width = view.frame.size.width - 180 // ignore insets
+
         let w = (self.fullpage) ? 0 : self.thumbnailsWidth
         
-        
-        let pageViewWidth = view.frame.size.width - w
+        let pageViewWidth = frame_width - w
         
         pageView.snp.updateConstraints { (make) -> Void in
             make.width.equalTo( pageViewWidth ).priority( 1000 ) // required

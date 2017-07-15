@@ -206,7 +206,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="edm-Cu-azw">
-                                <rect key="frame" x="624" y="-30" width="672" height="120"/>
+                                <rect key="frame" x="624" y="60" width="672" height="120"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favourites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7O-9N-PuX">
                                         <rect key="frame" x="212" y="18" width="350" height="100"/>
@@ -236,17 +236,15 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" rowHeight="66" sectionHeaderHeight="66" sectionFooterHeight="66" translatesAutoresizingMaskIntoConstraints="NO" id="5R8-Bp-FJq">
-                                <rect key="frame" x="91" y="100" width="1738" height="985"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="1738" id="oew-jf-zUR"/>
-                                </constraints>
+                                <rect key="frame" x="110" y="190" width="1700" height="830"/>
+                                <color key="backgroundColor" red="0.86610990762710571" green="0.99229353666305542" blue="0.99305266141891479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="sectionIndexTrackingBackgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="favoriteCell" rowHeight="100" id="oFn-tD-ByK" customClass="UIFavoriteCell" customModule="slides" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="66" width="1738" height="100"/>
+                                        <rect key="frame" x="0.0" y="66" width="1700" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="oFn-tD-ByK" id="pxr-vC-BDR">
-                                            <rect key="frame" x="0.0" y="0.0" width="1722" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1684" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
@@ -263,9 +261,11 @@
                         <constraints>
                             <constraint firstItem="edm-Cu-azw" firstAttribute="centerX" secondItem="2qQ-Yi-gpX" secondAttribute="centerX" id="6GZ-RY-2Cz"/>
                             <constraint firstItem="5R8-Bp-FJq" firstAttribute="top" secondItem="edm-Cu-azw" secondAttribute="bottom" constant="10" id="E2A-W3-NPc"/>
+                            <constraint firstItem="5R8-Bp-FJq" firstAttribute="leading" secondItem="2qQ-Yi-gpX" secondAttribute="leadingMargin" constant="90" id="Msb-df-Yqk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5R8-Bp-FJq" secondAttribute="trailing" constant="90" id="ZFp-Td-Ade"/>
                             <constraint firstItem="5R8-Bp-FJq" firstAttribute="centerX" secondItem="2qQ-Yi-gpX" secondAttribute="centerX" id="ir6-AQ-Kin"/>
-                            <constraint firstItem="edm-Cu-azw" firstAttribute="top" secondItem="zwI-On-7Ds" secondAttribute="bottom" constant="-30" id="u2d-iI-Yjl"/>
-                            <constraint firstItem="5R8-Bp-FJq" firstAttribute="bottom" secondItem="0g5-W9-dv0" secondAttribute="top" constant="5" id="va3-eI-L4W"/>
+                            <constraint firstItem="edm-Cu-azw" firstAttribute="top" secondItem="zwI-On-7Ds" secondAttribute="bottom" constant="60" id="u2d-iI-Yjl"/>
+                            <constraint firstItem="5R8-Bp-FJq" firstAttribute="bottom" secondItem="0g5-W9-dv0" secondAttribute="top" constant="-60" id="va3-eI-L4W"/>
                         </constraints>
                     </view>
                     <connections>
@@ -312,11 +312,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z" customClass="ThumbnailsView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="20" y="145" width="32" height="935"/>
+                                <rect key="frame" x="110" y="205" width="300" height="815"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="width" priority="250" constant="32" id="Faa-ow-7Bj"/>
+                                    <constraint firstAttribute="width" priority="250" constant="300" id="Faa-ow-7Bj"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="FbY-WG-tMt">
                                     <size key="itemSize" width="22" height="50"/>
@@ -341,14 +341,14 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view" customClass="PageView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="57" y="145" width="1858" height="935"/>
+                                <rect key="frame" x="415" y="205" width="1415" height="815"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsh-Gb-3mi">
-                                        <rect key="frame" x="10" y="0.0" width="1838" height="935"/>
+                                        <rect key="frame" x="10" y="0.0" width="1395" height="815"/>
                                         <gestureRecognizers/>
                                     </imageView>
                                     <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="1858" height="140"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1415" height="140"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <items>
                                             <tabBarItem tag="1" title="Toggle Fullscreen" id="J0v-Ag-eYI"/>
@@ -372,14 +372,15 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="Az4-5N-6X8" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="bottom" id="2kT-aJ-h2v"/>
-                            <constraint firstItem="c9g-rB-Tbc" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" id="C92-cY-9jO"/>
-                            <constraint firstAttribute="bottom" secondItem="rws-Tv-h7Z" secondAttribute="bottom" id="F8n-0G-o7O"/>
-                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" id="OAd-Eh-UVX"/>
-                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="leading" secondItem="kBg-cA-YoQ" secondAttribute="leadingMargin" id="ngZ-4o-9SM"/>
-                            <constraint firstAttribute="trailing" secondItem="c9g-rB-Tbc" secondAttribute="trailing" constant="5" id="r4k-rU-P8F"/>
+                            <constraint firstItem="Az4-5N-6X8" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="bottom" constant="60" id="2kT-aJ-h2v"/>
+                            <constraint firstItem="c9g-rB-Tbc" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" constant="60" id="C92-cY-9jO"/>
+                            <constraint firstAttribute="bottom" secondItem="rws-Tv-h7Z" secondAttribute="bottom" constant="60" id="F8n-0G-o7O"/>
+                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" constant="60" id="OAd-Eh-UVX"/>
+                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="leading" secondItem="kBg-cA-YoQ" secondAttribute="leadingMargin" constant="90" id="ngZ-4o-9SM"/>
+                            <constraint firstAttribute="trailing" secondItem="c9g-rB-Tbc" secondAttribute="trailing" constant="90" id="r4k-rU-P8F"/>
                             <constraint firstItem="c9g-rB-Tbc" firstAttribute="leading" secondItem="rws-Tv-h7Z" secondAttribute="trailing" constant="5" id="vNL-lz-UQb"/>
                         </constraints>
                     </view>

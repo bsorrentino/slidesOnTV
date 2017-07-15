@@ -235,7 +235,7 @@ extension FavoritesViewController {
         guard let cell = self.tableView?.cellForRow(at: selectedIndex) as? UIFavoriteCell  else { return }
 
         let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 800, height: 80))
-        toast.style.position = TVOSToastPosition.bottomRight(insets: 0)
+        toast.style.position = TVOSToastPosition.bottomRight(insets: 60)
         
         toast.hintText =
             TVOSToastHintText(element:

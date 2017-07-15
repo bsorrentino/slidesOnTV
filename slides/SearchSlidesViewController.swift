@@ -346,7 +346,8 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         
         let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 800, height: 80))
         //toast.style.position = TVOSToastPosition.topRight(insets: 0)
-        toast.style.position = TVOSToastPosition.top(insets: -10)
+        //toast.style.position = TVOSToastPosition.top(insets: -10)
+        toast.style.position = TVOSToastPosition.bottomRight(insets: detailView.frame.size.height)
         
         toast.hintText =
             TVOSToastHintText(element:
