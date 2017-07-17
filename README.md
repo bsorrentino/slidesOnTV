@@ -17,7 +17,9 @@ Such application gathers presentations over internet (at moment only from slides
  * Remote Light Pointer (very useful)
  * Swipe Based slides navigation
  * Swipe Down Menu
-
+ * Add to Favourite
+ * View/Download the/from Favourites
+ 
 Note:
 > At the moment only PDF format is supported
 
