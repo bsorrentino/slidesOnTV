@@ -8,14 +8,14 @@
 import Foundation
 import RxSwift
 import RxCocoa
-
+import TVOSToast
 
 class Scheduler {
     
     // implicit lazy
     static var backgroundWork: ImmediateSchedulerType = {
         
-        let operationQueue = NSOperationQueue()
+        let operationQueue = OperationQueue()
         operationQueue.maxConcurrentOperationCount = 2
         
         return OperationQueueScheduler(operationQueue: operationQueue)
@@ -31,9 +31,9 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var thumbnail: UIImageView?
     
-    private lazy var loadingView:UAProgressView? = self.initLoadingView()
+    fileprivate lazy var loadingView:UAProgressView? = self.initLoadingView()
     
-    private var _representedDataItem: Slideshow?
+    fileprivate var _representedDataItem: Slideshow?
     var representedDataItem: Slideshow?  {
         
         set {
@@ -44,11 +44,11 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                 return;
             }
             
-            if let thumbnail = item["thumbnailxlargeurl"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
+            if let thumbnail = item[DocumentField.ThumbnailXL]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
                 
                 let s = "http:\(thumbnail)"
                 
-                if let url = NSURL(string: s ) {
+                if let url = URL(string: s ) {
                     
                     self.loadImageUrl(url, backgroundWorkScheduler: Scheduler.backgroundWork)
                 }
@@ -62,10 +62,10 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     
     var disposeBag: DisposeBag?
     
-    func loadImageUrl( imageUrl:NSURL, backgroundWorkScheduler:ImmediateSchedulerType )  {
+    func loadImageUrl( _ imageUrl:URL, backgroundWorkScheduler:ImmediateSchedulerType )  {
             let disposeBag = DisposeBag()
             
-            NSURLSession.sharedSession().rx_data(NSURLRequest(URL: imageUrl))
+        URLSession.shared.rx.data( request: URLRequest(url: imageUrl))
                 .debug("image request")
                 .flatMap({ (imageData) -> Observable<UIImage> in
                     return Observable.just(imageData)
@@ -104,28 +104,28 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
         
         if let thumbnail = self.thumbnail {
             
-            let size = CGSizeMake(250, 250)
-            let center = CGPointMake( thumbnail.center.x - size.width/2, thumbnail.center.y - size.height/2 )
+            let size = CGSize(width: 250, height: 250)
+            let center = CGPoint( x: thumbnail.center.x - size.width/2, y: thumbnail.center.y - size.height/2 )
             
-            let frame = CGRectMake(center.x, center.y, size.width,size.height)
+            let frame = CGRect(x: center.x, y: center.y, width: size.width,height: size.height)
             
             let circleView =  UAProgressView(frame: frame)
             circleView.borderWidth = 10
             circleView.lineWidth = 5
             circleView.setFillAlpha(0.5)
             
-            let label = UILabel(frame:CGRectMake(0, 0, 120.0, 40.0))
-            label.textAlignment = .Center
-            label.userInteractionEnabled = false; // Allows tap to pass through to the progress view.
-            label.font = UIFont.boldSystemFontOfSize(30.0)
-            label.textColor = UIColor.whiteColor() //circleView.tintColor
+            let label = UILabel(frame:CGRect(x: 0, y: 0, width: 120.0, height: 40.0))
+            label.textAlignment = .center
+            label.isUserInteractionEnabled = false; // Allows tap to pass through to the progress view.
+            label.font = UIFont.boldSystemFont(ofSize: 30.0)
+            label.textColor = UIColor.white //circleView.tintColor
             
             circleView.centralView = label;
             
             
-            circleView.progressChangedBlock = { (progressView:UAProgressView!, progress:CGFloat) in
+            circleView.progressChangedBlock = { (progressView:UAProgressView?, progress:CGFloat) in
                 
-                if let label = progressView.centralView as? UILabel {
+                if let label = progressView?.centralView as? UILabel {
                     print( "progressChangedBlock \(progress)")
 
                     label.text = String( format:"%2.0f%%", progress*100 )
@@ -148,7 +148,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func setProgress( progress:Float) {
+    func setProgress( _ progress:Float) {
         
         if let loadingView = self.loadingView {
             
@@ -197,11 +197,12 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
     // MARK: UIFocusEnvironment
     
     
-    override func didUpdateFocusInContext(context: UIFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator )
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator )
     {
     }
 }
 
+typealias DocumentInfo = ( location:URL, id:String, title:String )
 
 class DetailView : UIView {
     
@@ -212,7 +213,7 @@ class DetailView : UIView {
     @IBOutlet weak var updatedLabel: UILabel!
     static func loadFromNib() -> DetailView {
         
-        let nibViews = NSBundle.mainBundle().loadNibNamed("DetailView", owner: nil, options: nil)
+        let nibViews = Bundle.main.loadNibNamed("DetailView", owner: nil, options: nil)
         
         for v in nibViews! {
             if let tog = v as? DetailView {
@@ -229,17 +230,17 @@ class DetailView : UIView {
     override func updateConstraints() {
         
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         
         if let superview = appDelegate.window  {
             
             
-            self.snp_updateConstraints { (make) in
+            self.snp.updateConstraints { (make) in
                 
                 make.height.equalTo(self.frame.size.height)
                 make.width.equalTo(superview)
-                make.bottom.equalTo(superview.snp_bottom)//.offset(-offsetFromBottom)
+                make.bottom.equalTo(superview.snp.bottom)//.offset(-offsetFromBottom)
             }
         }
         
@@ -248,7 +249,7 @@ class DetailView : UIView {
     
     func addToWindow() -> DetailView {
  
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         if let superview = appDelegate.window  {
         
@@ -258,14 +259,14 @@ class DetailView : UIView {
         return self
     }
     
-    func addTo(superview: UIView) -> DetailView {
+    func addTo(_ superview: UIView) -> DetailView {
         
         superview.addSubview( self )
         
         return self
     }
     
-    func show(item:Slideshow?) {
+    func show(_ item:Slideshow?) {
         
         self.alpha = 1.0
         //self.hidden = false
@@ -278,12 +279,12 @@ class DetailView : UIView {
         
         if let item = item {
             
-            if let title = item["title"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
+            if let title = item[DocumentField.Title]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
                 
                 self.titleLabel.text = title
             }
             
-            if let updated = item["updated"] {
+            if let updated = item[DocumentField.Updated] {
                 self.updatedLabel.text = updated
             }
         }
@@ -309,66 +310,94 @@ class DetailView : UIView {
 
 
 
-public class SearchSlidesViewController: UICollectionViewController, UISearchResultsUpdating {
+open class SearchSlidesViewController: UICollectionViewController, UISearchResultsUpdating {
     // MARK: Properties
     
-    public static let storyboardIdentifier = "SearchSlidesViewController"
+    open static let storyboardIdentifier = "SearchSlidesViewController"
     
-    private var filteredDataItems:[Slideshow] = []
+    fileprivate var filteredDataItems:[Slideshow] = []
     
-    private lazy var detailView:DetailView = DetailView.loadFromNib()
+    fileprivate lazy var detailView:DetailView = DetailView.loadFromNib()
     
     let disposeBag = DisposeBag()
     
     let searchResultsUpdatingSubject = PublishSubject<String>()
-
     
-    func downloadPresentationFormURL( downloadURL:NSURL, relatedCell:SearchSlideCollectionViewCell ) throws {
-        
-        let documentDirectoryURL =  try NSFileManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
-       
-        relatedCell.showProgress()
-        
-        TCBlobDownloadManager.sharedInstance.downloadFileAtURL(downloadURL,
-                                                               toDirectory: documentDirectoryURL,
-                                                               withName: "presentation.pdf",
-                                                               progression:
-            { (progress, totalBytesWritten, totalBytesExpectedToWrite) in
-                
-                //let percentage = round( Float((totalBytesWritten * 100)/totalBytesExpectedToWrite) )
-                //print( "\(progress) - \(totalBytesWritten) - \(totalBytesExpectedToWrite) %: \(percentage)" )
-                //relatedCell.setProgress( percentage )
-                
-                relatedCell.setProgress(progress)
-            })
-            { (error, location) in
-
-                
-                if let error = error {
-                 
-                    debugPrint(error)
-                }
-                else {
-                    
-                    //print( "Download completed at location \(location)")
-                    
-                    self.performSegueWithIdentifier("showPresentation", sender: location)
-                }
-                relatedCell.resetProgress()
-            }
-        
-
+    // MARK: DOWNLOAD MANAGEMENT
+    
+    var downloadDispose:Disposable?
+    
+    var menuTap:UITapGestureRecognizer?
+    
+    private func overrideMenuTap( _ enabled:Bool = false ) {
+        menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
+        menuTap?.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
+        menuTap?.isEnabled = enabled
+        view.addGestureRecognizer(menuTap!)
         
     }
     
+    @IBAction func menuTapped(_ sender: UITapGestureRecognizer) {
+        downloadDispose?.dispose()
+        downloadDispose = nil
+    }
     
-    // MARK: UICollectionViewController Lifecycle
+    fileprivate func rxDownload( presentation item:Slideshow, showOnCell cell:SearchSlideCollectionViewCell ) {
+        
+        let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 800, height: 80))
+        //toast.style.position = TVOSToastPosition.topRight(insets: 0)
+        //toast.style.position = TVOSToastPosition.top(insets: -10)
+        toast.style.position = TVOSToastPosition.bottomRight(insets: detailView.frame.size.height)
+        
+        toast.hintText =
+            TVOSToastHintText(element:
+                [ToastElement.stringType("Press the "),
+                 ToastElement.remoteButtonType(.MenuWhite),
+                 ToastElement.stringType(" button to cancel download")])
+        
+        
+        downloadDispose = rxDownloadFromURL( presentation:item )
+        {
+            (progress, totalBytesWritten, totalBytesExpectedToWrite) in
+            
+            cell.setProgress(progress)
+            }
+            .do(
+                onError: { [unowned self] (err) in
+                    self.collectionView?.isUserInteractionEnabled = true
+                    self.menuTap?.isEnabled = false
+                },
+                onSubscribe: { [unowned self] in
+                    self.collectionView?.isUserInteractionEnabled = false
+                    self.menuTap?.isEnabled = true
+                    self.presentToast(toast)
+                    cell.showProgress()
+                },
+                onDispose: { [unowned self] in
+                    self.collectionView?.isUserInteractionEnabled = true
+                    self.menuTap?.isEnabled = false
+                    cell.resetProgress()
+                }
+            )
+            .subscribe(onSuccess: { (value:(Slideshow,URL?)) in
+                
+                let title = item[DocumentField.Title] ?? ""
+                let id = item[DocumentField.ID] ?? "unknown" // raise error
+                
+                self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:value.1!, id:id, title:title) )
+                
+            }) { (err) in
+                
+                print( "error downloading url")
+        }
 
+    }
+    // MARK: UICollectionViewController Lifecycle
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let bundlePath = NSBundle.mainBundle().pathForResource("slideshare", ofType: "plist") else {
+        guard let bundlePath = Bundle.main.path(forResource: "slideshare", ofType: "plist") else {
             return
         }
         
@@ -379,6 +408,8 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         // Initilaize DetailView
         
         detailView.addToWindow().hide()
+        
+        overrideMenuTap()
         
         
 #if (arch(i386) || arch(x86_64)) && os(tvOS)
@@ -398,13 +429,16 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         .distinctUntilChanged()
         .debounce(debounce, scheduler: MainScheduler.instance)
         .debug("slideshareSearch")
-        .flatMap( {  (filterString) -> Observable<NSData> in
+        .flatMap( {  (filterString) -> Observable<Data> in
         
-            return slideshareSearch( apiKey: credentials["apiKey"]! as! String, sharedSecret: credentials["sharedSecret"] as! String, what: filterString )
+            return rxSlideshareSearch(
+                        apiKey: credentials["apiKey"]! as! String,
+                        sharedSecret: credentials["sharedSecret"] as! String,
+                        query: filterString )
         })
         .debug("parse")
-        .doOnNext({ (_) in self.filteredDataItems.removeAll() })
-        .flatMap({ (data:NSData) -> Observable<Slideshow> in
+        .do( onNext:{ (_) in self.filteredDataItems.removeAll() })
+        .flatMap({ (data:Data) -> Observable<Slideshow> in
 
             let slidehareItemsParser = SlideshareItemsParser()
             
@@ -413,26 +447,31 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         .debug( "subscribe")
         .filter({ (slide:Slideshow) -> Bool in
             print( "\(slide)" )
-            if let format = slide["format"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
-                return format.lowercaseString=="pdf"
+            if let format = slide[DocumentField.Format]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
+                return format.lowercased()=="pdf"
             }
             return true
         })
         .observeOn(MainScheduler.instance)
-        .subscribe({ e in
+            .subscribe(
+                onNext:{ slide in
             
-            if let slide = e.element {
-                
-                self.filteredDataItems.append(slide)
-                
-                let title = slide["title"]
-                
-                print( "\(title)")
-                
-                self.collectionView?.reloadData()
-            }
+                    //if let slide = e.element {
+                        
+                        self.filteredDataItems.append(slide)
+                        
+                        let title = slide[DocumentField.Title]
+                        
+                        print( "\(title ?? "title is nil!")")
+                        
+                        self.collectionView?.reloadData()
+                    //}
             
-        }).addDisposableTo(disposeBag)
+                },
+                onError: { error in
+                        print( "ERROR \(error)")
+                }
+            ).addDisposableTo(disposeBag)
         
         //self.collectionView?.setNeedsFocusUpdate()
         //self.collectionView?.updateFocusIfNeeded()
@@ -440,8 +479,8 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         
         // SETTINGS
         
-        Settings.subscribe(.SearchHMargins) { (newValue) -> Void in
-            print("Set Horizontal Margin was changed to \(newValue)")
+        Settings.subscribe(setting: .SearchHMargins) { (newValue) -> Void in
+            print("Set Horizontal Margin was changed to \(String(describing: newValue))")
             self.collectionView?.reloadData()
         }
 
@@ -450,18 +489,18 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     
     // MARK: UICollectionViewDataSource
     
-    override public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override open func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    override public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filteredDataItems.count
     }
     
-    override public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // Dequeue a cell from the collection view.
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(SearchSlideCollectionViewCell.reuseIdentifier, forIndexPath: indexPath) as! SearchSlideCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchSlideCollectionViewCell.reuseIdentifier, for: indexPath) as! SearchSlideCollectionViewCell
 
         return cell
         
@@ -472,19 +511,19 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
     
     // Space between item on different row
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 10.0
     }
 
     // Space between item on the same row
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 10.0
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         var result =  UIEdgeInsets( top: 30, left: 30, bottom: 30, right: 30 )
     
-        if let hm = Settings.get(.SearchHMargins) as? CGFloat {
+        if let hm = Settings.get(setting: .SearchHMargins) as? CGFloat {
             
             result.left = hm
             result.right = hm
@@ -501,7 +540,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
 
     //override public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
  
-    override public func collectionView(collectionView: UICollectionView, didUpdateFocusInContext context: UICollectionViewFocusUpdateContext, withAnimationCoordinator coordinator: UIFocusAnimationCoordinator)
+    override open func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator)
     {
         
         coordinator.addCoordinatedAnimations( {
@@ -520,7 +559,7 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
         
     }
     
-    override public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    override open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? SearchSlideCollectionViewCell else {
             fatalError("Expected to display a `DataItemCollectionViewCell`.")
         }
@@ -531,33 +570,21 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
  
     }
     
-    override public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? SearchSlideCollectionViewCell else {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SearchSlideCollectionViewCell else {
             fatalError("Expected to display a `DataItemCollectionViewCell`.")
         }
         
         let item:Slideshow = filteredDataItems[indexPath.row]
-       
-        if let url = item["downloadurl"]?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())  {
-            
-            print( "\(url)")
-            
-            if let downloadURL = NSURL(string:url) {
-                do {
-                    try downloadPresentationFormURL( downloadURL, relatedCell:cell)
-                }
-                catch {
-                    print( "error downloading url")
-                }
-            }
-        }
+        
+        rxDownload(presentation: item, showOnCell: cell)
         
     }
     
     // MARK: UISearchResultsUpdating
     
-    public func updateSearchResultsForSearchController(searchController: UISearchController) {
+    open func updateSearchResults(for searchController: UISearchController) {
         
         searchResultsUpdatingSubject.onNext(searchController.searchBar.text ?? "")
     
@@ -565,13 +592,13 @@ public class SearchSlidesViewController: UICollectionViewController, UISearchRes
     
     // MARK: Segue
     
-    override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override open func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let location = sender as? NSURL {
+        if let info = sender as? DocumentInfo {
             
-            if let destinationViewController = segue.destinationViewController as? UIPDFCollectionViewController {
+            if let destinationViewController = segue.destination as? UIPDFCollectionViewController {
                 
-                destinationViewController.documentLocation = location
+                destinationViewController.documentInfo = info
 
             }
         }

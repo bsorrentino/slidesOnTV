@@ -7,23 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F06EFC71F17610400B8D23B /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */; };
+		5F0C443E1EDB607D00B098A1 /* SearchStoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */; };
+		5F15D3EA1F03C4C2002F03AC /* FavoriteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */; };
+		5F1DBB131F1A87BD00DF4C87 /* ManualLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB61F175F8900B8D23B /* ManualLayout.framework */; };
+		5F1DBB141F1A87BD00DF4C87 /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB71F175F8900B8D23B /* Pods_slides.framework */; };
+		5F1DBB151F1A87BD00DF4C87 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB81F175F8900B8D23B /* RxCocoa.framework */; };
+		5F1DBB161F1A87BD00DF4C87 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB91F175F8900B8D23B /* RxSwift.framework */; };
+		5F1DBB171F1A87BD00DF4C87 /* RxSwiftExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFBA1F175F8900B8D23B /* RxSwiftExt.framework */; };
+		5F1DBB181F1A87BD00DF4C87 /* SettingsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFBB1F175F8900B8D23B /* SettingsKit.framework */; };
+		5F1DBB191F1A87BD00DF4C87 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFBC1F175F8900B8D23B /* SnapKit.framework */; };
+		5F1DBB1A1F1A87BD00DF4C87 /* TVOSToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB21F175F2E00B8D23B /* TVOSToast.framework */; };
+		5F1DBB1C1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1DBB1B1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift */; };
+		5F35BE3E1ED0941D00B644B1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */; };
 		5F3BF0021D8688850073EFCB /* SlideViewerController+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */; };
 		5F3E17321DB8C9EE00AED17C /* OHPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */; };
 		5F3E17331DB8C9EE00AED17C /* OHPDFPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172D1DB8C9EE00AED17C /* OHPDFPage.m */; };
 		5F3E17341DB8C9EE00AED17C /* OHVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172F1DB8C9EE00AED17C /* OHVectorImage.m */; };
 		5F3E17351DB8C9EE00AED17C /* UIImage+OHPDF.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E17311DB8C9EE00AED17C /* UIImage+OHPDF.m */; };
-		5F3E18061DB91D3200AED17C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F829C6E1DB6CE2F0058EA03 /* CloudKit.framework */; };
 		5F4515A71CC2F112004C4004 /* TCBlobDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */; };
 		5F4515A81CC2F112004C4004 /* TCBlobDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */; };
 		5F4515AB1CC2F355004C4004 /* TCBlobDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */; };
 		5F4515AC1CC2F355004C4004 /* TCBlobDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */; };
+		5F4C49901F00FB9700269C50 /* FavoritesCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4C498F1F00FB9700269C50 /* FavoritesCommandView.swift */; };
 		5F57DE0B1CC3DCCF00D5F1B8 /* TWRProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F57DE0A1CC3DCCF00D5F1B8 /* TWRProgressView.m */; };
 		5F57DE131CC42B7500D5F1B8 /* UAProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F57DE101CC42B7500D5F1B8 /* UAProgressView.m */; };
-		5F77C58A1DBD307900660653 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F77C5851DBD307900660653 /* RxCocoa.framework */; };
-		5F77C58B1DBD307900660653 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F77C5861DBD307900660653 /* RxSwift.framework */; };
-		5F77C58C1DBD307900660653 /* RxSwiftExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F77C5871DBD307900660653 /* RxSwiftExt.framework */; };
-		5F77C58D1DBD307900660653 /* SettingsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F77C5881DBD307900660653 /* SettingsKit.framework */; };
-		5F77C58E1DBD307900660653 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F77C5891DBD307900660653 /* SnapKit.framework */; };
+		5F5AC0481EF088C200E2A561 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5AC0471EF088C200E2A561 /* FavoritesViewController.swift */; };
+		5F8A17131EF0365E0005B086 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A17121EF0365E0005B086 /* Favorites.swift */; };
 		5F90B6091D9AC6DC00615BA4 /* ThumbnailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F90B6081D9AC6DC00615BA4 /* ThumbnailsView.swift */; };
 		5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */; };
 		5F9623531CBBF94900F61D9C /* Slidehare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9623521CBBF94900F61D9C /* Slidehare.swift */; };
@@ -32,6 +42,7 @@
 		5FB6540A1D82E7E600E6E2F2 /* SettingsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB654091D82E7E600E6E2F2 /* SettingsBarView.swift */; };
 		5FB6D3861CAEF8B100D7AA80 /* SlideViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */; };
 		5FC7A4AD1CAD8D0700530CB0 /* rx1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */; };
+		5FCCC36E1F0BF205002ADBEC /* Slideshare+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */; };
 		5FD9A2CF1CAD19590065BE03 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */; };
 		5FD9A2D11CAD19590065BE03 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D01CAD19590065BE03 /* ViewController.swift */; };
 		5FD9A2D41CAD19590065BE03 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D21CAD19590065BE03 /* Main.storyboard */; };
@@ -67,6 +78,19 @@
 		29922D394E25E590CB68BD7B /* Settings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = slides/Settings.swift; sourceTree = SOURCE_ROOT; };
 		3CADED520A0132122567DBAF /* Pods-slidesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4B74BAF74AE103B2AC4E9103 /* Pods-slides.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.release.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.release.xcconfig"; sourceTree = "<group>"; };
+		5F06EFB21F175F2E00B8D23B /* TVOSToast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TVOSToast.framework; path = "Build/Products/Release-appletvos/TVOSToast/TVOSToast.framework"; sourceTree = "<group>"; };
+		5F06EFB61F175F8900B8D23B /* ManualLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManualLayout.framework; path = "Build/Products/Release-appletvos/ManualLayout/ManualLayout.framework"; sourceTree = "<group>"; };
+		5F06EFB71F175F8900B8D23B /* Pods_slides.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_slides.framework; path = "Build/Products/Release-appletvos/Pods_slides.framework"; sourceTree = "<group>"; };
+		5F06EFB81F175F8900B8D23B /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "Build/Products/Release-appletvos/RxCocoa/RxCocoa.framework"; sourceTree = "<group>"; };
+		5F06EFB91F175F8900B8D23B /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Build/Products/Release-appletvos/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
+		5F06EFBA1F175F8900B8D23B /* RxSwiftExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwiftExt.framework; path = "Build/Products/Release-appletvos/RxSwiftExt/RxSwiftExt.framework"; sourceTree = "<group>"; };
+		5F06EFBB1F175F8900B8D23B /* SettingsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SettingsKit.framework; path = "Build/Products/Release-appletvos/SettingsKit/SettingsKit.framework"; sourceTree = "<group>"; };
+		5F06EFBC1F175F8900B8D23B /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Build/Products/Release-appletvos/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
+		5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
+		5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStoryboardSegue.swift; sourceTree = "<group>"; };
+		5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewCell.swift; sourceTree = "<group>"; };
+		5F1DBB1B1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideViewerStoryboardSegue.swift; sourceTree = "<group>"; };
+		5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SlideViewerController+AutoLayout.swift"; sourceTree = "<group>"; };
 		5F3E17291DB8C9EE00AED17C /* OHPDFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDFDocument.h; path = OHPDFImage/OHPDFDocument.h; sourceTree = "<group>"; };
 		5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OHPDFDocument.m; path = OHPDFImage/OHPDFDocument.m; sourceTree = "<group>"; };
@@ -81,16 +105,13 @@
 		5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCBlobDownloadManager.swift; sourceTree = "<group>"; };
 		5F4515A61CC2F112004C4004 /* TCBlobDownloadSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBlobDownloadSwift.h; sourceTree = "<group>"; };
 		5F4515A91CC2F277004C4004 /* Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-dev.plist"; sourceTree = "<group>"; };
+		5F4C498F1F00FB9700269C50 /* FavoritesCommandView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesCommandView.swift; sourceTree = "<group>"; };
 		5F57DE091CC3DCCF00D5F1B8 /* TWRProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWRProgressView.h; sourceTree = "<group>"; };
 		5F57DE0A1CC3DCCF00D5F1B8 /* TWRProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWRProgressView.m; sourceTree = "<group>"; };
 		5F57DE0F1CC42B7500D5F1B8 /* UAProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAProgressView.h; sourceTree = "<group>"; };
 		5F57DE101CC42B7500D5F1B8 /* UAProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAProgressView.m; sourceTree = "<group>"; };
-		5F77C5851DBD307900660653 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "Build/Products/Release-appletvos/RxCocoa/RxCocoa.framework"; sourceTree = "<group>"; };
-		5F77C5861DBD307900660653 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Build/Products/Release-appletvos/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
-		5F77C5871DBD307900660653 /* RxSwiftExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwiftExt.framework; path = "Build/Products/Release-appletvos/RxSwiftExt/RxSwiftExt.framework"; sourceTree = "<group>"; };
-		5F77C5881DBD307900660653 /* SettingsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SettingsKit.framework; path = "Build/Products/Release-appletvos/SettingsKit/SettingsKit.framework"; sourceTree = "<group>"; };
-		5F77C5891DBD307900660653 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Build/Products/Release-appletvos/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
-		5F829C6E1DB6CE2F0058EA03 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		5F5AC0471EF088C200E2A561 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		5F8A17121EF0365E0005B086 /* Favorites.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		5F90B6081D9AC6DC00615BA4 /* ThumbnailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailsView.swift; sourceTree = "<group>"; };
 		5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSlidesViewController.swift; sourceTree = "<group>"; };
 		5F9623521CBBF94900F61D9C /* Slidehare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slidehare.swift; sourceTree = "<group>"; };
@@ -102,6 +123,7 @@
 		5FC7A4A51CAD8A8F00530CB0 /* slides-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "slides-Bridging-Header.h"; sourceTree = "<group>"; };
 		5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = rx1.pdf; path = assets/rx1.pdf; sourceTree = "<group>"; };
 		5FCB2B2D1D7392CC007B8DA5 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Slideshare+Download.swift"; sourceTree = "<group>"; };
 		5FD9A2CB1CAD19590065BE03 /* slides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slides.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5FD9A2D01CAD19590065BE03 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -131,12 +153,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F77C58A1DBD307900660653 /* RxCocoa.framework in Frameworks */,
-				5F77C58B1DBD307900660653 /* RxSwift.framework in Frameworks */,
-				5F77C58C1DBD307900660653 /* RxSwiftExt.framework in Frameworks */,
-				5F77C58D1DBD307900660653 /* SettingsKit.framework in Frameworks */,
-				5F77C58E1DBD307900660653 /* SnapKit.framework in Frameworks */,
-				5F3E18061DB91D3200AED17C /* CloudKit.framework in Frameworks */,
+				5F1DBB131F1A87BD00DF4C87 /* ManualLayout.framework in Frameworks */,
+				5F1DBB141F1A87BD00DF4C87 /* Pods_slides.framework in Frameworks */,
+				5F1DBB151F1A87BD00DF4C87 /* RxCocoa.framework in Frameworks */,
+				5F1DBB161F1A87BD00DF4C87 /* RxSwift.framework in Frameworks */,
+				5F1DBB171F1A87BD00DF4C87 /* RxSwiftExt.framework in Frameworks */,
+				5F1DBB181F1A87BD00DF4C87 /* SettingsKit.framework in Frameworks */,
+				5F1DBB191F1A87BD00DF4C87 /* SnapKit.framework in Frameworks */,
+				5F1DBB1A1F1A87BD00DF4C87 /* TVOSToast.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,25 +250,25 @@
 			isa = PBXGroup;
 			children = (
 				5F3E17261DB8C9BE00AED17C /* OHPDFImage */,
-				5FCB2B2D1D7392CC007B8DA5 /* MyPlayground.playground */,
-				A0889C3B1CE8F4430050094D /* Settings.bundle */,
 				A00824031CC94A9B00C9BE8F /* ARLabel */,
 				5F57DE0C1CC42B7500D5F1B8 /* UAProgressView */,
 				5F57DE081CC3DCCF00D5F1B8 /* TWRProgessView */,
 				5F4515A31CC2F112004C4004 /* TCBlobDownloadSwift */,
-				A06B6D561CBFCEA800CBE220 /* SLIDESHARE.md */,
-				A06B6D541CBFCCA000CBE220 /* README.md */,
-				A06B6D521CBFA23900CBE220 /* slideshare.plist */,
 				5FC7A4AB1CAD8CA700530CB0 /* assets */,
-				5FD9A2FD1CAD5CFA0065BE03 /* Podfile */,
 				5FD9A2CD1CAD19590065BE03 /* slides */,
 				5FD9A2DF1CAD195A0065BE03 /* slidesTests */,
 				5FD9A2EA1CAD195A0065BE03 /* slidesUITests */,
 				5FD9A2CC1CAD19590065BE03 /* Products */,
 				A8CBADC199C577F1E16802A1 /* Frameworks */,
+				0D8B6F416D69A3E2A8579897 /* Pods */,
+				5FCB2B2D1D7392CC007B8DA5 /* MyPlayground.playground */,
+				A0889C3B1CE8F4430050094D /* Settings.bundle */,
+				A06B6D561CBFCEA800CBE220 /* SLIDESHARE.md */,
+				A06B6D541CBFCCA000CBE220 /* README.md */,
+				A06B6D521CBFA23900CBE220 /* slideshare.plist */,
+				5FD9A2FD1CAD5CFA0065BE03 /* Podfile */,
 				5FC7A4A51CAD8A8F00530CB0 /* slides-Bridging-Header.h */,
 				29922D394E25E590CB68BD7B /* Settings.swift */,
-				0D8B6F416D69A3E2A8579897 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -265,16 +289,25 @@
 				5FF0DE0B1D99AF79001CEC34 /* viewer */,
 				5F4515A91CC2F277004C4004 /* Info-dev.plist */,
 				5F9623521CBBF94900F61D9C /* Slidehare.swift */,
+				5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */,
 				5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */,
 				5FD9A2D01CAD19590065BE03 /* ViewController.swift */,
 				5FD9A2D21CAD19590065BE03 /* Main.storyboard */,
 				5FD9A2D51CAD19590065BE03 /* Assets.xcassets */,
 				5FD9A2D71CAD19590065BE03 /* Info.plist */,
-				5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */,
 				5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */,
+				5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */,
 				5FB37BF41D7352140081D8C4 /* DetailView.xib */,
+				5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */,
 				5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */,
 				5FB609EB1DA03CB000051347 /* SlideViewerController+Fullpage.swift */,
+				5F1DBB1B1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift */,
+				5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */,
+				5F8A17121EF0365E0005B086 /* Favorites.swift */,
+				5F5AC0471EF088C200E2A561 /* FavoritesViewController.swift */,
+				5F4C498F1F00FB9700269C50 /* FavoritesCommandView.swift */,
+				5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */,
+				5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";
@@ -318,12 +351,14 @@
 		A8CBADC199C577F1E16802A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5F77C5851DBD307900660653 /* RxCocoa.framework */,
-				5F77C5861DBD307900660653 /* RxSwift.framework */,
-				5F77C5871DBD307900660653 /* RxSwiftExt.framework */,
-				5F77C5881DBD307900660653 /* SettingsKit.framework */,
-				5F77C5891DBD307900660653 /* SnapKit.framework */,
-				5F829C6E1DB6CE2F0058EA03 /* CloudKit.framework */,
+				5F06EFB61F175F8900B8D23B /* ManualLayout.framework */,
+				5F06EFB71F175F8900B8D23B /* Pods_slides.framework */,
+				5F06EFB81F175F8900B8D23B /* RxCocoa.framework */,
+				5F06EFB91F175F8900B8D23B /* RxSwift.framework */,
+				5F06EFBA1F175F8900B8D23B /* RxSwiftExt.framework */,
+				5F06EFBB1F175F8900B8D23B /* SettingsKit.framework */,
+				5F06EFBC1F175F8900B8D23B /* SnapKit.framework */,
+				5F06EFB21F175F2E00B8D23B /* TVOSToast.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -401,22 +436,30 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = soulsoftware;
 				TargetAttributes = {
 					5FD9A2CA1CAD19590065BE03 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = 48J595L9BX;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0820;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					5FD9A2DB1CAD19590065BE03 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0820;
 						TestTargetID = 5FD9A2CA1CAD19590065BE03;
 					};
 					5FD9A2E61CAD195A0065BE03 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0820;
 						TestTargetID = 5FD9A2CA1CAD19590065BE03;
 					};
 				};
@@ -514,7 +557,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		4D08255B845C76B57FCCB0A8 /* [CP] Embed Pods Frameworks */ = {
@@ -574,7 +617,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A0889C3D1CE8F4AA0050094D /* ShellScript */ = {
@@ -604,7 +647,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		EF82CCA0A9859E65D3BA3EDE /* [CP] Embed Pods Frameworks */ = {
@@ -632,20 +675,29 @@
 				5F4515A81CC2F112004C4004 /* TCBlobDownloadManager.swift in Sources */,
 				5FB6540A1D82E7E600E6E2F2 /* SettingsBarView.swift in Sources */,
 				5F90B6091D9AC6DC00615BA4 /* ThumbnailsView.swift in Sources */,
+				5F8A17131EF0365E0005B086 /* Favorites.swift in Sources */,
+				5F06EFC71F17610400B8D23B /* MainMenuViewController.swift in Sources */,
+				5F1DBB1C1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift in Sources */,
 				5FB609EC1DA03CB000051347 /* SlideViewerController+Fullpage.swift in Sources */,
+				5F4C49901F00FB9700269C50 /* FavoritesCommandView.swift in Sources */,
+				5FCCC36E1F0BF205002ADBEC /* Slideshare+Download.swift in Sources */,
 				5F9623531CBBF94900F61D9C /* Slidehare.swift in Sources */,
 				A0C8B3E71CCCC8CF007352B6 /* ARLabel.swift in Sources */,
 				5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */,
 				5F57DE131CC42B7500D5F1B8 /* UAProgressView.m in Sources */,
 				5FD9A2D11CAD19590065BE03 /* ViewController.swift in Sources */,
+				5F5AC0481EF088C200E2A561 /* FavoritesViewController.swift in Sources */,
 				5F4515A71CC2F112004C4004 /* TCBlobDownload.swift in Sources */,
 				5FD9A2CF1CAD19590065BE03 /* AppDelegate.swift in Sources */,
 				5FB6D3861CAEF8B100D7AA80 /* SlideViewerController.swift in Sources */,
 				5F3E17331DB8C9EE00AED17C /* OHPDFPage.m in Sources */,
 				5F3BF0021D8688850073EFCB /* SlideViewerController+AutoLayout.swift in Sources */,
+				5F0C443E1EDB607D00B098A1 /* SearchStoryboardSegue.swift in Sources */,
 				5F3E17321DB8C9EE00AED17C /* OHPDFDocument.m in Sources */,
 				5F57DE0B1CC3DCCF00D5F1B8 /* TWRProgressView.m in Sources */,
+				5F35BE3E1ED0941D00B644B1 /* MainViewController.swift in Sources */,
 				C3F8E7A31B2D198534D793D2 /* Settings.swift in Sources */,
+				5F15D3EA1F03C4C2002F03AC /* FavoriteViewCell.swift in Sources */,
 				5F3E17341DB8C9EE00AED17C /* OHVectorImage.m in Sources */,
 				5FF0DE0D1D99B033001CEC34 /* PageView.swift in Sources */,
 				5F3E17351DB8C9EE00AED17C /* UIImage+OHPDF.m in Sources */,
@@ -700,6 +752,7 @@
 		5FAE605B1DB6C7840019C794 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -719,7 +772,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -760,11 +812,29 @@
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SettingsKit",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/TVOSToast",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/ManualLayout",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/ManualLayout",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/TVOSToast",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/ManualLayout",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxCocoa",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwift",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwiftExt",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SettingsKit",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/TVOSToast",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -774,7 +844,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "slides-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				SYMROOT = $PROJECT_DIR/build;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
@@ -789,23 +859,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxTests",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxBlocking",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxTests",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxTest",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxCocoa",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxBlocking",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxCocoa",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwift",
-					"$(PROJECT_DIR)/build/Debug-appletvos/OHPDFImage",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwiftExt",
-					"$(PROJECT_DIR)/build/Debug-appletvos",
 				);
 				INFOPLIST_FILE = slidesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slides.app/slides";
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
@@ -835,7 +898,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = slides;
 			};
 			name = Debug;
@@ -843,6 +906,7 @@
 		5FD9A2EF1CAD195A0065BE03 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -862,7 +926,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -896,16 +959,42 @@
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxCocoa",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SettingsKit",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SnapKit",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxCocoa",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwift",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwiftExt",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SettingsKit",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SnapKit",
+					"$(PROJECT_DIR)/build/Debug-appletvos/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
+					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SnapKit",
+					"$(PROJECT_DIR)/build/Debug-appletvos",
+					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwift",
+					"$(PROJECT_DIR)/build/Debug-appletvos/SettingsKit",
+					"$(PROJECT_DIR)/build/Debug-appletvos/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/TVOSToast",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/ManualLayout",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/ManualLayout",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/TVOSToast",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/ManualLayout",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/TVOSToast",
+					"$(PROJECT_DIR)/build/Debug-appletvos/ManualLayout",
+					"$(PROJECT_DIR)/build/Debug-appletvos/TVOSToast",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -915,7 +1004,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "slides-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				SYMROOT = $PROJECT_DIR/build;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
@@ -930,23 +1019,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxTests",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxBlocking",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxTests",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxTest",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxCocoa",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxBlocking",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxCocoa",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwift",
-					"$(PROJECT_DIR)/build/Debug-appletvos/OHPDFImage",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwiftExt",
-					"$(PROJECT_DIR)/build/Debug-appletvos",
 				);
 				INFOPLIST_FILE = slidesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slides.app/slides";
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
@@ -976,7 +1058,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = slides;
 			};
 			name = Release;

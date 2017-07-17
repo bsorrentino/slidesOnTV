@@ -10,6 +10,36 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+class DocumentField {
+    
+    static let Title            = "title"
+    static let DownloadUrl      = "downloadurl"
+    static let ID               = "id"
+    static let URL              = "url" // permalink
+    static let Created          = "created"
+    static let Updated          = "updated"
+    static let Format           = "format"
+    static let Language         = "language"
+    static let ThumbnailS       = "thumbnailsmallurl"
+    static let ThumbnailXL      = "thumbnailxlargeurl"
+    static let ThumbnailXXL     = "thumbnailxxlargeurl"
+    
+    static let names = [
+        Title,
+        DownloadUrl,
+        ID,
+        URL,
+        Updated,
+        Format,
+        ThumbnailXL,
+        ThumbnailXXL,
+        ThumbnailS,
+        Created,
+        Language
+    ]
+
+}
+
 
 extension String {
     func htmlDecoded()->String {
@@ -17,82 +47,152 @@ extension String {
         guard (self != "") else { return self }
         
         var _self = self;
-        if let v = self.stringByRemovingPercentEncoding  {
+        if let v = self.removingPercentEncoding  {
             _self = v
         }
         return _self
-            .stringByReplacingOccurrencesOfString( "&quot;", withString: "\"")
-            .stringByReplacingOccurrencesOfString( "&amp;" , withString: "&" )
-            .stringByReplacingOccurrencesOfString( "&apos;",    withString: "'" )
-            .stringByReplacingOccurrencesOfString( "&lt;",      withString: "<" )
-            .stringByReplacingOccurrencesOfString(  "&gt;",      withString: ">" )
+            .replacingOccurrences( of: "&quot;", with: "\"")
+            .replacingOccurrences( of: "&amp;" , with: "&" )
+            .replacingOccurrences( of: "&apos;",    with: "'" )
+            .replacingOccurrences( of: "&lt;",      with: "<" )
+            .replacingOccurrences(  of: "&gt;",      with: ">" )
     }
 }
 
-private func SHA1( s:String! ) -> String {
-    let data = s.dataUsingEncoding(NSUTF8StringEncoding)!
+private func SHA1( _ s:String! ) -> String {
+    let data = s.data(using: String.Encoding.utf8)!
     
-    var digest = [UInt8](count:Int(CC_SHA1_DIGEST_LENGTH), repeatedValue: 0)
+    var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
     
-    CC_SHA1(data.bytes, CC_LONG(data.length), &digest)
+    CC_SHA1((data as NSData).bytes, CC_LONG(data.count), &digest)
     
     let hexBytes = digest.map { String(format: "%02hhx", $0) }
     
-    return hexBytes.joinWithSeparator("")
+    return hexBytes.joined(separator: "")
 }
 
-func slideshareSearch( apiKey apiKey:String, sharedSecret:String, what:String ) ->  Observable<NSData> {
+private let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
+
+private func prepareQueryString( apiKey:String,
+                      sharedSecret:String,
+                      _ params:[String:String] ) -> String
+{
     
-    let allowedCharacters = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
-    
-    let ts = String(NSDate().timeIntervalSince1970)
+    let ts = String(Date().timeIntervalSince1970)
     
     let ss = String(format: "%@%@", sharedSecret, ts)
     
-    let hash = SHA1(ss)
-    
-    let params:Dictionary<String,String> = [
+    let hash =  SHA1(ss)
+
+    var result = [
         "api_key":apiKey,
-        "ts": ts,
-        "hash": hash,
-        "what":what,
-        "fileformat": "pdf", // seems that doesn't work
-        "download":"0",
-        //"sort":"latest",
-        //"file_type":"presentations"
+        "ts":ts,
+        "hash":hash
     ]
+    for (k, v) in params {
+        result[k] = v
+    }
     
-    let queryString =  params.map { (key, value) -> String in
-        let percentEscapedKey = key.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacters)!
-        let percentEscapedValue = value.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacters)!
+    let queryString =  result.map { (key, value) -> String in
+        let percentEscapedKey = key.addingPercentEncoding(withAllowedCharacters: allowedCharacters)!
+        let percentEscapedValue = value.addingPercentEncoding(withAllowedCharacters: allowedCharacters)!
         return "\(percentEscapedKey)=\(percentEscapedValue)"
-        }.joinWithSeparator("&")
+        }.joined(separator: "&")
+
+    return queryString
+}
+
+typealias SlideshareCredentials = (apikey:String, ssecret:String)
+
+func rxSlideshareCredentials() -> Single<SlideshareCredentials> {
+    guard let bundlePath = Bundle.main.path(forResource: "slideshare", ofType: "plist") else {
+        return Single.error( "cannot find bundle 'slideshare.plist'")
+    }
     
-    let requestURL = NSURL(string: String(format:"https://www.slideshare.net/api/2/search_slideshows?q=%@", queryString))!
+    guard let credentials = NSDictionary(contentsOfFile: bundlePath ) else {
+        return Single.error( "cannot load credential from bundle 'slideshare.plist'")
+    }
     
-    let request = NSURLRequest(URL: requestURL)
+    guard let apikey = credentials["apiKey"] as? String else {
+        return Single.error( "cannot find 'apiKey' in bundle 'slideshare.plist'")
+        
+    }
+    guard let ssecret = credentials["sharedSecret"]  as? String else {
+        return Single.error( "cannot find 'sharedSecret' in bundle 'slideshare.plist'")
+        
+    }
     
-    return NSURLSession.sharedSession().rx_data(request)
+    return Single.just( (apikey:apikey, ssecret:ssecret))
+
+}
+
+func rxSlideshareGet( credentials:SlideshareCredentials, id:String ) -> Single<Data> {
+    
+    let qs = prepareQueryString( apiKey:credentials.apikey,
+                                 sharedSecret:credentials.ssecret,
+                            [
+                                    "slideshow_id":id,
+                                    "slideshow_url":""
+                            ])
+    
+    
+    guard let requestURL = URL(string: String(format:"https://www.slideshare.net/api/2/get_slideshow?%@", qs)) else
+    {
+        return Single.error( "error creating requestURL" )
+    }
+    
+    
+    let request = URLRequest(url: requestURL)
+    
+    return URLSession.shared.rx.data(request: request).asSingle()
+}
+
+func rxSlideshareSearch( apiKey:String, sharedSecret:String, query:String ) ->  Observable<Data> {
+    
+    let qs = prepareQueryString( apiKey:apiKey,
+                                 sharedSecret:sharedSecret,
+                                 [
+                                    "q":query,
+                                    //"what":"tag",
+                                    "fileformat": "pdf", // seems that doesn't work
+                                    "download":"0",
+                                    //"sort":"latest",
+                                    //"file_type":"presentations"
+                                ])
+    
+    guard let requestURL = URL(string: String(format:"https://www.slideshare.net/api/2/search_slideshows?%@", qs)) else
+    {
+        return Observable.error( "error creating requestURL" )
+    }
+
+    let request = URLRequest(url: requestURL)
+    
+    return URLSession.shared.rx.data(request: request)
     
 }
 
 
-typealias Slideshow = Dictionary<String,String>
+typealias Slideshow = [String:String]
 
-class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
+class SlideshareItemsParser : NSObject, XMLParserDelegate {
     
     var currentData:(slide:Slideshow, attr:String?)?
+    
+    var currentError:String?
     
     var subject = PublishSubject<Slideshow>()
     
     
-    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
-        let properties = ["title", "thumbnailsmallurl", "thumbnailxlargeurl", "thumbnailxxlargeurl", "created", "updated", "language", "format", "downloadurl"]
+        if elementName == "SlideShareServiceError" {
+            currentError = ""
+            return
+        }
         
         if currentData != nil  {
             
-            currentData!.attr = properties.contains(elementName.lowercaseString) ? elementName.lowercaseString : nil
+            currentData!.attr = DocumentField.names.contains(elementName.lowercased()) ? elementName.lowercased() : nil
 
         }
         else {
@@ -105,7 +205,11 @@ class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
         
     }
     
-    func parser(parser: NSXMLParser, foundCharacters string: String) {
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        
+        if let err = currentError {
+            currentError = err + string
+        }
         
         if let data = currentData, let attr = data.attr {
     
@@ -123,9 +227,11 @@ class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
     }
     
     
-    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         
-        let e = elementName.lowercaseString
+        if currentError != nil { return }
+        
+        let e = elementName.lowercased()
         
         if e == "slideshow", let data = currentData {
 
@@ -141,25 +247,43 @@ class SlideshareItemsParser : NSObject, NSXMLParserDelegate {
         }
     }
     
-    func parserDidEndDocument(parser: NSXMLParser) {
+    func parserDidEndDocument(_ parser: XMLParser) {
+        
+        if let err = currentError {
+            subject.onError( err )
+            return
+        }
+        
         subject.onCompleted()
     }
     
-    func rx_parse( data:NSData! ) -> Observable<Slideshow> {
+    
+    func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
+        subject.onError(parseError)
+    }
+    
+    
+    func parser(_ parser: XMLParser, validationErrorOccurred validationError: Error) {
+        subject.onError(validationError)
+    }
+    
+    func rx_parse( _ data:Data! ) -> Observable<Slideshow> {
+        
+        //let ss = String(data: data!, encoding: .utf8) ; print( "parse \(ss)")
         
         return Observable.create{ observer in
             
-            let parser = NSXMLParser(data: data)
+            let parser = XMLParser(data: data)
             parser.delegate = self
             
             let subscription = self.subject.subscribe(observer);
             
             parser.parse()
 
-            return AnonymousDisposable {
+            return Disposables.create(with: {
                 //print("Disposed")
                 subscription.dispose()
-            }
+            })
         }
     }
 }

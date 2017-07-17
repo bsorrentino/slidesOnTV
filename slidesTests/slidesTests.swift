@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import OHPDFImage
+//import OHPDFImage
 import RxSwift
 import RxBlocking
 
@@ -46,7 +46,7 @@ class slidesTests: XCTestCase {
 
         typealias SelectInfo = (key:Int, step:Int)
         
-        let stream = [1,2,1,1,2,3,3].toObservable()
+        let stream = Observable.from([1,2,1,1,2,3,3])
 
         let result = try stream.scan( (key:0, step:0), accumulator: { (last:SelectInfo, item:Int) -> SelectInfo in
             
@@ -54,7 +54,7 @@ class slidesTests: XCTestCase {
             
                 return result
             })
-            .doOnNext({ (item:SelectInfo) in
+            .do( onNext: { (item:SelectInfo) in
                 print("SCAN RESULT: \(item)")
             })
             .filter({ (item:SelectInfo) -> Bool in
@@ -72,15 +72,15 @@ class slidesTests: XCTestCase {
     
     func testDownload() {
         
-        let asyncExpectation = expectationWithDescription("longRunningFunction")
+        let asyncExpectation = expectation(description: "longRunningFunction")
         
         let url = "http://publications.gbdirect.co.uk/c_book/thecbook.pdf"
         
-        let downloadURL = NSURL(string: url)
+        let downloadURL = URL(string: url)
         
         XCTAssertNotNil(downloadURL)
         
-        let documentDirectoryURL =  try! NSFileManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let documentDirectoryURL =  try! FileManager().url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
         XCTAssertNotNil(documentDirectoryURL)
         
@@ -98,7 +98,7 @@ class slidesTests: XCTestCase {
                 asyncExpectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(60) { error in
+        self.waitForExpectations(timeout: 60) { error in
             
             XCTAssertNil(error, "Something went horribly wrong")
             
@@ -108,7 +108,7 @@ class slidesTests: XCTestCase {
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measureBlock {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }

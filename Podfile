@@ -2,33 +2,25 @@
 #platform :ios, '9.0'
 platform :tvos, '9.0'
 use_frameworks!
-xcodeproj 'slides.xcodeproj'
+project 'slides.xcodeproj'
 
 target 'slides' do
-    #pod 'OHPDFImage'
-    #pod 'VAProgressCircle'
-    #pod 'UAProgressView'
-    #pod 'RxSwiftExt', '~> 1.2'
-    pod 'RxSwift',    '2.6.0'
-    pod 'RxCocoa',    '2.6.0'
-    pod 'RxSwiftExt', :git => 'https://github.com/RxSwiftCommunity/RxSwiftExt', :tag => '1.2'
-    pod 'SnapKit',    '0.22.0'
+    pod 'RxSwift',    '3.5.0'
+    pod 'RxCocoa',    '3.5.0'
+    pod 'RxSwiftExt'
+    pod 'SnapKit',    '3.1.2'
     pod 'SettingsKit', :git => 'https://github.com/bsorrentino/SettingsKit.git', :branch => 'develop'
+    pod 'TVOSToast'
 end
 
 target 'slidesTests' do
-    #pod 'OHPDFImage'
-    #pod 'RxSwiftExt', '1.2'
-    pod 'RxBlocking', '2.6.0'
-    pod 'RxTests',    '2.6.0'
+    pod 'RxBlocking', '3.5.0'
+    pod 'RxTest',     '3.5.0'
 end
 
 target 'slidesUITests' do
-    #pod 'OHPDFImage'
-    #pod 'VAProgressCircle'
-    #pod 'UAProgressView'
-    pod 'RxBlocking', '2.6.0'
-    pod 'RxTests',    '2.6.0'
+    pod 'RxBlocking', '3.5.0'
+    pod 'RxTest',     '3.5.0'
 end
 
 post_install do |installer|
