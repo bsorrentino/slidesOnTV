@@ -54,14 +54,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+
+        /*
         if let w = window {
 
             // Reccomendation from WWDC 2016 - Desiging for TvOS - https://developer.apple.com/videos/play/wwdc2016/802/
-
             w.frame = w.frame.insetBy(dx: 90, dy: 60 )
             
         }
+        */
         
         //window?.rootViewController = packagedSearchController()
         

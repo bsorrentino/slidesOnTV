@@ -7,8 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F06EFC71F17610400B8D23B /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */; };
 		5F0C443E1EDB607D00B098A1 /* SearchStoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */; };
 		5F15D3EA1F03C4C2002F03AC /* FavoriteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */; };
+		5F1DBB131F1A87BD00DF4C87 /* ManualLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB61F175F8900B8D23B /* ManualLayout.framework */; };
+		5F1DBB141F1A87BD00DF4C87 /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB71F175F8900B8D23B /* Pods_slides.framework */; };
+		5F1DBB151F1A87BD00DF4C87 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB81F175F8900B8D23B /* RxCocoa.framework */; };
+		5F1DBB161F1A87BD00DF4C87 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB91F175F8900B8D23B /* RxSwift.framework */; };
+		5F1DBB171F1A87BD00DF4C87 /* RxSwiftExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFBA1F175F8900B8D23B /* RxSwiftExt.framework */; };
+		5F1DBB181F1A87BD00DF4C87 /* SettingsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFBB1F175F8900B8D23B /* SettingsKit.framework */; };
+		5F1DBB191F1A87BD00DF4C87 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFBC1F175F8900B8D23B /* SnapKit.framework */; };
+		5F1DBB1A1F1A87BD00DF4C87 /* TVOSToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06EFB21F175F2E00B8D23B /* TVOSToast.framework */; };
+		5F1DBB1C1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1DBB1B1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift */; };
 		5F35BE3E1ED0941D00B644B1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */; };
 		5F3BF0021D8688850073EFCB /* SlideViewerController+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */; };
 		5F3E17321DB8C9EE00AED17C /* OHPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */; };
@@ -32,11 +42,6 @@
 		5FB6540A1D82E7E600E6E2F2 /* SettingsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB654091D82E7E600E6E2F2 /* SettingsBarView.swift */; };
 		5FB6D3861CAEF8B100D7AA80 /* SlideViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */; };
 		5FC7A4AD1CAD8D0700530CB0 /* rx1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */; };
-		5FC9C8E61F0CCD4800811E24 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC9C8E51F0CCD4800811E24 /* RxSwift.framework */; };
-		5FC9C8E81F0CCD5C00811E24 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC9C8E71F0CCD5C00811E24 /* RxCocoa.framework */; };
-		5FC9C8EA1F0CCD6F00811E24 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC9C8E91F0CCD6F00811E24 /* SnapKit.framework */; };
-		5FC9C8EC1F0CCD8200811E24 /* RxSwiftExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC9C8EB1F0CCD8200811E24 /* RxSwiftExt.framework */; };
-		5FC9C8EE1F0CCD8A00811E24 /* SettingsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC9C8ED1F0CCD8A00811E24 /* SettingsKit.framework */; };
 		5FCCC36E1F0BF205002ADBEC /* Slideshare+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */; };
 		5FD9A2CF1CAD19590065BE03 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */; };
 		5FD9A2D11CAD19590065BE03 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D01CAD19590065BE03 /* ViewController.swift */; };
@@ -73,8 +78,18 @@
 		29922D394E25E590CB68BD7B /* Settings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = slides/Settings.swift; sourceTree = SOURCE_ROOT; };
 		3CADED520A0132122567DBAF /* Pods-slidesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4B74BAF74AE103B2AC4E9103 /* Pods-slides.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.release.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.release.xcconfig"; sourceTree = "<group>"; };
+		5F06EFB21F175F2E00B8D23B /* TVOSToast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TVOSToast.framework; path = "Build/Products/Release-appletvos/TVOSToast/TVOSToast.framework"; sourceTree = "<group>"; };
+		5F06EFB61F175F8900B8D23B /* ManualLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManualLayout.framework; path = "Build/Products/Release-appletvos/ManualLayout/ManualLayout.framework"; sourceTree = "<group>"; };
+		5F06EFB71F175F8900B8D23B /* Pods_slides.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_slides.framework; path = "Build/Products/Release-appletvos/Pods_slides.framework"; sourceTree = "<group>"; };
+		5F06EFB81F175F8900B8D23B /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "Build/Products/Release-appletvos/RxCocoa/RxCocoa.framework"; sourceTree = "<group>"; };
+		5F06EFB91F175F8900B8D23B /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Build/Products/Release-appletvos/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
+		5F06EFBA1F175F8900B8D23B /* RxSwiftExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwiftExt.framework; path = "Build/Products/Release-appletvos/RxSwiftExt/RxSwiftExt.framework"; sourceTree = "<group>"; };
+		5F06EFBB1F175F8900B8D23B /* SettingsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SettingsKit.framework; path = "Build/Products/Release-appletvos/SettingsKit/SettingsKit.framework"; sourceTree = "<group>"; };
+		5F06EFBC1F175F8900B8D23B /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Build/Products/Release-appletvos/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
+		5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStoryboardSegue.swift; sourceTree = "<group>"; };
 		5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewCell.swift; sourceTree = "<group>"; };
+		5F1DBB1B1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideViewerStoryboardSegue.swift; sourceTree = "<group>"; };
 		5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SlideViewerController+AutoLayout.swift"; sourceTree = "<group>"; };
 		5F3E17291DB8C9EE00AED17C /* OHPDFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDFDocument.h; path = OHPDFImage/OHPDFDocument.h; sourceTree = "<group>"; };
@@ -107,11 +122,6 @@
 		5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideViewerController.swift; sourceTree = "<group>"; };
 		5FC7A4A51CAD8A8F00530CB0 /* slides-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "slides-Bridging-Header.h"; sourceTree = "<group>"; };
 		5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = rx1.pdf; path = assets/rx1.pdf; sourceTree = "<group>"; };
-		5FC9C8E51F0CCD4800811E24 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Build/Products/Debug-appletvos/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
-		5FC9C8E71F0CCD5C00811E24 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "Build/Products/Debug-appletvos/RxCocoa/RxCocoa.framework"; sourceTree = "<group>"; };
-		5FC9C8E91F0CCD6F00811E24 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = "Build/Products/Debug-appletvos/SnapKit/SnapKit.framework"; sourceTree = "<group>"; };
-		5FC9C8EB1F0CCD8200811E24 /* RxSwiftExt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwiftExt.framework; path = "Build/Products/Debug-appletvos/RxSwiftExt/RxSwiftExt.framework"; sourceTree = "<group>"; };
-		5FC9C8ED1F0CCD8A00811E24 /* SettingsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SettingsKit.framework; path = "Build/Products/Debug-appletvos/SettingsKit/SettingsKit.framework"; sourceTree = "<group>"; };
 		5FCB2B2D1D7392CC007B8DA5 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Slideshare+Download.swift"; sourceTree = "<group>"; };
 		5FD9A2CB1CAD19590065BE03 /* slides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slides.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,11 +153,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FC9C8EE1F0CCD8A00811E24 /* SettingsKit.framework in Frameworks */,
-				5FC9C8EC1F0CCD8200811E24 /* RxSwiftExt.framework in Frameworks */,
-				5FC9C8EA1F0CCD6F00811E24 /* SnapKit.framework in Frameworks */,
-				5FC9C8E81F0CCD5C00811E24 /* RxCocoa.framework in Frameworks */,
-				5FC9C8E61F0CCD4800811E24 /* RxSwift.framework in Frameworks */,
+				5F1DBB131F1A87BD00DF4C87 /* ManualLayout.framework in Frameworks */,
+				5F1DBB141F1A87BD00DF4C87 /* Pods_slides.framework in Frameworks */,
+				5F1DBB151F1A87BD00DF4C87 /* RxCocoa.framework in Frameworks */,
+				5F1DBB161F1A87BD00DF4C87 /* RxSwift.framework in Frameworks */,
+				5F1DBB171F1A87BD00DF4C87 /* RxSwiftExt.framework in Frameworks */,
+				5F1DBB181F1A87BD00DF4C87 /* SettingsKit.framework in Frameworks */,
+				5F1DBB191F1A87BD00DF4C87 /* SnapKit.framework in Frameworks */,
+				5F1DBB1A1F1A87BD00DF4C87 /* TVOSToast.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,16 +296,18 @@
 				5FD9A2D51CAD19590065BE03 /* Assets.xcassets */,
 				5FD9A2D71CAD19590065BE03 /* Info.plist */,
 				5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */,
+				5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */,
 				5FB37BF41D7352140081D8C4 /* DetailView.xib */,
 				5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */,
 				5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */,
 				5FB609EB1DA03CB000051347 /* SlideViewerController+Fullpage.swift */,
+				5F1DBB1B1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift */,
 				5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */,
-				5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */,
 				5F8A17121EF0365E0005B086 /* Favorites.swift */,
 				5F5AC0471EF088C200E2A561 /* FavoritesViewController.swift */,
 				5F4C498F1F00FB9700269C50 /* FavoritesCommandView.swift */,
 				5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */,
+				5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";
@@ -336,11 +351,14 @@
 		A8CBADC199C577F1E16802A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5FC9C8ED1F0CCD8A00811E24 /* SettingsKit.framework */,
-				5FC9C8EB1F0CCD8200811E24 /* RxSwiftExt.framework */,
-				5FC9C8E91F0CCD6F00811E24 /* SnapKit.framework */,
-				5FC9C8E71F0CCD5C00811E24 /* RxCocoa.framework */,
-				5FC9C8E51F0CCD4800811E24 /* RxSwift.framework */,
+				5F06EFB61F175F8900B8D23B /* ManualLayout.framework */,
+				5F06EFB71F175F8900B8D23B /* Pods_slides.framework */,
+				5F06EFB81F175F8900B8D23B /* RxCocoa.framework */,
+				5F06EFB91F175F8900B8D23B /* RxSwift.framework */,
+				5F06EFBA1F175F8900B8D23B /* RxSwiftExt.framework */,
+				5F06EFBB1F175F8900B8D23B /* SettingsKit.framework */,
+				5F06EFBC1F175F8900B8D23B /* SnapKit.framework */,
+				5F06EFB21F175F2E00B8D23B /* TVOSToast.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -658,6 +676,8 @@
 				5FB6540A1D82E7E600E6E2F2 /* SettingsBarView.swift in Sources */,
 				5F90B6091D9AC6DC00615BA4 /* ThumbnailsView.swift in Sources */,
 				5F8A17131EF0365E0005B086 /* Favorites.swift in Sources */,
+				5F06EFC71F17610400B8D23B /* MainMenuViewController.swift in Sources */,
+				5F1DBB1C1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift in Sources */,
 				5FB609EC1DA03CB000051347 /* SlideViewerController+Fullpage.swift in Sources */,
 				5F4C49901F00FB9700269C50 /* FavoritesCommandView.swift in Sources */,
 				5FCCC36E1F0BF205002ADBEC /* Slideshare+Download.swift in Sources */,
@@ -797,6 +817,24 @@
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SnapKit",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwiftExt",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/TVOSToast",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/ManualLayout",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/ManualLayout",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/TVOSToast",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/ManualLayout",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/TVOSToast",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -940,6 +978,23 @@
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SnapKit",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwiftExt",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxSwift",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/SettingsKit",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/SnapKit",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/TVOSToast",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/ManualLayout",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxCocoa",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/ManualLayout",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/TVOSToast",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvos",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/ManualLayout",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/TVOSToast",
+					"$(PROJECT_DIR)/build/Debug-appletvos/ManualLayout",
+					"$(PROJECT_DIR)/build/Debug-appletvos/TVOSToast",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

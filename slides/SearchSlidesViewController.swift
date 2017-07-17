@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
-
+import TVOSToast
 
 class Scheduler {
     
@@ -322,50 +322,77 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     let disposeBag = DisposeBag()
     
     let searchResultsUpdatingSubject = PublishSubject<String>()
-
     
-    func downloadPresentationFormURL( _ downloadURL:URL, item:Slideshow, relatedCell:SearchSlideCollectionViewCell ) throws {
-        
-        let documentDirectoryURL =  try FileManager().url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-       
-        relatedCell.showProgress()
-        
-        let _ = TCBlobDownloadManager.sharedInstance.downloadFileAtURL(downloadURL,
-                                                               toDirectory: documentDirectoryURL,
-                                                               withName: "presentation.pdf",
-                                                               progression:
-            { (progress, totalBytesWritten, totalBytesExpectedToWrite) in
-                
-                //let percentage = round( Float((totalBytesWritten * 100)/totalBytesExpectedToWrite) )
-                //print( "\(progress) - \(totalBytesWritten) - \(totalBytesExpectedToWrite) %: \(percentage)" )
-                //relatedCell.setProgress( percentage )
-                
-                relatedCell.setProgress(progress)
-            })
-            { (error, location) in
-
-                
-                if let error = error {
-                 
-                    debugPrint(error)
-                }
-                else {
-                    
-                    let title = item[DocumentField.Title] ?? ""
-                    let id = item[DocumentField.ID] ?? "unknown" // raise error
-                    
-                    self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:location!, id:id, title:title) )
-                }
-                relatedCell.resetProgress()
-            }
-        
-
+    // MARK: DOWNLOAD MANAGEMENT
+    
+    var downloadDispose:Disposable?
+    
+    var menuTap:UITapGestureRecognizer?
+    
+    private func overrideMenuTap( _ enabled:Bool = false ) {
+        menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
+        menuTap?.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
+        menuTap?.isEnabled = enabled
+        view.addGestureRecognizer(menuTap!)
         
     }
     
+    @IBAction func menuTapped(_ sender: UITapGestureRecognizer) {
+        downloadDispose?.dispose()
+        downloadDispose = nil
+    }
     
-    // MARK: UICollectionViewController Lifecycle
+    fileprivate func rxDownload( presentation item:Slideshow, showOnCell cell:SearchSlideCollectionViewCell ) {
+        
+        let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 800, height: 80))
+        //toast.style.position = TVOSToastPosition.topRight(insets: 0)
+        //toast.style.position = TVOSToastPosition.top(insets: -10)
+        toast.style.position = TVOSToastPosition.bottomRight(insets: detailView.frame.size.height)
+        
+        toast.hintText =
+            TVOSToastHintText(element:
+                [ToastElement.stringType("Press the "),
+                 ToastElement.remoteButtonType(.MenuWhite),
+                 ToastElement.stringType(" button to cancel download")])
+        
+        
+        downloadDispose = rxDownloadFromURL( presentation:item )
+        {
+            (progress, totalBytesWritten, totalBytesExpectedToWrite) in
+            
+            cell.setProgress(progress)
+            }
+            .do(
+                onError: { [unowned self] (err) in
+                    self.collectionView?.isUserInteractionEnabled = true
+                    self.menuTap?.isEnabled = false
+                },
+                onSubscribe: { [unowned self] in
+                    self.collectionView?.isUserInteractionEnabled = false
+                    self.menuTap?.isEnabled = true
+                    self.presentToast(toast)
+                    cell.showProgress()
+                },
+                onDispose: { [unowned self] in
+                    self.collectionView?.isUserInteractionEnabled = true
+                    self.menuTap?.isEnabled = false
+                    cell.resetProgress()
+                }
+            )
+            .subscribe(onSuccess: { (value:(Slideshow,URL?)) in
+                
+                let title = item[DocumentField.Title] ?? ""
+                let id = item[DocumentField.ID] ?? "unknown" // raise error
+                
+                self.performSegue(withIdentifier: "showPresentation", sender: DocumentInfo( location:value.1!, id:id, title:title) )
+                
+            }) { (err) in
+                
+                print( "error downloading url")
+        }
 
+    }
+    // MARK: UICollectionViewController Lifecycle
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -381,6 +408,8 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         // Initilaize DetailView
         
         detailView.addToWindow().hide()
+        
+        overrideMenuTap()
         
         
 #if (arch(i386) || arch(x86_64)) && os(tvOS)
@@ -548,20 +577,8 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         }
         
         let item:Slideshow = filteredDataItems[indexPath.row]
-       
-        if let url = item[DocumentField.DownloadUrl]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)  {
-            
-            print( "\(url)")
-            
-            if let downloadURL = URL(string:url) {
-                do {
-                    try downloadPresentationFormURL( downloadURL, item: item, relatedCell:cell)
-                }
-                catch {
-                    print( "error downloading url")
-                }
-            }
-        }
+        
+        rxDownload(presentation: item, showOnCell: cell)
         
     }
     

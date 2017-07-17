@@ -11,11 +11,12 @@ import RxSwift
 import RxCocoa
 
 
+
 //
 // MARK: Download Presentation
 //
 
-func rxDownloadPresentationFormURL( item:Slideshow, progression: progressionHandler? ) -> Single<(Slideshow,URL?)> {
+func rxDownloadFromURL( presentation item:Slideshow, progression: progressionHandler? ) -> Single<(Slideshow,URL?)> {
     
     guard   let url = item[DocumentField.DownloadUrl]?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
         let downloadURL = URL(string:url) else {
@@ -24,7 +25,7 @@ func rxDownloadPresentationFormURL( item:Slideshow, progression: progressionHand
     
     return Single<(Slideshow,URL?)>.create() { (single) in
         
-        var downloadTask:TCBlobDownload?
+        var downloadTask:TCBlobDownload? 
         
         do {
             
@@ -54,6 +55,7 @@ func rxDownloadPresentationFormURL( item:Slideshow, progression: progressionHand
         }
         
         return Disposables.create {
+            print( "CANCELLING DOWNLOAD TASK \(String(describing: downloadTask))")
             downloadTask?.cancel();
         }
     }
