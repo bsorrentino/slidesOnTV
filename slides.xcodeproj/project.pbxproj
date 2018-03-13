@@ -829,35 +829,22 @@
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SnapKit",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwiftExt",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SettingsKit",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxCocoa",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxSwift",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxSwiftExt",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/SettingsKit",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/SnapKit",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/TVOSToast",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/ManualLayout",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/ManualLayout",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/TVOSToast",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvos/ManualLayout",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvos",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxCocoa",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwift",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwiftExt",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SettingsKit",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SnapKit",
-					"$(PROJECT_DIR)/Build/Products/Release-appletvos/TVOSToast",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OBJROOT = "$PROJECT_DIR/build";
-				PODS_BUILD_DIR = "$PROJECT_DIR/Build";
+				OBJROOT = $PROJECT_DIR/build;
+				PODS_BUILD_DIR = $PROJECT_DIR/Build/Products;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slides;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "slides-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
-				SYMROOT = "$PROJECT_DIR/build";
+				SYMROOT = $PROJECT_DIR/build;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
@@ -976,48 +963,25 @@
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/RxSwiftExt",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SettingsKit",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/SnapKit",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxCocoa",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwift",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwiftExt",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SettingsKit",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/SnapKit",
-					"$(PROJECT_DIR)/build/Debug-appletvos",
-					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwift",
-					"$(PROJECT_DIR)/build/Debug-appletvos/SettingsKit",
-					"$(PROJECT_DIR)/build/Debug-appletvos/SnapKit",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwift",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxCocoa",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SnapKit",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/RxSwiftExt",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/SettingsKit",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxCocoa",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxSwift",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/RxSwiftExt",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/SettingsKit",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvsimulator/SnapKit",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/TVOSToast",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/ManualLayout",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxCocoa",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/ManualLayout",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/TVOSToast",
-					"$(PROJECT_DIR)/Build/Products/Debug-appletvos",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/ManualLayout",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/TVOSToast",
-					"$(PROJECT_DIR)/build/Debug-appletvos/ManualLayout",
-					"$(PROJECT_DIR)/build/Debug-appletvos/TVOSToast",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OBJROOT = "$PROJECT_DIR/build";
-				PODS_BUILD_DIR = "$PROJECT_DIR/Build";
+				OBJROOT = $PROJECT_DIR/build;
+				PODS_BUILD_DIR = $PROJECT_DIR/Build/Products;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slides;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "slides-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
-				SYMROOT = "$PROJECT_DIR/build";
+				SYMROOT = $PROJECT_DIR/build;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
