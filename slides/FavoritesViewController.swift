@@ -38,7 +38,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
     
     private func overrideMenuTap( _ enabled:Bool = false ) {
         menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
-        menuTap?.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
+        menuTap?.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
         menuTap?.isEnabled = enabled
         view.addGestureRecognizer(menuTap!)
         
@@ -309,7 +309,7 @@ extension FavoritesViewController {
                     self.tableView.isUserInteractionEnabled = true
                     self.menuTap?.isEnabled = false
                 })
-                .addDisposableTo(alertDisposeBag!)
+            .disposed(by: alertDisposeBag!)
         
 
         deleteAction
@@ -323,7 +323,7 @@ extension FavoritesViewController {
                     //self.tableView.endUpdates()
 
                 })
-                .addDisposableTo(alertDisposeBag!)
+            .disposed(by: alertDisposeBag!)
 
 
         var title:String?

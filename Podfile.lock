@@ -1,30 +1,45 @@
 PODS:
   - ManualLayout (1.3.0)
-  - RxBlocking (3.5.0):
-    - RxSwift (~> 3.4)
-  - RxCocoa (3.5.0):
-    - RxSwift (~> 3.4)
-  - RxSwift (3.5.0)
-  - RxSwiftExt (2.4.1):
-    - RxSwiftExt/Core (= 2.4.1)
-  - RxSwiftExt/Core (2.4.1):
-    - RxSwift (~> 3.4)
-  - RxTest (3.5.0):
-    - RxSwift (~> 3.4)
+  - RxBlocking (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxCocoa (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxSwift (4.5.0)
+  - RxSwiftExt (3.4.0):
+    - RxSwiftExt/Core (= 3.4.0)
+    - RxSwiftExt/RxCocoa (= 3.4.0)
+  - RxSwiftExt/Core (3.4.0):
+    - RxSwift (~> 4.0)
+  - RxSwiftExt/RxCocoa (3.4.0):
+    - RxCocoa (~> 4.0)
+    - RxSwiftExt/Core
+  - RxTest (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
   - SettingsKit (0.3.0)
-  - SnapKit (3.1.2)
+  - SnapKit (4.2.0)
   - TVOSToast (0.9):
     - ManualLayout
 
 DEPENDENCIES:
-  - RxBlocking (= 3.5.0)
-  - RxCocoa (= 3.5.0)
-  - RxSwift (= 3.5.0)
-  - RxSwiftExt
-  - RxTest (= 3.5.0)
+  - RxBlocking (= 4.5.0)
+  - RxCocoa (= 4.5.0)
+  - RxSwift (= 4.5.0)
+  - RxSwiftExt (= 3.4.0)
+  - RxTest (= 4.5.0)
   - SettingsKit (from `https://github.com/bsorrentino/SettingsKit.git`, branch `develop`)
-  - SnapKit (= 3.1.2)
+  - SnapKit (= 4.2.0)
   - TVOSToast
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ManualLayout
+    - RxBlocking
+    - RxCocoa
+    - RxSwift
+    - RxSwiftExt
+    - RxTest
+    - SnapKit
+    - TVOSToast
 
 EXTERNAL SOURCES:
   SettingsKit:
@@ -38,15 +53,15 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ManualLayout: 68ac8cfa6b5f656f7a9fadec3730208b95986880
-  RxBlocking: 471315e18b87c5ed4b9d0c69a57dfdbca5c01af1
-  RxCocoa: a0a09f45d0e5b48ecb6a4a7b4b4c89c88d3f633f
-  RxSwift: 18ee9d78b45edb3b0b7e79916b47a116e6dbc842
-  RxSwiftExt: 72278e4a84f35324a82a8dd359859782706576a6
-  RxTest: 1763765fd0e2282b0eb44c9050effdd7fe7156d4
+  RxBlocking: 79413e4d916f44bb3e113c5b2cc059e36fe58910
+  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
+  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+  RxSwiftExt: 01f8ecbeeb355698e9c75365ebe908b00dacf45d
+  RxTest: 3ccb66bfbace0bf7df1c43a7c75d046f8ce60372
   SettingsKit: 597fd5106c0bd4bcac7f09c6caf23c1e84b447aa
-  SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   TVOSToast: 7bb16527987fdaff1605ecb18aec491b7b16e4df
 
-PODFILE CHECKSUM: 1abbf710d88925c6d4220153ee17711213c1787c
+PODFILE CHECKSUM: fb942d17d317b2221fda9b95ff9e181d47dcf5db
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.6.1

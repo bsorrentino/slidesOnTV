@@ -8,12 +8,12 @@
 
 import Foundation
 
-public typealias progressionHandler = (( _ progress: Float, _ totalBytesWritten: Int64, _ totalBytesExpectedToWrite: Int64) -> Void)!
-public typealias completionHandler = ((_ error: NSError?, _ location: URL?) -> Void)!
+public typealias progressionHandler = (( _ progress: Float, _ totalBytesWritten: Int64, _ totalBytesExpectedToWrite: Int64) -> Void)?
+public typealias completionHandler = ((_ error: NSError?, _ location: URL?) -> Void)?
 
 open class TCBlobDownload {
     /// The underlying download task.
-    open let downloadTask: URLSessionDownloadTask
+    public let downloadTask: URLSessionDownloadTask
 
     /// An optional delegate to get notified of events.
     open weak var delegate: TCBlobDownloadDelegate?
@@ -71,8 +71,11 @@ open class TCBlobDownload {
     */
     convenience init(downloadTask: URLSessionDownloadTask, toDirectory directory: URL?, fileName: String?, progression: progressionHandler?, completion: completionHandler?) {
         self.init(downloadTask: downloadTask, toDirectory: directory, fileName: fileName, delegate: nil)
-        self.progression = progression
-        self.completion = completion
+        self.progression = progression ??
+            {( _ progress, _ totalBytesWritten, _ totalBytesExpectedToWrite) in }
+        self.completion = completion ??
+            {(_ error , _ location ) in  }
+        
     }
 
     /**
