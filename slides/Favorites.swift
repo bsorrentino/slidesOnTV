@@ -14,7 +14,7 @@ typealias FavoriteData = ( key:String, value:Any )
 
 
 func favorites() -> [FavoriteData] {
-    let sequence = NSUbiquitousKeyValueStore.default().dictionaryRepresentation.enumerated()
+    let sequence = NSUbiquitousKeyValueStore.default.dictionaryRepresentation.enumerated()
     
     return sequence.map { (t) in return t.element }
     
@@ -27,10 +27,10 @@ func rxFavorites() -> Observable<FavoriteData> {
 
 func favoriteRemove( key:String, synchronize:Bool = false ) {
 
-    NSUbiquitousKeyValueStore.default().removeObject(forKey: key)
+    NSUbiquitousKeyValueStore.default.removeObject(forKey: key)
     
     if( synchronize ) {
-        NSUbiquitousKeyValueStore.default().synchronize()
+        NSUbiquitousKeyValueStore.default.synchronize()
     } 
 }
 
@@ -38,13 +38,13 @@ func rxFavoriteRemove( key:String ) -> Completable {
 
     return Completable.create { (completable) -> Disposable in
         
-        NSUbiquitousKeyValueStore.default().removeObject(forKey: key)
+        NSUbiquitousKeyValueStore.default.removeObject(forKey: key)
         completable(.completed)
         
         
         return Disposables.create {
             
-            NSUbiquitousKeyValueStore.default().synchronize()
+            NSUbiquitousKeyValueStore.default.synchronize()
         }
     }
 
@@ -56,7 +56,7 @@ func rxFavoriteStore( data:DocumentInfo ) -> Completable {
         
        let key = data.id //NSUUID().uuidString
         
-       NSUbiquitousKeyValueStore.default().set(
+        NSUbiquitousKeyValueStore.default.set(
         [ "dummy":"", "title":data.title ],
         forKey: key )
         
@@ -65,7 +65,7 @@ func rxFavoriteStore( data:DocumentInfo ) -> Completable {
         
         return Disposables.create {
         
-            NSUbiquitousKeyValueStore.default().synchronize()
+            NSUbiquitousKeyValueStore.default.synchronize()
         }
     }
 }

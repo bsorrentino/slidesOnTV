@@ -20,13 +20,13 @@ class SettingsBarView : UITabBar, UITabBarDelegate {
     
     lazy var showConstraints:NSLayoutConstraint = {
         let h =  self.heightAnchor.constraint( equalToConstant: 140.0)
-        h.priority = 1000
+        h.priority = UILayoutPriority(rawValue: 1000)
         return h
     }()
     
     lazy var hideConstraints:NSLayoutConstraint = {
         let h =  self.heightAnchor.constraint(equalToConstant: 1.0)
-        h.priority = 1000
+        h.priority = UILayoutPriority(rawValue: 1000)
         return h
     }()
     
