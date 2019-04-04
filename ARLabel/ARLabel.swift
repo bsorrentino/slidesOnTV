@@ -11,11 +11,10 @@ extension  UILabel {
 
     
     fileprivate func calculateSizeWithFont( _ font:UIFont,  text:NSString, constrainedToSize:CGSize ) -> CGSize {
-        let attributesDictionary:Dictionary<String,AnyObject> = [NSFontAttributeName:font]
         
         let frame = text.boundingRect(with: constrainedToSize,
                                               options: .usesLineFragmentOrigin, //| .UsesFontLeading,
-                                              attributes:attributesDictionary,
+            attributes:[NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue):font],
                                               context:nil)
     
         return frame.size;

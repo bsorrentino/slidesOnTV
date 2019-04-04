@@ -46,7 +46,7 @@ func rxDownloadFromURL( presentation item:Slideshow, progression: progressionHan
                         single(.error(err))
                     }
                     else {
-                        single(.success(item,location))
+                        single(.success((item,location)))
                     }
             }
             
