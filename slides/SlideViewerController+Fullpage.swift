@@ -15,7 +15,7 @@ extension UIPDFCollectionViewController {
     }
     
     //this lets us check to see if the item is supposed to be displayed or not
-    var fullpage : Bool {
+    @objc var fullpage : Bool {
         get {
             guard let number = objc_getAssociatedObject(self, &AssociatedKeys.fullpage) as? NSNumber else {
                 return false
@@ -47,7 +47,7 @@ extension UIPDFCollectionViewController {
     
     fileprivate func showThumbnails() {
         print( "showThumbnails")
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIView.AnimationOptions(), animations: {
             
             let w = self.thumbnailsWidth
             
@@ -73,7 +73,7 @@ extension UIPDFCollectionViewController {
         
         let width = self.pagesView.frame.size.width
         
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions() , animations: {
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIView.AnimationOptions() , animations: {
             
             var pages_frame = self.pagesView.frame
             pages_frame.size.width = 0

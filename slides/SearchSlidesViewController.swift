@@ -92,7 +92,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                     }
                 )
                 //.trackActivity(self.loadingImage)
-                .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
             
                 self.disposeBag = disposeBag
     }
@@ -313,7 +313,7 @@ class DetailView : UIView {
 open class SearchSlidesViewController: UICollectionViewController, UISearchResultsUpdating {
     // MARK: Properties
     
-    open static let storyboardIdentifier = "SearchSlidesViewController"
+    public static let storyboardIdentifier = "SearchSlidesViewController"
     
     fileprivate var filteredDataItems:[Slideshow] = []
     
@@ -331,7 +331,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     
     private func overrideMenuTap( _ enabled:Bool = false ) {
         menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
-        menuTap?.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
+        menuTap?.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
         menuTap?.isEnabled = enabled
         view.addGestureRecognizer(menuTap!)
         
@@ -412,7 +412,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         overrideMenuTap()
         
         
-#if (arch(i386) || arch(x86_64)) && os(tvOS)
+        #if targetEnvironment(simulator)
     let debounce:RxSwift.RxTimeInterval = 0.5
 #else
     let debounce:RxSwift.RxTimeInterval = 2.5
@@ -420,7 +420,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         
         searchResultsUpdatingSubject
         .filter( { (filter:String) -> Bool in
-            let length = Int(filter.characters.count)
+            let length = Int(filter.count)
             
             print( "count \(length)")
             
@@ -471,7 +471,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
                 onError: { error in
                         print( "ERROR \(error)")
                 }
-            ).addDisposableTo(disposeBag)
+            ).disposed(by: disposeBag)
         
         //self.collectionView?.setNeedsFocusUpdate()
         //self.collectionView?.updateFocusIfNeeded()

@@ -182,7 +182,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 return slide < self.doc?.pagesCount
             })
             .takeUntil( pressesSubject.filter { (press:UIPress) -> Bool in
-                press.type != UIPressType.playPause
+                press.type != UIPress.PressType.playPause
             })
             .do( onCompleted:{
                 self._playPauseSlideShow?.dispose()
@@ -194,7 +194,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 
                 self.showSlide(at: UInt(i.row)) ; self._indexPathForPreferredFocusedView = i
 
-                self.pagesView.selectItem(at: i, animated: false, scrollPosition: UICollectionViewScrollPosition())
+                self.pagesView.selectItem(at: i, animated: false, scrollPosition: UICollectionView.ScrollPosition())
                 //self.pagesView.setNeedsFocusUpdate()
                 //self.pagesView.updateFocusIfNeeded()
             })
@@ -210,7 +210,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         
         settingsBar.rx_didHidden.subscribe( onNext: { (hidden:Bool,preferredFocusedView:UIView?) in
             tap.isEnabled = hidden
-        }).addDisposableTo(disposeBag)
+        }).disposed(by: disposeBag)
         
     }
     
@@ -229,7 +229,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         pageView.addGestureRecognizer(tap)
 
         let menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
-        menuTap.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
+        menuTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
         menuTap.isEnabled = false
         view.addGestureRecognizer(menuTap)
         
@@ -285,7 +285,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             .subscribe( onCompleted:{
                 print( "==> COMPLETED" )
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         settingsBar.rx_didHidden.subscribe( onNext: { [weak self] (hidden:Bool,preferredFocusedView:UIView?) in
             
@@ -294,7 +294,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             }
             menuTap.isEnabled = !hidden
             
-        }).addDisposableTo(disposeBag)
+        }).disposed(by: disposeBag)
         
     }
     
@@ -383,10 +383,10 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
                 self.showSlide(at: UInt(i.row)) ; self._indexPathForPreferredFocusedView = i
                 
-                self.pagesView.selectItem(at: i, animated: false, scrollPosition: UICollectionViewScrollPosition())
+                self.pagesView.selectItem(at: i, animated: false, scrollPosition: UICollectionView.ScrollPosition())
 
 
-            }).addDisposableTo(disposeBag)
+            }).disposed(by: disposeBag)
     }
     
     // MARK: view lifecycle

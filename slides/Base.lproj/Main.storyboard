@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="0eX-xm-M2A">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="14490.70" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="0eX-xm-M2A">
     <device id="appleTV" orientation="landscape">
         <adaptation id="light"/>
     </device>
     <dependencies>
         <deployment identifier="tvOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -49,7 +48,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VGU-w4-XSW">
-                                            <rect key="frame" x="25" y="13" width="500" height="350"/>
+                                            <rect key="frame" x="25" y="73" width="500" height="350"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="500" id="2US-PI-tKE"/>
                                                 <constraint firstAttribute="height" constant="350" id="hXJ-sU-Apr"/>
@@ -145,13 +144,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tv-menu" translatesAutoresizingMaskIntoConstraints="NO" id="Ytj-TJ-Hjk">
-                                <rect key="frame" x="436" y="58" width="1048" height="1100"/>
+                                <rect key="frame" x="436" y="118" width="1048" height="980"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="1048" id="4LZ-7Y-Oxi"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bAH-PL-ucG">
-                                <rect key="frame" x="785" y="363" width="350" height="130"/>
+                                <rect key="frame" x="785" y="423" width="350" height="130"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="RyV-mv-1iU"/>
                                     <constraint firstAttribute="width" constant="350" id="xQG-9I-cvk"/>
@@ -163,7 +162,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qVF-Y2-tBh">
-                                <rect key="frame" x="785" y="595" width="350" height="130"/>
+                                <rect key="frame" x="785" y="655" width="350" height="130"/>
                                 <constraints>
                                     <constraint firstAttribute="width" priority="250" constant="300" id="IX4-Cu-Hxu"/>
                                     <constraint firstAttribute="height" constant="130" id="fws-sv-idY"/>
@@ -206,7 +205,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="edm-Cu-azw">
-                                <rect key="frame" x="624" y="60" width="672" height="120"/>
+                                <rect key="frame" x="624" y="120" width="672" height="120"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favourites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7O-9N-PuX">
                                         <rect key="frame" x="212" y="18" width="350" height="100"/>
@@ -236,15 +235,15 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" rowHeight="66" sectionHeaderHeight="66" sectionFooterHeight="66" translatesAutoresizingMaskIntoConstraints="NO" id="5R8-Bp-FJq">
-                                <rect key="frame" x="110" y="190" width="1700" height="830"/>
+                                <rect key="frame" x="200" y="250" width="1520" height="710"/>
                                 <color key="backgroundColor" red="0.86610990762710571" green="0.99229353666305542" blue="0.99305266141891479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexTrackingBackgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="favoriteCell" rowHeight="100" id="oFn-tD-ByK" customClass="UIFavoriteCell" customModule="slides" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="66" width="1700" height="100"/>
+                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="favoriteCell" rowHeight="100" id="oFn-tD-ByK" customClass="UIFavoriteCell" customModule="slides" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="66" width="1520" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="oFn-tD-ByK" id="pxr-vC-BDR">
-                                            <rect key="frame" x="0.0" y="0.0" width="1684" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1520" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
@@ -312,7 +311,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z" customClass="ThumbnailsView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="110" y="205" width="300" height="815"/>
+                                <rect key="frame" x="200" y="205" width="300" height="815"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -341,14 +340,14 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view" customClass="PageView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="415" y="205" width="1415" height="815"/>
+                                <rect key="frame" x="505" y="205" width="1325" height="755"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsh-Gb-3mi">
-                                        <rect key="frame" x="10" y="0.0" width="1395" height="815"/>
+                                        <rect key="frame" x="10" y="0.0" width="1305" height="755"/>
                                         <gestureRecognizers/>
                                     </imageView>
                                     <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="1415" height="140"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1325" height="140"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <items>
                                             <tabBarItem tag="1" title="Toggle Fullscreen" id="J0v-Ag-eYI"/>
@@ -403,11 +402,6 @@
         <image name="presentation" width="76" height="57"/>
         <image name="tv-menu" width="512" height="512"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <nil key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>
-        <simulatedScreenMetrics key="destination"/>
-    </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="0AE-4I-NyF"/>
     </inferredMetricsTieBreakers>
