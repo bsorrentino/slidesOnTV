@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -116,6 +116,9 @@
 				Base,
 			);
 			mainGroup = A020827A23F9893B00B1ECCC;
+			packageReferences = (
+				A0919B1823F9EEF000A1D723 /* XCRemoteSwiftPackageReference "tvOS-PDF-Reader" */,
+			);
 			productRefGroup = A020828423F9893B00B1ECCC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -338,6 +341,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A0919B1823F9EEF000A1D723 /* XCRemoteSwiftPackageReference "tvOS-PDF-Reader" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bsorrentino/tvOS-PDF-Reader.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = A020827B23F9893B00B1ECCC /* Project object */;
 }

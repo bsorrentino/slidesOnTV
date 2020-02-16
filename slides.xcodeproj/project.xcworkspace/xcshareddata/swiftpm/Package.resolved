@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "PDFReader",
+        "repositoryURL": "https://github.com/bsorrentino/tvOS-PDF-Reader.git",
+        "state": {
+          "branch": "master",
+          "revision": "2352559673590f9b79ecd0e361af007292be6db6",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
