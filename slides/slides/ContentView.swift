@@ -2,19 +2,15 @@
 //  ContentView.swift
 //  slides
 //
-//  Created by Bartolomeo Sorrentino on 16/02/2020.
-//  Copyright © 2020 Bartolomeo Sorrentino. All rights reserved.
+//  Created by softphone on 01/03/2020.
+//  Copyright © 2020 bsorrentino. All rights reserved.
 //
 
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selection = 0
- 
     var body: some View {
-        NavigationView {
-            Text("First View")
-        }
+        Text("Hello, World!")
     }
 }
 
