@@ -1,6 +1,0 @@
-framework module TVOSToast {
-  umbrella header "TVOSToast-umbrella.h"
-
-  export *
-  module * { export * }
-}
