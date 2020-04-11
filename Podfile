@@ -1,27 +1,28 @@
 # Podfile
 #platform :ios, '9.0'
-platform :tvos, '10.0'
+platform :tvos, '12.4'
 use_frameworks!
 project 'slides.xcodeproj'
 
 target 'slides' do
-    pod 'RxSwift',    '4.5.0'
-    pod 'RxCocoa',    '4.5.0'
-    pod 'RxSwiftExt', '3.4.0'
-    pod 'SnapKit',    '4.2.0'
-    pod 'SettingsKit', :git => 'https://github.com/bsorrentino/SettingsKit.git', :branch => 'develop'
+    pod 'RxSwift',    '5.1.1'
+    pod 'RxCocoa',    '5.1.1'
+    pod 'RxSwiftExt', '5.2.0'
+    pod 'SnapKit',    '5.0.1'
     #pod 'SettingsKit'
-    pod 'TVOSToast'
+    pod 'SettingsKit', :git => 'https://github.com/bsorrentino/SettingsKit.git', :branch => 'develop'
+    #pod 'TVOSToast', '0.9'
+    pod 'TVOSToast', :git => 'https://github.com/bsorrentino/TVOSToast.git', :tag => "v1.0"
 end
 
 target 'slidesTests' do
-    pod 'RxBlocking', '4.5.0'
-    pod 'RxTest',     '4.5.0'
+    pod 'RxBlocking', '5.1.1'
+    pod 'RxTest',     '5.1.1'
 end
 
 target 'slidesUITests' do
-    pod 'RxBlocking', '4.5.0'
-    pod 'RxTest',     '4.5.0'
+    pod 'RxBlocking', '5.1.1'
+    pod 'RxTest',     '5.1.1'
 end
 
 post_install do |installer|
