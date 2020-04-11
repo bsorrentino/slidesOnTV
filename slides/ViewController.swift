@@ -42,7 +42,7 @@ class ViewController: UIViewController {
             
             self.expand = !self.expand
             
-            self.testLabel.setFontThatFitsWithSize()
+            let _ = self.testLabel.setFontThatFitsWithSize()
         }
         
     }

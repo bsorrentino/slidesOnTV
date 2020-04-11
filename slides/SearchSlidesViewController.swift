@@ -253,7 +253,7 @@ class DetailView : UIView {
         
         if let superview = appDelegate.window  {
         
-            self.addTo(superview)
+            let _ = self.addTo(superview)
         }
         
         return self
@@ -412,10 +412,10 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         overrideMenuTap()
         
         
-        #if targetEnvironment(simulator)
-    let debounce:RxSwift.RxTimeInterval = 0.5
+#if targetEnvironment(simulator)
+        let debounce:RxSwift.RxTimeInterval = .seconds(1)
 #else
-    let debounce:RxSwift.RxTimeInterval = 2.5
+        let debounce:RxSwift.RxTimeInterval = .seconds(3)
 #endif
         
         searchResultsUpdatingSubject

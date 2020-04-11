@@ -646,6 +646,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-slides/Pods-slides-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ManualLayout/ManualLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwiftExt/RxSwiftExt.framework",
 				"${BUILT_PRODUCTS_DIR}/SettingsKit/SettingsKit.framework",
@@ -656,6 +657,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ManualLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwiftExt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SettingsKit.framework",
@@ -845,7 +847,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "slides-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = $PROJECT_DIR/build;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
+				TVOS_DEPLOYMENT_TARGET = 12.4;
 			};
 			name = Debug;
 		};
@@ -992,7 +994,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "slides-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = $PROJECT_DIR/build;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
+				TVOS_DEPLOYMENT_TARGET = 12.4;
 			};
 			name = Release;
 		};
