@@ -1,6 +1,6 @@
 # Podfile
 #platform :ios, '9.0'
-platform :tvos, '12.4'
+platform :tvos, '12'
 use_frameworks!
 project 'slides.xcodeproj'
 
@@ -9,10 +9,11 @@ target 'slides' do
     pod 'RxCocoa',    '5.1.1'
     pod 'RxSwiftExt', '5.2.0'
     pod 'SnapKit',    '5.0.1'
+    pod 'OHPDFImage', :git => 'https://github.com/bsorrentino/OHPDFImage.git', :tag => 'v4.0.0'
     #pod 'SettingsKit'
     pod 'SettingsKit', :git => 'https://github.com/bsorrentino/SettingsKit.git', :branch => 'develop'
     #pod 'TVOSToast', '0.9'
-    pod 'TVOSToast', :git => 'https://github.com/bsorrentino/TVOSToast.git', :tag => "v1.0"
+    pod 'TVOSToast', :git => 'https://github.com/bsorrentino/TVOSToast.git', :tag => "v1.1"
 end
 
 target 'slidesTests' do
@@ -28,10 +29,10 @@ end
 post_install do |installer|
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
-            
+
             config.build_settings['ENABLE_BITCODE'] = 'YES'
             config.build_settings['BITCODE_GENERATION_MODE'] = 'bitcode'
-            
+
             cflags = config.build_settings['OTHER_CFLAGS'] || ['$(inherited)']
             cflags << '-fembed-bitcode'
             config.build_settings['OTHER_CFLAGS'] = cflags
