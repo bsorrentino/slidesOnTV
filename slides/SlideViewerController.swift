@@ -11,6 +11,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import RxSwiftExt
+
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -33,9 +34,12 @@ class UIPDFPageCell : UICollectionViewCell {
     
     fileprivate func initialize() {
     
+        //box.layer.borderColor = UIColor.black.cgColor
+        //box.layer.borderWidth = 2
+
         self.addSubview(box)
         
-         box.snp.makeConstraints { (make) -> Void in
+         box.snp.makeConstraints { make in
             make.width.height.equalTo(self)
             make.top.equalTo(self)
             make.bottom.equalTo(self)
@@ -54,7 +58,6 @@ class UIPDFPageCell : UICollectionViewCell {
         super.init(frame: frame)
         
         initialize()
-        
         
     }
     
@@ -76,8 +79,7 @@ class UIPDFPageCell : UICollectionViewCell {
         }
     }
     
-    override func layoutSubviews()
-    {
+    override func layoutSubviews() {
         super.layoutSubviews()
     }
     
@@ -99,12 +101,12 @@ enum SettingsBarItem : Int {
     case ADD_TO_FAVORITE = 2
     
 }
+
 //
 //  MARK: UIPDFCollectionViewController
 //
 class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     
-
     static let storyboardIdentifier = "UIPDFCollectionViewController"
     
     @IBOutlet weak var pagesView: ThumbnailsView!
@@ -155,7 +157,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 return 1
             }
             return index.row
-            
         }
     }
     
@@ -394,6 +395,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.pagesView.backgroundColor = UIColor.clear
+        
         //let playPauseTap = UITapGestureRecognizer(target: self, action: #selector(playPauseSlideShow))
         //playPauseTap.allowedPressTypes = [UIPressType.PlayPause.rawValue]
         //view.addGestureRecognizer(playPauseTap)
@@ -407,14 +410,11 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         pageView.becomeFocusedPredicate = {
             
             return !self.settingsBar.active
-
         }
         
         self.setNeedsFocusUpdate()
         self.updateFocusIfNeeded()
         
-        
- 
     }
 
     override func viewDidAppear(_ animated: Bool) {
