@@ -309,7 +309,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z" customClass="ThumbnailsView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="30" y="120" width="0.0" height="940"/>
+                                <rect key="frame" x="30" y="60" width="300" height="1000"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -323,8 +323,10 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="slide" id="k2e-9S-Kun" customClass="UIPDFPageCell" customModule="slides" customModuleProvider="target">
+                                        <rect key="frame" x="5" y="5" width="22" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="22" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </view>
                                         <gestureRecognizers/>
@@ -336,36 +338,33 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view" customClass="PageView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="35" y="80" width="1855" height="880"/>
+                                <rect key="frame" x="335" y="80" width="1555" height="880"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsh-Gb-3mi">
-                                        <rect key="frame" x="10" y="0.0" width="1835" height="880"/>
+                                        <rect key="frame" x="20" y="56" width="1535" height="880"/>
                                         <gestureRecognizers/>
                                     </imageView>
-                                    <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="1855" height="68"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <items>
-                                            <tabBarItem tag="1" title="Toggle Fullscreen" id="J0v-Ag-eYI"/>
-                                            <tabBarItem tag="2" title="Add to Favourite" image="favorite" id="itz-Ku-sMH"/>
-                                            <tabBarItem tag="3" enabled="NO" title="Zoom+" id="Mgh-57-m5N"/>
-                                            <tabBarItem tag="4" enabled="NO" title="Zoom-" id="DLk-td-vjh"/>
-                                            <tabBarItem tag="5" enabled="NO" systemItem="search" id="HRj-nf-1WF"/>
-                                        </items>
-                                    </tabBar>
                                 </subviews>
                                 <color key="backgroundColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstItem="Xsh-Gb-3mi" firstAttribute="leading" secondItem="c9g-rB-Tbc" secondAttribute="leading" priority="250" constant="10" id="33i-uf-5Ck"/>
-                                    <constraint firstItem="Xsh-Gb-3mi" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="top" priority="250" id="Dvl-CJ-3Uv"/>
-                                    <constraint firstItem="Xsh-Gb-3mi" firstAttribute="centerY" secondItem="c9g-rB-Tbc" secondAttribute="centerY" id="Q0P-nV-Ek7"/>
-                                    <constraint firstItem="etP-sG-wAf" firstAttribute="width" secondItem="c9g-rB-Tbc" secondAttribute="width" id="X1M-EL-UBs"/>
-                                    <constraint firstItem="Xsh-Gb-3mi" firstAttribute="centerX" secondItem="c9g-rB-Tbc" secondAttribute="centerX" id="Y1U-sV-8z7"/>
-                                    <constraint firstItem="etP-sG-wAf" firstAttribute="leading" secondItem="c9g-rB-Tbc" secondAttribute="leading" id="iT0-Hl-G5F"/>
-                                    <constraint firstItem="etP-sG-wAf" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="top" id="oYr-JB-Bz5"/>
+                                    <constraint firstAttribute="bottom" secondItem="Xsh-Gb-3mi" secondAttribute="bottom" constant="-56" id="JQV-Zt-jVg"/>
+                                    <constraint firstItem="Xsh-Gb-3mi" firstAttribute="leading" secondItem="c9g-rB-Tbc" secondAttribute="leading" constant="20" id="N5D-Ay-bHx"/>
+                                    <constraint firstItem="Xsh-Gb-3mi" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="top" constant="56" id="upm-r5-08Q"/>
+                                    <constraint firstAttribute="trailing" secondItem="Xsh-Gb-3mi" secondAttribute="trailing" id="zU1-gX-Roc"/>
                                 </constraints>
                             </view>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="68"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <tabBarItem tag="1" title="Toggle Fullscreen" id="J0v-Ag-eYI"/>
+                                    <tabBarItem tag="2" title="Add to Favourite" image="favorite" id="itz-Ku-sMH"/>
+                                    <tabBarItem tag="3" enabled="NO" title="Zoom+" id="Mgh-57-m5N"/>
+                                    <tabBarItem tag="4" enabled="NO" title="Zoom-" id="DLk-td-vjh"/>
+                                    <tabBarItem tag="5" enabled="NO" systemItem="search" id="HRj-nf-1WF"/>
+                                </items>
+                            </tabBar>
                         </subviews>
                         <color key="backgroundColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                         <gestureRecognizers/>
@@ -373,8 +372,11 @@
                             <constraint firstItem="Az4-5N-6X8" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="bottom" constant="60" id="2kT-aJ-h2v"/>
                             <constraint firstItem="c9g-rB-Tbc" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" constant="20" id="C92-cY-9jO"/>
                             <constraint firstAttribute="bottom" secondItem="rws-Tv-h7Z" secondAttribute="bottom" constant="20" id="F8n-0G-o7O"/>
-                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" constant="60" id="OAd-Eh-UVX"/>
+                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" id="OAd-Eh-UVX"/>
+                            <constraint firstItem="etP-sG-wAf" firstAttribute="leading" secondItem="kBg-cA-YoQ" secondAttribute="leading" id="SQz-65-cab"/>
+                            <constraint firstItem="etP-sG-wAf" firstAttribute="width" secondItem="kBg-cA-YoQ" secondAttribute="width" id="htU-WC-zAR"/>
                             <constraint firstAttribute="trailing" secondItem="c9g-rB-Tbc" secondAttribute="trailing" constant="30" id="r4k-rU-P8F"/>
+                            <constraint firstItem="etP-sG-wAf" firstAttribute="top" secondItem="kBg-cA-YoQ" secondAttribute="top" id="uAX-Ph-dzn"/>
                             <constraint firstItem="c9g-rB-Tbc" firstAttribute="leading" secondItem="rws-Tv-h7Z" secondAttribute="trailing" constant="5" id="vNL-lz-UQb"/>
                             <constraint firstItem="rws-Tv-h7Z" firstAttribute="leading" secondItem="kBg-cA-YoQ" secondAttribute="leading" constant="30" id="xtE-hJ-cxz"/>
                         </constraints>
