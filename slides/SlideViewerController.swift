@@ -169,7 +169,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
         self.fullpage = true
         
-        _playPauseSlideShow = Observable<Int>.interval(3, scheduler: MainScheduler.instance)
+        _playPauseSlideShow = Observable<Int>.interval(.seconds(3), scheduler: MainScheduler.instance)
             .map({ (index:Int) -> Int in
 
                 guard let prevIndex = self._indexPathForPreferredFocusedView else {
@@ -510,7 +510,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             return focusedView
         }
         
-        return super.preferredFocusedView
+            return super.preferredFocusedView
     }
     
     
