@@ -246,7 +246,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                     self.setNeedsFocusUpdate()
                 })
                 
-        
         }
         
         let rxToggleFullPageDeferred = Completable.deferred { () -> PrimitiveSequence<CompletableTrait, Never> in
