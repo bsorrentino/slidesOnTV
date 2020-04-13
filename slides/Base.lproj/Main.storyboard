@@ -353,6 +353,9 @@
                                     <constraint firstItem="Xsh-Gb-3mi" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="top" constant="56" id="upm-r5-08Q"/>
                                     <constraint firstAttribute="trailing" secondItem="Xsh-Gb-3mi" secondAttribute="trailing" id="zU1-gX-Roc"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="pageImageView" destination="Xsh-Gb-3mi" id="yN7-vH-WbR"/>
+                                </connections>
                             </view>
                             <tabBar opaque="NO" contentMode="scaleToFill" backgroundImage="slidesontv" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
                                 <rect key="frame" x="355" y="30" width="1535" height="68"/>
@@ -380,7 +383,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="pageImageView" destination="Xsh-Gb-3mi" id="BMY-yq-xL5"/>
                         <outlet property="pageView" destination="c9g-rB-Tbc" id="3Jb-LK-VuR"/>
                         <outlet property="pagesView" destination="rws-Tv-h7Z" id="liw-vC-pWt"/>
                         <outlet property="settingsBar" destination="etP-sG-wAf" id="qRz-j8-1RW"/>

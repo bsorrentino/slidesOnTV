@@ -42,7 +42,7 @@ extension UIPDFCollectionViewController {
             make.width.equalTo( w ).priority( 750 ) // high
         }
         
-        pageImageView.snp.updateConstraints { make in
+        pageView.pageImageView.snp.updateConstraints { make in
             
             let delta = pageViewWidth * 0.10
             let newWidth = pageViewWidth - delta

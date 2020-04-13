@@ -27,25 +27,18 @@ class SettingsBarView : UITabBar, UITabBarDelegate, NameDescribable {
     var rx_didPressItem: ControlEvent<SettingsBarItem> {
         
         let result = super.rx.didSelectItem
+            .filter { item in
+               self.selectedItem == item
+            }
             .map { item -> SettingsBarItem in
                 (SettingsBarItem( rawValue: item.tag ) ?? SettingsBarItem.UNKNOWN)
             }
-            // TRANSFORM "SELECTED ITEM" IN "PRESSED ITEM" (DOUBLE SELECTION)
-            .scan( ( item:.UNKNOWN, step:0 ), accumulator: { (last, item) -> ItemSelection in
-                var step = 1
-                if item == last.item {
-                    step = last.step + 1
-                }
-                return (item:item, step:step)
-            })
-            .filter { item in
-                item.step >= 2
-            }
-            .map { item in
-                item.item
-            }
 
         return ControlEvent<SettingsBarItem>( events: result)
+    }
+    
+    func resetSelection() {
+        self.selectedItem = self.items?[0]
     }
     
     // MARK: Standard Lifecycle
