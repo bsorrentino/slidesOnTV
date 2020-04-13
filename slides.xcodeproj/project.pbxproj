@@ -49,6 +49,7 @@
 		5FF934361F1CAD3500639D34 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF9342E1F1CAD3500639D34 /* SnapKit.framework */; };
 		5FF934371F1CAD3500639D34 /* TVOSToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF9342F1F1CAD3500639D34 /* TVOSToast.framework */; };
 		6A10E4F499B056D28E50547B /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEA2C00A2E0E59EA8DFD7DB1 /* Pods_slides.framework */; };
+		A02DD8B624449D3B008F8A7E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD8B524449D3B008F8A7E /* Utils.swift */; };
 		A06B6D531CBFA23900CBE220 /* slideshare.plist in Resources */ = {isa = PBXBuildFile; fileRef = A06B6D521CBFA23900CBE220 /* slideshare.plist */; };
 		A0889C3C1CE8F4430050094D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A0889C3B1CE8F4430050094D /* Settings.bundle */; };
 		A0B8590624446FA900D115F2 /* rx1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */; };
@@ -131,6 +132,7 @@
 		5FF9342F1F1CAD3500639D34 /* TVOSToast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TVOSToast.framework; path = "Pods/../build/Debug-appletvos/TVOSToast/TVOSToast.framework"; sourceTree = "<group>"; };
 		62406CDC06BDBFE1B2A3BC7F /* Pods-slidesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.release.xcconfig"; sourceTree = "<group>"; };
 		66582F1A187676F859E95254 /* Pods_slidesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A02DD8B524449D3B008F8A7E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		A06B6D521CBFA23900CBE220 /* slideshare.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = slideshare.plist; path = slides/slideshare.plist; sourceTree = "<group>"; };
 		A06B6D541CBFCCA000CBE220 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A06B6D561CBFCEA800CBE220 /* SLIDESHARE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = SLIDESHARE.md; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				5F4C498F1F00FB9700269C50 /* FavoritesCommandView.swift */,
 				5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */,
 				5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */,
+				A02DD8B524449D3B008F8A7E /* Utils.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";
@@ -655,6 +658,7 @@
 				5F90B6091D9AC6DC00615BA4 /* ThumbnailsView.swift in Sources */,
 				5F8A17131EF0365E0005B086 /* Favorites.swift in Sources */,
 				5F06EFC71F17610400B8D23B /* MainMenuViewController.swift in Sources */,
+				A02DD8B624449D3B008F8A7E /* Utils.swift in Sources */,
 				5F1DBB1C1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift in Sources */,
 				5FB609EC1DA03CB000051347 /* SlideViewerController+Fullpage.swift in Sources */,
 				5F4C49901F00FB9700269C50 /* FavoritesCommandView.swift in Sources */,

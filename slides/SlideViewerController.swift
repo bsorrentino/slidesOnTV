@@ -94,18 +94,10 @@ class UIPDFPageCell : UICollectionViewCell {
 }
 
 
-enum SettingsBarItem : Int {
-    
-    case UNKNOWN = 0
-    case FULL_SCREEN = 1
-    case ADD_TO_FAVORITE = 2
-    
-}
-
 //
 //  MARK: UIPDFCollectionViewController
 //
-class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
+class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout, NameDescribable {
     
     static let storyboardIdentifier = "UIPDFCollectionViewController"
     
@@ -209,9 +201,9 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         tap.numberOfTapsRequired = 1
         pageView.addGestureRecognizer(tap)
         
-        settingsBar.rx_didHidden.subscribe( onNext: { (hidden:Bool,preferredFocusedView:UIView?) in
-            tap.isEnabled = hidden
-        }).disposed(by: disposeBag)
+//        settingsBar.rx_didHidden.subscribe( onNext: { (hidden:Bool,preferredFocusedView:UIView?) in
+//            tap.isEnabled = hidden
+//        }).disposed(by: disposeBag)
         
     }
     
@@ -228,25 +220,29 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             item.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize:  20)], for: .normal)
         })
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSettingsBarOnTap) )
-        tap.numberOfTapsRequired = 2
-        tap.isEnabled = false
-        pageView.addGestureRecognizer(tap)
-
-        let menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
-        menuTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
-        menuTap.isEnabled = false
-        view.addGestureRecognizer(menuTap)
-        
-        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(showSettingsBarOnSwipeDown) )
-        swipe.direction = .down
-        swipe.isEnabled = true
-        pageView.addGestureRecognizer(swipe)
-
-        settingsBar.hide(animated:false, preferredFocusedView: pageView)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSettingsBarOnTap) )
+//        tap.numberOfTapsRequired = 2
+//        tap.isEnabled = false
+//        pageView.addGestureRecognizer(tap)
+//
+//        let menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
+//        menuTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
+//        menuTap.isEnabled = false
+//        view.addGestureRecognizer(menuTap)
+//
+//        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(showSettingsBarOnSwipeDown) )
+//        swipe.direction = .down
+//        swipe.isEnabled = true
+//        pageView.addGestureRecognizer(swipe)
+//
+//        settingsBar.hide(animated:false, preferredFocusedView: pageView)
         
         
         let rxFavoriteStoreDeferred = Completable.deferred { () -> PrimitiveSequence<CompletableTrait, Never> in
+            
+            print( "\(self.typeName) save to favorite \(!self.fullpage)")
+            
+
             guard let documentInfo = self.documentInfo else {
                 return Completable.empty()
             }
@@ -254,7 +250,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             return rxFavoriteStore(data: documentInfo).do( onCompleted: {
 
                 print("Favorite stored")
-                self.settingsBar.hide(animated: true, preferredFocusedView: self.pageView)
+                //self.settingsBar.hide(animated: true, preferredFocusedView: self.pageView)
                 
             })
                 
@@ -263,19 +259,21 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         
         let rxToggleFullPageDeferred = Completable.deferred { () -> PrimitiveSequence<CompletableTrait, Never> in
             
+            print( "\(self.typeName) fullpage \(!self.fullpage)")
+            
             self.fullpage = !self.fullpage
 
             return Completable.empty()
         }
         
         self.settingsBar.rx_didPressItem
-            .filter { (_:Int) -> Bool in self.settingsBar.active }
-            .map { (item:Int) -> SettingsBarItem  in
-                guard let value = SettingsBarItem(rawValue: item) else {
-                    return .UNKNOWN
-                }
-                return value
-            }
+            //.filter { (_:Int) -> Bool in self.settingsBar.active }
+//            .map { (item:Int) -> SettingsBarItem  in
+//                guard let value = SettingsBarItem(rawValue: item) else {
+//                    return .UNKNOWN
+//                }
+//                return value
+//            }
             .observeOn(MainScheduler.asyncInstance)
             .flatMap { (item ) -> Completable in
                 switch item {
@@ -292,45 +290,45 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             })
             .disposed(by: disposeBag)
 
-        settingsBar.rx_didHidden.subscribe( onNext: { [weak self] (hidden:Bool,preferredFocusedView:UIView?) in
-            
-            if let _preferredFocusedView = preferredFocusedView {
-                self?._preferredFocusedView = _preferredFocusedView
-            }
-            menuTap.isEnabled = !hidden
-            
-        }).disposed(by: disposeBag)
+//        settingsBar.rx_didHidden.subscribe( onNext: { [weak self] (hidden:Bool,preferredFocusedView:UIView?) in
+//
+//            if let _preferredFocusedView = preferredFocusedView {
+//                self?._preferredFocusedView = _preferredFocusedView
+//            }
+//            menuTap.isEnabled = !hidden
+//
+//        }).disposed(by: disposeBag)
         
     }
     
-    @IBAction func menuTapped(_ sender: UITapGestureRecognizer) {
-        print("=> MENU TAPPED")
-        self.settingsBar.hide(animated: true, preferredFocusedView: pageView)
-
-    }
+//    @IBAction func menuTapped(_ sender: UITapGestureRecognizer) {
+//        print("=> MENU TAPPED")
+//        //self.settingsBar.hide(animated: true, preferredFocusedView: pageView)
+//
+//    }
     
-    @IBAction func toggleSettingsBarOnTap(_ sender: UITapGestureRecognizer) {
-        print("=> ON SINGLE TAP")
-        
-        let isVisible = self.settingsBar.showConstraints.isActive
-        
-        if isVisible {
-            settingsBar.hide(animated: true, preferredFocusedView: pageView)
-        }
-        else {
-            settingsBar.show(animated: true)
-        }
-    }
+//    @IBAction func toggleSettingsBarOnTap(_ sender: UITapGestureRecognizer) {
+//        print("=> ON SINGLE TAP")
+//
+//        let isVisible = self.settingsBar.showConstraints.isActive
+//
+//        if isVisible {
+//            settingsBar.hide(animated: true, preferredFocusedView: pageView)
+//        }
+//        else {
+//            settingsBar.show(animated: true)
+//        }
+//    }
     
     
     @IBAction func showSettingsBarOnSwipeDown( _ sender: UISwipeGestureRecognizer) {
         print("=> ON SWIPE DOWN")
         
-        guard self.settingsBar.hideConstraints.isActive else {
-            return
-        }
-
-        settingsBar.show(animated: true)
+//        guard self.settingsBar.hideConstraints.isActive else {
+//            return
+//        }
+//
+//        settingsBar.show(animated: true)
     
     }
 
@@ -413,7 +411,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
  
         pageView.becomeFocusedPredicate = {
             
-            return !self.settingsBar.active
+            return !self.settingsBar.isFocused
         }
         
         self.setNeedsFocusUpdate()
@@ -455,7 +453,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 // MARK: UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print( "didSelectItemAtIndexPath: \(indexPath)" )
+        print( "\(typeName).didSelectItemAtIndexPath: \(indexPath)" )
     }
     
 // MARK: UICollectionViewDataSource
@@ -497,45 +495,39 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     //override func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool
     //override func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)
- 
+
+//
 // MARK: Focus Engine
+//
+
     
-    fileprivate var _preferredFocusedView:UIView? {
-        didSet {
-            if _preferredFocusedView != nil {
-                self.setNeedsFocusUpdate()
-            }
-        }
-    }
     
-    override var preferredFocusedView: UIView? {
-        
-        if let focusedView = self._preferredFocusedView {
-            return focusedView
-        }
-        
-            return super.preferredFocusedView
-    }
+//    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+//
+//        print( "preferredFocusEnvironments")
+//        return []
+//
+//    }
     
     
     override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
         
-        if context.nextFocusedView is UIPDFPageCell {
-            settingsBar.hide(animated: true, preferredFocusedView:self.pagesView)
-        }
-        
+        print( "\(typeName).shouldUpdateFocus" );
         return true
     }
     
     
-    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator)
-    {
-        print( "view.didUpdateFocusInContext: focused: \(type(of: context.nextFocusedView))" );
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        
+        print( "\(typeName).didUpdateFocusInContext: focused: \(type(of: context.nextFocusedView))" );
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        print("collectionView.didUpdateFocusInContext")
+    func collectionView(_ collectionView: UICollectionView,
+                        didUpdateFocusIn context: UICollectionViewFocusUpdateContext,
+                        with coordinator: UIFocusAnimationCoordinator)
+    {
+        print("\(typeName).didUpdateFocusInContext")
        
         if let i = context.nextFocusedIndexPath {
             self.showSlide(at: UInt(i.row)) ; _indexPathForPreferredFocusedView = i
@@ -544,13 +536,13 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-        print( "collectionView.canFocusItemAtIndexPath(\(indexPath.row))" )
+        print( "\(typeName).canFocusItemAtIndexPath(\(indexPath.row))" )
         return true
     }
     
     
     func indexPathForPreferredFocusedView(in collectionView: UICollectionView) -> IndexPath? {
-        print("collectionView.indexPathForPreferredFocusedViewInCollectionView: \(String(describing: _indexPathForPreferredFocusedView))")
+        print("\(typeName).indexPathForPreferredFocusedViewInCollectionView: \(String(describing: _indexPathForPreferredFocusedView))")
         
         // Return index path for selected show that you will be playing
         return _indexPathForPreferredFocusedView
@@ -559,7 +551,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     // MARK: Presses Handling
     
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        print("view.pressesBegan")
+        print("\(typeName).pressesBegan")
 
         if let press = presses.first {
             
@@ -579,7 +571,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
     
     override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        print("view.pressesEnded")
+        print("\(typeName).pressesEnded")
         super.pressesEnded(presses, with: event)
     }
     

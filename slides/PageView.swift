@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PageView: UIView {
+class PageView: UIView, NameDescribable {
 
     // MARK: standard lifecycle
     
@@ -26,11 +26,11 @@ class PageView: UIView {
     // MARK: Focus Management
     override var canBecomeFocused : Bool {
         guard let predicate = self.becomeFocusedPredicate else {
-            print( "PageView.canBecomeFocused: true" )
+            print( "\(typeName).canBecomeFocused: true" )
             return true
         }
         let result = predicate()
-        print( "PageView.canBecomeFocused: \(result)" )
+        print( "\(typeName).canBecomeFocused: \(result)" )
 
         return result
     }

@@ -11,41 +11,6 @@ import RxSwift
 import RxCocoa
 
 
-func associatedObject<ValueType: AnyObject>(
-    base: AnyObject,
-    key: UnsafePointer<UInt8>,
-    initialiser: () -> ValueType)
-    -> ValueType {
-        if let associated = objc_getAssociatedObject(base, key)
-            as? ValueType { return associated }
-        let associated = initialiser()
-        objc_setAssociatedObject(base, key, associated,
-                                 .OBJC_ASSOCIATION_RETAIN)
-        return associated
-}
-
-func associateObject<ValueType: AnyObject>(
-    base: AnyObject,
-    key: UnsafePointer<UInt8>,
-    value: ValueType) {
-    objc_setAssociatedObject(base, key, value,
-                             .OBJC_ASSOCIATION_RETAIN)
-}
-func describing( _ fh: UIFocusHeading ) -> String {
-    switch( fh ) {
-    case UIFocusHeading.up: return "up"
-    case UIFocusHeading.down: return "down"
-    case UIFocusHeading.left: return "down"
-    case UIFocusHeading.right: return "right"
-    case UIFocusHeading.next: return "next"
-    case UIFocusHeading.previous: return "previous"
-    default:return "undef"
-    }
-}
-
-// Make String confrom to Error protocol
-extension String: Error {}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

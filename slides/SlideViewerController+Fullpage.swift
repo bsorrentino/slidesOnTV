@@ -31,7 +31,7 @@ extension UIPDFCollectionViewController {
                                      objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             self.didChangeValue(forKey: "fullpage")
 
-            self.settingsBar.hide(animated: true, preferredFocusedView: pageView)
+            //self.settingsBar.hide(animated: true, preferredFocusedView: pageView)
             
 
             if newValue {
