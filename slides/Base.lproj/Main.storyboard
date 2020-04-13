@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="16096" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="0eX-xm-M2A">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="16096" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
@@ -77,10 +77,10 @@
             </objects>
             <point key="canvasLocation" x="2143" y="1206"/>
         </scene>
-        <!--View Controller-->
+        <!--Test View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="slides" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TestViewController" customModule="slides" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -94,7 +94,7 @@
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="Push Me"/>
                                 <connections>
-                                    <segue destination="3Li-gA-Wtf" kind="show" id="xUO-Iz-NFC"/>
+                                    <segue destination="3Li-gA-Wtf" kind="show" identifier="showPresentation" id="xUO-Iz-NFC"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6k-4J-PNR">
@@ -309,7 +309,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z" customClass="ThumbnailsView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="30" y="60" width="300" height="1000"/>
+                                <rect key="frame" x="30" y="60" width="305" height="1000"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -338,10 +338,10 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view" customClass="PageView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="335" y="80" width="1555" height="880"/>
+                                <rect key="frame" x="340" y="80" width="1550" height="880"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsh-Gb-3mi">
-                                        <rect key="frame" x="20" y="56" width="1535" height="880"/>
+                                        <rect key="frame" x="20" y="56" width="1530" height="880"/>
                                         <gestureRecognizers/>
                                     </imageView>
                                 </subviews>
@@ -354,9 +354,8 @@
                                     <constraint firstAttribute="trailing" secondItem="Xsh-Gb-3mi" secondAttribute="trailing" id="zU1-gX-Roc"/>
                                 </constraints>
                             </view>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="1920" height="68"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <tabBar opaque="NO" contentMode="scaleToFill" backgroundImage="slidesontv" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
+                                <rect key="frame" x="355" y="30" width="1535" height="68"/>
                                 <items>
                                     <tabBarItem tag="1" title="Toggle Fullscreen" id="J0v-Ag-eYI"/>
                                     <tabBarItem tag="2" title="Add to Favourite" image="favorite" id="itz-Ku-sMH"/>
@@ -370,13 +369,14 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Az4-5N-6X8" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="bottom" constant="60" id="2kT-aJ-h2v"/>
+                            <constraint firstItem="etP-sG-wAf" firstAttribute="leading" secondItem="rws-Tv-h7Z" secondAttribute="trailing" constant="20" id="Aeg-ev-81w"/>
                             <constraint firstItem="c9g-rB-Tbc" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" constant="20" id="C92-cY-9jO"/>
                             <constraint firstAttribute="bottom" secondItem="rws-Tv-h7Z" secondAttribute="bottom" constant="20" id="F8n-0G-o7O"/>
                             <constraint firstItem="rws-Tv-h7Z" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" id="OAd-Eh-UVX"/>
-                            <constraint firstItem="etP-sG-wAf" firstAttribute="leading" secondItem="kBg-cA-YoQ" secondAttribute="leading" id="SQz-65-cab"/>
-                            <constraint firstItem="etP-sG-wAf" firstAttribute="width" secondItem="kBg-cA-YoQ" secondAttribute="width" id="htU-WC-zAR"/>
+                            <constraint firstAttribute="trailing" secondItem="etP-sG-wAf" secondAttribute="trailing" constant="30" id="fgD-Mn-crR"/>
+                            <constraint firstItem="etP-sG-wAf" firstAttribute="width" secondItem="kBg-cA-YoQ" secondAttribute="width" constant="-385" id="htU-WC-zAR"/>
                             <constraint firstAttribute="trailing" secondItem="c9g-rB-Tbc" secondAttribute="trailing" constant="30" id="r4k-rU-P8F"/>
-                            <constraint firstItem="etP-sG-wAf" firstAttribute="top" secondItem="kBg-cA-YoQ" secondAttribute="top" id="uAX-Ph-dzn"/>
+                            <constraint firstItem="etP-sG-wAf" firstAttribute="top" secondItem="kBg-cA-YoQ" secondAttribute="top" constant="30" id="uAX-Ph-dzn"/>
                             <constraint firstItem="c9g-rB-Tbc" firstAttribute="leading" secondItem="rws-Tv-h7Z" secondAttribute="trailing" constant="5" id="vNL-lz-UQb"/>
                             <constraint firstItem="rws-Tv-h7Z" firstAttribute="leading" secondItem="kBg-cA-YoQ" secondAttribute="leading" constant="30" id="xtE-hJ-cxz"/>
                         </constraints>
@@ -401,6 +401,7 @@
     <resources>
         <image name="favorite" width="54" height="54"/>
         <image name="presentation" width="76" height="57"/>
+        <image name="slidesontv" width="720" height="720"/>
         <image name="tv-menu" width="512" height="512"/>
     </resources>
 </document>

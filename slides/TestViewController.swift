@@ -8,12 +8,20 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TestViewController: UIViewController {
 
     @IBOutlet weak var pushMe: UIButton!
     @IBOutlet weak var testLabel: UILabel!
     
     fileprivate var expand = true
+    
+    
+    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        
+        print( "preferredFocusEnvironments")
+        return [pushMe]
+
+    }
     
     @IBAction func animateLabel(_ sender: AnyObject) {
         
@@ -78,10 +86,20 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: Segue
+    
+    override open func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+            
+        if let destinationViewController = segue.destination as? UIPDFCollectionViewController {
+            
+            if let path = Bundle.main.url(forResource: "rx1", withExtension:"pdf") {
 
-    override weak var preferredFocusedView: UIView? {
-        print( "preferredFocusedView")
-        return pushMe
+                destinationViewController.documentInfo = DocumentInfo( location:path, id:"test-document", title:"RX" )
+             }
+        }
     }
+
 }
 

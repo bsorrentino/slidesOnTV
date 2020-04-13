@@ -224,6 +224,10 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
     fileprivate func setupSettingsBar() {
         
+        self.settingsBar.items?.forEach({ (item) in
+            item.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize:  20)], for: .normal)
+        })
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSettingsBarOnTap) )
         tap.numberOfTapsRequired = 2
         tap.isEnabled = false

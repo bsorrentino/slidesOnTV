@@ -34,7 +34,7 @@
 		5FC7A4AD1CAD8D0700530CB0 /* rx1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */; };
 		5FCCC36E1F0BF205002ADBEC /* Slideshare+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */; };
 		5FD9A2CF1CAD19590065BE03 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */; };
-		5FD9A2D11CAD19590065BE03 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D01CAD19590065BE03 /* ViewController.swift */; };
+		5FD9A2D11CAD19590065BE03 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D01CAD19590065BE03 /* TestViewController.swift */; };
 		5FD9A2D41CAD19590065BE03 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D21CAD19590065BE03 /* Main.storyboard */; };
 		5FD9A2D61CAD19590065BE03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D51CAD19590065BE03 /* Assets.xcassets */; };
 		5FD9A2E11CAD195A0065BE03 /* slidesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2E01CAD195A0065BE03 /* slidesTests.swift */; };
@@ -51,6 +51,7 @@
 		6A10E4F499B056D28E50547B /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEA2C00A2E0E59EA8DFD7DB1 /* Pods_slides.framework */; };
 		A06B6D531CBFA23900CBE220 /* slideshare.plist in Resources */ = {isa = PBXBuildFile; fileRef = A06B6D521CBFA23900CBE220 /* slideshare.plist */; };
 		A0889C3C1CE8F4430050094D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A0889C3B1CE8F4430050094D /* Settings.bundle */; };
+		A0B8590624446FA900D115F2 /* rx1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */; };
 		A0C8B3E71CCCC8CF007352B6 /* ARLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8B3E61CCCC8CF007352B6 /* ARLabel.swift */; };
 		C3F8E7A31B2D198534D793D2 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29922D394E25E590CB68BD7B /* Settings.swift */; };
 /* End PBXBuildFile section */
@@ -108,7 +109,7 @@
 		5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Slideshare+Download.swift"; sourceTree = "<group>"; };
 		5FD9A2CB1CAD19590065BE03 /* slides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slides.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5FD9A2D01CAD19590065BE03 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5FD9A2D01CAD19590065BE03 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		5FD9A2D31CAD19590065BE03 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FD9A2D51CAD19590065BE03 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5FD9A2D71CAD19590065BE03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -270,7 +271,7 @@
 				5F9623521CBBF94900F61D9C /* Slidehare.swift */,
 				5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */,
 				5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */,
-				5FD9A2D01CAD19590065BE03 /* ViewController.swift */,
+				5FD9A2D01CAD19590065BE03 /* TestViewController.swift */,
 				5FD9A2D21CAD19590065BE03 /* Main.storyboard */,
 				5FD9A2D51CAD19590065BE03 /* Assets.xcassets */,
 				5FD9A2D71CAD19590065BE03 /* Info.plist */,
@@ -468,6 +469,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0B8590624446FA900D115F2 /* rx1.pdf in Resources */,
 				5FD9A2D61CAD19590065BE03 /* Assets.xcassets in Resources */,
 				A06B6D531CBFA23900CBE220 /* slideshare.plist in Resources */,
 				5FB37BF51D7352140081D8C4 /* DetailView.xib in Resources */,
@@ -661,7 +663,7 @@
 				A0C8B3E71CCCC8CF007352B6 /* ARLabel.swift in Sources */,
 				5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */,
 				5F57DE131CC42B7500D5F1B8 /* UAProgressView.m in Sources */,
-				5FD9A2D11CAD19590065BE03 /* ViewController.swift in Sources */,
+				5FD9A2D11CAD19590065BE03 /* TestViewController.swift in Sources */,
 				5F5AC0481EF088C200E2A561 /* FavoritesViewController.swift in Sources */,
 				5F4515A71CC2F112004C4004 /* TCBlobDownload.swift in Sources */,
 				5FD9A2CF1CAD19590065BE03 /* AppDelegate.swift in Sources */,
