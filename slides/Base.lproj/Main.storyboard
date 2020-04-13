@@ -357,7 +357,7 @@
                             <tabBar opaque="NO" contentMode="scaleToFill" backgroundImage="slidesontv" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
                                 <rect key="frame" x="355" y="30" width="1535" height="68"/>
                                 <items>
-                                    <tabBarItem tag="1" title="Toggle Fullscreen" id="J0v-Ag-eYI"/>
+                                    <tabBarItem tag="1" title="Toggle Fullscreen" image="fullscreen" id="J0v-Ag-eYI"/>
                                     <tabBarItem tag="2" title="Add to Favourite" image="favorite" id="itz-Ku-sMH"/>
                                     <tabBarItem tag="3" enabled="NO" title="Zoom+" id="Mgh-57-m5N"/>
                                     <tabBarItem tag="4" enabled="NO" title="Zoom-" id="DLk-td-vjh"/>
@@ -399,7 +399,8 @@
         <segue reference="xUO-Iz-NFC"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="favorite" width="54" height="54"/>
+        <image name="favorite" width="27" height="27"/>
+        <image name="fullscreen" width="27" height="27"/>
         <image name="presentation" width="76" height="57"/>
         <image name="slidesontv" width="720" height="720"/>
         <image name="tv-menu" width="512" height="512"/>
