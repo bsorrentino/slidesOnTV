@@ -112,6 +112,20 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     fileprivate var pressesSubject = PublishSubject<UIPress>()
     fileprivate let disposeBag = DisposeBag()
 
+    @objc var fullpage : Bool = false {
+             
+        didSet {
+             if fullpage {
+                self.hideThumbnails()
+             }
+             else {
+                self.showThumbnails()
+             }
+             self.view.setNeedsUpdateConstraints()
+             
+         }
+    }
+    
     var documentInfo:DocumentInfo? {
         didSet {
             if let location = documentInfo?.location {

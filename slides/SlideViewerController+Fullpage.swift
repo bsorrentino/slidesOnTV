@@ -10,43 +10,8 @@ import Foundation
 
 extension UIPDFCollectionViewController {
     
-    fileprivate struct AssociatedKeys {
-        static var fullpage = "_fullpage"
-    }
-    
-    //this lets us check to see if the item is supposed to be displayed or not
-    @objc var fullpage : Bool {
-        get {
-            guard let number = objc_getAssociatedObject(self, &AssociatedKeys.fullpage) as? NSNumber else {
-                return false
-            }
-            return number.boolValue
-        }
-        
-        set {
-            self.willChangeValue(forKey: "fullpage")
-            objc_setAssociatedObject(self,
-                                     &AssociatedKeys.fullpage,
-                                     NSNumber(value: newValue as Bool),
-                                     objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            self.didChangeValue(forKey: "fullpage")
-
-            //self.settingsBar.hide(animated: true, preferredFocusedView: pageView)
-            
-
-            if newValue {
-                hideThumbnails()
-            }
-            else {
-                showThumbnails()
-            }
-            self.view.setNeedsUpdateConstraints()
-            
-        }
-    }
-    
-    fileprivate func showThumbnails() {
-        print( "showThumbnails")
+    func showThumbnails() {
+        print( "\(typeName).showThumbnails")
         UIView.animate(withDuration: 0.5, delay: 0.0, options: UIView.AnimationOptions(), animations: {
             
             let w = self.thumbnailsWidth
@@ -68,8 +33,8 @@ extension UIPDFCollectionViewController {
         
     }
     
-    fileprivate func hideThumbnails()  {
-        print( "hideThumbnails")
+    func hideThumbnails()  {
+        print( "\(typeName).hideThumbnails")
         
         let width = self.pagesView.frame.size.width
         

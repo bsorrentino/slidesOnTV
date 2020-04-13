@@ -309,7 +309,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z" customClass="ThumbnailsView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="30" y="60" width="305" height="1000"/>
+                                <rect key="frame" x="30" y="60" width="300" height="1000"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -338,10 +338,10 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view" customClass="PageView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="340" y="80" width="1550" height="880"/>
+                                <rect key="frame" x="335" y="80" width="1555" height="880"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsh-Gb-3mi">
-                                        <rect key="frame" x="20" y="56" width="1530" height="880"/>
+                                        <rect key="frame" x="20" y="56" width="1535" height="880"/>
                                         <gestureRecognizers/>
                                     </imageView>
                                 </subviews>
@@ -357,11 +357,9 @@
                             <tabBar opaque="NO" contentMode="scaleToFill" backgroundImage="slidesontv" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
                                 <rect key="frame" x="355" y="30" width="1535" height="68"/>
                                 <items>
+                                    <tabBarItem enabled="NO" title="Options &gt;&gt;" id="HYq-Nr-3pK"/>
                                     <tabBarItem tag="1" title="Toggle Fullscreen" image="fullscreen" id="J0v-Ag-eYI"/>
                                     <tabBarItem tag="2" title="Add to Favourite" image="favorite" id="itz-Ku-sMH"/>
-                                    <tabBarItem tag="3" enabled="NO" title="Zoom+" id="Mgh-57-m5N"/>
-                                    <tabBarItem tag="4" enabled="NO" title="Zoom-" id="DLk-td-vjh"/>
-                                    <tabBarItem tag="5" enabled="NO" systemItem="search" id="HRj-nf-1WF"/>
                                 </items>
                             </tabBar>
                         </subviews>
@@ -369,8 +367,8 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Az4-5N-6X8" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="bottom" constant="60" id="2kT-aJ-h2v"/>
-                            <constraint firstItem="etP-sG-wAf" firstAttribute="leading" secondItem="rws-Tv-h7Z" secondAttribute="trailing" constant="20" id="Aeg-ev-81w"/>
                             <constraint firstItem="c9g-rB-Tbc" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" constant="20" id="C92-cY-9jO"/>
+                            <constraint firstItem="etP-sG-wAf" firstAttribute="leading" secondItem="kBg-cA-YoQ" secondAttribute="leading" constant="355" id="DlG-ej-ycV"/>
                             <constraint firstAttribute="bottom" secondItem="rws-Tv-h7Z" secondAttribute="bottom" constant="20" id="F8n-0G-o7O"/>
                             <constraint firstItem="rws-Tv-h7Z" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" id="OAd-Eh-UVX"/>
                             <constraint firstAttribute="trailing" secondItem="etP-sG-wAf" secondAttribute="trailing" constant="30" id="fgD-Mn-crR"/>

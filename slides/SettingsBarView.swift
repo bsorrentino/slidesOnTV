@@ -22,79 +22,16 @@ enum SettingsBarItem : Int {
 
 class SettingsBarView : UITabBar, UITabBarDelegate, NameDescribable {
     
-    //let hiddenSubject = PublishSubject<(hidden:Bool,preferredFocusedView:UIView?)>()
-    
-    // MARK: public implementation
-    
-//    lazy var showConstraints:NSLayoutConstraint = {
-//        let h =  self.heightAnchor.constraint( equalToConstant: 140.0)
-//        h.priority = UILayoutPriority(rawValue: 1000)
-//        return h
-//    }()
-//
-//    lazy var hideConstraints:NSLayoutConstraint = {
-//        let h =  self.heightAnchor.constraint(equalToConstant: 1.0)
-//        h.priority = UILayoutPriority(rawValue: 1000)
-//        return h
-//    }()
-    
-//    func hide(animated:Bool, preferredFocusedView:UIView? = nil) {
-//
-//        guard !self.hideConstraints.isActive else {
-//            return
-//        }
-//
-//        self.showConstraints.isActive = false
-//        self.hideConstraints.isActive = true
-//
-//        if animated {
-//            UIView.animate(withDuration: 0.5, animations: { self.superview?.layoutIfNeeded() })
-//        }
-//
-//        hiddenSubject.onNext(( hidden:true, preferredFocusedView:preferredFocusedView) )
-//
-//    }
-    
-//    func show(animated:Bool) {
-//
-//        guard !self.showConstraints.isActive else {
-//            return
-//        }
-//
-//        self.hideConstraints.isActive = false
-//        self.showConstraints.isActive = true
-//
-//        if animated {
-//            UIView.animate(withDuration: 0.5, animations: { self.superview?.layoutIfNeeded() })
-//        }
-//
-//        hiddenSubject.onNext(( hidden:false, preferredFocusedView:self) )
-//        
-//    }
-
-//    var active: Bool {
-//        get {
-//            return true //self.showConstraints.isActive
-//        }
-//    }
-
-    // MARK: RX 
-    
-//    var rx_didHidden: ControlEvent<(hidden:Bool,preferredFocusedView:UIView?)> {
-//        return ControlEvent<(hidden:Bool,preferredFocusedView:UIView?)>( events: hiddenSubject )
-//    }
     typealias ItemSelection = (item:SettingsBarItem, step:Int)
 
     var rx_didPressItem: ControlEvent<SettingsBarItem> {
-        
-        let start:ItemSelection = ( item:.UNKNOWN, step:0 )
         
         let result = super.rx.didSelectItem
             .map { item -> SettingsBarItem in
                 (SettingsBarItem( rawValue: item.tag ) ?? SettingsBarItem.UNKNOWN)
             }
             // TRANSFORM "SELECTED ITEM" IN "PRESSED ITEM" (DOUBLE SELECTION)
-            .scan( start, accumulator: { (last, item) -> ItemSelection in
+            .scan( ( item:.UNKNOWN, step:0 ), accumulator: { (last, item) -> ItemSelection in
                 var step = 1
                 if item == last.item {
                     step = last.step + 1
