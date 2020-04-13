@@ -10,6 +10,33 @@ import UIKit
 
 class PageView: UIView, NameDescribable {
 
+    @IBOutlet weak var pageImageView: UIImageView!
+    
+    
+    // MARK: -Shadow management
+    // MARRK: -
+    
+    private func addShadow(_ height: Int = 0) {
+        
+        self.pageImageView.layer.masksToBounds = false
+        self.pageImageView.layer.shadowColor = UIColor.black.cgColor
+        self.pageImageView.layer.shadowOpacity = 1
+        self.pageImageView.layer.shadowOffset = CGSize(width: 0 , height: height)
+        self.pageImageView.layer.shadowRadius = 10
+        self.pageImageView.layer.cornerRadius = 0.0
+
+     }
+
+     private func removeShadow() {
+
+        self.pageImageView.layer.masksToBounds = false
+        self.pageImageView.layer.shadowColor = UIColor.clear.cgColor
+        self.pageImageView.layer.shadowOpacity = 0.0
+        self.pageImageView.layer.shadowOffset = .zero
+        self.pageImageView.layer.shadowRadius = 0.0
+        self.pageImageView.layer.cornerRadius = 0.0
+     }
+    
     // MARK: standard lifecycle
     
     override func didMoveToSuperview() {
@@ -19,33 +46,34 @@ class PageView: UIView, NameDescribable {
         super.updateConstraints()
     }
     
-    typealias BecomeFocusPredicate = () -> Bool
+    // MARK: - Focus Management
+    // MARK: -
     
-    var becomeFocusedPredicate:BecomeFocusPredicate?
-    
-    // MARK: Focus Management
     override var canBecomeFocused : Bool {
-        guard let predicate = self.becomeFocusedPredicate else {
-            print( "\(typeName).canBecomeFocused: true" )
-            return true
-        }
-        let result = predicate()
-        print( "\(typeName).canBecomeFocused: \(result)" )
-
-        return result
-    }
-    
-    /// Asks whether the system should allow a focus update to occur.
-    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
-        print( "PageView.shouldUpdateFocusInContext:" )
         return true
-        
     }
+//
+//    /// Asks whether the system should allow a focus update to occur.
+//    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+//        print( "PageView.shouldUpdateFocusInContext:" )
+//        return true
+//
+//    }
     
     /// Called when the screen’s focusedView has been updated to a new view. Use the animation coordinator to schedule focus-related animations in response to the update.
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator)
     {
-        print( "PageView.didUpdateFocusInContext: focused: \(self.isFocused)" );
+        print( "\(typeName).didUpdateFocusInContext: focused: \(self.isFocused)" );
+
+        coordinator.addCoordinatedAnimations(nil) {
+          // Perform some task after item has received focus
+            if context.nextFocusedView == self {
+                self.addShadow()
+            }
+            else {
+                self.removeShadow()
+            }
+        }
     }
     
     // MARK: Pointer Management
