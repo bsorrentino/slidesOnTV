@@ -64,14 +64,13 @@ class SettingsBarView : UITabBar, UITabBarDelegate, NameDescribable {
     // MARK: Focus Management
     
     override var canBecomeFocused: Bool {
-        print( "\(typeName).canBecomeFocused:" )
+        //print( "\(typeName).canBecomeFocused:" )
         return false
     }
     
 //    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
 //        print( "\(typeName).shouldUpdateFocus:" )
 //        return context.focusHeading == .left || context.focusHeading == .right
-//
 //    }
 //
 //    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
