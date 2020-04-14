@@ -7,13 +7,13 @@
 //
 
 import UIKit
+import RxRelay
 
 class PageView: UIView, NameDescribable {
 
     @IBOutlet weak var pageImageView: UIImageView!
     
-    
-    // MARK: -Shadow management
+    // MARK: - Shadow management
     // MARRK: -
     
     private func addShadow(_ height: Int = 0) {
@@ -37,8 +37,9 @@ class PageView: UIView, NameDescribable {
         self.pageImageView.layer.cornerRadius = 0.0
      }
     
-    // MARK: standard lifecycle
-    
+    // MARK: - standard lifecycle
+    // MARK: -
+
     override func didMoveToSuperview() {
     }
     
@@ -76,7 +77,8 @@ class PageView: UIView, NameDescribable {
         }
     }
     
-    // MARK: Pointer Management
+    // MARK: - Pointer Management
+    // MARK: -
     
     fileprivate lazy var pointer:UIView = {
         
@@ -101,29 +103,32 @@ class PageView: UIView, NameDescribable {
         
     }()
     
+    let showPointerRelay = BehaviorRelay<Bool>( value: false )
+    
     var showPointer:Bool = false {
         
         didSet {
-            
+
             if !showPointer {
                 pointer.removeFromSuperview()
-                return;
             }
-            
-            if !oldValue {
+            else if !oldValue {
                 pointer.frame.origin = self.center
-                
                 addSubview(pointer)
             }
+            
+            showPointerRelay.accept( showPointer )
+
         }
     }
     
-    // MARK: Touch Handling
-    
+    // MARK: - Touch Handling
+    // MARK: -
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let firstTouch = touches.first else { return }
-        guard showPointer else {return}
+        guard showPointer, let firstTouch = touches.first else {
+            return
+        }
         
         let locationInView = firstTouch.location(in: firstTouch.view)
         
@@ -134,11 +139,9 @@ class PageView: UIView, NameDescribable {
     }
     
     override func  touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //print("touchesMoved ")
-        
-        guard let firstTouch = touches.first else { return }
-        guard showPointer else {return}
-        
+        guard showPointer, let firstTouch = touches.first else {
+            return
+        }
         
         let locationInView = firstTouch.location(in: firstTouch.view)
         
@@ -149,15 +152,11 @@ class PageView: UIView, NameDescribable {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touchesEnded ")
         showPointer = false
-        
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touchesCancelled ")
         showPointer = false
-        
     }
     
     

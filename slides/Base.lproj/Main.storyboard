@@ -384,8 +384,8 @@
                     </view>
                     <connections>
                         <outlet property="pageView" destination="c9g-rB-Tbc" id="3Jb-LK-VuR"/>
-                        <outlet property="pagesView" destination="rws-Tv-h7Z" id="liw-vC-pWt"/>
                         <outlet property="settingsBar" destination="etP-sG-wAf" id="qRz-j8-1RW"/>
+                        <outlet property="thumbnailsView" destination="rws-Tv-h7Z" id="liw-vC-pWt"/>
                         <outlet property="view" destination="kBg-cA-YoQ" id="RrZ-aT-N4E"/>
                     </connections>
                 </viewController>

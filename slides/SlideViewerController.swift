@@ -25,74 +25,6 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-//
-//  UIPDFPageCell
-//
-class UIPDFPageCell : UICollectionViewCell {
-    
-    lazy var box:UIImageView = UIImageView()
-    
-    fileprivate func initialize() {
-    
-        //box.layer.borderColor = UIColor.black.cgColor
-        //box.layer.borderWidth = 2
-
-        self.addSubview(box)
-        
-         box.snp.makeConstraints { make in
-            make.width.height.equalTo(self)
-            make.top.equalTo(self)
-            make.bottom.equalTo(self)
-         }
-        
-        self.layoutIfNeeded()
-        self.layoutSubviews()
-        self.setNeedsDisplay()
-        
-        
-        //self.box.adjustsImageWhenAncestorFocused = true
-
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        initialize()
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-
-        initialize()
-        
-    }
- 
-    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        if (self.isFocused)
-        {
-            self.box.adjustsImageWhenAncestorFocused = true
-        }
-        else
-        {
-            self.box.adjustsImageWhenAncestorFocused = false
-        }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-    }
-    
-}
-
 
 //
 //  MARK: UIPDFCollectionViewController
@@ -101,8 +33,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     static let storyboardIdentifier = "UIPDFCollectionViewController"
     
-    @IBOutlet weak var pagesView: ThumbnailsView!
-    
+    @IBOutlet weak var thumbnailsView: ThumbnailsView!
     @IBOutlet weak var settingsBar: SettingsBarView!
     @IBOutlet weak var pageView: PageView!
     
@@ -129,8 +60,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         didSet {
             if let location = documentInfo?.location {
                 doc = OHPDFDocument(url: location)
-                if( pagesView != nil ) {
-                    pagesView.reloadData()
+                if( thumbnailsView != nil ) {
+                    thumbnailsView.reloadData()
                 }
             }
         }
@@ -200,7 +131,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 
                 self.showSlide(at: UInt(i.row)) ; self._indexPathForPreferredFocusedView = i
 
-                self.pagesView.selectItem(at: i, animated: false, scrollPosition: UICollectionView.ScrollPosition())
+                self.thumbnailsView.selectItem(at: i, animated: false, scrollPosition: UICollectionView.ScrollPosition())
                 //self.pagesView.setNeedsFocusUpdate()
                 //self.pagesView.updateFocusIfNeeded()
             })
@@ -211,12 +142,23 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     // MARK: -
     
     fileprivate func setupPointer() {
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(togglePointerOnTap) )
+
         tap.numberOfTapsRequired = 1
+
         pageView.addGestureRecognizer(tap)
-   }
+
+        let _ = pageView.showPointerRelay
+                    .subscribe( onNext: { showPointer in
+                        self.thumbnailsView.enableFocus = !(showPointer)
+                    })
+    }
     
     @IBAction func togglePointerOnTap(_ sender: UITapGestureRecognizer) {
+        
+        print( "\(typeName).togglePointerOnTap \(pageView.showPointer)")
+        
         pageView.showPointer = !pageView.showPointer
 
     }
@@ -333,7 +275,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
                 self.showSlide(at: UInt(i.row)) ; self._indexPathForPreferredFocusedView = i
                 
-                self.pagesView.selectItem(at: i, animated: false, scrollPosition: UICollectionView.ScrollPosition())
+                self.thumbnailsView.selectItem(at: i, animated: false, scrollPosition: UICollectionView.ScrollPosition())
 
 
             }).disposed(by: disposeBag)
@@ -344,7 +286,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.pagesView.backgroundColor = UIColor.clear
+        self.thumbnailsView.backgroundColor = UIColor.clear
         
         //let playPauseTap = UITapGestureRecognizer(target: self, action: #selector(playPauseSlideShow))
         //playPauseTap.allowedPressTypes = [UIPressType.PlayPause.rawValue]
@@ -447,21 +389,17 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 // MARK: - Focus Engine
 // MARK: -
 
-    
-    
     override var preferredFocusEnvironments: [UIFocusEnvironment] {
-
         print( "\(typeName).preferredFocusEnvironments")
-        return ( self.fullpage ) ?
-            [ pageView, settingsBar] :
-        super.preferredFocusEnvironments
+        
+        return ( self.fullpage ) ? [ pageView, settingsBar] : super.preferredFocusEnvironments
 
     }
     
     
     override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
-        
         print( "\(typeName).shouldUpdateFocus" );
+        
         if( context.nextFocusedView == self.pageView ) {
             self.settingsBar.resetSelection()
         }
@@ -470,9 +408,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        
         print( "\(typeName).didUpdateFocusInContext: focused: \(type(of: context.nextFocusedView))" );
-
     }
     
     
@@ -489,7 +425,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-        print( "\(typeName).canFocusItemAtIndexPath(\(indexPath.row))" )
+        //print( "\(typeName).canFocusItemAtIndexPath(\(indexPath.row))" )
         return true
     }
     
@@ -504,7 +440,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     // MARK: Presses Handling
     
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        print("\(typeName).pressesBegan")
+        //print("\(typeName).pressesBegan")
 
         if let press = presses.first {
             
@@ -524,7 +460,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
     
     override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        print("\(typeName).pressesEnded")
+        //print("\(typeName).pressesEnded")
         super.pressesEnded(presses, with: event)
     }
     

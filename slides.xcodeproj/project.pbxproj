@@ -50,6 +50,7 @@
 		5FF934371F1CAD3500639D34 /* TVOSToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF9342F1F1CAD3500639D34 /* TVOSToast.framework */; };
 		6A10E4F499B056D28E50547B /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEA2C00A2E0E59EA8DFD7DB1 /* Pods_slides.framework */; };
 		A02DD8B624449D3B008F8A7E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD8B524449D3B008F8A7E /* Utils.swift */; };
+		A04CD04524459C2A00EA1FBB /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04CD04424459C2A00EA1FBB /* PageCell.swift */; };
 		A06B6D531CBFA23900CBE220 /* slideshare.plist in Resources */ = {isa = PBXBuildFile; fileRef = A06B6D521CBFA23900CBE220 /* slideshare.plist */; };
 		A0889C3C1CE8F4430050094D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A0889C3B1CE8F4430050094D /* Settings.bundle */; };
 		A0B8590624446FA900D115F2 /* rx1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */; };
@@ -133,6 +134,7 @@
 		62406CDC06BDBFE1B2A3BC7F /* Pods-slidesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.release.xcconfig"; sourceTree = "<group>"; };
 		66582F1A187676F859E95254 /* Pods_slidesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A02DD8B524449D3B008F8A7E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		A04CD04424459C2A00EA1FBB /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		A06B6D521CBFA23900CBE220 /* slideshare.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = slideshare.plist; path = slides/slideshare.plist; sourceTree = "<group>"; };
 		A06B6D541CBFCCA000CBE220 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A06B6D561CBFCEA800CBE220 /* SLIDESHARE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = SLIDESHARE.md; sourceTree = "<group>"; };
@@ -268,7 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				5FAE605A1DB6C7480019C794 /* slides.entitlements */,
-				5FF0DE0B1D99AF79001CEC34 /* viewer */,
+				5FF0DE0B1D99AF79001CEC34 /* views */,
 				5F4515A91CC2F277004C4004 /* Info-dev.plist */,
 				5F9623521CBBF94900F61D9C /* Slidehare.swift */,
 				5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */,
@@ -313,14 +315,15 @@
 			path = slidesUITests;
 			sourceTree = "<group>";
 		};
-		5FF0DE0B1D99AF79001CEC34 /* viewer */ = {
+		5FF0DE0B1D99AF79001CEC34 /* views */ = {
 			isa = PBXGroup;
 			children = (
 				5FB654091D82E7E600E6E2F2 /* SettingsBarView.swift */,
 				5FF0DE0C1D99B033001CEC34 /* PageView.swift */,
 				5F90B6081D9AC6DC00615BA4 /* ThumbnailsView.swift */,
+				A04CD04424459C2A00EA1FBB /* PageCell.swift */,
 			);
-			name = viewer;
+			name = views;
 			sourceTree = "<group>";
 		};
 		A00824031CC94A9B00C9BE8F /* ARLabel */ = {
@@ -667,6 +670,7 @@
 				A0C8B3E71CCCC8CF007352B6 /* ARLabel.swift in Sources */,
 				5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */,
 				5F57DE131CC42B7500D5F1B8 /* UAProgressView.m in Sources */,
+				A04CD04524459C2A00EA1FBB /* PageCell.swift in Sources */,
 				5FD9A2D11CAD19590065BE03 /* TestViewController.swift in Sources */,
 				5F5AC0481EF088C200E2A561 /* FavoritesViewController.swift in Sources */,
 				5F4515A71CC2F112004C4004 /* TCBlobDownload.swift in Sources */,
@@ -792,6 +796,7 @@
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1.3.0;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -813,6 +818,7 @@
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.3;
 				OBJROOT = $PROJECT_DIR/build;
 				PODS_BUILD_DIR = $PROJECT_DIR/Build/Products;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slides;
@@ -941,6 +947,7 @@
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1.3.0;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -960,6 +967,7 @@
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.3;
 				OBJROOT = $PROJECT_DIR/build;
 				PODS_BUILD_DIR = $PROJECT_DIR/Build/Products;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slides;
