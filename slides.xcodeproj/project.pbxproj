@@ -57,6 +57,7 @@
 		A0889C3C1CE8F4430050094D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A0889C3B1CE8F4430050094D /* Settings.bundle */; };
 		A0B8590624446FA900D115F2 /* rx1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */; };
 		A0C8B3E71CCCC8CF007352B6 /* ARLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8B3E61CCCC8CF007352B6 /* ARLabel.swift */; };
+		A0FD1CFE24470420003217CE /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD1CFD24470420003217CE /* DetailView.swift */; };
 		C3F8E7A31B2D198534D793D2 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29922D394E25E590CB68BD7B /* Settings.swift */; };
 /* End PBXBuildFile section */
 
@@ -144,6 +145,7 @@
 		A07DD7912446852300532A87 /* ViewController+FocusGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+FocusGuide.swift"; sourceTree = "<group>"; };
 		A0889C3B1CE8F4430050094D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = slides/Settings.bundle; sourceTree = "<group>"; };
 		A0C8B3E61CCCC8CF007352B6 /* ARLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARLabel.swift; sourceTree = "<group>"; };
+		A0FD1CFD24470420003217CE /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		A5BE309DE648A948642821DE /* Pods_slidesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C555331529587B8A9D9CCD2B /* Pods-slides.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.debug.xcconfig"; sourceTree = "<group>"; };
 		CD0C312159396BDFEFD44CE4 /* Pods-slidesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -293,7 +295,6 @@
 				5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */,
 				5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */,
 				A02DD8B524449D3B008F8A7E /* Utils.swift */,
-				5FB37BF41D7352140081D8C4 /* DetailView.xib */,
 				5FD9A2D71CAD19590065BE03 /* Info.plist */,
 				5F4515A91CC2F277004C4004 /* Info-dev.plist */,
 				5FD9A2D51CAD19590065BE03 /* Assets.xcassets */,
@@ -328,6 +329,8 @@
 				5FF0DE0C1D99B033001CEC34 /* PageView.swift */,
 				5F90B6081D9AC6DC00615BA4 /* ThumbnailsView.swift */,
 				A04CD04424459C2A00EA1FBB /* PageCell.swift */,
+				A0FD1CFD24470420003217CE /* DetailView.swift */,
+				5FB37BF41D7352140081D8C4 /* DetailView.xib */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -675,6 +678,7 @@
 				5FCCC36E1F0BF205002ADBEC /* Slideshare+Download.swift in Sources */,
 				5F9623531CBBF94900F61D9C /* Slidehare.swift in Sources */,
 				A0C8B3E71CCCC8CF007352B6 /* ARLabel.swift in Sources */,
+				A0FD1CFE24470420003217CE /* DetailView.swift in Sources */,
 				5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */,
 				5F57DE131CC42B7500D5F1B8 /* UAProgressView.m in Sources */,
 				A04CD04524459C2A00EA1FBB /* PageCell.swift in Sources */,
