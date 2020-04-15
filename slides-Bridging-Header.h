@@ -3,7 +3,7 @@
 //
 
 //@import OHPDFImage;
-#import "OHPDFImage.h"
+#import <OHPDFImage.h>
 
 #include <CommonCrypto/CommonCrypto.h>
 #include "UAProgressView.h"

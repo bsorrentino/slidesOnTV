@@ -90,25 +90,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r8N-Wn-L1s">
-                                <rect key="frame" x="847.5" y="497" width="225" height="86"/>
+                                <rect key="frame" x="815" y="459" width="225" height="86"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="Push Me"/>
                                 <connections>
                                     <segue destination="3Li-gA-Wtf" kind="show" identifier="showPresentation" id="xUO-Iz-NFC"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6k-4J-PNR">
-                                <rect key="frame" x="863" y="180" width="195" height="86"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6k-4J-PNR">
+                                <rect key="frame" x="815" y="280" width="225" height="86"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="animateLabel:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="H1l-9o-dBq"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TEST 1 TEST TEST 2 TEST" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpb-8C-g7g">
-                                <rect key="frame" x="403" y="174" width="152" height="98"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TEST 1 TEST TEST 2 TEST" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpb-8C-g7g">
+                                <rect key="frame" x="815" y="68" width="204" height="98"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="98" id="74g-TU-Qbx"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -116,8 +117,15 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="r8N-Wn-L1s" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="JMK-DT-hQv"/>
-                            <constraint firstItem="r8N-Wn-L1s" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xbH-on-Huj"/>
+                            <constraint firstItem="hpb-8C-g7g" firstAttribute="leading" secondItem="f6k-4J-PNR" secondAttribute="leading" id="3Td-CT-hHU"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="r8N-Wn-L1s" secondAttribute="bottom" constant="475" id="3iU-on-XfC"/>
+                            <constraint firstItem="hpb-8C-g7g" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="6fl-C3-izV"/>
+                            <constraint firstItem="r8N-Wn-L1s" firstAttribute="top" secondItem="f6k-4J-PNR" secondAttribute="bottom" constant="93" id="JL0-EC-4fb"/>
+                            <constraint firstItem="f6k-4J-PNR" firstAttribute="trailing" secondItem="r8N-Wn-L1s" secondAttribute="trailing" id="SEc-dr-YDN"/>
+                            <constraint firstItem="f6k-4J-PNR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="815" id="mJo-pp-8px"/>
+                            <constraint firstItem="f6k-4J-PNR" firstAttribute="leading" secondItem="r8N-Wn-L1s" secondAttribute="leading" id="mgL-cl-eHG"/>
+                            <constraint firstItem="r8N-Wn-L1s" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="60" symbolic="YES" id="ok7-4U-mmy"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hpb-8C-g7g" secondAttribute="trailing" constant="20" symbolic="YES" id="zvm-C3-Ghx"/>
                         </constraints>
                     </view>
                     <connections>
@@ -156,7 +164,7 @@
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                <state key="normal" title="Search" image="magnifyingglass" catalog="system"/>
+                                <state key="normal" title="Search"/>
                                 <state key="highlighted">
                                     <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
@@ -172,7 +180,7 @@
                                     <constraint firstAttribute="height" constant="130" id="fws-sv-idY"/>
                                 </constraints>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                <state key="normal" title="Favorites" image="bookmark.fill" catalog="system"/>
+                                <state key="normal" title="Favorites"/>
                                 <connections>
                                     <segue destination="7MQ-SL-prb" kind="show" id="Ucl-Wu-SU9"/>
                                 </connections>
@@ -211,7 +219,7 @@
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="edm-Cu-azw">
                                 <rect key="frame" x="624" y="120" width="555" height="120"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bookmark.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="8gN-Rb-YnL">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="favorite" translatesAutoresizingMaskIntoConstraints="NO" id="8gN-Rb-YnL">
                                         <rect key="frame" x="102" y="13" width="124" height="89"/>
                                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <constraints>
@@ -445,13 +453,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="V1I-rp-vwY"/>
+        <segue reference="xUO-Iz-NFC"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="bookmark.fill" catalog="system" width="115" height="128"/>
         <image name="favorite" width="27" height="27"/>
         <image name="fullscreen" width="27" height="27"/>
-        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="tv-menu" width="512" height="512"/>
     </resources>
 </document>
