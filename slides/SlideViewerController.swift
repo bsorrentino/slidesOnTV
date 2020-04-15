@@ -34,15 +34,17 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     static let storyboardIdentifier = "UIPDFCollectionViewController"
     
     @IBOutlet weak var thumbnailsView: ThumbnailsView!
-    @IBOutlet weak var settingsBar: SettingsBarView!
     @IBOutlet weak var pageView: PageView!
-    
     
     fileprivate var doc:OHPDFDocument?
 
-    fileprivate var pressesSubject = PublishSubject<UIPress>()
-    fileprivate let disposeBag = DisposeBag()
+    var settingsViewController:SettingsViewController?
+    
 
+    fileprivate var pressesSubject = PublishSubject<UIPress>()
+    
+    let disposeBag = DisposeBag()
+    
     @objc var fullpage : Bool = false {
              
         didSet {
@@ -56,6 +58,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
          }
     }
     
+
     var documentInfo:DocumentInfo? {
         didSet {
             if let location = documentInfo?.location {
@@ -163,64 +166,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
     }
 
-    // MARK: - SettingsBar Management
-    // MARK: -
-
-    fileprivate func setupSettingsBar() {
-        
-        self.settingsBar.items?.forEach({ (item) in
-            item.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize:  20)], for: .normal)
-        })
-        
-        let rxFavoriteStoreDeferred = Completable.deferred { () -> PrimitiveSequence<CompletableTrait, Never> in
-            
-            print( "\(self.typeName) save to favorite \(!self.fullpage)")
-            
-            guard let documentInfo = self.documentInfo else {
-                return Completable.empty()
-            }
-                
-            return rxFavoriteStore(data: documentInfo)
-                .do( onCompleted: {
-
-                    print("\(self.typeName) Favorite stored")
-
-                    self.setNeedsFocusUpdate()
-                })
-                
-        }
-        
-        let rxToggleFullPageDeferred = Completable.deferred { () -> PrimitiveSequence<CompletableTrait, Never> in
-            
-            print( "\(self.typeName) fullpage \(!self.fullpage)")
-            
-            self.fullpage = !self.fullpage
-            
-            self.setNeedsFocusUpdate()
-
-            return Completable.empty()
-        }
-        
-        self.settingsBar.rx_didPressItem
-            .observeOn(MainScheduler.asyncInstance)
-            .flatMap { (item ) -> Completable in
-                switch item {
-                case .FULL_SCREEN: // toggle fullscreen
-                    return rxToggleFullPageDeferred;
-                case .ADD_TO_FAVORITE:
-                    return rxFavoriteStoreDeferred;
-                default:
-                    return Completable.empty()
-                }
-            }
-            .subscribe(
-                onCompleted:{
-                    print( "==> COMPLETED" )
-                })
-            .disposed(by: disposeBag)
-    
-    }
-    
     // MARK: Setup Manual Next Prev page
     
     fileprivate func setupNextPrev() {
@@ -358,7 +303,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "slide", for:indexPath) as! UIPDFPageCell
         
         if let doc = self.doc {
@@ -392,24 +336,21 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     override var preferredFocusEnvironments: [UIFocusEnvironment] {
         print( "\(typeName).preferredFocusEnvironments")
         
-        return ( self.fullpage ) ? [ pageView, settingsBar] : super.preferredFocusEnvironments
-
+        return [pageView]
     }
     
     
-    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
-        print( "\(typeName).shouldUpdateFocus" );
-        
-        if( context.nextFocusedView == self.pageView ) {
-            self.settingsBar.resetSelection()
-        }
-        return true
-    }
+//    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+//        print( "\(typeName).shouldUpdateFocus" );
+//        
+//        return true
+//    }
     
     
-    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        print( "\(typeName).didUpdateFocusInContext: focused: \(type(of: context.nextFocusedView))" );
-    }
+//    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+//        print( "\(typeName).didUpdateFocusInContext: focused: \(type(of: context.nextFocusedView))" );
+//        super.didUpdateFocus(in: context, with: coordinator)
+//    }
     
     
     func collectionView(_ collectionView: UICollectionView,
@@ -437,8 +378,9 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         return _indexPathForPreferredFocusedView
     }
     
-    // MARK: Presses Handling
-    
+    // MARK: - Presses Handling
+    // MARK: -
+
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         //print("\(typeName).pressesBegan")
 

@@ -17,10 +17,7 @@ class TestViewController: UIViewController {
     
     
     override var preferredFocusEnvironments: [UIFocusEnvironment] {
-        
-        print( "preferredFocusEnvironments")
         return [pushMe]
-
     }
     
     @IBAction func animateLabel(_ sender: AnyObject) {

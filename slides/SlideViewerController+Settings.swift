@@ -7,9 +7,32 @@
 //
 
 import Foundation
-
-extension UIPDFCollectionViewController {
+import RxSwift
+extension UIPDFCollectionViewController : SettingsDelegate {
+        
+    func setupSettingsBar() {
+        
+        guard let settingsViewController = children.first as? SettingsViewController else  {
+          return
+        }
+        
+        self.settingsViewController = settingsViewController
+        settingsViewController.delegate = self
     
+    }
+
+    // MARK: - Fullsceen
+    // MARK: -
+    func toggleFullscreen(_ sender: SettingButton) {
+
+        print( "\(self.typeName) fullpage \(!self.fullpage)")
+        
+        self.fullpage = !self.fullpage
+        
+        self.setNeedsFocusUpdate()
+
+    }
+
     func showThumbnails() {
         print( "\(typeName).showThumbnails")
         UIView.animate(withDuration: 0.5, delay: 0.0, options: UIView.AnimationOptions(), animations: {
@@ -53,5 +76,27 @@ extension UIPDFCollectionViewController {
             
         }
     }
-    
+ 
+    // MARK: - add to favorite
+    // MARK: -
+
+    func addToFavorite(_ sender: SettingButton) {
+        print( "\(self.typeName) save to favorite \(!self.fullpage)")
+        
+        guard let documentInfo = self.documentInfo else {
+            return
+        }
+            
+        rxFavoriteStore(data: documentInfo)
+            .subscribe( onCompleted: {
+
+                print("\(self.typeName) Favorite stored")
+
+                self.setNeedsFocusUpdate()
+            })
+            .disposed(by: disposeBag)
+
+    }
+
+
 }
