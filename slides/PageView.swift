@@ -7,11 +7,39 @@
 //
 
 import UIKit
+import RxRelay
 
-class PageView: UIView {
+class PageView: UIView, NameDescribable {
 
-    // MARK: standard lifecycle
+    @IBOutlet weak var pageImageView: UIImageView!
     
+    // MARK: - Shadow management
+    // MARRK: -
+    
+    private func addShadow(_ height: Int = 0) {
+        
+        self.pageImageView.layer.masksToBounds = false
+        self.pageImageView.layer.shadowColor = UIColor.black.cgColor
+        self.pageImageView.layer.shadowOpacity = 1
+        self.pageImageView.layer.shadowOffset = CGSize(width: 0 , height: height)
+        self.pageImageView.layer.shadowRadius = 10
+        self.pageImageView.layer.cornerRadius = 0.0
+
+     }
+
+     private func removeShadow() {
+
+        self.pageImageView.layer.masksToBounds = false
+        self.pageImageView.layer.shadowColor = UIColor.clear.cgColor
+        self.pageImageView.layer.shadowOpacity = 0.0
+        self.pageImageView.layer.shadowOffset = .zero
+        self.pageImageView.layer.shadowRadius = 0.0
+        self.pageImageView.layer.cornerRadius = 0.0
+     }
+    
+    // MARK: - standard lifecycle
+    // MARK: -
+
     override func didMoveToSuperview() {
     }
     
@@ -19,36 +47,38 @@ class PageView: UIView {
         super.updateConstraints()
     }
     
-    typealias BecomeFocusPredicate = () -> Bool
+    // MARK: - Focus Management
+    // MARK: -
     
-    var becomeFocusedPredicate:BecomeFocusPredicate?
-    
-    // MARK: Focus Management
     override var canBecomeFocused : Bool {
-        guard let predicate = self.becomeFocusedPredicate else {
-            print( "PageView.canBecomeFocused: true" )
-            return true
-        }
-        let result = predicate()
-        print( "PageView.canBecomeFocused: \(result)" )
-
-        return result
-    }
-    
-    /// Asks whether the system should allow a focus update to occur.
-    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
-        print( "PageView.shouldUpdateFocusInContext:" )
         return true
-        
     }
+//
+//    /// Asks whether the system should allow a focus update to occur.
+//    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+//        print( "PageView.shouldUpdateFocusInContext:" )
+//        return true
+//
+//    }
     
     /// Called when the screen’s focusedView has been updated to a new view. Use the animation coordinator to schedule focus-related animations in response to the update.
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator)
     {
-        print( "PageView.didUpdateFocusInContext: focused: \(self.isFocused)" );
+        print( "\(typeName).didUpdateFocusInContext: focused: \(self.isFocused)" );
+
+        coordinator.addCoordinatedAnimations(nil) {
+          // Perform some task after item has received focus
+            if context.nextFocusedView == self {
+                self.addShadow()
+            }
+            else {
+                self.removeShadow()
+            }
+        }
     }
     
-    // MARK: Pointer Management
+    // MARK: - Pointer Management
+    // MARK: -
     
     fileprivate lazy var pointer:UIView = {
         
@@ -73,29 +103,32 @@ class PageView: UIView {
         
     }()
     
+    let showPointerRelay = BehaviorRelay<Bool>( value: false )
+    
     var showPointer:Bool = false {
         
         didSet {
-            
+
             if !showPointer {
                 pointer.removeFromSuperview()
-                return;
             }
-            
-            if !oldValue {
+            else if !oldValue {
                 pointer.frame.origin = self.center
-                
                 addSubview(pointer)
             }
+            
+            showPointerRelay.accept( showPointer )
+
         }
     }
     
-    // MARK: Touch Handling
-    
+    // MARK: - Touch Handling
+    // MARK: -
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let firstTouch = touches.first else { return }
-        guard showPointer else {return}
+        guard showPointer, let firstTouch = touches.first else {
+            return
+        }
         
         let locationInView = firstTouch.location(in: firstTouch.view)
         
@@ -106,11 +139,9 @@ class PageView: UIView {
     }
     
     override func  touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //print("touchesMoved ")
-        
-        guard let firstTouch = touches.first else { return }
-        guard showPointer else {return}
-        
+        guard showPointer, let firstTouch = touches.first else {
+            return
+        }
         
         let locationInView = firstTouch.location(in: firstTouch.view)
         
@@ -121,15 +152,11 @@ class PageView: UIView {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touchesEnded ")
         showPointer = false
-        
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touchesCancelled ")
         showPointer = false
-        
     }
     
     

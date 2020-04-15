@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="16096" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="0eX-xm-M2A">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="16096" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <deployment identifier="tvOS"/>
@@ -77,10 +77,10 @@
             </objects>
             <point key="canvasLocation" x="2143" y="1206"/>
         </scene>
-        <!--View Controller-->
+        <!--Test View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="slides" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TestViewController" customModule="slides" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -94,7 +94,7 @@
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="Push Me"/>
                                 <connections>
-                                    <segue destination="3Li-gA-Wtf" kind="show" id="xUO-Iz-NFC"/>
+                                    <segue destination="3Li-gA-Wtf" kind="show" identifier="showPresentation" id="xUO-Iz-NFC"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6k-4J-PNR">
@@ -127,7 +127,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3883" y="5577"/>
+            <point key="canvasLocation" x="-4695" y="5850"/>
         </scene>
         <!--Main Menu View Controller-->
         <scene sceneID="w3e-IU-T7I">
@@ -309,7 +309,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rws-Tv-h7Z" customClass="ThumbnailsView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="30" y="120" width="0.0" height="940"/>
+                                <rect key="frame" x="30" y="60" width="300" height="1000"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -323,8 +323,10 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="slide" id="k2e-9S-Kun" customClass="UIPDFPageCell" customModule="slides" customModuleProvider="target">
+                                        <rect key="frame" x="5" y="5" width="22" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="22" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </view>
                                         <gestureRecognizers/>
@@ -336,68 +338,121 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9g-rB-Tbc" userLabel="Page view" customClass="PageView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="35" y="80" width="1855" height="880"/>
+                                <rect key="frame" x="335" y="60" width="1555" height="1000"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xsh-Gb-3mi">
-                                        <rect key="frame" x="10" y="0.0" width="1835" height="880"/>
+                                        <rect key="frame" x="20" y="56" width="1535" height="880"/>
                                         <gestureRecognizers/>
                                     </imageView>
-                                    <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etP-sG-wAf" customClass="SettingsBarView" customModule="slides" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="1855" height="68"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <items>
-                                            <tabBarItem tag="1" title="Toggle Fullscreen" id="J0v-Ag-eYI"/>
-                                            <tabBarItem tag="2" title="Add to Favourite" image="favorite" id="itz-Ku-sMH"/>
-                                            <tabBarItem tag="3" enabled="NO" title="Zoom+" id="Mgh-57-m5N"/>
-                                            <tabBarItem tag="4" enabled="NO" title="Zoom-" id="DLk-td-vjh"/>
-                                            <tabBarItem tag="5" enabled="NO" systemItem="search" id="HRj-nf-1WF"/>
-                                        </items>
-                                    </tabBar>
                                 </subviews>
                                 <color key="backgroundColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstItem="Xsh-Gb-3mi" firstAttribute="leading" secondItem="c9g-rB-Tbc" secondAttribute="leading" priority="250" constant="10" id="33i-uf-5Ck"/>
-                                    <constraint firstItem="Xsh-Gb-3mi" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="top" priority="250" id="Dvl-CJ-3Uv"/>
-                                    <constraint firstItem="Xsh-Gb-3mi" firstAttribute="centerY" secondItem="c9g-rB-Tbc" secondAttribute="centerY" id="Q0P-nV-Ek7"/>
-                                    <constraint firstItem="etP-sG-wAf" firstAttribute="width" secondItem="c9g-rB-Tbc" secondAttribute="width" id="X1M-EL-UBs"/>
-                                    <constraint firstItem="Xsh-Gb-3mi" firstAttribute="centerX" secondItem="c9g-rB-Tbc" secondAttribute="centerX" id="Y1U-sV-8z7"/>
-                                    <constraint firstItem="etP-sG-wAf" firstAttribute="leading" secondItem="c9g-rB-Tbc" secondAttribute="leading" id="iT0-Hl-G5F"/>
-                                    <constraint firstItem="etP-sG-wAf" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="top" id="oYr-JB-Bz5"/>
+                                    <constraint firstItem="Xsh-Gb-3mi" firstAttribute="leading" secondItem="c9g-rB-Tbc" secondAttribute="leading" constant="20" id="9JM-4J-QHl"/>
+                                    <constraint firstAttribute="bottom" secondItem="Xsh-Gb-3mi" secondAttribute="bottom" constant="64" id="GOA-9h-VFW"/>
+                                    <constraint firstAttribute="trailing" secondItem="Xsh-Gb-3mi" secondAttribute="trailing" id="pDk-Hz-Elt"/>
+                                    <constraint firstItem="Xsh-Gb-3mi" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="top" constant="56" id="zuz-s2-BXk"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="pageImageView" destination="Xsh-Gb-3mi" id="yN7-vH-WbR"/>
+                                </connections>
                             </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aro-vk-dJK" customClass="SettingsView" customModule="slides" customModuleProvider="target">
+                                <rect key="frame" x="355" y="16" width="1535" height="88"/>
+                                <connections>
+                                    <segue destination="nwc-Ip-aOv" kind="embed" id="Knd-ju-AMW"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="Az4-5N-6X8" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="bottom" constant="60" id="2kT-aJ-h2v"/>
-                            <constraint firstItem="c9g-rB-Tbc" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" constant="20" id="C92-cY-9jO"/>
+                            <constraint firstItem="Az4-5N-6X8" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="bottom" constant="-40" id="2kT-aJ-h2v"/>
+                            <constraint firstItem="Az4-5N-6X8" firstAttribute="top" secondItem="Aro-vk-dJK" secondAttribute="bottom" constant="916" id="5Q8-qR-dxx"/>
+                            <constraint firstItem="Aro-vk-dJK" firstAttribute="trailing" secondItem="c9g-rB-Tbc" secondAttribute="trailing" id="8A5-xa-fJn"/>
+                            <constraint firstItem="Aro-vk-dJK" firstAttribute="leading" secondItem="Xsh-Gb-3mi" secondAttribute="leading" id="95n-Rc-6su"/>
+                            <constraint firstItem="c9g-rB-Tbc" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" id="C92-cY-9jO"/>
                             <constraint firstAttribute="bottom" secondItem="rws-Tv-h7Z" secondAttribute="bottom" constant="20" id="F8n-0G-o7O"/>
-                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" constant="60" id="OAd-Eh-UVX"/>
+                            <constraint firstItem="rws-Tv-h7Z" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" id="OAd-Eh-UVX"/>
+                            <constraint firstItem="Aro-vk-dJK" firstAttribute="top" secondItem="kBg-cA-YoQ" secondAttribute="topMargin" constant="-44" id="ZcR-O5-bMc"/>
                             <constraint firstAttribute="trailing" secondItem="c9g-rB-Tbc" secondAttribute="trailing" constant="30" id="r4k-rU-P8F"/>
                             <constraint firstItem="c9g-rB-Tbc" firstAttribute="leading" secondItem="rws-Tv-h7Z" secondAttribute="trailing" constant="5" id="vNL-lz-UQb"/>
                             <constraint firstItem="rws-Tv-h7Z" firstAttribute="leading" secondItem="kBg-cA-YoQ" secondAttribute="leading" constant="30" id="xtE-hJ-cxz"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="pageImageView" destination="Xsh-Gb-3mi" id="BMY-yq-xL5"/>
                         <outlet property="pageView" destination="c9g-rB-Tbc" id="3Jb-LK-VuR"/>
-                        <outlet property="pagesView" destination="rws-Tv-h7Z" id="liw-vC-pWt"/>
-                        <outlet property="preferredFocusedView" destination="c9g-rB-Tbc" id="qk7-ML-5e6"/>
-                        <outlet property="settingsBar" destination="etP-sG-wAf" id="qRz-j8-1RW"/>
+                        <outlet property="thumbnailsView" destination="rws-Tv-h7Z" id="liw-vC-pWt"/>
                         <outlet property="view" destination="kBg-cA-YoQ" id="RrZ-aT-N4E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1U8-9K-Gmt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1189" y="3777"/>
+            <point key="canvasLocation" x="-1497" y="2682"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="2fc-mB-ekU">
+            <objects>
+                <viewController id="nwc-Ip-aOv" customClass="SettingsViewController" customModule="slides" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="k71-NP-SNN"/>
+                        <viewControllerLayoutGuide type="bottom" id="OLA-cV-Zdk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cu2-ej-48d">
+                        <rect key="frame" x="0.0" y="0.0" width="1535" height="88"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="41" translatesAutoresizingMaskIntoConstraints="NO" id="oAc-Fg-4pZ">
+                                <rect key="frame" x="543.5" y="10.5" width="448" height="67"/>
+                                <subviews>
+                                    <button tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WI5-6O-c1w" userLabel="Fullscreen" customClass="SettingButton" customModule="slides" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="205" height="67"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                        <state key="normal" title="  Fullscreen" image="fullscreen"/>
+                                        <connections>
+                                            <action selector="toggleFullscreen:" destination="nwc-Ip-aOv" eventType="primaryActionTriggered" id="ExC-Cq-Dfe"/>
+                                        </connections>
+                                    </button>
+                                    <button tag="2" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pjn-UZ-K0J" customClass="SettingButton" customModule="slides" customModuleProvider="target">
+                                        <rect key="frame" x="246" y="0.0" width="202" height="67"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                        <state key="normal" title="  + Favorite" image="favorite">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <state key="focused">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addToFavorite:" destination="nwc-Ip-aOv" eventType="primaryActionTriggered" id="qFF-bq-DDr"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="oAc-Fg-4pZ" firstAttribute="centerX" secondItem="cu2-ej-48d" secondAttribute="centerX" id="Rfl-Uk-9zH"/>
+                            <constraint firstItem="oAc-Fg-4pZ" firstAttribute="centerY" secondItem="cu2-ej-48d" secondAttribute="centerY" id="zVg-1T-GS5"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0t7-jt-qce" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1722.5" y="3650"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="xUO-Iz-NFC"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="favorite" width="54" height="54"/>
+        <image name="favorite" width="27" height="27"/>
+        <image name="fullscreen" width="27" height="27"/>
         <image name="presentation" width="76" height="57"/>
         <image name="tv-menu" width="512" height="512"/>
     </resources>

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface TWRProgressView : UIView {
+@interface TWRProgressView : UIView<CAAnimationDelegate> {
     CGFloat _progress;
     CGFloat _animationTime;
 }
