@@ -97,30 +97,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 
-    func packagedSearchController() -> UIViewController {
-        // Load a `SearchResultsViewController` from its storyboard.
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        guard let searchResultsController = storyboard.instantiateViewController(withIdentifier: SearchSlidesViewController.storyboardIdentifier) as? SearchSlidesViewController else {
-            fatalError("Unable to instatiate a SearchResultsViewController from the storyboard.")
-        }
-        
-        /*
-         Create a UISearchController, passing the `searchResultsController` to
-         use to display search results.
-         */
-        let searchController = UISearchController(searchResultsController: searchResultsController)
-        searchController.searchResultsUpdater = searchResultsController
-        searchController.searchBar.placeholder = NSLocalizedString("what", comment: "")
-        
-        // Contain the `UISearchController` in a `UISearchContainerViewController`.
-        let searchContainer = UISearchContainerViewController(searchController: searchController)
-        searchContainer.title = NSLocalizedString("Search", comment: "")
-        
-        // Finally contain the `UISearchContainerViewController` in a `UINavigationController`.
-        let searchNavigationController = UINavigationController(rootViewController: searchContainer)
-        return searchNavigationController
-    }
 }
 
 
