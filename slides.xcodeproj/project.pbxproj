@@ -125,6 +125,7 @@
 		5FD9A2EB1CAD195A0065BE03 /* slidesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slidesUITests.swift; sourceTree = "<group>"; };
 		5FD9A2ED1CAD195A0065BE03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5FD9A2FD1CAD5CFA0065BE03 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		5FEB6139244B609B00ED35AD /* OHPDFImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OHPDFImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FF0DE0C1D99B033001CEC34 /* PageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		5FF934281F1CAD3500639D34 /* ManualLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManualLayout.framework; path = "Build/Products/Debug-appletvsimulator/ManualLayout/ManualLayout.framework"; sourceTree = "<group>"; };
 		5FF934291F1CAD3500639D34 /* Pods_slides.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_slides.framework; path = "Pods/../build/Debug-appletvos/Pods_slides.framework"; sourceTree = "<group>"; };
@@ -346,6 +347,7 @@
 		A8CBADC199C577F1E16802A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5FEB6139244B609B00ED35AD /* OHPDFImage.framework */,
 				5FF934281F1CAD3500639D34 /* ManualLayout.framework */,
 				5FF934291F1CAD3500639D34 /* Pods_slides.framework */,
 				5FF9342A1F1CAD3500639D34 /* RxCocoa.framework */,
@@ -801,14 +803,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C555331529587B8A9D9CCD2B /* Pods-slides.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1.3.0;
+				CURRENT_PROJECT_VERSION = 1.3.1;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -827,6 +828,7 @@
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/ManualLayout",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos/TVOSToast",
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvos",
+					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/OHPDFImage",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -952,14 +954,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4B74BAF74AE103B2AC4E9103 /* Pods-slides.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1.3.0;
+				CURRENT_PROJECT_VERSION = 1.3.1;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -976,6 +977,7 @@
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/ManualLayout",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos",
 					"$(PROJECT_DIR)/Build/Products/Release-appletvos/TVOSToast",
+					"$(PROJECT_DIR)/Build/Products/Release-appletvos/OHPDFImage",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
