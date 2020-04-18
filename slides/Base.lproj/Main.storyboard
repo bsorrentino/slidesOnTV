@@ -363,7 +363,7 @@
                                 </connections>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aro-vk-dJK" customClass="SettingsView" customModule="slides" customModuleProvider="target">
-                                <rect key="frame" x="355" y="16" width="1535" height="88"/>
+                                <rect key="frame" x="355" y="16" width="1535" height="70"/>
                                 <connections>
                                     <segue destination="nwc-Ip-aOv" kind="embed" id="Knd-ju-AMW"/>
                                 </connections>
@@ -373,7 +373,7 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Az4-5N-6X8" firstAttribute="top" secondItem="c9g-rB-Tbc" secondAttribute="bottom" constant="-40" id="2kT-aJ-h2v"/>
-                            <constraint firstItem="Az4-5N-6X8" firstAttribute="top" secondItem="Aro-vk-dJK" secondAttribute="bottom" constant="916" id="5Q8-qR-dxx"/>
+                            <constraint firstItem="Az4-5N-6X8" firstAttribute="top" secondItem="Aro-vk-dJK" secondAttribute="bottom" constant="934" id="5Q8-qR-dxx"/>
                             <constraint firstItem="Aro-vk-dJK" firstAttribute="trailing" secondItem="c9g-rB-Tbc" secondAttribute="trailing" id="8A5-xa-fJn"/>
                             <constraint firstItem="Aro-vk-dJK" firstAttribute="leading" secondItem="Xsh-Gb-3mi" secondAttribute="leading" id="95n-Rc-6su"/>
                             <constraint firstItem="c9g-rB-Tbc" firstAttribute="top" secondItem="Deq-BL-f34" secondAttribute="bottom" id="C92-cY-9jO"/>
@@ -404,19 +404,20 @@
                         <viewControllerLayoutGuide type="bottom" id="OLA-cV-Zdk"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cu2-ej-48d">
-                        <rect key="frame" x="0.0" y="0.0" width="1535" height="88"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1535" height="70"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="oAc-Fg-4pZ">
-                                <rect key="frame" x="402.5" y="9" width="730" height="70"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="oAc-Fg-4pZ">
+                                <rect key="frame" x="507.5" y="10" width="520" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WI5-6O-c1w" userLabel="Fullscreen" customClass="SettingButton" customModule="slides" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="350" height="70"/>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="plain" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WI5-6O-c1w" userLabel="Fullscreen" customClass="SettingButton" customModule="slides" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="350" id="JLT-WM-tuW"/>
+                                            <constraint firstAttribute="height" constant="50" id="7ev-ru-duy"/>
+                                            <constraint firstAttribute="width" constant="250" id="JLT-WM-tuW"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                         <state key="normal" title="  toggle Fullscreen"/>
                                         <state key="focused" image="fullscreen">
@@ -426,13 +427,14 @@
                                             <action selector="toggleFullscreen:" destination="nwc-Ip-aOv" eventType="primaryActionTriggered" id="ExC-Cq-Dfe"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pjn-UZ-K0J" customClass="SettingButton" customModule="slides" customModuleProvider="target">
-                                        <rect key="frame" x="380" y="0.0" width="350" height="70"/>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="plain" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pjn-UZ-K0J" customClass="SettingButton" customModule="slides" customModuleProvider="target">
+                                        <rect key="frame" x="270" y="0.0" width="250" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="350" id="a6k-xm-3hs"/>
+                                            <constraint firstAttribute="height" constant="50" id="Vms-E7-qmt"/>
+                                            <constraint firstAttribute="width" constant="250" id="a6k-xm-3hs"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                         <state key="normal" title=" add to Favorite"/>
                                         <state key="focused" image="favorite">

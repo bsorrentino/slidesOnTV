@@ -26,20 +26,20 @@ class SettingButton : UIButton, NameDescribable {
 //
 //    }
     
-    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        print( "\(typeName).didUpdateFocusInContext: focused:" );
-
-        super.didUpdateFocus(in: context, with: coordinator)
-        
-        coordinator.addCoordinatedAnimations(nil) {
-            // Perform some task after item has received focus
-            if context.nextFocusedView == self {
-                
-            }
-            else {
-            }
-        }
-    }
+//    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+//        print( "\(typeName).didUpdateFocusInContext: focused:" );
+//
+//        super.didUpdateFocus(in: context, with: coordinator)
+//        
+//        coordinator.addCoordinatedAnimations(nil) {
+//            // Perform some task after item has received focus
+//            if context.nextFocusedView == self {
+//                
+//            }
+//            else {
+//            }
+//        }
+//    }
 
 //    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
 //        print( "\(typeName).didUpdateFocusInContext: focused:" );

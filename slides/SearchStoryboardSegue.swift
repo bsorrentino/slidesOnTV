@@ -48,8 +48,13 @@ class SearchStoryboardSegue: UIStoryboardSegue {
         // Apperance
         let bgColor = searchResultsController.collectionView.backgroundColor
         //searchResultsController.view.backgroundColor = bgColor
-        searchController.view.backgroundColor = bgColor
-        searchController.searchBar.backgroundColor = .white
+        if searchResultsController.traitCollection.userInterfaceStyle == .dark  {
+            searchController.view.backgroundColor = .systemBlue
+        }
+        else {
+            searchController.view.backgroundColor = bgColor
+            searchController.searchBar.backgroundColor = .white
+        }
 
         let searchContainer = UISearchContainerViewController(searchController: searchController)
         //searchContainer.title = NSLocalizedString("Search for slides", comment: "")
