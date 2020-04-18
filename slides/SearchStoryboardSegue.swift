@@ -26,7 +26,6 @@ class SearchStoryboardSegue: UIStoryboardSegue {
 
             searchNavigationController.setViewControllers([searchContainer], animated: false)
             
-
             super.perform()
             
         }
@@ -35,19 +34,11 @@ class SearchStoryboardSegue: UIStoryboardSegue {
     
     func packagedSearchController( searchResultsController:SearchSlidesViewController ) -> UISearchContainerViewController {
         
-//        if let wiew = searchResultsController.collectionView {
-//            
-//            //var f = w.frame.insetBy(dx: 90, dy: 60 )
-//            var ff = wiew.frame
-//            
-//            ff.origin.x     = ff.origin.x + 90
-//            ff.size.width   = ff.size.width - 180
-//            ff.size.height  = ff.size.height - 60
-//            
-//            wiew.frame = ff
-//            
-//        }
-
+        // set margin
+        if let view = searchResultsController.collectionView {
+             view.frame = view.frame.insetBy(dx: 30, dy: 20 )
+        }
+        
         let searchController = UISearchController(searchResultsController: searchResultsController)
         // Contain the `UISearchController` in a `UISearchContainerViewController`.
 
@@ -56,7 +47,7 @@ class SearchStoryboardSegue: UIStoryboardSegue {
         
         // Apperance
         let bgColor = searchResultsController.collectionView.backgroundColor
-        searchResultsController.view.backgroundColor = bgColor
+        //searchResultsController.view.backgroundColor = bgColor
         searchController.view.backgroundColor = bgColor
         searchController.searchBar.backgroundColor = .white
 
