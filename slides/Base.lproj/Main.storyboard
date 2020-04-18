@@ -407,25 +407,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="1535" height="88"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="41" translatesAutoresizingMaskIntoConstraints="NO" id="oAc-Fg-4pZ">
-                                <rect key="frame" x="450" y="9" width="635" height="70"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="oAc-Fg-4pZ">
+                                <rect key="frame" x="402.5" y="9" width="730" height="70"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WI5-6O-c1w" userLabel="Fullscreen" customClass="SettingButton" customModule="slides" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="313" height="70"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="350" height="70"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="350" id="JLT-WM-tuW"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                        <state key="normal" title="  toggle Fullscreen" image="fullscreen"/>
+                                        <state key="normal" title="  toggle Fullscreen"/>
+                                        <state key="focused" image="fullscreen">
+                                            <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
                                         <connections>
                                             <action selector="toggleFullscreen:" destination="nwc-Ip-aOv" eventType="primaryActionTriggered" id="ExC-Cq-Dfe"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pjn-UZ-K0J" customClass="SettingButton" customModule="slides" customModuleProvider="target">
-                                        <rect key="frame" x="354" y="0.0" width="281" height="70"/>
+                                        <rect key="frame" x="380" y="0.0" width="350" height="70"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="350" id="a6k-xm-3hs"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                        <state key="normal" title=" add to Favorite" image="favorite"/>
+                                        <state key="normal" title=" add to Favorite"/>
+                                        <state key="focused" image="favorite">
+                                            <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
                                         <connections>
                                             <action selector="addToFavorite:" destination="nwc-Ip-aOv" eventType="primaryActionTriggered" id="qFF-bq-DDr"/>
                                         </connections>
