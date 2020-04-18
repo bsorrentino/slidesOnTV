@@ -25,7 +25,7 @@ class Scheduler {
 
 class SearchSlideCollectionViewCell: UICollectionViewCell {
     
-    // MARK: Properties
+    // MARK: - Properties
 
     static let reuseIdentifier = "SearchSlideCell"
 
@@ -97,7 +97,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
                 self.disposeBag = disposeBag
     }
     
-    // MARK: Progress
+    // MARK: - Progress
     var lastUpdatedProgress:Float = 0.0
     
     func initLoadingView() -> UAProgressView? {
@@ -174,7 +174,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // MARK: Initialization
+    // MARK: - Initialization
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -185,7 +185,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
 
     }
 
-    // MARK: UICollectionReusableView
+    // MARK: - UICollectionReusableView
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -194,7 +194,7 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
 
     }
     
-    // MARK: UIFocusEnvironment
+    // MARK: - UIFocusEnvironment
     
     
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator )
@@ -205,10 +205,8 @@ class SearchSlideCollectionViewCell: UICollectionViewCell {
 typealias DocumentInfo = ( location:URL, id:String, title:String )
 
 
-
-
 open class SearchSlidesViewController: UICollectionViewController, UISearchResultsUpdating {
-    // MARK: Properties
+    // MARK: - Properties
     
     public static let storyboardIdentifier = "SearchSlidesViewController"
     
@@ -220,7 +218,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     
     let searchResultsUpdatingSubject = PublishSubject<String>()
     
-    // MARK: DOWNLOAD MANAGEMENT
+    // MARK: - DOWNLOAD MANAGEMENT
     
     var downloadDispose:Disposable?
     
@@ -289,7 +287,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         }
 
     }
-    // MARK: UICollectionViewController Lifecycle
+    // MARK: - UICollectionViewController Lifecycle
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -307,7 +305,6 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         detailView.addToWindow().hide()
         
         overrideMenuTap()
-        
         
 #if targetEnvironment(simulator)
         let debounce:RxSwift.RxTimeInterval = .seconds(1)
@@ -384,7 +381,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     }
     
     
-    // MARK: UICollectionViewDataSource
+    // MARK: - UICollectionViewDataSource
     
     override open func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -403,7 +400,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         
     }
     
-    // MARK: UICollectionViewDelegateFlowLayout
+    // MARK: - UICollectionViewDelegateFlowLayout
     
     //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
     
@@ -433,7 +430,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     //func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize
 
     
-    // MARK: UICollectionViewDelegate
+    // MARK: - UICollectionViewDelegate
 
     //override public func collectionView(collectionView: UICollectionView, canFocusItemAtIndexPath indexPath: NSIndexPath) -> Bool
  
@@ -479,7 +476,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
         
     }
     
-    // MARK: UISearchResultsUpdating
+    // MARK: - UISearchResultsUpdating
     
     open func updateSearchResults(for searchController: UISearchController) {
         
@@ -487,7 +484,7 @@ open class SearchSlidesViewController: UICollectionViewController, UISearchResul
     
     }
     
-    // MARK: Segue
+    // MARK: - Segue
     
     override open func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
