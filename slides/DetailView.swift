@@ -71,7 +71,6 @@ class DetailView : UIView {
     }
     
     func show(_ item:Slideshow? ) {
-        
         self.alpha = 1.0
         self.layer.zPosition = 1
         //self.hidden = false
