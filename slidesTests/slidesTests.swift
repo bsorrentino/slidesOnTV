@@ -7,9 +7,9 @@
 //
 
 import XCTest
-//import OHPDFImage
 import RxSwift
 import RxBlocking
+//@testable import slides
 
 
 class slidesTests: XCTestCase {
@@ -42,6 +42,19 @@ class slidesTests: XCTestCase {
     }
     */
     
+    func testFrame() {
+        
+        let rect1 = CGRect(x: 0,y: 0,width: 100,height: 100)
+        
+        let rect2 = rect1.offsetBy(dx: 10, dy: 10)
+        print( "rect2: \(rect2)")
+
+        
+        let rect3 = rect1.inset(by: UIEdgeInsets(top:20, left:30,bottom: -60, right: -30))
+        print( "rect2: \(rect3)")
+        
+        
+    }
     func testScan() throws {
 
         typealias SelectInfo = (key:Int, step:Int)

@@ -36,7 +36,8 @@ class SearchStoryboardSegue: UIStoryboardSegue {
         
         // set margin
         if let view = searchResultsController.collectionView {
-             view.frame = view.frame.insetBy(dx: 30, dy: 20 )
+             view.frame = view.frame.insetBy(dx: 20, dy: 70 )
+             
         }
         
         let searchController = UISearchController(searchResultsController: searchResultsController)
