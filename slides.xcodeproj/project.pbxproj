@@ -15,10 +15,6 @@
 		5F1DBB1C1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1DBB1B1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift */; };
 		5F35BE3E1ED0941D00B644B1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */; };
 		5F3BF0021D8688850073EFCB /* SlideViewerController+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */; };
-		5F3E17321DB8C9EE00AED17C /* OHPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */; };
-		5F3E17331DB8C9EE00AED17C /* OHPDFPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172D1DB8C9EE00AED17C /* OHPDFPage.m */; };
-		5F3E17341DB8C9EE00AED17C /* OHVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E172F1DB8C9EE00AED17C /* OHVectorImage.m */; };
-		5F3E17351DB8C9EE00AED17C /* UIImage+OHPDF.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E17311DB8C9EE00AED17C /* UIImage+OHPDF.m */; };
 		5F4515A71CC2F112004C4004 /* TCBlobDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */; };
 		5F4515A81CC2F112004C4004 /* TCBlobDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */; };
 		5F4515AB1CC2F355004C4004 /* TCBlobDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */; };
@@ -32,13 +28,13 @@
 		5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */; };
 		5F9623531CBBF94900F61D9C /* Slidehare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9623521CBBF94900F61D9C /* Slidehare.swift */; };
 		5FB37BF51D7352140081D8C4 /* DetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FB37BF41D7352140081D8C4 /* DetailView.xib */; };
-		5FB609EC1DA03CB000051347 /* SlideViewerController+Fullpage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB609EB1DA03CB000051347 /* SlideViewerController+Fullpage.swift */; };
-		5FB6540A1D82E7E600E6E2F2 /* SettingsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB654091D82E7E600E6E2F2 /* SettingsBarView.swift */; };
+		5FB609EC1DA03CB000051347 /* SlideViewerController+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB609EB1DA03CB000051347 /* SlideViewerController+Settings.swift */; };
+		5FB6540A1D82E7E600E6E2F2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB654091D82E7E600E6E2F2 /* SettingsView.swift */; };
 		5FB6D3861CAEF8B100D7AA80 /* SlideViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */; };
 		5FC7A4AD1CAD8D0700530CB0 /* rx1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */; };
 		5FCCC36E1F0BF205002ADBEC /* Slideshare+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */; };
 		5FD9A2CF1CAD19590065BE03 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */; };
-		5FD9A2D11CAD19590065BE03 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D01CAD19590065BE03 /* ViewController.swift */; };
+		5FD9A2D11CAD19590065BE03 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D01CAD19590065BE03 /* TestViewController.swift */; };
 		5FD9A2D41CAD19590065BE03 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D21CAD19590065BE03 /* Main.storyboard */; };
 		5FD9A2D61CAD19590065BE03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FD9A2D51CAD19590065BE03 /* Assets.xcassets */; };
 		5FD9A2E11CAD195A0065BE03 /* slidesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2E01CAD195A0065BE03 /* slidesTests.swift */; };
@@ -53,9 +49,15 @@
 		5FF934361F1CAD3500639D34 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF9342E1F1CAD3500639D34 /* SnapKit.framework */; };
 		5FF934371F1CAD3500639D34 /* TVOSToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF9342F1F1CAD3500639D34 /* TVOSToast.framework */; };
 		6A10E4F499B056D28E50547B /* Pods_slides.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEA2C00A2E0E59EA8DFD7DB1 /* Pods_slides.framework */; };
+		A02DD8B624449D3B008F8A7E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD8B524449D3B008F8A7E /* Utils.swift */; };
+		A0411F072446134300972331 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0411F062446134300972331 /* SettingsViewController.swift */; };
+		A04CD04524459C2A00EA1FBB /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04CD04424459C2A00EA1FBB /* PageCell.swift */; };
 		A06B6D531CBFA23900CBE220 /* slideshare.plist in Resources */ = {isa = PBXBuildFile; fileRef = A06B6D521CBFA23900CBE220 /* slideshare.plist */; };
+		A07DD7922446852300532A87 /* ViewController+FocusGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07DD7912446852300532A87 /* ViewController+FocusGuide.swift */; };
 		A0889C3C1CE8F4430050094D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A0889C3B1CE8F4430050094D /* Settings.bundle */; };
+		A0B8590624446FA900D115F2 /* rx1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */; };
 		A0C8B3E71CCCC8CF007352B6 /* ARLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C8B3E61CCCC8CF007352B6 /* ARLabel.swift */; };
+		A0FD1CFE24470420003217CE /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD1CFD24470420003217CE /* DetailView.swift */; };
 		C3F8E7A31B2D198534D793D2 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29922D394E25E590CB68BD7B /* Settings.swift */; };
 /* End PBXBuildFile section */
 
@@ -87,15 +89,6 @@
 		5F1DBB1B1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideViewerStoryboardSegue.swift; sourceTree = "<group>"; };
 		5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SlideViewerController+AutoLayout.swift"; sourceTree = "<group>"; };
-		5F3E17291DB8C9EE00AED17C /* OHPDFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDFDocument.h; path = OHPDFImage/OHPDFDocument.h; sourceTree = "<group>"; };
-		5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OHPDFDocument.m; path = OHPDFImage/OHPDFDocument.m; sourceTree = "<group>"; };
-		5F3E172B1DB8C9EE00AED17C /* OHPDFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDFImage.h; path = OHPDFImage/OHPDFImage.h; sourceTree = "<group>"; };
-		5F3E172C1DB8C9EE00AED17C /* OHPDFPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDFPage.h; path = OHPDFImage/OHPDFPage.h; sourceTree = "<group>"; };
-		5F3E172D1DB8C9EE00AED17C /* OHPDFPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OHPDFPage.m; path = OHPDFImage/OHPDFPage.m; sourceTree = "<group>"; };
-		5F3E172E1DB8C9EE00AED17C /* OHVectorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHVectorImage.h; path = OHPDFImage/OHVectorImage.h; sourceTree = "<group>"; };
-		5F3E172F1DB8C9EE00AED17C /* OHVectorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OHVectorImage.m; path = OHPDFImage/OHVectorImage.m; sourceTree = "<group>"; };
-		5F3E17301DB8C9EE00AED17C /* UIImage+OHPDF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+OHPDF.h"; path = "OHPDFImage/UIImage+OHPDF.h"; sourceTree = "<group>"; };
-		5F3E17311DB8C9EE00AED17C /* UIImage+OHPDF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+OHPDF.m"; path = "OHPDFImage/UIImage+OHPDF.m"; sourceTree = "<group>"; };
 		5F4515A41CC2F112004C4004 /* TCBlobDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCBlobDownload.swift; sourceTree = "<group>"; };
 		5F4515A51CC2F112004C4004 /* TCBlobDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCBlobDownloadManager.swift; sourceTree = "<group>"; };
 		5F4515A61CC2F112004C4004 /* TCBlobDownloadSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCBlobDownloadSwift.h; sourceTree = "<group>"; };
@@ -112,8 +105,8 @@
 		5F9623521CBBF94900F61D9C /* Slidehare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slidehare.swift; sourceTree = "<group>"; };
 		5FAE605A1DB6C7480019C794 /* slides.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = slides.entitlements; sourceTree = "<group>"; };
 		5FB37BF41D7352140081D8C4 /* DetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailView.xib; sourceTree = "<group>"; };
-		5FB609EB1DA03CB000051347 /* SlideViewerController+Fullpage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SlideViewerController+Fullpage.swift"; sourceTree = "<group>"; };
-		5FB654091D82E7E600E6E2F2 /* SettingsBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsBarView.swift; sourceTree = "<group>"; };
+		5FB609EB1DA03CB000051347 /* SlideViewerController+Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SlideViewerController+Settings.swift"; sourceTree = "<group>"; };
+		5FB654091D82E7E600E6E2F2 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideViewerController.swift; sourceTree = "<group>"; };
 		5FC7A4A51CAD8A8F00530CB0 /* slides-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "slides-Bridging-Header.h"; sourceTree = "<group>"; };
 		5FC7A4A91CAD8CA000530CB0 /* rx1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = rx1.pdf; path = assets/rx1.pdf; sourceTree = "<group>"; };
@@ -121,7 +114,7 @@
 		5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Slideshare+Download.swift"; sourceTree = "<group>"; };
 		5FD9A2CB1CAD19590065BE03 /* slides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slides.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5FD9A2D01CAD19590065BE03 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5FD9A2D01CAD19590065BE03 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		5FD9A2D31CAD19590065BE03 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FD9A2D51CAD19590065BE03 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5FD9A2D71CAD19590065BE03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -143,11 +136,16 @@
 		5FF9342F1F1CAD3500639D34 /* TVOSToast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TVOSToast.framework; path = "Pods/../build/Debug-appletvos/TVOSToast/TVOSToast.framework"; sourceTree = "<group>"; };
 		62406CDC06BDBFE1B2A3BC7F /* Pods-slidesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.release.xcconfig"; sourceTree = "<group>"; };
 		66582F1A187676F859E95254 /* Pods_slidesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A02DD8B524449D3B008F8A7E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		A0411F062446134300972331 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		A04CD04424459C2A00EA1FBB /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		A06B6D521CBFA23900CBE220 /* slideshare.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = slideshare.plist; path = slides/slideshare.plist; sourceTree = "<group>"; };
 		A06B6D541CBFCCA000CBE220 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A06B6D561CBFCEA800CBE220 /* SLIDESHARE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = SLIDESHARE.md; sourceTree = "<group>"; };
+		A07DD7912446852300532A87 /* ViewController+FocusGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+FocusGuide.swift"; sourceTree = "<group>"; };
 		A0889C3B1CE8F4430050094D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = slides/Settings.bundle; sourceTree = "<group>"; };
 		A0C8B3E61CCCC8CF007352B6 /* ARLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARLabel.swift; sourceTree = "<group>"; };
+		A0FD1CFD24470420003217CE /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		A5BE309DE648A948642821DE /* Pods_slidesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C555331529587B8A9D9CCD2B /* Pods-slides.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.debug.xcconfig"; sourceTree = "<group>"; };
 		CD0C312159396BDFEFD44CE4 /* Pods-slidesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slidesTests/Pods-slidesTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -203,22 +201,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		5F3E17261DB8C9BE00AED17C /* OHPDFImage */ = {
-			isa = PBXGroup;
-			children = (
-				5F3E17291DB8C9EE00AED17C /* OHPDFDocument.h */,
-				5F3E172A1DB8C9EE00AED17C /* OHPDFDocument.m */,
-				5F3E172B1DB8C9EE00AED17C /* OHPDFImage.h */,
-				5F3E172C1DB8C9EE00AED17C /* OHPDFPage.h */,
-				5F3E172D1DB8C9EE00AED17C /* OHPDFPage.m */,
-				5F3E172E1DB8C9EE00AED17C /* OHVectorImage.h */,
-				5F3E172F1DB8C9EE00AED17C /* OHVectorImage.m */,
-				5F3E17301DB8C9EE00AED17C /* UIImage+OHPDF.h */,
-				5F3E17311DB8C9EE00AED17C /* UIImage+OHPDF.m */,
-			);
-			name = OHPDFImage;
-			sourceTree = "<group>";
-		};
 		5F4515A31CC2F112004C4004 /* TCBlobDownloadSwift */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,7 +240,6 @@
 		5FD9A2C21CAD19590065BE03 = {
 			isa = PBXGroup;
 			children = (
-				5F3E17261DB8C9BE00AED17C /* OHPDFImage */,
 				A00824031CC94A9B00C9BE8F /* ARLabel */,
 				5F57DE0C1CC42B7500D5F1B8 /* UAProgressView */,
 				5F57DE081CC3DCCF00D5F1B8 /* TWRProgessView */,
@@ -294,22 +275,18 @@
 		5FD9A2CD1CAD19590065BE03 /* slides */ = {
 			isa = PBXGroup;
 			children = (
-				5FAE605A1DB6C7480019C794 /* slides.entitlements */,
-				5FF0DE0B1D99AF79001CEC34 /* viewer */,
-				5F4515A91CC2F277004C4004 /* Info-dev.plist */,
+				5FD9A2D21CAD19590065BE03 /* Main.storyboard */,
+				5FF0DE0B1D99AF79001CEC34 /* views */,
+				A0411F062446134300972331 /* SettingsViewController.swift */,
 				5F9623521CBBF94900F61D9C /* Slidehare.swift */,
 				5FCCC36D1F0BF205002ADBEC /* Slideshare+Download.swift */,
 				5FD9A2CE1CAD19590065BE03 /* AppDelegate.swift */,
-				5FD9A2D01CAD19590065BE03 /* ViewController.swift */,
-				5FD9A2D21CAD19590065BE03 /* Main.storyboard */,
-				5FD9A2D51CAD19590065BE03 /* Assets.xcassets */,
-				5FD9A2D71CAD19590065BE03 /* Info.plist */,
+				5FD9A2D01CAD19590065BE03 /* TestViewController.swift */,
 				5F9623501CBBF80400F61D9C /* SearchSlidesViewController.swift */,
 				5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */,
-				5FB37BF41D7352140081D8C4 /* DetailView.xib */,
 				5FB6D3851CAEF8B100D7AA80 /* SlideViewerController.swift */,
 				5F3BF0011D8688850073EFCB /* SlideViewerController+AutoLayout.swift */,
-				5FB609EB1DA03CB000051347 /* SlideViewerController+Fullpage.swift */,
+				5FB609EB1DA03CB000051347 /* SlideViewerController+Settings.swift */,
 				5F1DBB1B1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift */,
 				5F35BE3D1ED0941D00B644B1 /* MainViewController.swift */,
 				5F8A17121EF0365E0005B086 /* Favorites.swift */,
@@ -317,6 +294,12 @@
 				5F4C498F1F00FB9700269C50 /* FavoritesCommandView.swift */,
 				5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */,
 				5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */,
+				A02DD8B524449D3B008F8A7E /* Utils.swift */,
+				5FD9A2D71CAD19590065BE03 /* Info.plist */,
+				5F4515A91CC2F277004C4004 /* Info-dev.plist */,
+				5FD9A2D51CAD19590065BE03 /* Assets.xcassets */,
+				5FAE605A1DB6C7480019C794 /* slides.entitlements */,
+				A07DD7912446852300532A87 /* ViewController+FocusGuide.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";
@@ -339,14 +322,17 @@
 			path = slidesUITests;
 			sourceTree = "<group>";
 		};
-		5FF0DE0B1D99AF79001CEC34 /* viewer */ = {
+		5FF0DE0B1D99AF79001CEC34 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				5FB654091D82E7E600E6E2F2 /* SettingsBarView.swift */,
+				5FB654091D82E7E600E6E2F2 /* SettingsView.swift */,
 				5FF0DE0C1D99B033001CEC34 /* PageView.swift */,
 				5F90B6081D9AC6DC00615BA4 /* ThumbnailsView.swift */,
+				A04CD04424459C2A00EA1FBB /* PageCell.swift */,
+				A0FD1CFD24470420003217CE /* DetailView.swift */,
+				5FB37BF41D7352140081D8C4 /* DetailView.xib */,
 			);
-			name = viewer;
+			name = views;
 			sourceTree = "<group>";
 		};
 		A00824031CC94A9B00C9BE8F /* ARLabel */ = {
@@ -498,6 +484,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0B8590624446FA900D115F2 /* rx1.pdf in Resources */,
 				5FD9A2D61CAD19590065BE03 /* Assets.xcassets in Resources */,
 				A06B6D531CBFA23900CBE220 /* slideshare.plist in Resources */,
 				5FB37BF51D7352140081D8C4 /* DetailView.xib in Resources */,
@@ -645,7 +632,9 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-slides/Pods-slides-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ManualLayout/ManualLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/OHPDFImage/OHPDFImage.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwiftExt/RxSwiftExt.framework",
 				"${BUILT_PRODUCTS_DIR}/SettingsKit/SettingsKit.framework",
@@ -655,7 +644,9 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ManualLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHPDFImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwiftExt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SettingsKit.framework",
@@ -675,34 +666,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F4515A81CC2F112004C4004 /* TCBlobDownloadManager.swift in Sources */,
-				5FB6540A1D82E7E600E6E2F2 /* SettingsBarView.swift in Sources */,
+				5FB6540A1D82E7E600E6E2F2 /* SettingsView.swift in Sources */,
 				5F90B6091D9AC6DC00615BA4 /* ThumbnailsView.swift in Sources */,
 				5F8A17131EF0365E0005B086 /* Favorites.swift in Sources */,
 				5F06EFC71F17610400B8D23B /* MainMenuViewController.swift in Sources */,
+				A02DD8B624449D3B008F8A7E /* Utils.swift in Sources */,
 				5F1DBB1C1F1A8F5F00DF4C87 /* SlideViewerStoryboardSegue.swift in Sources */,
-				5FB609EC1DA03CB000051347 /* SlideViewerController+Fullpage.swift in Sources */,
+				A07DD7922446852300532A87 /* ViewController+FocusGuide.swift in Sources */,
+				5FB609EC1DA03CB000051347 /* SlideViewerController+Settings.swift in Sources */,
 				5F4C49901F00FB9700269C50 /* FavoritesCommandView.swift in Sources */,
 				5FCCC36E1F0BF205002ADBEC /* Slideshare+Download.swift in Sources */,
 				5F9623531CBBF94900F61D9C /* Slidehare.swift in Sources */,
 				A0C8B3E71CCCC8CF007352B6 /* ARLabel.swift in Sources */,
+				A0FD1CFE24470420003217CE /* DetailView.swift in Sources */,
 				5F9623511CBBF80400F61D9C /* SearchSlidesViewController.swift in Sources */,
 				5F57DE131CC42B7500D5F1B8 /* UAProgressView.m in Sources */,
-				5FD9A2D11CAD19590065BE03 /* ViewController.swift in Sources */,
+				A04CD04524459C2A00EA1FBB /* PageCell.swift in Sources */,
+				5FD9A2D11CAD19590065BE03 /* TestViewController.swift in Sources */,
 				5F5AC0481EF088C200E2A561 /* FavoritesViewController.swift in Sources */,
 				5F4515A71CC2F112004C4004 /* TCBlobDownload.swift in Sources */,
 				5FD9A2CF1CAD19590065BE03 /* AppDelegate.swift in Sources */,
 				5FB6D3861CAEF8B100D7AA80 /* SlideViewerController.swift in Sources */,
-				5F3E17331DB8C9EE00AED17C /* OHPDFPage.m in Sources */,
 				5F3BF0021D8688850073EFCB /* SlideViewerController+AutoLayout.swift in Sources */,
 				5F0C443E1EDB607D00B098A1 /* SearchStoryboardSegue.swift in Sources */,
-				5F3E17321DB8C9EE00AED17C /* OHPDFDocument.m in Sources */,
 				5F57DE0B1CC3DCCF00D5F1B8 /* TWRProgressView.m in Sources */,
+				A0411F072446134300972331 /* SettingsViewController.swift in Sources */,
 				5F35BE3E1ED0941D00B644B1 /* MainViewController.swift in Sources */,
 				C3F8E7A31B2D198534D793D2 /* Settings.swift in Sources */,
 				5F15D3EA1F03C4C2002F03AC /* FavoriteViewCell.swift in Sources */,
-				5F3E17341DB8C9EE00AED17C /* OHVectorImage.m in Sources */,
 				5FF0DE0D1D99B033001CEC34 /* PageView.swift in Sources */,
-				5F3E17351DB8C9EE00AED17C /* UIImage+OHPDF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,6 +790,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = appletvos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				VALIDATE_PRODUCT = YES;
@@ -815,6 +808,7 @@
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1.3.1;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -836,6 +830,7 @@
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.3;
 				OBJROOT = $PROJECT_DIR/build;
 				PODS_BUILD_DIR = $PROJECT_DIR/Build/Products;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slides;
@@ -844,7 +839,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "slides-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = $PROJECT_DIR/build;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
+				TVOS_DEPLOYMENT_TARGET = 12.4;
 			};
 			name = Debug;
 		};
@@ -866,7 +861,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slides.app/slides";
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
@@ -896,7 +891,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = slides;
 			};
 			name = Debug;
@@ -946,6 +941,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = appletvos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				VALIDATE_PRODUCT = YES;
@@ -963,6 +959,7 @@
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1.3.1;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -982,6 +979,7 @@
 				);
 				INFOPLIST_FILE = slides/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.3;
 				OBJROOT = $PROJECT_DIR/build;
 				PODS_BUILD_DIR = $PROJECT_DIR/Build/Products;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slides;
@@ -990,7 +988,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "slides-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = $PROJECT_DIR/build;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
+				TVOS_DEPLOYMENT_TARGET = 12.4;
 			};
 			name = Release;
 		};
@@ -1012,7 +1010,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slides.app/slides";
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
@@ -1042,7 +1040,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = slides;
 			};
 			name = Release;
