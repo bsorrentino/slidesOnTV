@@ -11,41 +11,6 @@ import RxSwift
 import RxCocoa
 
 
-func associatedObject<ValueType: AnyObject>(
-    base: AnyObject,
-    key: UnsafePointer<UInt8>,
-    initialiser: () -> ValueType)
-    -> ValueType {
-        if let associated = objc_getAssociatedObject(base, key)
-            as? ValueType { return associated }
-        let associated = initialiser()
-        objc_setAssociatedObject(base, key, associated,
-                                 .OBJC_ASSOCIATION_RETAIN)
-        return associated
-}
-
-func associateObject<ValueType: AnyObject>(
-    base: AnyObject,
-    key: UnsafePointer<UInt8>,
-    value: ValueType) {
-    objc_setAssociatedObject(base, key, value,
-                             .OBJC_ASSOCIATION_RETAIN)
-}
-func describing( _ fh: UIFocusHeading ) -> String {
-    switch( fh ) {
-    case UIFocusHeading.up: return "up"
-    case UIFocusHeading.down: return "down"
-    case UIFocusHeading.left: return "down"
-    case UIFocusHeading.right: return "right"
-    case UIFocusHeading.next: return "next"
-    case UIFocusHeading.previous: return "previous"
-    default:return "undef"
-    }
-}
-
-// Make String confrom to Error protocol
-extension String: Error {}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -132,30 +97,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 
-    func packagedSearchController() -> UIViewController {
-        // Load a `SearchResultsViewController` from its storyboard.
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        guard let searchResultsController = storyboard.instantiateViewController(withIdentifier: SearchSlidesViewController.storyboardIdentifier) as? SearchSlidesViewController else {
-            fatalError("Unable to instatiate a SearchResultsViewController from the storyboard.")
-        }
-        
-        /*
-         Create a UISearchController, passing the `searchResultsController` to
-         use to display search results.
-         */
-        let searchController = UISearchController(searchResultsController: searchResultsController)
-        searchController.searchResultsUpdater = searchResultsController
-        searchController.searchBar.placeholder = NSLocalizedString("what", comment: "")
-        
-        // Contain the `UISearchController` in a `UISearchContainerViewController`.
-        let searchContainer = UISearchContainerViewController(searchController: searchController)
-        searchContainer.title = NSLocalizedString("Search", comment: "")
-        
-        // Finally contain the `UISearchContainerViewController` in a `UINavigationController`.
-        let searchNavigationController = UINavigationController(rootViewController: searchContainer)
-        return searchNavigationController
-    }
 }
 
 

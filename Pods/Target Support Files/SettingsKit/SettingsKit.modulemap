@@ -1,6 +1,0 @@
-framework module SettingsKit {
-  umbrella header "SettingsKit-umbrella.h"
-
-  export *
-  module * { export * }
-}

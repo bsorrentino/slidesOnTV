@@ -23,7 +23,7 @@ open class TCBlobDownloadManager {
     /**
         A shared instance of `TCBlobDownloadManager`.
     */
-    open static let sharedInstance = TCBlobDownloadManager()
+    public static let sharedInstance = TCBlobDownloadManager()
 
     /// Instance of the underlying class implementing `NSURLSessionDownloadDelegate`.
     fileprivate let delegate: DownloadDelegate
@@ -32,7 +32,7 @@ open class TCBlobDownloadManager {
     open var startImmediatly = true
 
     /// The underlying `NSURLSession`.
-    open let session: URLSession
+    public let session: URLSession
 
     /**
         Custom `NSURLSessionConfiguration` init.

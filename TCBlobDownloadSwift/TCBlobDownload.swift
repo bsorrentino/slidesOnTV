@@ -64,6 +64,10 @@ open class TCBlobDownload {
         self.directory = directory
         self.preferedFileName = fileName
         self.delegate = delegate
+        self.progression =
+            {( _ progress, _ totalBytesWritten, _ totalBytesExpectedToWrite) in }
+        self.completion = 
+            {(_ error , _ location ) in  }
     }
 
     /**
@@ -162,10 +166,18 @@ extension TCBlobDownload: CustomStringConvertible {
         }
         
         parts.append("TCBlobDownload")
-        parts.append("URL: \(self.downloadTask.originalRequest!.url)")
+        if let url = self.downloadTask.originalRequest?.url {
+            parts.append("URL: \(url)")
+        }
         parts.append("Download task state: \(state)")
-        parts.append("destinationPath: \(self.directory)")
-        parts.append("fileName: \(self.fileName)")
+        
+        if let dir = self.directory {
+            parts.append("destinationPath: \(dir)")
+        }
+        
+        if let name = self.fileName {
+            parts.append("fileName: \(name)")
+        }
         
         return parts.map{ $0 }.joined(separator: " | ")
     }

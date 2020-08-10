@@ -11,6 +11,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import RxSwiftExt
+
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -24,106 +25,46 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-//
-//  UIPDFPageCell
-//
-class UIPDFPageCell : UICollectionViewCell {
-    
-    lazy var box:UIImageView = UIImageView()
-    
-    fileprivate func initialize() {
-    
-        self.addSubview(box)
-        
-         box.snp.makeConstraints { (make) -> Void in
-            make.width.height.equalTo(self)
-            make.top.equalTo(self)
-            make.bottom.equalTo(self)
-         }
-        
-        self.layoutIfNeeded()
-        self.layoutSubviews()
-        self.setNeedsDisplay()
-        
-        
-        //self.box.adjustsImageWhenAncestorFocused = true
 
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        initialize()
-        
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-
-        initialize()
-        
-    }
- 
-    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        if (self.isFocused)
-        {
-            self.box.adjustsImageWhenAncestorFocused = true
-        }
-        else
-        {
-            self.box.adjustsImageWhenAncestorFocused = false
-        }
-    }
-    
-    override func layoutSubviews()
-    {
-        super.layoutSubviews()
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-    }
-    
-}
-
-
-enum SettingsBarItem : Int {
-    
-    case UNKNOWN = 0
-    case FULL_SCREEN = 1
-    case ADD_TO_FAVORITE = 2
-    
-}
 //
 //  MARK: UIPDFCollectionViewController
 //
-class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
+class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout, NameDescribable {
     
-
     static let storyboardIdentifier = "UIPDFCollectionViewController"
     
-    @IBOutlet weak var pagesView: ThumbnailsView!
-    
-    @IBOutlet weak var settingsBar: SettingsBarView!
+    @IBOutlet weak var thumbnailsView: ThumbnailsView!
     @IBOutlet weak var pageView: PageView!
-    @IBOutlet weak var pageImageView: UIImageView!
     
     fileprivate var doc:OHPDFDocument?
 
+    var settingsViewController:SettingsViewController?
+    
+
     fileprivate var pressesSubject = PublishSubject<UIPress>()
-    fileprivate let disposeBag = DisposeBag()
+    
+    let disposeBag = DisposeBag()
+    
+    @objc var fullpage : Bool = false {
+             
+        didSet {
+             if fullpage {
+                self.hideThumbnails()
+             }
+             else {
+                self.showThumbnails()
+             }
+             self.view.setNeedsUpdateConstraints()
+         }
+    }
+    
 
     var documentInfo:DocumentInfo? {
         didSet {
             if let location = documentInfo?.location {
                 doc = OHPDFDocument(url: location)
-                if( pagesView != nil ) {
-                    pagesView.reloadData()
+                if( thumbnailsView != nil ) {
+                    thumbnailsView.reloadData()
                 }
             }
         }
@@ -136,8 +77,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
             
             let vectorImage = OHVectorImage(pdfPage: page)
             
-            let fitSize = vectorImage?.sizeThatFits(pageImageView.frame.size)
-            self.pageImageView.image = vectorImage?.render(at: fitSize!)
+            let fitSize = vectorImage?.sizeThatFits(pageView.pageImageView.frame.size)
+            self.pageView.pageImageView.image = vectorImage?.render(at: fitSize!)
             
         }
 
@@ -155,7 +96,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 return 1
             }
             return index.row
-            
         }
     }
     
@@ -169,7 +109,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
         self.fullpage = true
         
-        _playPauseSlideShow = Observable<Int>.interval(3, scheduler: MainScheduler.instance)
+        _playPauseSlideShow = Observable<Int>.interval(.seconds(3), scheduler: MainScheduler.instance)
             .map({ (index:Int) -> Int in
 
                 guard let prevIndex = self._indexPathForPreferredFocusedView else {
@@ -194,139 +134,36 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
                 
                 self.showSlide(at: UInt(i.row)) ; self._indexPathForPreferredFocusedView = i
 
-                self.pagesView.selectItem(at: i, animated: false, scrollPosition: UICollectionView.ScrollPosition())
+                self.thumbnailsView.selectItem(at: i, animated: false, scrollPosition: UICollectionView.ScrollPosition())
                 //self.pagesView.setNeedsFocusUpdate()
                 //self.pagesView.updateFocusIfNeeded()
             })
         
     }
     
-    // MARK: Pointer Management
+    // MARK: - Pointer Management
+    // MARK: -
     
     fileprivate func setupPointer() {
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(togglePointerOnTap) )
+
         tap.numberOfTapsRequired = 1
+
         pageView.addGestureRecognizer(tap)
-        
-        settingsBar.rx_didHidden.subscribe( onNext: { (hidden:Bool,preferredFocusedView:UIView?) in
-            tap.isEnabled = hidden
-        }).disposed(by: disposeBag)
-        
+
+        let _ = pageView.showPointerRelay
+                    .subscribe( onNext: { showPointer in
+                        self.thumbnailsView.enableFocus = !(showPointer)
+                    })
     }
     
     @IBAction func togglePointerOnTap(_ sender: UITapGestureRecognizer) {
+        
+        print( "\(typeName).togglePointerOnTap \(pageView.showPointer)")
+        
         pageView.showPointer = !pageView.showPointer
 
-    }
-
-    // MARK: SettingsBar Management
-
-    fileprivate func setupSettingsBar() {
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSettingsBarOnTap) )
-        tap.numberOfTapsRequired = 2
-        tap.isEnabled = false
-        pageView.addGestureRecognizer(tap)
-
-        let menuTap = UITapGestureRecognizer(target: self, action: #selector(menuTapped))
-        menuTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
-        menuTap.isEnabled = false
-        view.addGestureRecognizer(menuTap)
-        
-        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(showSettingsBarOnSwipeDown) )
-        swipe.direction = .down
-        swipe.isEnabled = true
-        pageView.addGestureRecognizer(swipe)
-
-        settingsBar.hide(animated:false, preferredFocusedView: pageView)
-        
-        
-        let rxFavoriteStoreDeferred = Completable.deferred { () -> PrimitiveSequence<CompletableTrait, Never> in
-            guard let documentInfo = self.documentInfo else {
-                return Completable.empty()
-            }
-                
-            return rxFavoriteStore(data: documentInfo).do( onCompleted: {
-
-                print("Favorite stored")
-                self.settingsBar.hide(animated: true, preferredFocusedView: self.pageView)
-                
-            })
-                
-        
-        }
-        
-        let rxToggleFullPageDeferred = Completable.deferred { () -> PrimitiveSequence<CompletableTrait, Never> in
-            
-            self.fullpage = !self.fullpage
-
-            return Completable.empty()
-        }
-        
-        self.settingsBar.rx_didPressItem
-            .filter { (_:Int) -> Bool in self.settingsBar.active }
-            .map { (item:Int) -> SettingsBarItem  in
-                guard let value = SettingsBarItem(rawValue: item) else {
-                    return .UNKNOWN
-                }
-                return value
-            }
-            .observeOn(MainScheduler.asyncInstance)
-            .flatMap { (item ) -> Completable in
-                switch item {
-                case .FULL_SCREEN: // toggle fullscreen
-                    return rxToggleFullPageDeferred;
-                case .ADD_TO_FAVORITE:
-                    return rxFavoriteStoreDeferred;
-                default:
-                    return Completable.empty()
-                }
-            }
-            .subscribe( onCompleted:{
-                print( "==> COMPLETED" )
-            })
-            .disposed(by: disposeBag)
-
-        settingsBar.rx_didHidden.subscribe( onNext: { [weak self] (hidden:Bool,preferredFocusedView:UIView?) in
-            
-            if let _preferredFocusedView = preferredFocusedView {
-                self?._preferredFocusedView = _preferredFocusedView
-            }
-            menuTap.isEnabled = !hidden
-            
-        }).disposed(by: disposeBag)
-        
-    }
-    
-    @IBAction func menuTapped(_ sender: UITapGestureRecognizer) {
-        print("=> MENU TAPPED")
-        self.settingsBar.hide(animated: true, preferredFocusedView: pageView)
-
-    }
-    
-    @IBAction func toggleSettingsBarOnTap(_ sender: UITapGestureRecognizer) {
-        print("=> ON SINGLE TAP")
-        
-        let isVisible = self.settingsBar.showConstraints.isActive
-        
-        if isVisible {
-            settingsBar.hide(animated: true, preferredFocusedView: pageView)
-        }
-        else {
-            settingsBar.show(animated: true)
-        }
-    }
-    
-    
-    @IBAction func showSettingsBarOnSwipeDown( _ sender: UISwipeGestureRecognizer) {
-        print("=> ON SWIPE DOWN")
-        
-        guard self.settingsBar.hideConstraints.isActive else {
-            return
-        }
-
-        settingsBar.show(animated: true)
-    
     }
 
     // MARK: Setup Manual Next Prev page
@@ -383,7 +220,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 
                 self.showSlide(at: UInt(i.row)) ; self._indexPathForPreferredFocusedView = i
                 
-                self.pagesView.selectItem(at: i, animated: false, scrollPosition: UICollectionView.ScrollPosition())
+                self.thumbnailsView.selectItem(at: i, animated: false, scrollPosition: UICollectionView.ScrollPosition())
 
 
             }).disposed(by: disposeBag)
@@ -394,6 +231,8 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.thumbnailsView.backgroundColor = UIColor.clear
+        
         //let playPauseTap = UITapGestureRecognizer(target: self, action: #selector(playPauseSlideShow))
         //playPauseTap.allowedPressTypes = [UIPressType.PlayPause.rawValue]
         //view.addGestureRecognizer(playPauseTap)
@@ -402,19 +241,16 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
         self.setupPointer()
         self.setupNextPrev()
         
-        pageImageView.translatesAutoresizingMaskIntoConstraints = false
+        pageView.pageImageView.translatesAutoresizingMaskIntoConstraints = false
  
-        pageView.becomeFocusedPredicate = {
-            
-            return !self.settingsBar.active
-
-        }
+//        pageView.becomeFocusedPredicate = {
+//
+//            return !self.settingsBar.isFocused
+//        }
         
         self.setNeedsFocusUpdate()
         self.updateFocusIfNeeded()
         
-        
- 
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -451,7 +287,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
 // MARK: UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print( "didSelectItemAtIndexPath: \(indexPath)" )
+        print( "\(typeName).didSelectItemAtIndexPath: \(indexPath)" )
     }
     
 // MARK: UICollectionViewDataSource
@@ -466,7 +302,6 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "slide", for:indexPath) as! UIPDFPageCell
         
@@ -493,45 +328,36 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     
     //override func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool
     //override func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)
- 
-// MARK: Focus Engine
-    
-    fileprivate var _preferredFocusedView:UIView? {
-        didSet {
-            if _preferredFocusedView != nil {
-                self.setNeedsFocusUpdate()
-            }
-        }
-    }
-    
-    override var preferredFocusedView: UIView? {
+
+
+// MARK: - Focus Engine
+// MARK: -
+
+    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        print( "\(typeName).preferredFocusEnvironments")
         
-        if let focusedView = self._preferredFocusedView {
-            return focusedView
-        }
-        
-        return super.preferredFocusedView
+        return [pageView]
     }
     
     
-    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
-        
-        if context.nextFocusedView is UIPDFPageCell {
-            settingsBar.hide(animated: true, preferredFocusedView:self.pagesView)
-        }
-        
-        return true
-    }
+//    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+//        print( "\(typeName).shouldUpdateFocus" );
+//        
+//        return true
+//    }
     
     
-    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator)
+//    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+//        print( "\(typeName).didUpdateFocusInContext: focused: \(type(of: context.nextFocusedView))" );
+//        super.didUpdateFocus(in: context, with: coordinator)
+//    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        didUpdateFocusIn context: UICollectionViewFocusUpdateContext,
+                        with coordinator: UIFocusAnimationCoordinator)
     {
-        print( "view.didUpdateFocusInContext: focused: \(type(of: context.nextFocusedView))" );
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        print("collectionView.didUpdateFocusInContext")
+        print("\(typeName).didUpdateFocusInContext")
        
         if let i = context.nextFocusedIndexPath {
             self.showSlide(at: UInt(i.row)) ; _indexPathForPreferredFocusedView = i
@@ -540,22 +366,23 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-        print( "collectionView.canFocusItemAtIndexPath(\(indexPath.row))" )
+        //print( "\(typeName).canFocusItemAtIndexPath(\(indexPath.row))" )
         return true
     }
     
     
     func indexPathForPreferredFocusedView(in collectionView: UICollectionView) -> IndexPath? {
-        print("collectionView.indexPathForPreferredFocusedViewInCollectionView: \(String(describing: _indexPathForPreferredFocusedView))")
+        print("\(typeName).indexPathForPreferredFocusedViewInCollectionView: \(String(describing: _indexPathForPreferredFocusedView))")
         
         // Return index path for selected show that you will be playing
         return _indexPathForPreferredFocusedView
     }
     
-    // MARK: Presses Handling
-    
+    // MARK: - Presses Handling
+    // MARK: -
+
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        print("view.pressesBegan")
+        //print("\(typeName).pressesBegan")
 
         if let press = presses.first {
             
@@ -575,7 +402,7 @@ class UIPDFCollectionViewController :  UIViewController, UICollectionViewDataSou
     }
     
     override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-        print("view.pressesEnded")
+        //print("\(typeName).pressesEnded")
         super.pressesEnded(presses, with: event)
     }
     
