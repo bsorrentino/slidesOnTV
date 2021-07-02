@@ -9,8 +9,18 @@
 import SwiftUI
 
 struct SearchSlides: View {
+    @State var searchText:String = ""
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        
+        SearchBar( text: $searchText ) {
+            VStack {
+                Text("Hello, world!")
+                    .padding()
+                Button( "test", action: {} )
+            }
+        }
     }
 }
 
@@ -19,3 +29,4 @@ struct SearchSlides_Previews: PreviewProvider {
         SearchSlides()
     }
 }
+
