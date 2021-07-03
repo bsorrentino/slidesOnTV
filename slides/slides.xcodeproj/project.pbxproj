@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F3A6E5F2690C0F0001A3F9F /* SlideshareApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E5E2690C0F0001A3F9F /* SlideshareApi.swift */; };
+		5F3A6E612690C414001A3F9F /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E602690C414001A3F9F /* String+Extensions.swift */; };
+		5F3A6E632690D240001A3F9F /* SlideshareXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E622690D240001A3F9F /* SlideshareXMLParser.swift */; };
+		5F3A6E6B2690EEB4001A3F9F /* slidesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E6A2690EEB4001A3F9F /* slidesTests.swift */; };
+		5F3A6E732690EF3A001A3F9F /* slideshare.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F3A6E722690EF3A001A3F9F /* slideshare.plist */; };
 		5FCEB900240C51D600F9885A /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCEB8FF240C51D600F9885A /* App.swift */; };
 		5FCEB902240C51D600F9885A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCEB901240C51D600F9885A /* ContentView.swift */; };
 		5FCEB904240C51D600F9885A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FCEB903240C51D600F9885A /* Assets.xcassets */; };
@@ -16,7 +21,24 @@
 		A05CB1F6268F59F5001F26E4 /* SearchSlides.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5F3A6E6D2690EEB5001A3F9F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5FCEB8F4240C51D600F9885A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5FCEB8FB240C51D600F9885A;
+			remoteInfo = slides;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		5F3A6E5E2690C0F0001A3F9F /* SlideshareApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshareApi.swift; sourceTree = "<group>"; };
+		5F3A6E602690C414001A3F9F /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		5F3A6E622690D240001A3F9F /* SlideshareXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshareXMLParser.swift; sourceTree = "<group>"; };
+		5F3A6E682690EEB4001A3F9F /* slidesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = slidesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F3A6E6A2690EEB4001A3F9F /* slidesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slidesTests.swift; sourceTree = "<group>"; };
+		5F3A6E6C2690EEB5001A3F9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5F3A6E722690EF3A001A3F9F /* slideshare.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = slideshare.plist; sourceTree = "<group>"; };
 		5FCEB8FC240C51D600F9885A /* slides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slides.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FCEB8FF240C51D600F9885A /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		5FCEB901240C51D600F9885A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -29,6 +51,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5F3A6E652690EEB4001A3F9F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5FCEB8F9240C51D600F9885A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -39,10 +68,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F3A6E692690EEB4001A3F9F /* slidesTests */ = {
+			isa = PBXGroup;
+			children = (
+				5F3A6E6A2690EEB4001A3F9F /* slidesTests.swift */,
+				5F3A6E6C2690EEB5001A3F9F /* Info.plist */,
+			);
+			path = slidesTests;
+			sourceTree = "<group>";
+		};
 		5FCEB8F3240C51D600F9885A = {
 			isa = PBXGroup;
 			children = (
 				5FCEB8FE240C51D600F9885A /* slides */,
+				5F3A6E692690EEB4001A3F9F /* slidesTests */,
 				5FCEB8FD240C51D600F9885A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				5FCEB8FC240C51D600F9885A /* slides.app */,
+				5F3A6E682690EEB4001A3F9F /* slidesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -58,14 +98,18 @@
 		5FCEB8FE240C51D600F9885A /* slides */ = {
 			isa = PBXGroup;
 			children = (
+				5F3A6E622690D240001A3F9F /* SlideshareXMLParser.swift */,
+				5F3A6E5E2690C0F0001A3F9F /* SlideshareApi.swift */,
 				5FCEB8FF240C51D600F9885A /* App.swift */,
 				5FCEB901240C51D600F9885A /* ContentView.swift */,
 				5FCEB903240C51D600F9885A /* Assets.xcassets */,
 				A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */,
 				5FCEB908240C51D600F9885A /* LaunchScreen.storyboard */,
 				5FCEB90B240C51D600F9885A /* Info.plist */,
+				5F3A6E722690EF3A001A3F9F /* slideshare.plist */,
 				5FCEB905240C51D600F9885A /* Preview Content */,
 				A05CB1F3268F59B9001F26E4 /* SearchBar.swift */,
+				5F3A6E602690C414001A3F9F /* String+Extensions.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";
@@ -81,6 +125,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5F3A6E672690EEB4001A3F9F /* slidesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F3A6E6F2690EEB5001A3F9F /* Build configuration list for PBXNativeTarget "slidesTests" */;
+			buildPhases = (
+				5F3A6E642690EEB4001A3F9F /* Sources */,
+				5F3A6E652690EEB4001A3F9F /* Frameworks */,
+				5F3A6E662690EEB4001A3F9F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5F3A6E6E2690EEB5001A3F9F /* PBXTargetDependency */,
+			);
+			name = slidesTests;
+			productName = slidesTests;
+			productReference = 5F3A6E682690EEB4001A3F9F /* slidesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5FCEB8FB240C51D600F9885A /* slides */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5FCEB90E240C51D600F9885A /* Build configuration list for PBXNativeTarget "slides" */;
@@ -104,10 +166,14 @@
 		5FCEB8F4240C51D600F9885A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = bsorrentino;
 				TargetAttributes = {
+					5F3A6E672690EEB4001A3F9F = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = 5FCEB8FB240C51D600F9885A;
+					};
 					5FCEB8FB240C51D600F9885A = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -127,17 +193,26 @@
 			projectRoot = "";
 			targets = (
 				5FCEB8FB240C51D600F9885A /* slides */,
+				5F3A6E672690EEB4001A3F9F /* slidesTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5F3A6E662690EEB4001A3F9F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5FCEB8FA240C51D600F9885A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				5FCEB90A240C51D600F9885A /* LaunchScreen.storyboard in Resources */,
 				5FCEB907240C51D600F9885A /* Preview Assets.xcassets in Resources */,
+				5F3A6E732690EF3A001A3F9F /* slideshare.plist in Resources */,
 				5FCEB904240C51D600F9885A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,6 +220,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5F3A6E642690EEB4001A3F9F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F3A6E6B2690EEB4001A3F9F /* slidesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5FCEB8F8240C51D600F9885A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -152,11 +235,22 @@
 				5FCEB902240C51D600F9885A /* ContentView.swift in Sources */,
 				5FCEB900240C51D600F9885A /* App.swift in Sources */,
 				A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */,
+				5F3A6E5F2690C0F0001A3F9F /* SlideshareApi.swift in Sources */,
+				5F3A6E612690C414001A3F9F /* String+Extensions.swift in Sources */,
+				5F3A6E632690D240001A3F9F /* SlideshareXMLParser.swift in Sources */,
 				A05CB1F6268F59F5001F26E4 /* SearchSlides.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5F3A6E6E2690EEB5001A3F9F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5FCEB8FB240C51D600F9885A /* slides */;
+			targetProxy = 5F3A6E6D2690EEB5001A3F9F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5FCEB908240C51D600F9885A /* LaunchScreen.storyboard */ = {
@@ -170,6 +264,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		5F3A6E702690EEB5001A3F9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 48J595L9BX;
+				INFOPLIST_FILE = slidesTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slides.app/slides";
+				TVOS_DEPLOYMENT_TARGET = 14.5;
+			};
+			name = Debug;
+		};
+		5F3A6E712690EEB5001A3F9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 48J595L9BX;
+				INFOPLIST_FILE = slidesTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slides.app/slides";
+				TVOS_DEPLOYMENT_TARGET = 14.5;
+			};
+			name = Release;
+		};
 		5FCEB90C240C51D600F9885A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -196,6 +332,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -256,6 +393,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -329,6 +467,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5F3A6E6F2690EEB5001A3F9F /* Build configuration list for PBXNativeTarget "slidesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F3A6E702690EEB5001A3F9F /* Debug */,
+				5F3A6E712690EEB5001A3F9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5FCEB8F7240C51D600F9885A /* Build configuration list for PBXProject "slides" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
