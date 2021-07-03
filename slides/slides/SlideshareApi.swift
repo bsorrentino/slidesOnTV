@@ -84,7 +84,7 @@ class SlideshareApi /*: ObservableObject */ {
         return Credentials( apikey:apikey, ssecret:ssecret)
     }
     
-    func querysById( credentials:Credentials, id:String ) throws -> URLSession.DataTaskPublisher {
+    func queryById( credentials:Credentials, id:String ) throws -> URLSession.DataTaskPublisher {
         
         let qs = prepareQueryString( credentials:credentials, [
                                         "slideshow_id":id,
@@ -92,7 +92,7 @@ class SlideshareApi /*: ObservableObject */ {
                                     ])
         
         
-        guard let requestURL = URL(string: String(format:"https://www.slideshare.net/api/2/get_slideshow?%@", qs)) else
+        guard let requestURL = URL(string:"https://www.slideshare.net/api/2/get_slideshow?\(qs)" ) else
         {
             throw RequestError.CreationURL
         }
@@ -114,15 +114,16 @@ class SlideshareApi /*: ObservableObject */ {
                                         //"file_type":"presentations"
                                     ])
         
-        guard let requestURL = URL(string: String(format:"https://www.slideshare.net/api/2/search_slideshows?%@", qs)) else
+        guard let requestURL = URL(string: "https://www.slideshare.net/api/2/search_slideshows?\(qs)" ) else
         {
             throw RequestError.CreationURL
         }
 
-        let request = URLRequest(url: requestURL, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
+//        let request = URLRequest(url: requestURL, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
+//
+//        return URLSession.shared.dataTaskPublisher(for: request)
         
-        return URLSession.shared.dataTaskPublisher(for: request)
-        
+        return URLSession.shared.dataTaskPublisher(for: requestURL)
     }
 
 }

@@ -12,6 +12,9 @@
 		5F3A6E632690D240001A3F9F /* SlideshareXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E622690D240001A3F9F /* SlideshareXMLParser.swift */; };
 		5F3A6E6B2690EEB4001A3F9F /* slidesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E6A2690EEB4001A3F9F /* slidesTests.swift */; };
 		5F3A6E732690EF3A001A3F9F /* slideshare.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F3A6E722690EF3A001A3F9F /* slideshare.plist */; };
+		5F3A6E742690F1B5001A3F9F /* SlideshareXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E622690D240001A3F9F /* SlideshareXMLParser.swift */; };
+		5F3A6E752690F1B5001A3F9F /* SlideshareApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E5E2690C0F0001A3F9F /* SlideshareApi.swift */; };
+		5F3A6E762690F1B5001A3F9F /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E602690C414001A3F9F /* String+Extensions.swift */; };
 		5FCEB900240C51D600F9885A /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCEB8FF240C51D600F9885A /* App.swift */; };
 		5FCEB902240C51D600F9885A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCEB901240C51D600F9885A /* ContentView.swift */; };
 		5FCEB904240C51D600F9885A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FCEB903240C51D600F9885A /* Assets.xcassets */; };
@@ -98,8 +101,10 @@
 		5FCEB8FE240C51D600F9885A /* slides */ = {
 			isa = PBXGroup;
 			children = (
+				5F3A6E602690C414001A3F9F /* String+Extensions.swift */,
 				5F3A6E622690D240001A3F9F /* SlideshareXMLParser.swift */,
 				5F3A6E5E2690C0F0001A3F9F /* SlideshareApi.swift */,
+				A05CB1F3268F59B9001F26E4 /* SearchBar.swift */,
 				5FCEB8FF240C51D600F9885A /* App.swift */,
 				5FCEB901240C51D600F9885A /* ContentView.swift */,
 				5FCEB903240C51D600F9885A /* Assets.xcassets */,
@@ -108,8 +113,6 @@
 				5FCEB90B240C51D600F9885A /* Info.plist */,
 				5F3A6E722690EF3A001A3F9F /* slideshare.plist */,
 				5FCEB905240C51D600F9885A /* Preview Content */,
-				A05CB1F3268F59B9001F26E4 /* SearchBar.swift */,
-				5F3A6E602690C414001A3F9F /* String+Extensions.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";
@@ -224,6 +227,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F3A6E742690F1B5001A3F9F /* SlideshareXMLParser.swift in Sources */,
+				5F3A6E752690F1B5001A3F9F /* SlideshareApi.swift in Sources */,
+				5F3A6E762690F1B5001A3F9F /* String+Extensions.swift in Sources */,
 				5F3A6E6B2690EEB4001A3F9F /* slidesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

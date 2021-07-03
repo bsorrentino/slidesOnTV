@@ -133,7 +133,7 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
         subject.send(completion: .failure(validationError))
     }
     
-    func parse( _ data:Data! ) -> AnyPublisher<Slideshow,Error> {
+    func parse( _ data:Data ) -> AnyPublisher<Slideshow,Error> {
 
         let parser = XMLParser(data: data)
         parser.delegate = self
@@ -143,4 +143,6 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
         return subject.eraseToAnyPublisher()
 
     }
+
+    
 }
