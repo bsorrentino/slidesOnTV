@@ -61,11 +61,11 @@
 				5FCEB8FF240C51D600F9885A /* App.swift */,
 				5FCEB901240C51D600F9885A /* ContentView.swift */,
 				5FCEB903240C51D600F9885A /* Assets.xcassets */,
+				A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */,
 				5FCEB908240C51D600F9885A /* LaunchScreen.storyboard */,
 				5FCEB90B240C51D600F9885A /* Info.plist */,
 				5FCEB905240C51D600F9885A /* Preview Content */,
 				A05CB1F3268F59B9001F26E4 /* SearchBar.swift */,
-				A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";

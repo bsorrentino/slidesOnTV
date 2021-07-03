@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct SearchSlides: View {
+struct SearchSlidesView: View {
     @State var searchText:String = ""
     
     var body: some View {
@@ -26,7 +26,7 @@ struct SearchSlides: View {
 
 struct SearchSlides_Previews: PreviewProvider {
     static var previews: some View {
-        SearchSlides()
+        SearchSlidesView()
     }
 }
 

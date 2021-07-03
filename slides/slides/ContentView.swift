@@ -1,4 +1,4 @@
-//
+    //
 //  ContentView.swift
 //  slides
 //
@@ -44,7 +44,7 @@ struct ContentView: View {
             VStack(alignment: .center, spacing:50) {
 
                 Spacer()
-                NavigationButton( text: "Search   ", image: "magnifyingglass.circle.fill", destination:SearchSlides() )
+                NavigationButton( text: "Search   ", image: "magnifyingglass.circle.fill", destination:SearchSlidesView() )
                 NavigationButton( text: "Favorites", image:"bookmark.fill", destination: Text("TO DO") )
                 Spacer()
             }
