@@ -45,12 +45,37 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
     
     var currentError:String?
     
-    //@Published private(set) var slides: [Slideshow] = [Slideshow]()
-    
     private var subject = PassthroughSubject<Slideshow, Error>()
+    
+    private func escapeAttribute( e:String ) -> String? {
+        guard let data = currentData, let value =  data.slide[e] else { return nil }
+            
+        if( e == "title" ) {
+            
+            if let decoded = String( htmlEncodedString: value) {
+                return decoded.trimmingCharacters(in: .whitespacesAndNewlines)
+            }
+        }
+        
+        return value.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        
+    }
+    
+    func parserDidEndDocument(_ parser: XMLParser) {
+        
+        if let err = currentError {
+            subject.send(completion: .failure(err))
+            return
+        }
+        
+        subject.send(completion: .finished)
+    }
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
+        //log.trace( "didStartElement( \(elementName) )" )
+
         if elementName == "SlideShareServiceError" {
             currentError = ""
             return
@@ -64,13 +89,34 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
         else {
             
             if( elementName == "Slideshow" ) {
-                //print( "start \(elementName) - \(attributeDict)")
+                //log.trace( "start \(elementName) - \(attributeDict)")
                 currentData = (slide:Slideshow(), attr:nil)
             }
         }
         
     }
     
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        
+        //log.trace( "didEndElement( \(elementName) )" )
+        
+        if currentError != nil { return }
+        
+        let e = elementName.lowercased()
+        
+        if let data = currentData {
+        
+            if e == "slideshow" {
+
+                //log.trace( "didEndElement send( \(data.slide) )" )
+                subject.send(data.slide)
+
+                currentData = nil
+            }
+
+        }
+    }
+
     func parser(_ parser: XMLParser, foundCharacters string: String) {
         
         if let err = currentError {
@@ -88,43 +134,13 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
                 currentData!.slide[attr] = string
                 
             }
-            
+            currentData!.slide[attr] = escapeAttribute(e: attr)
         }
     }
-    
-    
-    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        
-        if currentError != nil { return }
-        
-        let e = elementName.lowercased()
-        
-        if e == "slideshow", let data = currentData {
-
-            subject.send(data.slide)
-            
-            currentData = nil
-        }
-        else if e == "title" {
-            
-            if let title =  currentData!.slide[e] {
-                currentData!.slide[e] = title.htmlDecoded()
-            }
-        }
-    }
-    
-    func parserDidEndDocument(_ parser: XMLParser) {
-        
-        if let err = currentError {
-            subject.send(completion: .failure(err))
-            return
-        }
-        
-        subject.send(completion: .finished)
-    }
-    
     
     func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
+        log.error("parseErrorOccurred")
+        
         subject.send(completion: .failure(parseError))
     }
     
@@ -135,13 +151,13 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
     
     func parse( _ data:Data ) -> AnyPublisher<Slideshow,Error> {
 
-        let parser = XMLParser(data: data)
-        parser.delegate = self
-        
-        parser.parse()
-        
-        return subject.eraseToAnyPublisher()
-
+        subject.handleEvents(receiveSubscription:  { s in
+            DispatchQueue.main.async {
+                let parser = XMLParser(data: data)
+                parser.delegate = self
+                parser.parse()
+            }
+        }).eraseToAnyPublisher()
     }
 
     

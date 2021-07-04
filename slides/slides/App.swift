@@ -9,7 +9,7 @@
 import SwiftUI
 import OSLog
 
-let logger = Logger(subsystem: "org.bsc.slides", category: "main")
+let log = Logger(subsystem: "org.bsc.slides", category: "main")
 
 @main
 struct SwiftUITVAppApp: App {

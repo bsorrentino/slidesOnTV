@@ -109,7 +109,10 @@ class SlideshareApi /*: ObservableObject */ {
                                         "q":query,
                                         //"what":"tag",
                                         "fileformat": "pdf", // seems that doesn't work
+                                        "format": "pdf", // seems that doesn't work
                                         "download":"0",
+                                        "items_per_page":"50",
+                                        "sort": "latest"
                                         //"sort":"latest",
                                         //"file_type":"presentations"
                                     ])
@@ -119,11 +122,9 @@ class SlideshareApi /*: ObservableObject */ {
             throw RequestError.CreationURL
         }
 
-//        let request = URLRequest(url: requestURL, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
-//
-//        return URLSession.shared.dataTaskPublisher(for: request)
-        
-        return URLSession.shared.dataTaskPublisher(for: requestURL)
+        let request = URLRequest(url: requestURL, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
+
+        return URLSession.shared.dataTaskPublisher(for: request)
     }
 
 }

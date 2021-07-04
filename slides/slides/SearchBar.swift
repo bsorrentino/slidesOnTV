@@ -30,7 +30,7 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
         
         // Called when user selects one of the search suggestion buttons displayed under the keyboard on tvOS.
         func updateSearchResults(for searchController: UISearchController) {
-            logger.trace( "updateSearchResults text = \(searchController.searchBar.text ?? "")")
+            log.trace( "updateSearchResults text = \(searchController.searchBar.text ?? "")")
             self.text = searchController.searchBar.text ?? ""
 
         }
@@ -41,7 +41,7 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
         // MARK: - UISearchBarDelegate impl
 
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            logger.trace( "textDidChange text = \(searchText)")
+            log.trace( "textDidChange text = \(searchText)")
             //text = searchText
         }
 
@@ -73,7 +73,7 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: UIViewControllerRepresentableContext<SearchBar>) {
-        logger.trace( "updateUIViewController" )
+        log.trace( "updateUIViewController" )
         
         let vc = uiViewController.children.first as? UISearchContainerViewController
          
