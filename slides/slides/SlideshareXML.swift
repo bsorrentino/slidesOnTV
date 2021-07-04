@@ -9,36 +9,6 @@
 import Foundation
 import Combine
 
-struct DocumentField {
-    
-    static let Title            = "title"
-    static let DownloadUrl      = "downloadurl"
-    static let ID               = "id"
-    static let URL              = "url" // permalink
-    static let Created          = "created"
-    static let Updated          = "updated"
-    static let Format           = "format"
-    static let Language         = "language"
-    static let ThumbnailS       = "thumbnailsmallurl"
-    static let ThumbnailXL      = "thumbnailxlargeurl"
-    static let ThumbnailXXL     = "thumbnailxxlargeurl"
-    
-    static let names = [
-        Title,
-        DownloadUrl,
-        ID,
-        URL,
-        Updated,
-        Format,
-        ThumbnailXL,
-        ThumbnailXXL,
-        ThumbnailS,
-        Created,
-        Language
-    ]
-
-}
-
 class SlideshareItemsParser : NSObject, XMLParserDelegate {
     
     var currentData:(slide:Slideshow, attr:String?)?
@@ -83,7 +53,7 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
         
         if currentData != nil  {
             
-            currentData!.attr = DocumentField.names.contains(elementName.lowercased()) ? elementName.lowercased() : nil
+            currentData!.attr = SlidehareItem.names.contains(elementName.lowercased()) ? elementName.lowercased() : nil
 
         }
         else {

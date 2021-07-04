@@ -18,6 +18,10 @@
 		5F3A6E742690F1B5001A3F9F /* SlideshareXML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E622690D240001A3F9F /* SlideshareXML.swift */; };
 		5F3A6E752690F1B5001A3F9F /* SlideshareApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E5E2690C0F0001A3F9F /* SlideshareApi.swift */; };
 		5F3A6E762690F1B5001A3F9F /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E602690C414001A3F9F /* String+Extensions.swift */; };
+		5F6804E82691EBA300E114FA /* SlideshareResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6804E72691EBA300E114FA /* SlideshareResult.swift */; };
+		5F6804E92691EBA300E114FA /* SlideshareResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6804E72691EBA300E114FA /* SlideshareResult.swift */; };
+		5F6804EB2691F8AD00E114FA /* SlideshareItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6804EA2691F8AD00E114FA /* SlideshareItem.swift */; };
+		5F6804EC2691F8AD00E114FA /* SlideshareItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6804EA2691F8AD00E114FA /* SlideshareItem.swift */; };
 		5F88CD6C2691D09700D27865 /* Slideshows.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5F88CD6B2691D09700D27865 /* Slideshows.xml */; };
 		5FCEB900240C51D600F9885A /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCEB8FF240C51D600F9885A /* App.swift */; };
 		5FCEB902240C51D600F9885A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCEB901240C51D600F9885A /* ContentView.swift */; };
@@ -48,6 +52,8 @@
 		5F3A6E6A2690EEB4001A3F9F /* slidesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slidesTests.swift; sourceTree = "<group>"; };
 		5F3A6E6C2690EEB5001A3F9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F3A6E722690EF3A001A3F9F /* slideshare.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = slideshare.plist; sourceTree = "<group>"; };
+		5F6804E72691EBA300E114FA /* SlideshareResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshareResult.swift; sourceTree = "<group>"; };
+		5F6804EA2691F8AD00E114FA /* SlideshareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshareItem.swift; sourceTree = "<group>"; };
 		5F88CD6B2691D09700D27865 /* Slideshows.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Slideshows.xml; sourceTree = "<group>"; };
 		5FCEB8FC240C51D600F9885A /* slides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slides.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FCEB8FF240C51D600F9885A /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -112,8 +118,10 @@
 			children = (
 				5F3A6E602690C414001A3F9F /* String+Extensions.swift */,
 				5F20660B2691C6DD003B819A /* Publisher+Extensions.swift */,
+				5F6804EA2691F8AD00E114FA /* SlideshareItem.swift */,
 				5F3A6E622690D240001A3F9F /* SlideshareXML.swift */,
 				5F3A6E5E2690C0F0001A3F9F /* SlideshareApi.swift */,
+				5F6804E72691EBA300E114FA /* SlideshareResult.swift */,
 				A05CB1F3268F59B9001F26E4 /* SearchBar.swift */,
 				5FCEB8FF240C51D600F9885A /* App.swift */,
 				5FCEB901240C51D600F9885A /* ContentView.swift */,
@@ -239,11 +247,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F6804E92691EBA300E114FA /* SlideshareResult.swift in Sources */,
 				5F3A6E742690F1B5001A3F9F /* SlideshareXML.swift in Sources */,
 				5F3A6E752690F1B5001A3F9F /* SlideshareApi.swift in Sources */,
 				5F3A6E762690F1B5001A3F9F /* String+Extensions.swift in Sources */,
 				5F3A6E6B2690EEB4001A3F9F /* slidesTests.swift in Sources */,
 				5F20660D2691C6DD003B819A /* Publisher+Extensions.swift in Sources */,
+				5F6804EC2691F8AD00E114FA /* SlideshareItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,8 +264,10 @@
 				5FCEB902240C51D600F9885A /* ContentView.swift in Sources */,
 				5FCEB900240C51D600F9885A /* App.swift in Sources */,
 				A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */,
+				5F6804E82691EBA300E114FA /* SlideshareResult.swift in Sources */,
 				5F3A6E5F2690C0F0001A3F9F /* SlideshareApi.swift in Sources */,
 				5F3A6E612690C414001A3F9F /* String+Extensions.swift in Sources */,
+				5F6804EB2691F8AD00E114FA /* SlideshareItem.swift in Sources */,
 				5F3A6E632690D240001A3F9F /* SlideshareXML.swift in Sources */,
 				5F20660C2691C6DD003B819A /* Publisher+Extensions.swift in Sources */,
 				A05CB1F6268F59F5001F26E4 /* SearchSlides.swift in Sources */,

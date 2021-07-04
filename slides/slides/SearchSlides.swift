@@ -9,16 +9,24 @@
 import SwiftUI
 
 struct SearchSlidesView: View {
-    @State var searchText:String = ""
+    @StateObject var slidesResult = SlideShareResult()
     
+    let columns = [
+            GridItem(.adaptive(minimum: 80))
+        ]
+
     var body: some View {
         
-        
-        SearchBar( text: $searchText ) {
-            VStack {
-                Text("Hello, world!")
-                    .padding()
-                Button( "test", action: {} )
+        SearchBar( text: $slidesResult.searchText ) {
+            
+            ScrollView {
+                LazyVGrid( columns: columns) {
+
+                    ForEach(slidesResult.data, id: \.id) { item in
+                        Text( item.id )
+                    }
+                }
+                .padding(.horizontal)
             }
         }
     }
