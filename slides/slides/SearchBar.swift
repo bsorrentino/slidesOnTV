@@ -15,7 +15,7 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
     
     @Binding var text: String
     var placeholder: String = ""
-    @ViewBuilder var content: Content
+    @ViewBuilder var content: () -> Content
 
     class Coordinator: NSObject, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
 
@@ -56,7 +56,7 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<SearchBar>) -> UIViewControllerType {
 
-        let topController = UIHostingController(rootView: content )
+        let topController = UIHostingController(rootView: content() )
         
         let searchController =  UISearchController(searchResultsController: topController)
         searchController.searchResultsUpdater = context.coordinator
@@ -75,10 +75,18 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: UIViewControllerRepresentableContext<SearchBar>) {
         log.trace( "updateUIViewController" )
         
-        let vc = uiViewController.children.first as? UISearchContainerViewController
-         
-         vc?.searchController.searchBar.text = nil
+       
+        if let vc = uiViewController.children.first as? UISearchContainerViewController {
 
+            if let searchResultController = vc.searchController.searchResultsController, let host = searchResultController as? UIHostingController<Content> {
+                
+                host.rootView = content()
+            }
+//            if( vc.searchController.searchBar.text != nil ) {
+//                vc.searchController.searchBar.text = nil
+//            }
+
+        }
     }
 
 }
