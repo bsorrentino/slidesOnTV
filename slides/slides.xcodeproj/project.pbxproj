@@ -28,6 +28,7 @@
 		5FCEB904240C51D600F9885A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FCEB903240C51D600F9885A /* Assets.xcassets */; };
 		5FCEB907240C51D600F9885A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FCEB906240C51D600F9885A /* Preview Assets.xcassets */; };
 		5FCEB90A240C51D600F9885A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FCEB908240C51D600F9885A /* LaunchScreen.storyboard */; };
+		5FEA94A32693061E002D228A /* XCode+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA94A22693061E002D228A /* XCode+Utils.swift */; };
 		A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F3268F59B9001F26E4 /* SearchBar.swift */; };
 		A05CB1F6268F59F5001F26E4 /* SearchSlides.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */; };
 /* End PBXBuildFile section */
@@ -62,6 +63,7 @@
 		5FCEB906240C51D600F9885A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5FCEB909240C51D600F9885A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5FCEB90B240C51D600F9885A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FEA94A22693061E002D228A /* XCode+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCode+Utils.swift"; sourceTree = "<group>"; };
 		A05CB1F3268F59B9001F26E4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSlides.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +118,7 @@
 		5FCEB8FE240C51D600F9885A /* slides */ = {
 			isa = PBXGroup;
 			children = (
+				5FEA94A22693061E002D228A /* XCode+Utils.swift */,
 				5F3A6E602690C414001A3F9F /* String+Extensions.swift */,
 				5F20660B2691C6DD003B819A /* Publisher+Extensions.swift */,
 				5F6804EA2691F8AD00E114FA /* SlideshareItem.swift */,
@@ -261,6 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FEA94A32693061E002D228A /* XCode+Utils.swift in Sources */,
 				5FCEB902240C51D600F9885A /* ContentView.swift in Sources */,
 				5FCEB900240C51D600F9885A /* App.swift in Sources */,
 				A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */,

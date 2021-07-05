@@ -37,10 +37,25 @@ class SlideShareResult :  ObservableObject {
                 self.query(searchText: text)
             })
             .store(in: &subscriptions)
+        
     }
     
     func query( searchText: String ) -> Void {
         
+        if isInPreviewMode {
+            
+            data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00000"] ))
+            data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00001"] ))
+            data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00002"] ))
+            data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00003"] ))
+            data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00004"] ))
+            data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00005"] ))
+            data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00006"] ))
+            data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00007"] ))
+            
+            return
+        }
+
         let credentials = try? SlideshareApi.getCredential()
 
         let api = SlideshareApi()

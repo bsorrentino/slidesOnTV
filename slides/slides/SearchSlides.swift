@@ -12,7 +12,9 @@ struct SearchSlidesView: View {
     @StateObject var slidesResult = SlideShareResult()
     
     let columns = [
-            GridItem(.adaptive(minimum: 80))
+            GridItem(.fixed(550)),
+            GridItem(.fixed(550)),
+            GridItem(.fixed(550)),
         ]
 
     var body: some View {
@@ -23,7 +25,13 @@ struct SearchSlidesView: View {
                 LazyVGrid( columns: columns) {
 
                     ForEach(slidesResult.data, id: \.id) { item in
-                        Text( item.id )
+                        Button( action: {} ) {
+                            Text( "\(item.id)")
+                                .padding(150.0)
+                            
+                        }
+                        .buttonStyle(CardButtonStyle())
+                        
                     }
                 }
                 .padding(.horizontal)

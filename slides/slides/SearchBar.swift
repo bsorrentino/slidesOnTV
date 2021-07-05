@@ -14,6 +14,7 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
     typealias UIViewControllerType = UINavigationController
     
     @Binding var text: String
+    
     var placeholder: String = ""
     @ViewBuilder var content: () -> Content
 
@@ -31,8 +32,18 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
         // Called when user selects one of the search suggestion buttons displayed under the keyboard on tvOS.
         func updateSearchResults(for searchController: UISearchController) {
             log.trace( "updateSearchResults text = \(searchController.searchBar.text ?? "")")
-            self.text = searchController.searchBar.text ?? ""
-
+            
+            if isInPreviewMode {
+                self.text = "test in preview"
+                return
+            }
+            
+            // IMPORTANT!!!
+            // only if text has changed it will be reassigned.
+            // reassignment implies a content view update
+            if( self.text != searchController.searchBar.text ) {
+                self.text = searchController.searchBar.text ?? ""
+            }
         }
         
         // Called when user selects one of the search suggestion buttons displayed under the keyboard on tvOS.
@@ -73,18 +84,17 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: UIViewControllerRepresentableContext<SearchBar>) {
-        log.trace( "updateUIViewController" )
+        log.trace( "updateUIViewController - searchText:\(text)" )
         
-       
         if let vc = uiViewController.children.first as? UISearchContainerViewController {
 
             if let searchResultController = vc.searchController.searchResultsController, let host = searchResultController as? UIHostingController<Content> {
                 
                 host.rootView = content()
             }
-//            if( vc.searchController.searchBar.text != nil ) {
-//                vc.searchController.searchBar.text = nil
-//            }
+//          if( vc.searchController.searchBar.text != nil ) {
+//              vc.searchController.searchBar.text = nil
+//          }
 
         }
     }
