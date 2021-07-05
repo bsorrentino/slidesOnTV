@@ -40,8 +40,19 @@ struct SlidehareItem : Identifiable {
     let data:Slideshow
     
     var id: String {
-        return self.data[SlidehareItem.ITEMID]!
+        self.data[SlidehareItem.ITEMID]!
     }
 
-    
+    var thumbnailS: String {
+        return "http:\(self.data[SlidehareItem.ThumbnailS]!)"
+    }
+
+    var thumbnailXL: String {
+        "http:\(self.data[SlidehareItem.ThumbnailXL]!)"
+    }
+
+    var thumbnailXXL: String {
+        "http:\(self.data[SlidehareItem.ThumbnailXXL]!)"
+    }
+
 }
