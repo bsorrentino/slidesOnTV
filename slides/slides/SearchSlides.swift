@@ -19,22 +19,41 @@ struct SearchSlidesView: View {
         ]
 
     func Thumbnail(url:String) -> some View {
-        WebImage(url: URL(string: url ) )
-        // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
-        .onSuccess { image, data, cacheType in
-            // Success
-            // Note: Data exist only when queried from disk cache or network. Use `.queryMemoryData` if you really need data
+        
+        Group {
+            if( isInPreviewMode ) {
+                Image("slideshow")
+                    .resizable()
+                    .scaledToFit()
+            }
+            else {
+                WebImage(url: URL(string: url ) )
+                    // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
+                    .onSuccess { image, data, cacheType in
+                        // Success
+                        // Note: Data exist only when queried from disk cache or network. Use `.queryMemoryData` if you really need data
+                    }
+                    .resizable() // Resizable like SwiftUI.Image, you must use this modifier or the view will use the image bitmap size
+                    .placeholder(Image(systemName: "photo")) // Placeholder Image
+                    // Supports ViewBuilder as well
+                    .placeholder {
+                        Rectangle().foregroundColor(.gray)
+                    }
+                    .indicator(.activity) // Activity Indicator
+                    .transition(.fade(duration: 0.5)) // Fade Transition with duration
+                    .scaledToFit()
+            }
         }
-        .resizable() // Resizable like SwiftUI.Image, you must use this modifier or the view will use the image bitmap size
-        .placeholder(Image(systemName: "photo")) // Placeholder Image
-        // Supports ViewBuilder as well
-        .placeholder {
-            Rectangle().foregroundColor(.gray)
-        }
-        .indicator(.activity) // Activity Indicator
-        .transition(.fade(duration: 0.5)) // Fade Transition with duration
-        .scaledToFit()
 
+    }
+    
+    func Title( _ text:String ) -> some View {
+        Text( text )
+            .font(.footnote)
+            .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+            .fixedSize(horizontal: false, vertical: true)
+            .lineLimit(/*@START_MENU_TOKEN@*/2/*@END_MENU_TOKEN@*/)
+            .frame( maxWidth: 500 )
     }
     
     var body: some View {
@@ -43,19 +62,19 @@ struct SearchSlidesView: View {
             
             ScrollView {
                 LazyVGrid( columns: columns) {
-
                     ForEach(slidesResult.data, id: \.id) { item in
                         Button( action: {} ) {
-                            VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: 5 ) {
+                            VStack( alignment:.leading, spacing: 5 ) {
                                 Thumbnail( url:item.thumbnailXXL )
                                     .frame(width: 500, height: 400, alignment: .center)
-                                Text( "\(item.id)")
+                                Divider()
+                                Title( "\(item.title)")
+                                    .frame( maxWidth: 500 )
                             }
                             .padding()
-                            
+                            .background(Color.white)
                         }
                         .buttonStyle(CardButtonStyle())
-                        
                     }
                 }
                 .padding(.horizontal)

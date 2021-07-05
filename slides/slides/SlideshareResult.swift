@@ -44,8 +44,12 @@ class SlideShareResult :  ObservableObject {
         
         if isInPreviewMode {
             
-            data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00000"] ))
-            data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00001"] ))
+            data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00000", SlidehareItem.Title:"Title for 000000"] ))
+            data.append( SlidehareItem( data:[
+                                        SlidehareItem.ITEMID:"00001",
+                                            SlidehareItem.Title: """
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse facilisis tincidunt sapien eget euismod. Aenean vulputate ligula a orci molestie malesuada. Phasellus tempus tincidunt turpis eu finibus. Aliquam tempus aliquam.
+                                            """]))
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00002"] ))
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00003"] ))
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00004"] ))

@@ -43,16 +43,33 @@ struct SlidehareItem : Identifiable {
         self.data[SlidehareItem.ITEMID]!
     }
 
+    var title: String {
+        guard let result = self.data[SlidehareItem.Title] else {
+            return ""
+        }
+        return result
+
+    }
+
     var thumbnailS: String {
-        return "http:\(self.data[SlidehareItem.ThumbnailS]!)"
+        guard let result = self.data[SlidehareItem.ThumbnailS] else {
+            return ""
+        }
+        return "http:\(result)"
     }
 
     var thumbnailXL: String {
-        "http:\(self.data[SlidehareItem.ThumbnailXL]!)"
+        guard let result = self.data[SlidehareItem.ThumbnailXL] else {
+            return ""
+        }
+        return "http:\(result)"
     }
 
     var thumbnailXXL: String {
-        "http:\(self.data[SlidehareItem.ThumbnailXXL]!)"
+        guard let result = self.data[SlidehareItem.ThumbnailXXL] else {
+            return ""
+        }
+        return "http:\(result)"
     }
 
 }
