@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "tv",
-      "filename" : "slideontv-tsw3.png",
+      "filename" : "slidesontv-appicon-small.png",
       "scale" : "1x"
     },
     {
       "idiom" : "tv",
+      "filename" : "slidesontv-appicon-small@x2.png",
       "scale" : "2x"
     }
   ],
