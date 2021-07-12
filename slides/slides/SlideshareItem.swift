@@ -23,6 +23,13 @@ struct SlidehareItem : Identifiable {
     static let ThumbnailXL      = "thumbnailxlargeurl"
     static let ThumbnailXXL     = "thumbnailxxlargeurl"
     
+    static let Query        = "query"
+    static let ResultOffset = "resultoffset"
+    static let NumResults   = "numresults"
+    static let TotalResults = "totalresults"
+
+    static let Message = "message"
+
     static let names = [
         Title,
         DownloadUrl,
@@ -34,7 +41,15 @@ struct SlidehareItem : Identifiable {
         ThumbnailXXL,
         ThumbnailS,
         Created,
-        Language
+        Language,
+        // META
+        Query,
+        ResultOffset,
+        NumResults,
+        TotalResults,
+        // Error
+        Message
+
     ]
     
     let data:Slideshow

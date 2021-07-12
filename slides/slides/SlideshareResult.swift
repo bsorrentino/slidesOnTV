@@ -41,7 +41,7 @@ class SlideShareResult :  ObservableObject {
     }
     
     func query( searchText: String ) -> Void {
-        
+    
         if isInPreviewMode {
             
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00000", SlidehareItem.Title:"Title for 000000"] ))
@@ -60,6 +60,11 @@ class SlideShareResult :  ObservableObject {
             return
         }
 
+        if searchText.isEmpty  {
+            log.trace( "search is empty")
+            return
+        }
+        
         let credentials = try? SlideshareApi.getCredential()
 
         let api = SlideshareApi()

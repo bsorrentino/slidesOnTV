@@ -9,11 +9,36 @@
 import Foundation
 import Combine
 
+struct SlideshowsMeta  {
+    var Query:String
+    var ResultOffset:String?
+    var NumResults:Int
+    var TotalResults:Int
+    
+    init( slide:Slideshow ) {
+        Query = slide[SlidehareItem.Query]!
+        ResultOffset = slide[SlidehareItem.ResultOffset]
+        NumResults = Int( slide[SlidehareItem.NumResults]! )!
+        TotalResults = Int( slide[SlidehareItem.TotalResults]! )!
+    }
+}
+
+struct SlideshowsError  {
+    var Message:String?
+    
+    init( slide:Slideshow ) {
+        Message = slide[SlidehareItem.Message]
+    }
+}
+
+
 class SlideshareItemsParser : NSObject, XMLParserDelegate {
     
     var currentData:(slide:Slideshow, attr:String?)?
     
-    var currentError:String?
+    var currentError:SlideshowsError?
+    var meta:SlideshowsMeta?
+    
     
     private var subject = PassthroughSubject<Slideshow, Error>()
     
@@ -34,8 +59,9 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
     
     func parserDidEndDocument(_ parser: XMLParser) {
         
-        if let err = currentError {
-            subject.send(completion: .failure(err))
+        if let error = currentError {
+            subject.send(completion: .failure( error.Message ?? "Unknow Error"))
+            currentError = nil
             return
         }
         
@@ -46,20 +72,22 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
         
         //log.trace( "didStartElement( \(elementName) )" )
 
-        if elementName == "SlideShareServiceError" {
-            currentError = ""
-            return
-        }
-        
         if currentData != nil  {
             
-            currentData!.attr = SlidehareItem.names.contains(elementName.lowercased()) ? elementName.lowercased() : nil
+            // currentData!.attr = SlidehareItem.names.contains(elementName.lowercased()) ? elementName.lowercased() : nil
+            currentData!.attr = elementName.lowercased()
 
         }
         else {
+            // log.trace( "start \(elementName) - \(attributeDict)")
             
             if( elementName == "Slideshow" ) {
-                //log.trace( "start \(elementName) - \(attributeDict)")
+                currentData = (slide:Slideshow(), attr:nil)
+            }
+            else if( elementName == "Meta") {
+                currentData = (slide:Slideshow(), attr:nil)
+            }
+            else if( elementName == "SlideShareServiceError" ) {
                 currentData = (slide:Slideshow(), attr:nil)
             }
         }
@@ -70,17 +98,20 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
         
         //log.trace( "didEndElement( \(elementName) )" )
         
-        if currentError != nil { return }
+        if let data = currentData?.slide {
         
-        let e = elementName.lowercased()
-        
-        if let data = currentData {
-        
-            if e == "slideshow" {
-
-                //log.trace( "didEndElement send( \(data.slide) )" )
-                subject.send(data.slide)
-
+            if elementName == "Slideshow" {
+                log.trace( "send( \(data) )" )
+                subject.send(data)
+                currentData = nil
+            }
+            else if elementName == "Meta" {
+                meta = SlideshowsMeta(slide: data)
+                currentData = nil
+            }
+            else if( elementName == "SlideShareServiceError" ) {
+                log.error( "error \(data)" )
+                currentError = SlideshowsError(slide: data)
                 currentData = nil
             }
 
@@ -88,10 +119,6 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
     }
 
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        
-        if let err = currentError {
-            currentError = err + string
-        }
         
         if let data = currentData, let attr = data.attr {
     
