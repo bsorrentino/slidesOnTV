@@ -101,7 +101,7 @@ class SlideshareItemsParser : NSObject, XMLParserDelegate {
         if let data = currentData?.slide {
         
             if elementName == "Slideshow" {
-                log.trace( "send( \(data) )" )
+                //log.trace( "send( \(data) )" )
                 subject.send(data)
                 currentData = nil
             }

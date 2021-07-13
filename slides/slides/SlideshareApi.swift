@@ -103,7 +103,7 @@ class SlideshareApi /*: ObservableObject */ {
         return URLSession.shared.dataTaskPublisher(for: request)
     }
 
-    func query( credentials:Credentials, query:String ) throws ->  URLSession.DataTaskPublisher {
+    func query( credentials:Credentials, query:String, page:Int = 1 ) throws ->  URLSession.DataTaskPublisher {
         
         let qs = prepareQueryString( credentials:credentials, [
                                         "q":query,
@@ -112,9 +112,10 @@ class SlideshareApi /*: ObservableObject */ {
                                         "format": "pdf", // seems that doesn't work
                                         "download":"0",
                                         "items_per_page":"50",
-                                        "sort": "latest"
+                                        "sort": "latest",
+                                        "page":String(page)
                                         //"sort":"latest",
-                                        //"file_type":"presentations"
+                                        //"file_type":"presentations",
                                     ])
         
         guard let requestURL = URL(string: "https://www.slideshare.net/api/2/search_slideshows?\(qs)" ) else

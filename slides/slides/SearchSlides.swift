@@ -11,7 +11,7 @@ import SDWebImageSwiftUI
 
 struct SearchSlidesView: View {
     @StateObject var slidesResult = SlideShareResult()
-    
+
     let columns = [
             GridItem(.fixed(550)),
             GridItem(.fixed(550)),
@@ -56,6 +56,23 @@ struct SearchSlidesView: View {
             .frame( maxWidth: 500 )
     }
     
+    var NextPage: some View {
+        Group {
+            if( slidesResult.hasMoreItems ) {
+                Button( action: {
+                    slidesResult.nextPage()
+                } ) {
+                    Text( "More Result ..." )
+                        .font( .largeTitle)
+                        .padding()
+                }.buttonStyle(CardButtonStyle())
+            }
+            else {
+                EmptyView()
+            }
+        }
+    }
+    
     var body: some View {
         
         SearchBar( text: $slidesResult.searchText ) {
@@ -76,6 +93,8 @@ struct SearchSlidesView: View {
                         }
                         .buttonStyle(CardButtonStyle())
                     }
+                    NextPage
+                    
                 }
                 .padding(.horizontal)
             }
