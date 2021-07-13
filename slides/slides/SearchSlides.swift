@@ -11,7 +11,8 @@ import SDWebImageSwiftUI
 
 struct SearchSlidesView: View {
     @StateObject var slidesResult = SlideShareResult()
-
+    @StateObject var downloadManager = DownloadManager()
+    
     let columns = [
             GridItem(.fixed(550)),
             GridItem(.fixed(550)),
@@ -73,32 +74,47 @@ struct SearchSlidesView: View {
         }
     }
     
+    
     var body: some View {
-        
-        SearchBar( text: $slidesResult.searchText ) {
+        NavigationView {
             
-            ScrollView {
-                LazyVGrid( columns: columns) {
-                    ForEach(slidesResult.data, id: \.id) { item in
-                        Button( action: {} ) {
-                            VStack( alignment:.leading, spacing: 5 ) {
-                                Thumbnail( url:item.thumbnailXXL )
-                                    .frame(width: 500, height: 400, alignment: .center)
-                                Divider()
-                                Title( "\(item.title)")
-                                    .frame( maxWidth: 500 )
-                            }
-                            .padding()
-                            .background(Color.white)
-                        }
-                        .buttonStyle(CardButtonStyle())
-                    }
-                    NextPage
+            ZStack {
+                NavigationLink(destination: PresentationView().environmentObject(downloadManager),
+                               isActive: $downloadManager.downloadedItem) { EmptyView() }
+                    .hidden()
+                
+                SearchBar( text: $slidesResult.searchText ) {
                     
+                    ScrollView {
+                        LazyVGrid( columns: columns) {
+                            
+                            ForEach(slidesResult.data, id: \.id) { item in
+                                
+                                Button( action: {
+                                    self.downloadManager.downloadInfo = item.downloadUrl
+                                }) {
+                                    VStack( alignment:.leading, spacing: 5 ) {
+                                        Thumbnail( url:item.thumbnailXXL )
+                                            .frame(width: 500, height: 400, alignment: .center)
+                                        Divider()
+                                        Title( "\(item.title)")
+                                            .frame( maxWidth: 500 )
+                                    }
+                                    .padding()
+                                    .background(Color.white)
+                                }
+                                .buttonStyle(CardButtonStyle())
+                            }
+                        }
+                        NextPage
+                        
+                    }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
+                
             }
         }
+        
     }
 }
 

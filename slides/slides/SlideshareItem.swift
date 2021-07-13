@@ -14,7 +14,7 @@ struct SlidehareItem : Identifiable {
     static let Title            = "title"
     static let DownloadUrl      = "downloadurl"
     static let ITEMID           = "id"
-    static let URL              = "url" // permalink
+    static let Url              = "url" // permalink
     static let Created          = "created"
     static let Updated          = "updated"
     static let Format           = "format"
@@ -34,7 +34,7 @@ struct SlidehareItem : Identifiable {
         Title,
         DownloadUrl,
         ITEMID,
-        URL,
+        Url,
         Updated,
         Format,
         ThumbnailXL,
@@ -63,6 +63,13 @@ struct SlidehareItem : Identifiable {
             return ""
         }
         return result
+
+    }
+    var downloadUrl: URL? {
+        guard let result = self.data[SlidehareItem.DownloadUrl] else {
+            return nil
+        }
+        return URL(string:result)
 
     }
 

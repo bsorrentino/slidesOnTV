@@ -28,6 +28,8 @@
 		5FB7EA94269DE71A00B849C0 /* TiledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7EA93269DE71A00B849C0 /* TiledView.swift */; };
 		5FB7EA97269DE7D700B849C0 /* PDFReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7EA95269DE7D700B849C0 /* PDFReaderView.swift */; };
 		5FB7EA98269DE7D700B849C0 /* PDFReader+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7EA96269DE7D700B849C0 /* PDFReader+UIKit.swift */; };
+		5FB7EA9A269DF79A00B849C0 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7EA99269DF79A00B849C0 /* DownloadManager.swift */; };
+		5FB7EA9C269E306F00B849C0 /* PresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7EA9B269E306F00B849C0 /* PresentationView.swift */; };
 		5FCEB900240C51D600F9885A /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCEB8FF240C51D600F9885A /* App.swift */; };
 		5FCEB902240C51D600F9885A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCEB901240C51D600F9885A /* ContentView.swift */; };
 		5FCEB904240C51D600F9885A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FCEB903240C51D600F9885A /* Assets.xcassets */; };
@@ -67,6 +69,8 @@
 		5FB7EA93269DE71A00B849C0 /* TiledView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiledView.swift; sourceTree = "<group>"; };
 		5FB7EA95269DE7D700B849C0 /* PDFReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFReaderView.swift; sourceTree = "<group>"; };
 		5FB7EA96269DE7D700B849C0 /* PDFReader+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PDFReader+UIKit.swift"; sourceTree = "<group>"; };
+		5FB7EA99269DF79A00B849C0 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		5FB7EA9B269E306F00B849C0 /* PresentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationView.swift; sourceTree = "<group>"; };
 		5FCEB8FC240C51D600F9885A /* slides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slides.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FCEB8FF240C51D600F9885A /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		5FCEB901240C51D600F9885A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -144,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				5FEA94A22693061E002D228A /* XCode+Utils.swift */,
+				5FB7EA99269DF79A00B849C0 /* DownloadManager.swift */,
 				5F3A6E602690C414001A3F9F /* String+Extensions.swift */,
 				5F20660B2691C6DD003B819A /* Publisher+Extensions.swift */,
 				5F6804EA2691F8AD00E114FA /* SlideshareItem.swift */,
@@ -154,6 +159,7 @@
 				5FCEB8FF240C51D600F9885A /* App.swift */,
 				5FCEB901240C51D600F9885A /* ContentView.swift */,
 				A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */,
+				5FB7EA9B269E306F00B849C0 /* PresentationView.swift */,
 				5FCEB903240C51D600F9885A /* Assets.xcassets */,
 				5FCEB908240C51D600F9885A /* LaunchScreen.storyboard */,
 				5FCEB90B240C51D600F9885A /* Info.plist */,
@@ -303,11 +309,13 @@
 				5F6804E82691EBA300E114FA /* SlideshareResult.swift in Sources */,
 				5FB7EA94269DE71A00B849C0 /* TiledView.swift in Sources */,
 				5F3A6E5F2690C0F0001A3F9F /* SlideshareApi.swift in Sources */,
+				5FB7EA9A269DF79A00B849C0 /* DownloadManager.swift in Sources */,
 				5FB7EA90269DE6FE00B849C0 /* PDFPageView.swift in Sources */,
 				5F3A6E612690C414001A3F9F /* String+Extensions.swift in Sources */,
 				5F6804EB2691F8AD00E114FA /* SlideshareItem.swift in Sources */,
 				5F3A6E632690D240001A3F9F /* SlideshareXML.swift in Sources */,
 				5F20660C2691C6DD003B819A /* Publisher+Extensions.swift in Sources */,
+				5FB7EA9C269E306F00B849C0 /* PresentationView.swift in Sources */,
 				5FB7EA91269DE6FE00B849C0 /* PDFDocument.swift in Sources */,
 				5FB7EA98269DE7D700B849C0 /* PDFReader+UIKit.swift in Sources */,
 				A05CB1F6268F59F5001F26E4 /* SearchSlides.swift in Sources */,
