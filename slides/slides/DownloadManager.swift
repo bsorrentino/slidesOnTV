@@ -13,7 +13,6 @@ class DownloadManager : ObservableObject {
     
     typealias Progress = (Double,TimeInterval?)
     
-    @Published var downloadedItem:Bool = false
     @Published var downloadProgress:Progress?
 
     
@@ -33,14 +32,13 @@ class DownloadManager : ObservableObject {
         
     }
     func isDownloading( item:SlidehareItem ) -> Bool {
-        guard let id = itemId, let _ = downloadProgress, downloadedItem==false, id==item.id else {
+        guard let id = itemId, let progress = downloadProgress, progress.0 < 1, id==item.id else {
             return false
         }
         return true
     }
     
     private func reset() {
-        downloadedItem = false
         downloadProgress = nil
         
         if let task = downloadTask {
@@ -51,8 +49,12 @@ class DownloadManager : ObservableObject {
         }
     }
     
-    func download( item: SlidehareItem ) {
-        guard let downloadURL = item.downloadUrl else {return }
+    
+    func download( item: SlidehareItem, completionHandler: @escaping (Bool) -> Void )  {
+        
+        guard let downloadURL = item.downloadUrl else {
+            return
+        }
         
         reset()
         
@@ -61,17 +63,17 @@ class DownloadManager : ObservableObject {
             let request = URLRequest(url:downloadURL)
             
             let session = URLSession(configuration: URLSessionConfiguration.default)
-
+            
             let destinationFileUrl =
                 try FileManager().url(for: .cachesDirectory,
                                       in: .userDomainMask,
                                       appropriateFor: nil,
                                       create: false).appendingPathComponent("presentation.pdf")
-
+            
             self.itemId = item.id
             
             downloadTask = session.downloadTask(with: request) { [self] (tempLocalUrl, response, error) in
-            
+                
                 if let error = error  {
                     log.error("Error took place while downloading a file. Error description: \(error.localizedDescription)" )
                     return
@@ -81,12 +83,12 @@ class DownloadManager : ObservableObject {
                     log.error("Error file dodn't dowloaded. tempLocalUrl == nil" )
                     return
                 }
-            
+                
                 // Success
                 if let statusCode = (response as? HTTPURLResponse)?.statusCode {
                     log.trace("Successfully downloaded. Status code: \(statusCode)")
                 }
-                    
+                
                 do {
                     
                     // try FileManager.default.copyItem(at: tempLocalUrl, to: destinationFileUrl)
@@ -95,16 +97,15 @@ class DownloadManager : ObservableObject {
                         self.document = PDFDocument(url: url)
                         
                         DispatchQueue.main.async {
-                            log.trace( "result url: \(url)")
-                            self.downloadedItem = true
+                            completionHandler( true )
                         }
                     }
-
+                    
                 } catch (let writeError) {
                     log.error("Error creating a file \(destinationFileUrl) : \(writeError.localizedDescription)")
                 }
-                    
-
+                
+                
             }
             
             observation = downloadTask?.progress.observe(\.fractionCompleted ) { observationProgress, _ in
@@ -114,7 +115,7 @@ class DownloadManager : ObservableObject {
             }
             
             downloadTask?.resume()
- 
+            
         }
         catch {
             log.error( "download error \(error.localizedDescription)")

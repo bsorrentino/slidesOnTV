@@ -8,11 +8,12 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-
+import Combine
 
 struct SearchSlidesView: View {
     @StateObject var slidesResult = SlideShareResult()
     @StateObject var downloadManager = DownloadManager()
+    @State var isItemDownloaded:Bool = false
     
     let columns = [
             GridItem(.fixed(550)),
@@ -26,9 +27,9 @@ struct SearchSlidesView: View {
             Rectangle()
                 .fill( Color.white.opacity(0.5) )
                 .cornerRadius(10)
-                .shadow( color: Color.black, radius: 4 )
+                .shadow( color: Color.black, radius: 10 )
 
-            ProgressView( "Download \(self.downloadManager.downloadingDescription)", value: self.downloadManager.downloadProgress?.0, total:1)
+            ProgressView( "Download: \(self.downloadManager.downloadingDescription)", value: self.downloadManager.downloadProgress?.0, total:1)
                 .progressViewStyle(BlueShadowProgressViewStyle())
                 .padding()
                 
@@ -98,7 +99,7 @@ struct SearchSlidesView: View {
             
             ZStack {
                 NavigationLink(destination: PresentationView().environmentObject(downloadManager),
-                               isActive: $downloadManager.downloadedItem) { EmptyView() }
+                               isActive: $isItemDownloaded) { EmptyView() }
                     .hidden()
                 
                 SearchBar( text: $slidesResult.searchText ) {
@@ -110,7 +111,7 @@ struct SearchSlidesView: View {
                                 ForEach(slidesResult.data, id: \.id) { item in
                                     
                                     Button( action: {
-                                        self.downloadManager.download( item: item )
+                                        self.downloadManager.download( item: item )  { isItemDownloaded = $0 }
                                     }) {
                                         HStack( alignment:.center, spacing: 5 ) {
                                             Thumbnail( for: item )

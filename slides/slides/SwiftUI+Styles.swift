@@ -13,8 +13,8 @@ struct BlueShadowProgressViewStyle: ProgressViewStyle {
     func makeBody(configuration: Configuration) -> some View {
         ProgressView(configuration)
             .progressViewStyle( LinearProgressViewStyle())
-            .foregroundColor(.blue)
-            .font( .system(size: 16 ) )
+            .foregroundColor(.white)
+            .font( .system(size: 16 ).bold() )
             //.shadow(color: Color.blue, radius: 4.0, x: 1.0, y: 2.0)
     }
 }
