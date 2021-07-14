@@ -20,7 +20,7 @@ struct PresentationView: View {
                 PDFReaderContentView( document: doc )
             }
             else {
-                Text( "error loading presentation: \(String(describing: downloadInfo.downloadedUrl))")
+                Text( "error loading presentation")
             }
         }
         

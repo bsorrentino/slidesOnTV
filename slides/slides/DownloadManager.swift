@@ -11,29 +11,50 @@ import Combine
 
 class DownloadManager : ObservableObject {
     
-    typealias Input = URL
+    typealias Progress = (Double,TimeInterval?)
     
-    @Published var downloadInfo:Input?
     @Published var downloadedItem:Bool = false
+    @Published var downloadProgress:Progress?
+
     
-    private(set) var downloadedUrl:URL?
+    private var itemId:String?
     private(set) var document:PDFDocument?
-
-    private var subscriptions = Set<AnyCancellable>()
     
-    init() {
-        $downloadInfo
-            .sink(receiveValue: {
-                if let downloadUrl = $0 {
-                    self.download( fromURL: downloadUrl)
-                }
-
-            })
-            .store(in: &subscriptions)
+    private var downloadTask:URLSessionDownloadTask?
+    private var observation:NSKeyValueObservation?
+    private var subscriptions = Set<AnyCancellable>()
+        
+    var downloadingDescription:String {
+        guard let progress = downloadProgress else { return "" }
+        
+        let perc = Int(progress.0 * 100)
+        
+        return "\(perc)% - \(progress.1 ?? 0)"
         
     }
+    func isDownloading( item:SlidehareItem ) -> Bool {
+        guard let id = itemId, let _ = downloadProgress, downloadedItem==false, id==item.id else {
+            return false
+        }
+        return true
+    }
     
-    private func download( fromURL downloadURL:URL ) {
+    private func reset() {
+        downloadedItem = false
+        downloadProgress = nil
+        
+        if let task = downloadTask {
+            task.cancel()
+            observation = nil
+            itemId = nil
+            document = nil
+        }
+    }
+    
+    func download( item: SlidehareItem ) {
+        guard let downloadURL = item.downloadUrl else {return }
+        
+        reset()
         
         do {
             
@@ -47,7 +68,9 @@ class DownloadManager : ObservableObject {
                                       appropriateFor: nil,
                                       create: false).appendingPathComponent("presentation.pdf")
 
-            let task = session.downloadTask(with: request) { [self] (tempLocalUrl, response, error) in
+            self.itemId = item.id
+            
+            downloadTask = session.downloadTask(with: request) { [self] (tempLocalUrl, response, error) in
             
                 if let error = error  {
                     log.error("Error took place while downloading a file. Error description: \(error.localizedDescription)" )
@@ -73,7 +96,6 @@ class DownloadManager : ObservableObject {
                         
                         DispatchQueue.main.async {
                             log.trace( "result url: \(url)")
-                            self.downloadedUrl = url
                             self.downloadedItem = true
                         }
                     }
@@ -84,7 +106,14 @@ class DownloadManager : ObservableObject {
                     
 
             }
-            task.resume()
+            
+            observation = downloadTask?.progress.observe(\.fractionCompleted ) { observationProgress, _ in
+                DispatchQueue.main.async { [self] in
+                    downloadProgress = ( observationProgress.fractionCompleted, observationProgress.estimatedTimeRemaining)
+                }
+            }
+            
+            downloadTask?.resume()
  
         }
         catch {

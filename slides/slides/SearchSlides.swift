@@ -9,6 +9,7 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
+
 struct SearchSlidesView: View {
     @StateObject var slidesResult = SlideShareResult()
     @StateObject var downloadManager = DownloadManager()
@@ -19,6 +20,21 @@ struct SearchSlidesView: View {
             GridItem(.fixed(550)),
         ]
 
+    func DownloadProgress() -> some View {
+        
+        ZStack {
+            Rectangle()
+                .fill( Color.white.opacity(0.5) )
+                .cornerRadius(10)
+                .shadow( color: Color.black, radius: 4 )
+
+            ProgressView( "Download \(self.downloadManager.downloadingDescription)", value: self.downloadManager.downloadProgress?.0, total:1)
+                .progressViewStyle(BlueShadowProgressViewStyle())
+                .padding()
+                
+        }
+    }
+    
     func Thumbnail(for item: SlidehareItem) -> some View {
         
         Group {
@@ -94,17 +110,21 @@ struct SearchSlidesView: View {
                                 ForEach(slidesResult.data, id: \.id) { item in
                                     
                                     Button( action: {
-                                        self.downloadManager.downloadInfo = item.downloadUrl
+                                        self.downloadManager.download( item: item )
                                     }) {
                                         HStack( alignment:.center, spacing: 5 ) {
                                             Thumbnail( for: item )
                                             Divider()
                                             Title( "\(item.title)")
                                         }
+                                        .if( self.downloadManager.isDownloading(item: item) ) {
+                                            $0.overlay( DownloadProgress(), alignment: .bottom )
+                                        }
                                         .padding()
                                         .background(Color.white)
                                     }
                                     .buttonStyle(CardButtonStyle())
+                                    .disabled( self.downloadManager.isDownloading(item: item) )
                                 }
                                 NextPage
                             }

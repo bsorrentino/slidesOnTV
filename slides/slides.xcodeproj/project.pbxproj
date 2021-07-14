@@ -36,6 +36,8 @@
 		5FCEB907240C51D600F9885A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FCEB906240C51D600F9885A /* Preview Assets.xcassets */; };
 		5FCEB90A240C51D600F9885A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FCEB908240C51D600F9885A /* LaunchScreen.storyboard */; };
 		5FD5CE7B269ED569001046EA /* XCode+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA94A22693061E002D228A /* XCode+Utils.swift */; };
+		5FD5CE7D269F3B72001046EA /* SwiftUI+Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD5CE7C269F3B72001046EA /* SwiftUI+Condition.swift */; };
+		5FD5CE7F269F44E7001046EA /* SwiftUI+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD5CE7E269F44E7001046EA /* SwiftUI+Styles.swift */; };
 		5FEA94A32693061E002D228A /* XCode+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA94A22693061E002D228A /* XCode+Utils.swift */; };
 		5FEA94A626931CF0002D228A /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5FEA94A526931CF0002D228A /* SDWebImageSwiftUI */; };
 		A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F3268F59B9001F26E4 /* SearchBar.swift */; };
@@ -79,6 +81,8 @@
 		5FCEB906240C51D600F9885A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5FCEB909240C51D600F9885A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5FCEB90B240C51D600F9885A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FD5CE7C269F3B72001046EA /* SwiftUI+Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Condition.swift"; sourceTree = "<group>"; };
+		5FD5CE7E269F44E7001046EA /* SwiftUI+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Styles.swift"; sourceTree = "<group>"; };
 		5FEA94A22693061E002D228A /* XCode+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCode+Utils.swift"; sourceTree = "<group>"; };
 		A05CB1F3268F59B9001F26E4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSlides.swift; sourceTree = "<group>"; };
@@ -149,6 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				5FEA94A22693061E002D228A /* XCode+Utils.swift */,
+				5FD5CE7C269F3B72001046EA /* SwiftUI+Condition.swift */,
+				5FD5CE7E269F44E7001046EA /* SwiftUI+Styles.swift */,
 				5FB7EA99269DF79A00B849C0 /* DownloadManager.swift */,
 				5F3A6E602690C414001A3F9F /* String+Extensions.swift */,
 				5F20660B2691C6DD003B819A /* Publisher+Extensions.swift */,
@@ -157,10 +163,10 @@
 				5F3A6E5E2690C0F0001A3F9F /* SlideshareApi.swift */,
 				5F6804E72691EBA300E114FA /* SlideshareResult.swift */,
 				A05CB1F3268F59B9001F26E4 /* SearchBar.swift */,
-				5FCEB8FF240C51D600F9885A /* App.swift */,
-				5FCEB901240C51D600F9885A /* ContentView.swift */,
 				A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */,
 				5FB7EA9B269E306F00B849C0 /* PresentationView.swift */,
+				5FCEB901240C51D600F9885A /* ContentView.swift */,
+				5FCEB8FF240C51D600F9885A /* App.swift */,
 				5FCEB903240C51D600F9885A /* Assets.xcassets */,
 				5FCEB908240C51D600F9885A /* LaunchScreen.storyboard */,
 				5FCEB90B240C51D600F9885A /* Info.plist */,
@@ -304,9 +310,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FEA94A32693061E002D228A /* XCode+Utils.swift in Sources */,
+				5FD5CE7F269F44E7001046EA /* SwiftUI+Styles.swift in Sources */,
 				5FCEB902240C51D600F9885A /* ContentView.swift in Sources */,
 				5FCEB900240C51D600F9885A /* App.swift in Sources */,
 				A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */,
+				5FD5CE7D269F3B72001046EA /* SwiftUI+Condition.swift in Sources */,
 				5FB7EA97269DE7D700B849C0 /* PDFReaderView.swift in Sources */,
 				5F6804E82691EBA300E114FA /* SlideshareResult.swift in Sources */,
 				5FB7EA94269DE71A00B849C0 /* TiledView.swift in Sources */,
