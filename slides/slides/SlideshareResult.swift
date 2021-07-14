@@ -14,17 +14,15 @@ class SlideShareResult :  ObservableObject {
     @Published var searchText = ""
     @Published var data = [SlidehareItem]()
     
+    private(set) var totalItems:Int = 0
+    private(set) var currentPage:Int = 1
+    
     private var subscriptions = Set<AnyCancellable>()
     
-    var cancellable: AnyCancellable?
+    private var cancellable: AnyCancellable?
     
-    private func onCompletion( completion:Subscribers.Completion<Error> ) {
-        switch completion {
-        case .failure(let error):
-            log.error( "\(error.localizedDescription)")
-        case .finished:
-            log.debug("DONE!")
-        }
+    var hasMoreItems:Bool {
+        totalItems > data.count
     }
     
     /**
@@ -34,14 +32,29 @@ class SlideShareResult :  ObservableObject {
         $searchText
             .debounce(for: .seconds(1.0), scheduler: DispatchQueue.main)
             .sink(receiveValue: { text in
+                self.reset()
                 self.query(searchText: text)
             })
             .store(in: &subscriptions)
         
     }
     
+    private func reset() {
+        totalItems  = 0
+        currentPage = 1
+        data.removeAll()
+    }
+    
+    func nextPage() {
+        if( hasMoreItems ) {
+            
+            currentPage += 1
+            query( searchText: searchText )
+        }
+    }
+    
     func query( searchText: String ) -> Void {
-        
+    
         if isInPreviewMode {
             
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00000", SlidehareItem.Title:"Title for 000000"] ))
@@ -57,23 +70,39 @@ class SlideShareResult :  ObservableObject {
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00006"] ))
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00007"] ))
             
+            totalItems = 1000
             return
         }
 
+        if searchText.isEmpty  {
+            log.trace( "search is empty")
+            return
+        }
+        
         let credentials = try? SlideshareApi.getCredential()
 
         let api = SlideshareApi()
         
         let parser = SlideshareItemsParser()
         
-        if let query = try? api.query(credentials: credentials!, query:searchText) {
+        if let query = try? api.query(credentials: credentials!, query:searchText, page:currentPage) {
            
-            self.data.removeAll()
+            let onCompletion = { (completion:Subscribers.Completion<Error>) in
+                switch completion {
+                case .failure(let error):
+                    log.error( "\(error.localizedDescription)")
+                case .finished:
+                    self.totalItems = parser.meta?.TotalResults ?? 0
+                    log.debug("DONE! total:\(self.totalItems) - current: \(self.data.count)")
+                }
+            }
+           
             
             cancellable =
                 query.toGenericError()
                     .flatMap( { parser.parse($0.data) } )
                     .filter({ $0[SlidehareItem.Format]=="pdf" })
+                    //.print()
                     //.receive(on: RunLoop.main )
                     .sink(
                         receiveCompletion: onCompletion,

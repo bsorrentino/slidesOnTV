@@ -9,8 +9,10 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
+
 struct SearchSlidesView: View {
     @StateObject var slidesResult = SlideShareResult()
+    @StateObject var downloadManager = DownloadManager()
     
     let columns = [
             GridItem(.fixed(550)),
@@ -18,7 +20,22 @@ struct SearchSlidesView: View {
             GridItem(.fixed(550)),
         ]
 
-    func Thumbnail(url:String) -> some View {
+    func DownloadProgress() -> some View {
+        
+        ZStack {
+            Rectangle()
+                .fill( Color.white.opacity(0.5) )
+                .cornerRadius(10)
+                .shadow( color: Color.black, radius: 4 )
+
+            ProgressView( "Download \(self.downloadManager.downloadingDescription)", value: self.downloadManager.downloadProgress?.0, total:1)
+                .progressViewStyle(BlueShadowProgressViewStyle())
+                .padding()
+                
+        }
+    }
+    
+    func Thumbnail(for item: SlidehareItem) -> some View {
         
         Group {
             if( isInPreviewMode ) {
@@ -27,7 +44,7 @@ struct SearchSlidesView: View {
                     .scaledToFit()
             }
             else {
-                WebImage(url: URL(string: url ) )
+                WebImage(url: URL(string: item.thumbnail) )
                     // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
                     .onSuccess { image, data, cacheType in
                         // Success
@@ -44,42 +61,82 @@ struct SearchSlidesView: View {
                     .scaledToFit()
             }
         }
+        .frame(width: item.thumbnailSize.width, height: item.thumbnailSize.height, alignment: .center)
 
     }
     
     func Title( _ text:String ) -> some View {
         Text( text )
-            .font(.footnote)
+            .font(.system(size: 20).italic().weight(.light))
             .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
             .fixedSize(horizontal: false, vertical: true)
-            .lineLimit(/*@START_MENU_TOKEN@*/2/*@END_MENU_TOKEN@*/)
-            .frame( maxWidth: 500 )
+            .lineLimit(4)
+            .frame( maxWidth: 300 )
+            .padding()
     }
     
-    var body: some View {
-        
-        SearchBar( text: $slidesResult.searchText ) {
-            
-            ScrollView {
-                LazyVGrid( columns: columns) {
-                    ForEach(slidesResult.data, id: \.id) { item in
-                        Button( action: {} ) {
-                            VStack( alignment:.leading, spacing: 5 ) {
-                                Thumbnail( url:item.thumbnailXXL )
-                                    .frame(width: 500, height: 400, alignment: .center)
-                                Divider()
-                                Title( "\(item.title)")
-                                    .frame( maxWidth: 500 )
-                            }
-                            .padding()
-                            .background(Color.white)
-                        }
-                        .buttonStyle(CardButtonStyle())
-                    }
-                }
-                .padding(.horizontal)
+    var NextPage: some View {
+        Group {
+            if slidesResult.hasMoreItems {
+                Button( action: { slidesResult.nextPage() }) {
+                    Label( "More Result ...", systemImage: "arrow.right.doc.on.clipboard" )
+                        .foregroundColor(.blue)
+                        .padding()
+                        .background(Color.white)
+                }.buttonStyle(CardButtonStyle())
+            }
+            else {
+                EmptyView()
             }
         }
+            
+    }
+    
+    
+    var body: some View {
+        NavigationView {
+            
+            ZStack {
+                NavigationLink(destination: PresentationView().environmentObject(downloadManager),
+                               isActive: $downloadManager.downloadedItem) { EmptyView() }
+                    .hidden()
+                
+                SearchBar( text: $slidesResult.searchText ) {
+                    
+                    ScrollView {
+                        VStack {
+                            LazyVGrid( columns: columns) {
+                                
+                                ForEach(slidesResult.data, id: \.id) { item in
+                                    
+                                    Button( action: {
+                                        self.downloadManager.download( item: item )
+                                    }) {
+                                        HStack( alignment:.center, spacing: 5 ) {
+                                            Thumbnail( for: item )
+                                            Divider()
+                                            Title( "\(item.title)")
+                                        }
+                                        .if( self.downloadManager.isDownloading(item: item) ) {
+                                            $0.overlay( DownloadProgress(), alignment: .bottom )
+                                        }
+                                        .padding()
+                                        .background(Color.white)
+                                    }
+                                    .buttonStyle(CardButtonStyle())
+                                    .disabled( self.downloadManager.isDownloading(item: item) )
+                                }
+                                NextPage
+                            }
+                        }
+                        
+                    }
+                    .padding(.horizontal)
+                }
+                
+            }
+        }
+        
     }
 }
 

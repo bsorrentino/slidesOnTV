@@ -11,7 +11,7 @@ import SwiftUI
 
 struct SearchBar<Content: View>: UIViewControllerRepresentable {
     
-    typealias UIViewControllerType = UINavigationController
+    typealias UIViewControllerType = UIViewController
     
     @Binding var text: String
     
@@ -47,12 +47,12 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
         }
         
         // Called when user selects one of the search suggestion buttons displayed under the keyboard on tvOS.
-//        optional func updateSearchResults(for searchController: UISearchController, selecting searchSuggestion: UISearchSuggestion)
+//      func updateSearchResults(for searchController: UISearchController, selecting searchSuggestion: UISearchSuggestion)
 
         // MARK: - UISearchBarDelegate impl
 
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            log.trace( "textDidChange text = \(searchText)")
+            // log.trace( "textDidChange text = \(searchText)")
             //text = searchText
         }
 
@@ -77,6 +77,7 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
         searchController.searchBar.placeholder = placeholder
         
         let searchContainer = UISearchContainerViewController(searchController: searchController)
+        // return searchContainer
         
         let searchNavigationController = UINavigationController(rootViewController: searchContainer)
 
@@ -84,17 +85,15 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: UIViewControllerRepresentableContext<SearchBar>) {
-        log.trace( "updateUIViewController - searchText:\(text)" )
-        
+        // log.trace( "updateUIViewController - searchText:\(text)" )
+
+        //if let vc = uiViewController as? UISearchContainerViewController {
         if let vc = uiViewController.children.first as? UISearchContainerViewController {
 
             if let searchResultController = vc.searchController.searchResultsController, let host = searchResultController as? UIHostingController<Content> {
                 
                 host.rootView = content()
             }
-//          if( vc.searchController.searchBar.text != nil ) {
-//              vc.searchController.searchBar.text = nil
-//          }
 
         }
     }
