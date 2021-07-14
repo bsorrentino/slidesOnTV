@@ -19,7 +19,7 @@ struct SearchSlidesView: View {
             GridItem(.fixed(550)),
         ]
 
-    func Thumbnail(url:String) -> some View {
+    func Thumbnail(for item: SlidehareItem) -> some View {
         
         Group {
             if( isInPreviewMode ) {
@@ -28,7 +28,7 @@ struct SearchSlidesView: View {
                     .scaledToFit()
             }
             else {
-                WebImage(url: URL(string: url ) )
+                WebImage(url: URL(string: item.thumbnail) )
                     // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
                     .onSuccess { image, data, cacheType in
                         // Success
@@ -45,33 +45,35 @@ struct SearchSlidesView: View {
                     .scaledToFit()
             }
         }
+        .frame(width: item.thumbnailSize.width, height: item.thumbnailSize.height, alignment: .center)
 
     }
     
     func Title( _ text:String ) -> some View {
         Text( text )
-            .font(.footnote)
+            .font(.system(size: 20).italic().weight(.light))
             .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
             .fixedSize(horizontal: false, vertical: true)
-            .lineLimit(/*@START_MENU_TOKEN@*/2/*@END_MENU_TOKEN@*/)
-            .frame( maxWidth: 500 )
+            .lineLimit(4)
+            .frame( maxWidth: 300 )
+            .padding()
     }
     
     var NextPage: some View {
         Group {
-            if( slidesResult.hasMoreItems ) {
-                Button( action: {
-                    slidesResult.nextPage()
-                } ) {
-                    Text( "More Result ..." )
-                        .font( .largeTitle)
+            if slidesResult.hasMoreItems {
+                Button( action: { slidesResult.nextPage() }) {
+                    Label( "More Result ...", systemImage: "arrow.right.doc.on.clipboard" )
+                        .foregroundColor(.blue)
                         .padding()
+                        .background(Color.white)
                 }.buttonStyle(CardButtonStyle())
             }
             else {
                 EmptyView()
             }
         }
+            
     }
     
     
@@ -86,27 +88,27 @@ struct SearchSlidesView: View {
                 SearchBar( text: $slidesResult.searchText ) {
                     
                     ScrollView {
-                        LazyVGrid( columns: columns) {
-                            
-                            ForEach(slidesResult.data, id: \.id) { item in
+                        VStack {
+                            LazyVGrid( columns: columns) {
                                 
-                                Button( action: {
-                                    self.downloadManager.downloadInfo = item.downloadUrl
-                                }) {
-                                    VStack( alignment:.leading, spacing: 5 ) {
-                                        Thumbnail( url:item.thumbnailXXL )
-                                            .frame(width: 500, height: 400, alignment: .center)
-                                        Divider()
-                                        Title( "\(item.title)")
-                                            .frame( maxWidth: 500 )
+                                ForEach(slidesResult.data, id: \.id) { item in
+                                    
+                                    Button( action: {
+                                        self.downloadManager.downloadInfo = item.downloadUrl
+                                    }) {
+                                        HStack( alignment:.center, spacing: 5 ) {
+                                            Thumbnail( for: item )
+                                            Divider()
+                                            Title( "\(item.title)")
+                                        }
+                                        .padding()
+                                        .background(Color.white)
                                     }
-                                    .padding()
-                                    .background(Color.white)
+                                    .buttonStyle(CardButtonStyle())
                                 }
-                                .buttonStyle(CardButtonStyle())
+                                NextPage
                             }
                         }
-                        NextPage
                         
                     }
                     .padding(.horizontal)

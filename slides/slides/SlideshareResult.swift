@@ -70,6 +70,7 @@ class SlideShareResult :  ObservableObject {
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00006"] ))
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00007"] ))
             
+            totalItems = 1000
             return
         }
 
@@ -101,6 +102,7 @@ class SlideShareResult :  ObservableObject {
                 query.toGenericError()
                     .flatMap( { parser.parse($0.data) } )
                     .filter({ $0[SlidehareItem.Format]=="pdf" })
+                    //.print()
                     //.receive(on: RunLoop.main )
                     .sink(
                         receiveCompletion: onCompletion,

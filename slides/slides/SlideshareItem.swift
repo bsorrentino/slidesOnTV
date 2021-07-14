@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 struct SlidehareItem : Identifiable {
     
@@ -19,10 +19,8 @@ struct SlidehareItem : Identifiable {
     static let Updated          = "updated"
     static let Format           = "format"
     static let Language         = "language"
-    static let ThumbnailS       = "thumbnailsmallurl"
-    static let ThumbnailXL      = "thumbnailxlargeurl"
-    static let ThumbnailXXL     = "thumbnailxxlargeurl"
-    
+    static let Thumbnail        = "thumbnailurl"
+    static let ThumbnailSize    = "thumbnailsize"
     static let Query        = "query"
     static let ResultOffset = "resultoffset"
     static let NumResults   = "numresults"
@@ -37,9 +35,8 @@ struct SlidehareItem : Identifiable {
         Url,
         Updated,
         Format,
-        ThumbnailXL,
-        ThumbnailXXL,
-        ThumbnailS,
+        Thumbnail,
+        ThumbnailSize,
         Created,
         Language,
         // META
@@ -53,6 +50,26 @@ struct SlidehareItem : Identifiable {
     ]
     
     let data:Slideshow
+    
+    let thumbnailSize: CGSize
+
+    init( data:Slideshow ) {
+        self.data = data
+        
+        if let result = data[SlidehareItem.ThumbnailSize],
+           let value = result.data( using: .utf8),
+           let points = try? JSONDecoder().decode([Int].self, from: value ) {
+           
+            thumbnailSize =  CGSize( width: points[0], height: points[1] )
+        }
+        else {
+
+            thumbnailSize = CGSize(width:170, height: 130)
+
+        }
+        print( "thumbnailSize: \(thumbnailSize)" )
+
+    }
     
     var id: String {
         self.data[SlidehareItem.ITEMID]!
@@ -73,25 +90,11 @@ struct SlidehareItem : Identifiable {
 
     }
 
-    var thumbnailS: String {
-        guard let result = self.data[SlidehareItem.ThumbnailS] else {
+    var thumbnail: String {
+        guard let result = self.data[SlidehareItem.Thumbnail] else {
             return ""
         }
         return "http:\(result)"
     }
-
-    var thumbnailXL: String {
-        guard let result = self.data[SlidehareItem.ThumbnailXL] else {
-            return ""
-        }
-        return "http:\(result)"
-    }
-
-    var thumbnailXXL: String {
-        guard let result = self.data[SlidehareItem.ThumbnailXXL] else {
-            return ""
-        }
-        return "http:\(result)"
-    }
-
+    
 }
