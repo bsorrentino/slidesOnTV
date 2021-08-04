@@ -28,8 +28,13 @@ class DownloadManager : ObservableObject {
         
         let perc = Int(progress.0 * 100)
         
-        return "\(perc)% - \(progress.1 ?? 0)"
+        let result = "\(perc)%"
         
+        if let time = progress.1 {
+            return "\(result) - \(time)"
+        }
+        return result
+
     }
     func isDownloading( item:SlidehareItem ) -> Bool {
         guard let id = itemId, let progress = downloadProgress, progress.0 < 1, id==item.id else {
