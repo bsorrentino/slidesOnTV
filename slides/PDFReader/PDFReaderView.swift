@@ -43,6 +43,11 @@ struct PDFThumbnailView : View {
     }
     
     var body: some View {
+        
+        List( document.allPageNumbers, id: \.self ) { pageNumber in
+            thumbnailView(pageNumber: pageNumber)
+        }
+        /*
         ScrollView(showsIndicators: false ) {
             
             VStack(alignment: .leading) {
@@ -50,6 +55,7 @@ struct PDFThumbnailView : View {
                 ForEach( document.allPageNumbers, id: \.self,  content:thumbnailView )
             }
         }
+        */
         
     }
 }
@@ -60,30 +66,25 @@ struct PDFReaderContentView: View {
     var document:PDFDocument
     
     @State var pageSelected: Int = 1
-    
+
     var body: some View {
         GeometryReader { geom in
             HStack {
                 
                 PDFThumbnailView( document:self.document,
                                   pageSelected:self.$pageSelected,
-                                  thumbnailSize:CGSize(width: 300, height: geom.size.height/2))
-                    .frame( height: geom.size.height - 1)
+                                  thumbnailSize:CGSize(width: geom.size.width * 0.2, height: geom.size.height * 0.25))
+                    .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
                 
                 if self.pageSelected > 0  {
                     Spacer()
                     
+                    ZStack {
                     PDFDocumentView(
                         document:self.document,
                         pageSelected:self.$pageSelected )
-                        
+                    }
                     
-//                    Text( """
-//                            geom:
-//                                h:\(geom.size.height)
-//                                w:\(geom.size.width)
-//                          """)
-//                        .foregroundColor(.black)
                     Spacer()
                 }
                 
@@ -91,6 +92,16 @@ struct PDFReaderContentView: View {
             }.background(Color.gray)
         }
     }
+    
+    //                    Text( """
+    //                            geom:
+    //                                h:\(geom.size.height)
+    //                                w:\(geom.size.width)
+    //                          """)
+    //                        .foregroundColor(.black)
+
+    
+
 }
 
 
