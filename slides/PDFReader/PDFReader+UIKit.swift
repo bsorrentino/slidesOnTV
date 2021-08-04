@@ -167,31 +167,36 @@ class PageContainerView: UIView {
     }
     
     override func  touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print( "\(type(of: self)).touchesMoved: focused: \(self.isFocused)" );
+//        print( "\(type(of: self)).touchesMoved: focused: \(self.isFocused)" )
         guard showPointer, let firstTouch = touches.first else {
             return
         }
         
-        let locationInView = firstTouch.location(in: firstTouch.view)
+        let locationInView = firstTouch.location(in: firstTouch.view )
         
         var f = pointer.frame
-        f.origin = locationInView
         
+        f.origin = locationInView
+    
         pointer.frame = f
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print( "\(type(of: self)).touchesEnded: focused: \(self.isFocused)" )
         showPointer = false
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print( "\(type(of: self)).touchesCancelled: focused: \(self.isFocused)" )
         showPointer = false
     }
     
-    
-
 }
 
+public protocol PDFPageDelegate {
+
+    func pointerStatedDidChange( show: Bool ) -> Void
+}
 
 /**
  PDFPageViewController
@@ -205,6 +210,8 @@ class PDFPageViewController : UIViewController {
     fileprivate var document : PDFDocument
     
     fileprivate let _currentPageIndex = CurrentValueSubject<Value,Never>( (newValue:0,oldValue:0) )
+    
+    var pageDelegate: PDFPageDelegate?
     
     var currentPageIndex:Int = 0 {
         didSet {
@@ -266,40 +273,59 @@ class PDFPageViewController : UIViewController {
         }
     }
     
+    private var subscribers =  Set<AnyCancellable>()
+    
     override func loadView() {
-        
         let mainView = PageContainerView()
         
         self.view = mainView
         
+        mainView.showPointerSubject.sink { show in
+            
+            if let delegate = self.pageDelegate  {
+                delegate.pointerStatedDidChange(show: show)
+            }
+        }.store( in: &subscribers)
     }
     
     override func viewWillAppear(_ animated:Bool) {
-        print( "viewWillAppear")
+        print( "\(type(of: self)).viewWillAppear")
         updateCurrentPage()
         super.viewWillAppear(animated)
     }
     
     // MARK: - Focus Engine
     // MARK: -
-    override var preferredFocusEnvironments: [UIFocusEnvironment] {
-        print( "\(type(of: self)).preferredFocusEnvironments")
-        
-        return [view]
-    }
+//    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+//        print( "\(type(of: self)).preferredFocusEnvironments")
+//        
+//        return [view]
+//    }
         
 }
 
-struct PDFDocumentView : UIViewControllerRepresentable {
+
+struct PDFDocumentView : UIViewControllerRepresentable, PDFPageDelegate {
         
     typealias UIViewControllerType = PDFPageViewController
-
+    
+    
     var document : PDFDocument
     @Binding var pageSelected:Int
+    @Binding var isPointerVisible:Bool
+    
+    func pointerStatedDidChange( show: Bool ) {
+        DispatchQueue.main.async {
+            print( "pointerStatedDidChange \(show)")            
+            isPointerVisible = show
+        }
+    }
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<PDFDocumentView>) -> UIViewControllerType {
         
         let controller = PDFPageViewController( document: document )
+        
+        controller.pageDelegate = self
         
         return controller
     }
