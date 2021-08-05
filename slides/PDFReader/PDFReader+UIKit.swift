@@ -209,14 +209,14 @@ class PDFPageViewController : UIViewController {
     
     fileprivate var document : PDFDocument
     
-    fileprivate let _currentPageIndex = CurrentValueSubject<Value,Never>( (newValue:0,oldValue:0) )
+    fileprivate let currentPageIndexSubject = CurrentValueSubject<Value,Never>( (newValue:0,oldValue:0) )
     
     var pageDelegate: PDFPageDelegate?
     
     var currentPageIndex:Int = 0 {
         didSet {
             guard currentPageIndex != oldValue else {return}
-            _currentPageIndex.send( (newValue:currentPageIndex, oldValue:oldValue) )
+            currentPageIndexSubject.send( (newValue:currentPageIndex, oldValue:oldValue) )
         }
     }
     
@@ -227,50 +227,6 @@ class PDFPageViewController : UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    fileprivate var cancellable:AnyCancellable?
-    
-    fileprivate func updateCurrentPage() {
-        
-        guard cancellable == nil else { return }
-        
-        cancellable = _currentPageIndex.sink {
-            print( "value changed \($0)")
-            
-            if( $0.oldValue > 0 ) {
-                let view = self.pages[$0.oldValue - 1]
-                view.removeFromSuperview()
-
-                print( "remove view at index \($0.oldValue)" )
-            }
-            if( $0.newValue > 0 ) {
-                let index = $0.newValue-1
-                if( !self.pages.indices.contains(index) ) {
-                    
-                    print( "create view at index \($0.newValue)" )
-
-                    let view = PDFPageView( frame: self.view.frame,
-                                            document: self.document,
-                                            pageNumber: index,
-                                            backgroundImage: nil,
-                                            pageViewDelegate: nil)
-                    
-                    self.pages.append( view )
-                    view.isUserInteractionEnabled = false
-                    self.view.addSubview(view)
-
-                }
-                else {
-                    print( "reuse view at index \($0.newValue)" )
-
-                    let view = self.pages[index]
-                    self.view.addSubview(view)
-                }
-
-            }
-
-        }
     }
     
     private var subscribers =  Set<AnyCancellable>()
@@ -288,12 +244,71 @@ class PDFPageViewController : UIViewController {
         }.store( in: &subscribers)
     }
     
-    override func viewWillAppear(_ animated:Bool) {
-        print( "\(type(of: self)).viewWillAppear")
-        updateCurrentPage()
-        super.viewWillAppear(animated)
+    
+    fileprivate func onUpdateCurrentPageIndex( newValue:Int, oldValue:Int ) {
+        
+            print( "CurrentPageIndex changed from \(oldValue) to \(newValue)")
+            
+            if( oldValue > 0 ) {
+                let zeroBasedIndex = oldValue-1
+                
+                let view = self.pages[zeroBasedIndex]
+                view.removeFromSuperview()
+
+                print( "remove view at index \(zeroBasedIndex)" )
+            }
+            if( newValue > 0 ) {
+                
+                let zeroBasedIndex = newValue-1
+                
+                if( !self.pages.indices.contains(zeroBasedIndex) ) {
+                    
+                    print( "create view at index \(zeroBasedIndex)" )
+
+                    let view = PDFPageView( frame: self.view.frame,
+                                            document: self.document,
+                                            pageNumber: zeroBasedIndex,
+                                            backgroundImage: nil,
+                                            pageViewDelegate: nil)
+                    
+                    self.pages.append( view )
+                    view.isUserInteractionEnabled = false
+                    self.view.addSubview(view)
+
+                }
+                else {
+                    print( "reuse view at index \(zeroBasedIndex)" )
+
+                    let view = self.pages[zeroBasedIndex]
+                    self.view.addSubview(view)
+                }
+
+            }
+
     }
     
+    
+    var onUpdateCurrentPageIndexSubscriber:AnyCancellable?
+    
+    override func viewWillAppear(_ animated:Bool) {
+        
+        super.viewWillAppear(animated)
+        
+        onUpdateCurrentPageIndexSubscriber =
+            currentPageIndexSubject.sink {
+                self.onUpdateCurrentPageIndex( newValue:$0.newValue, oldValue:$0.oldValue )
+            }
+    }
+
+    override func viewDidDisappear(_ animated:Bool) {
+        super.viewDidDisappear(animated)
+        
+        if let subscriber = onUpdateCurrentPageIndexSubscriber {
+            subscriber.cancel()
+        }
+        onUpdateCurrentPageIndexSubscriber = nil
+    }
+
     // MARK: - Focus Engine
     // MARK: -
 //    override var preferredFocusEnvironments: [UIFocusEnvironment] {
@@ -311,7 +326,7 @@ struct PDFDocumentView : UIViewControllerRepresentable, PDFPageDelegate {
     
     
     var document : PDFDocument
-    @Binding var pageSelected:Int
+    var pageSelected:Int
     @Binding var isPointerVisible:Bool
     
     func pointerStatedDidChange( show: Bool ) {

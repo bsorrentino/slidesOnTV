@@ -12,16 +12,12 @@ struct ThumbnailShadow: ViewModifier {
     var focused:Bool
     
     func body(content: Content) -> some View {
-        (focused) ?
-            content.shadow( color: Color.black, radius: 10, x:5, y:5 ) :
-            content.shadow( color: Color.clear, radius: 0 )
-        
-//        page.layer.masksToBounds = false
-//        page.layer.shadowColor = UIColor.black.cgColor
-//        page.layer.shadowOpacity = 1
-//        page.layer.shadowOffset = CGSize(width: 0 , height: height)
-//        page.layer.shadowRadius = 10
-//        page.layer.cornerRadius = 0.0
+        if (focused) {
+            return content
+                .shadow( color: Color.black, radius: 20, x:5, y:5 )
+        }
+            
+        return content.shadow( color: Color.clear, radius: 0 )
     }
 }
 
@@ -29,26 +25,31 @@ struct ThumbnailView : View {
 //    @Environment(\.isFocused) var focused: Bool
 
     var uiImage:UIImage
-    var pageNumber:Int
-    var thumbnailSize:CGSize
-    
-    @State var focused = false
+    var size:CGSize
     
     var body: some View {
         
         Image( uiImage: uiImage )
             .resizable()
-            .frame(width: thumbnailSize.width,
-                   height: thumbnailSize.height,
+            .frame(width: size.width,
+                   height: size.height,
                    alignment: .center)
-            .overlay(
-                Text( "page \(pageNumber)" )
-                    .font(.footnote.italic().weight(.thin))
-                    .foregroundColor(.gray)
-                    .padding(),
-                alignment: .bottomTrailing )
-
     }
+}
+
+func pageNumberLabel( of pageNumber:Int ) -> some View {
+
+    Circle()
+        .fill( Color.blue )
+        .shadow( color: Color.black, radius: 1, x:1, y:1)
+        .shadow( color: Color.black, radius: 1, x:1, y:1)
+        .frame(width: 30, height: 30)
+        .padding( EdgeInsets(top:0,leading:0,bottom:5,trailing:5))
+        .overlay(
+            Text("\(pageNumber)")
+                .padding( EdgeInsets(top:0,leading:0,bottom:5,trailing:5) )
+                .font(.system(size: 12).weight(.heavy))
+        )
 }
 
 
@@ -58,8 +59,8 @@ struct PDFReaderContentView: View {
     
     @State var pageSelected: Int = 1
     @State var isPointerVisible: Bool = false
-    @State var pageWithFocus:Int = 1
     
+
     var body: some View {
         GeometryReader { geom in
             
@@ -68,18 +69,13 @@ struct PDFReaderContentView: View {
                 List( document.allPageNumbers, id: \.self ) { pageNumber in
                     
                     ThumbnailView( uiImage:document.pdfPageImage(at: pageNumber)!,
-                                   pageNumber:pageNumber,
-                                   thumbnailSize:CGSize(width: geom.size.width * 0.2, height: geom.size.height * 0.25))
-                        .modifier( ThumbnailShadow( focused: pageWithFocus == pageNumber ) )
+                                   size:CGSize(width: geom.size.width * 0.2, height: geom.size.height * 0.25))
+                        .modifier( ThumbnailShadow( focused: pageSelected == pageNumber ) )
+                        .overlay( pageNumberLabel(of: pageNumber ), alignment: .bottomTrailing )
                         .focusable(true) { focused in
                             print( "thumbnail focus on page \(pageNumber) - focused:\(focused) - pinter:\(isPointerVisible)")
-                            if( focused ) {
+                            if( focused && pageNumber != self.pageSelected ) {
                                 self.pageSelected = pageNumber
-                                self.pageWithFocus = pageNumber
-                            }
-                            else
-                            {
-                                self.pageWithFocus = 0
                             }
                         }
                 }
@@ -93,7 +89,7 @@ struct PDFReaderContentView: View {
                     
                     PDFDocumentView(
                         document:self.document,
-                        pageSelected:self.$pageSelected,
+                        pageSelected:self.pageSelected,
                         isPointerVisible:self.$isPointerVisible)
                     
                     Spacer()
@@ -109,14 +105,34 @@ struct PDFReaderContentView: View {
     //                                h:\(geom.size.height)
     //                                w:\(geom.size.width)
     //                          """)
-    //                        .foregroundColor(.black)
 
-    
 }
-
 
 struct PDFReaderContentView_Previews: PreviewProvider {
     static var previews: some View {
-        PDFReaderContentView(document: PDFDocument.createFormBundle(resource: "apple"))
+        // PDFReaderContentView(document: PDFDocument.createFormBundle(resource: "apple"))
+        VStack {
+            Circle()
+                .fill(Color.blue)
+                .frame(width: 50, height: 50)
+                .shadow( color:Color.black, radius: 1, x:2, y:1)
+                .shadow( color:Color.black, radius: 1, x:2, y:1)
+                .overlay(
+                Text("2")
+                    .padding()
+                    .font(.system(size: 10).weight(.medium))
+                )
+            Circle()
+                .fill(Color.blue)
+                .frame(width: 50, height: 50)
+                .overlay(
+                Text("20")
+                    .padding()
+                    .font(.system(size: 10).weight(.medium))
+                )
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background( Color.white )
+        //.edgesIgnoringSafeArea(.all)
     }
 }
