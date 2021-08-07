@@ -15,11 +15,7 @@ struct SearchSlidesView: View {
     @StateObject var downloadManager = DownloadManager()
     @State var isItemDownloaded:Bool = false
     
-    let columns = [
-            GridItem(.fixed(550)),
-            GridItem(.fixed(550)),
-            GridItem(.fixed(550)),
-        ]
+    let columns:[GridItem] = Array(repeating: .init(.fixed(500)), count: 3)
 
     func DownloadProgress() -> some View {
         
@@ -105,45 +101,63 @@ struct SearchSlidesView: View {
                 SearchBar( text: $slidesResult.searchText ) {
                     
                     ScrollView {
-                        VStack {
-                            LazyVGrid( columns: columns) {
+                            LazyVGrid( columns: columns ) {
                                 
                                 ForEach(slidesResult.data, id: \.id) { item in
                                     
-                                    Button( action: {
-                                        self.downloadManager.download( item: item )  { isItemDownloaded = $0 }
-                                    }) {
-                                        HStack( alignment:.center, spacing: 5 ) {
-                                            Thumbnail( for: item )
-                                            Divider()
-                                            Title( "\(item.title)")
+                                        Button( action: {
+                                            self.downloadManager.download( item: item )  { isItemDownloaded = $0 }
+                                        }) {
+                                            VStack( alignment:.center, spacing: 5 ) {
+                                                Thumbnail( for: item )
+                                                Divider()
+                                                Title( "\(item.title)")
+                                            }
+                                            .if( self.downloadManager.isDownloading(item: item) ) {
+                                                $0.overlay( DownloadProgress(), alignment: .bottom )
+                                            }
+                                            .padding()
                                         }
-                                        .if( self.downloadManager.isDownloading(item: item) ) {
-                                            $0.overlay( DownloadProgress(), alignment: .bottom )
-                                        }
-                                        .padding()
+                                        .frame( width: 500 )
                                         .background(Color.white)
-                                    }
-                                    .buttonStyle(CardButtonStyle())
-                                    .disabled( self.downloadManager.isDownloading(item: item) )
+                                        .buttonStyle(CardButtonStyle())
+                                        .disabled( self.downloadManager.isDownloading(item: item) )
                                 }
-                                NextPage
                             }
+                            NextPage
                         }
-                        
+                        .padding(.horizontal)
+
                     }
-                    .padding(.horizontal)
                 }
                 
             }
         }
         
-    }
 }
 
 struct SearchSlides_Previews: PreviewProvider {
     static var previews: some View {
-        SearchSlidesView()
+        VStack {
+            Button( action: {} ) {
+                ZStack {
+                    Rectangle()
+                        .fill( Color.white.opacity(0.5) )
+                        .cornerRadius(10)
+                        .shadow( color: Color.black, radius: 10 )
+
+                    ProgressView( "Download:", value: 0.5, total:1)
+                        .progressViewStyle(BlueShadowProgressViewStyle())
+                        .padding()
+                        
+                }
+            }
+            .frame( width:500, height: 150)
+            
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background( Color.white )
+
     }
 }
 
