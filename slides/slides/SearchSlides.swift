@@ -10,20 +10,31 @@ import SwiftUI
 import SDWebImageSwiftUI
 import Combine
 
-struct SearchSlidesView: View {
-    @StateObject var slidesResult = SlideShareResult()
-    @StateObject var downloadManager = DownloadManager()
-    @State var isItemDownloaded:Bool = false
-    
-    let columns:[GridItem] = Array(repeating: .init(.fixed(500)), count: 3)
 
-    func DownloadProgress() -> some View {
+fileprivate let Const = (
+    gridItemSize:   CGFloat(500),
+    
+    cardSize:       CGSize( width: 490, height: 300 ),
+    
+    ProgressView: (fill:Color.white.opacity(0.5),  radius:CGFloat(10))
+)
+
+struct SearchSlidesView: View {
+    @StateObject var slidesResult       = SlideShareResult()
+    @StateObject var downloadManager    = DownloadManager()
+    
+    @State var isItemDownloaded:Bool    = false
+    @State var title:String             = ""
+    
+    let columns:[GridItem] = Array(repeating: .init(.fixed(Const.gridItemSize)), count: 3)
+
+    func DownloadProgressView() -> some View {
         
         ZStack {
             Rectangle()
-                .fill( Color.white.opacity(0.5) )
-                .cornerRadius(10)
-                .shadow( color: Color.black, radius: 10 )
+                .fill( Const.ProgressView.fill )
+                .cornerRadius(Const.ProgressView.radius)
+                .shadow( color: Color.black, radius: Const.ProgressView.radius )
 
             ProgressView( "Download: \(self.downloadManager.downloadingDescription)", value: self.downloadManager.downloadProgress?.0, total:1)
                 .progressViewStyle(BlueShadowProgressViewStyle())
@@ -32,7 +43,7 @@ struct SearchSlidesView: View {
         }
     }
     
-    func Thumbnail(for item: SlidehareItem) -> some View {
+    func ThumbnailView(for item: SlidehareItem) -> some View {
         
         Group {
             if( isInPreviewMode ) {
@@ -58,21 +69,29 @@ struct SearchSlidesView: View {
                     .scaledToFit()
             }
         }
-        .frame(width: item.thumbnailSize.width, height: item.thumbnailSize.height, alignment: .center)
+        //.frame(width: item.thumbnailSize.width, height: item.thumbnailSize.height, alignment: .center)
 
     }
     
-    func Title( _ text:String ) -> some View {
-        Text( text )
+    
+    /**
+     *  TITLE VIEW
+     */
+    func TitleView() -> some View {
+        Text( title )
             .font(.system(size: 20).italic().weight(.light))
             .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
             .fixedSize(horizontal: false, vertical: true)
             .lineLimit(4)
-            .frame( maxWidth: 300 )
+            //.frame( maxWidth: 300 )
             .padding()
+            .ignoresSafeArea()
     }
     
-    var NextPage: some View {
+    /**
+     *  NEXT PAGE VIEW
+     */
+    var NextPageView: some View {
         Group {
             if slidesResult.hasMoreItems {
                 Button( action: { slidesResult.nextPage() }) {
@@ -80,13 +99,36 @@ struct SearchSlidesView: View {
                         .foregroundColor(.blue)
                         .padding()
                         .background(Color.white)
-                }.buttonStyle(CardButtonStyle())
+                }
+                .buttonStyle( CardButtonStyle() )
             }
             else {
                 EmptyView()
             }
         }
             
+    }
+    
+    
+    /**
+     *  CARD VIEW
+     */
+    func CardView( item: SlidehareItem ) -> some View {
+            Button( action: {
+                self.downloadManager.download(item: item)  { isItemDownloaded = $0 }
+            }) {
+          
+                ThumbnailView( for: item )
+                .if( self.downloadManager.isDownloading(item: item) ) {
+                    $0.overlay( DownloadProgressView(), alignment: .bottom )
+                }
+                .padding()
+                    .frame( width: Const.cardSize.width, height: Const.cardSize.height)
+                .background(Color.white)
+            }
+            .buttonStyle( CardButtonStyle() )
+            .disabled( self.downloadManager.isDownloading(item: item) )
+
     }
     
     
@@ -97,42 +139,31 @@ struct SearchSlidesView: View {
                 NavigationLink(destination: PresentationView().environmentObject(downloadManager),
                                isActive: $isItemDownloaded) { EmptyView() }
                     .hidden()
-                
-                SearchBar( text: $slidesResult.searchText ) {
-                    
-                    ScrollView {
-                            LazyVGrid( columns: columns ) {
-                                
-                                ForEach(slidesResult.data, id: \.id) { item in
+                VStack {
+                    SearchBar( text: $slidesResult.searchText ) {
+                        
+                        ScrollView {
+                                LazyVGrid( columns: columns ) {
                                     
-                                        Button( action: {
-                                            self.downloadManager.download( item: item )  { isItemDownloaded = $0 }
-                                        }) {
-                                            VStack( alignment:.center, spacing: 5 ) {
-                                                Thumbnail( for: item )
-                                                Divider()
-                                                Title( "\(item.title)")
-                                            }
-                                            .if( self.downloadManager.isDownloading(item: item) ) {
-                                                $0.overlay( DownloadProgress(), alignment: .bottom )
-                                            }
-                                            .padding()
-                                        }
-                                        .frame( width: 500 )
-                                        .background(Color.white)
-                                        .buttonStyle(CardButtonStyle())
-                                        .disabled( self.downloadManager.isDownloading(item: item) )
+                                    ForEach(slidesResult.data, id: \.id) { item in
+                                        
+                                        CardView( item: item )
+                                            
+                                    }
+                                    
+                                    NextPageView
                                 }
-                            }
-                            NextPage
                         }
                         .padding(.horizontal)
 
                     }
+                    TitleView()
                 }
                 
             }
+                
         }
+    }
         
 }
 
