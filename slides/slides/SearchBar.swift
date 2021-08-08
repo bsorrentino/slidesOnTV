@@ -16,15 +16,18 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
     @Binding var text: String
     
     var placeholder: String = ""
+    var onFocusChange: (Bool) -> Void = { _ in }
+    
     @ViewBuilder var content: () -> Content
 
     class Coordinator: NSObject, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
 
         @Binding var text: String
-
+        var onFocusChange: (Bool) -> Void
         
-        init(text: Binding<String>) {
+        init(text: Binding<String>, onFocusChange: @escaping (Bool) -> Void ) {
             _text = text
+            self.onFocusChange = onFocusChange
         }
 
         // MARK: - UISearchResultsUpdating impl
@@ -51,18 +54,20 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
 
         // MARK: - UISearchBarDelegate impl
 
-        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            // log.trace( "textDidChange text = \(searchText)")
-            //text = searchText
+        func searchBarTextDidBeginEditing(_ searchBar: UISearchBar){
+            print( "searchBarShouldBeginEditing")
+            onFocusChange( true )
         }
-
+        
         func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-            //text = ""
+            print( "searchBarTextDidEndEditing")
+            onFocusChange( false )
+
         }
     }
 
     func makeCoordinator() -> SearchBar.Coordinator {
-        return Coordinator(text: $text)
+        return Coordinator(text: $text, onFocusChange: onFocusChange)
     }
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<SearchBar>) -> UIViewControllerType {
@@ -71,7 +76,7 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
         
         let searchController =  UISearchController(searchResultsController: topController)
         searchController.searchResultsUpdater = context.coordinator
-        // searchController.searchBar.delegate = context.coordinator
+        searchController.searchBar.delegate = context.coordinator
         // searchController.delegate = context.coordinator
 
         searchController.searchBar.placeholder = placeholder

@@ -43,34 +43,45 @@ struct SearchSlidesView: View {
         }
     }
     
-    func ThumbnailView(for item: SlidehareItem) -> some View {
+    struct ThumbnailView : View {
+        @Environment(\.isFocused) var focused: Bool
         
-        Group {
-            if( isInPreviewMode ) {
-                Image("slideshow")
-                    .resizable()
-                    .scaledToFit()
-            }
-            else {
-                WebImage(url: URL(string: item.thumbnail) )
-                    // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
-                    .onSuccess { image, data, cacheType in
-                        // Success
-                        // Note: Data exist only when queried from disk cache or network. Use `.queryMemoryData` if you really need data
-                    }
-                    .resizable() // Resizable like SwiftUI.Image, you must use this modifier or the view will use the image bitmap size
-                    .placeholder(Image(systemName: "photo")) // Placeholder Image
-                    // Supports ViewBuilder as well
-                    .placeholder {
-                        Rectangle().foregroundColor(.gray)
-                    }
-                    .indicator(.activity) // Activity Indicator
-                    .transition(.fade(duration: 0.5)) // Fade Transition with duration
-                    .scaledToFit()
-            }
-        }
-        //.frame(width: item.thumbnailSize.width, height: item.thumbnailSize.height, alignment: .center)
+        var item: SlidehareItem
+        var onFocusChange: (Bool) -> Void = { _ in }
 
+        var body: some View {
+        
+            Group {
+                if( isInPreviewMode ) {
+                    Image("slideshow")
+                        .resizable()
+                        .scaledToFit()
+                }
+                else {
+                    WebImage(url: URL(string: item.thumbnail) )
+                        // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
+                        .onSuccess { image, data, cacheType in
+                            // Success
+                            // Note: Data exist only when queried from disk cache or network. Use `.queryMemoryData` if you really need data
+                            // print( "ThumbnailView: \(focused) - \(item.title)")
+                        }
+                        .resizable() // Resizable like SwiftUI.Image, you must use this modifier or the view will use the image bitmap size
+                        .placeholder(Image(systemName: "photo")) // Placeholder Image
+                        // Supports ViewBuilder as well
+                        .placeholder {
+                            Rectangle().foregroundColor(.gray)
+                        }
+                        .indicator(.activity) // Activity Indicator
+                        .transition(.fade(duration: 0.5)) // Fade Transition with duration
+                        .scaledToFit()
+                }
+            }
+            .onChange(of: focused, perform: {
+                print( "ThumbnailView(\(item.title)): old:\(focused) new:\($0)")
+                onFocusChange( $0 ) // Workaround for 'CardButtonStyle' bug
+            })
+//            .frame(width: item.thumbnailSize.width, height: item.thumbnailSize.height, alignment: .center)
+        }
     }
     
     
@@ -79,7 +90,7 @@ struct SearchSlidesView: View {
      */
     func TitleView() -> some View {
         Text( title )
-            .font(.system(size: 20).italic().weight(.light))
+            .font(.system(.title3).weight(.heavy))
             .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
             .fixedSize(horizontal: false, vertical: true)
             .lineLimit(4)
@@ -91,24 +102,24 @@ struct SearchSlidesView: View {
     /**
      *  NEXT PAGE VIEW
      */
-    var NextPageView: some View {
-        Group {
-            if slidesResult.hasMoreItems {
-                Button( action: { slidesResult.nextPage() }) {
-                    Label( "More Result ...", systemImage: "arrow.right.doc.on.clipboard" )
-                        .foregroundColor(.blue)
-                        .padding()
-                        .background(Color.white)
-                }
-                .buttonStyle( CardButtonStyle() )
-            }
-            else {
-                EmptyView()
-            }
-        }
+    struct NextPageView : View {
+        
+        @Environment(\.isFocused) var focused: Bool
+        
+        var onFocusChange: (Bool) -> Void = { _ in }
+        
+        var body: some View {
             
+            Label( "More Result ...", systemImage: "arrow.right.doc.on.clipboard" )
+                .foregroundColor(.blue)
+                .padding()
+                .background(Color.white)
+                .onChange(of: focused, perform: {
+                    print( "NextPageView: old:\(focused) new:\($0)")
+                    onFocusChange( $0 ) // Workaround for 'CardButtonStyle' bug
+                })
+        }
     }
-    
     
     /**
      *  CARD VIEW
@@ -118,19 +129,28 @@ struct SearchSlidesView: View {
                 self.downloadManager.download(item: item)  { isItemDownloaded = $0 }
             }) {
           
-                ThumbnailView( for: item )
+                ThumbnailView( item: item ) { focused in
+                    if( focused ) {
+                        self.title = item.title
+                    }
+                }
                 .if( self.downloadManager.isDownloading(item: item) ) {
                     $0.overlay( DownloadProgressView(), alignment: .bottom )
                 }
                 .padding()
-                    .frame( width: Const.cardSize.width, height: Const.cardSize.height)
+                .frame( width: Const.cardSize.width, height: Const.cardSize.height)
                 .background(Color.white)
             }
-            .buttonStyle( CardButtonStyle() )
+            .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
             .disabled( self.downloadManager.isDownloading(item: item) )
 
     }
     
+    fileprivate func resetTitleOnFocusChange( focused : Bool ) {
+        if focused {
+            self.title = ""
+        }
+    }
     
     var body: some View {
         NavigationView {
@@ -140,7 +160,7 @@ struct SearchSlidesView: View {
                                isActive: $isItemDownloaded) { EmptyView() }
                     .hidden()
                 VStack {
-                    SearchBar( text: $slidesResult.searchText ) {
+                    SearchBar( text: $slidesResult.searchText, onFocusChange: resetTitleOnFocusChange ) {
                         
                         ScrollView {
                                 LazyVGrid( columns: columns ) {
@@ -150,9 +170,14 @@ struct SearchSlidesView: View {
                                         CardView( item: item )
                                             
                                     }
-                                    
-                                    NextPageView
+                                    if slidesResult.hasMoreItems {
+                                        Button( action: { slidesResult.nextPage() }) {
+                                            NextPageView( onFocusChange: resetTitleOnFocusChange )
+                                        }
+                                        .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
+                                    }
                                 }
+
                         }
                         .padding(.horizontal)
 
