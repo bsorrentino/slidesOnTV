@@ -24,7 +24,7 @@ struct SearchSlidesView: View {
     @StateObject var downloadManager    = DownloadManager()
     
     @State var isItemDownloaded:Bool    = false
-    @State var title:String             = ""
+    @State var selectedItem:SlidehareItem?
     
     let columns:[GridItem] = Array(repeating: .init(.fixed(Const.gridItemSize)), count: 3)
 
@@ -47,7 +47,7 @@ struct SearchSlidesView: View {
         @Environment(\.isFocused) var focused: Bool
         
         var item: SlidehareItem
-        var onFocusChange: (Bool) -> Void = { _ in }
+        var onFocusChange: (SlidehareItem,Bool) -> Void = { _,_ in }
 
         var body: some View {
         
@@ -78,7 +78,7 @@ struct SearchSlidesView: View {
             }
             .onChange(of: focused, perform: {
                 print( "ThumbnailView(\(item.title)): old:\(focused) new:\($0)")
-                onFocusChange( $0 ) // Workaround for 'CardButtonStyle' bug
+                onFocusChange( item, $0 ) // Workaround for 'CardButtonStyle' bug
             })
 //            .frame(width: item.thumbnailSize.width, height: item.thumbnailSize.height, alignment: .center)
         }
@@ -89,14 +89,27 @@ struct SearchSlidesView: View {
      *  TITLE VIEW
      */
     func TitleView() -> some View {
-        Text( title )
-            .font(.system(.title3).weight(.heavy))
-            .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-            .fixedSize(horizontal: false, vertical: true)
-            .lineLimit(4)
-            //.frame( maxWidth: 300 )
-            .padding()
-            .ignoresSafeArea()
+        Group {
+            if let item = self.selectedItem {
+                VStack {
+                    Text( item.title )
+                        .font(.system(.headline).weight(.semibold))
+                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(2)
+                        //.frame( maxWidth: 300 )
+                        //.padding()
+                    Divider()
+                    Text( "\(item.updated)")
+                        .font(.system(.subheadline))
+                    
+                }.ignoresSafeArea()
+
+            }
+            else {
+                EmptyView()
+            }
+        }
     }
     
     /**
@@ -124,16 +137,12 @@ struct SearchSlidesView: View {
     /**
      *  CARD VIEW
      */
-    func CardView( item: SlidehareItem ) -> some View {
+    func CardView( item: SlidehareItem, onFocusChange: @escaping (SlidehareItem, Bool) -> Void  ) -> some View {
             Button( action: {
                 self.downloadManager.download(item: item)  { isItemDownloaded = $0 }
             }) {
           
-                ThumbnailView( item: item ) { focused in
-                    if( focused ) {
-                        self.title = item.title
-                    }
-                }
+                ThumbnailView( item: item, onFocusChange: onFocusChange)
                 .if( self.downloadManager.isDownloading(item: item) ) {
                     $0.overlay( DownloadProgressView(), alignment: .bottom )
                 }
@@ -146,12 +155,18 @@ struct SearchSlidesView: View {
 
     }
     
-    fileprivate func resetTitleOnFocusChange( focused : Bool ) {
+    fileprivate func resetItemOnFocusChange( focused : Bool ) {
         if focused {
-            self.title = ""
+            self.selectedItem = nil
         }
     }
     
+    fileprivate func setItemOnFocusChange( item:SlidehareItem, focused : Bool ) {
+        if focused {
+            self.selectedItem = item
+        }
+    }
+
     var body: some View {
         NavigationView {
             
@@ -160,19 +175,19 @@ struct SearchSlidesView: View {
                                isActive: $isItemDownloaded) { EmptyView() }
                     .hidden()
                 VStack {
-                    SearchBar( text: $slidesResult.searchText, onFocusChange: resetTitleOnFocusChange ) {
+                    SearchBar( text: $slidesResult.searchText, onFocusChange: resetItemOnFocusChange ) {
                         
                         ScrollView {
                                 LazyVGrid( columns: columns ) {
                                     
                                     ForEach(slidesResult.data, id: \.id) { item in
                                         
-                                        CardView( item: item )
+                                        CardView( item: item, onFocusChange: setItemOnFocusChange )
                                             
                                     }
                                     if slidesResult.hasMoreItems {
                                         Button( action: { slidesResult.nextPage() }) {
-                                            NextPageView( onFocusChange: resetTitleOnFocusChange )
+                                            NextPageView( onFocusChange: resetItemOnFocusChange )
                                         }
                                         .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
                                     }

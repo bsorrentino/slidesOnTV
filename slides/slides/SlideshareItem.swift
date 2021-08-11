@@ -97,4 +97,18 @@ struct SlidehareItem : Identifiable {
         return "http:\(result)"
     }
     
+    var created: String {
+        guard let result = self.data[SlidehareItem.Created] else {
+            return ""
+        }
+        return result
+    }
+    
+    var updated: String {
+        guard let result = self.data[SlidehareItem.Updated] else {
+            return ""
+        }
+        return result
+    }
+
 }

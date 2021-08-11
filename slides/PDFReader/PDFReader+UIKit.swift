@@ -249,7 +249,7 @@ class PDFPageViewController : UIViewController {
         
             print( "CurrentPageIndex changed from \(oldValue) to \(newValue)")
             
-            if( oldValue > 0 ) {
+        if( oldValue > 0 && oldValue <= self.pages.count ) {
                 let zeroBasedIndex = oldValue-1
                 
                 let view = self.pages[zeroBasedIndex]
