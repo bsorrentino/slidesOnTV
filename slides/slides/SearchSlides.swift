@@ -155,13 +155,13 @@ struct SearchSlidesView: View {
 
     }
     
-    fileprivate func resetItemOnFocusChange( focused : Bool ) {
+    fileprivate func resetItem( OnFocusChange focused : Bool ) {
         if focused {
             self.selectedItem = nil
         }
     }
     
-    fileprivate func setItemOnFocusChange( item:SlidehareItem, focused : Bool ) {
+    fileprivate func setItem( item:SlidehareItem, OnFocusChange focused : Bool ) {
         if focused {
             self.selectedItem = item
         }
@@ -175,19 +175,19 @@ struct SearchSlidesView: View {
                                isActive: $isItemDownloaded) { EmptyView() }
                     .hidden()
                 VStack {
-                    SearchBar( text: $slidesResult.searchText, onFocusChange: resetItemOnFocusChange ) {
+                    SearchBar( text: $slidesResult.searchText, onFocusChange: resetItem ) {
                         
                         ScrollView {
                                 LazyVGrid( columns: columns ) {
                                     
                                     ForEach(slidesResult.data, id: \.id) { item in
                                         
-                                        CardView( item: item, onFocusChange: setItemOnFocusChange )
+                                        CardView( item: item, onFocusChange: setItem )
                                             
                                     }
                                     if slidesResult.hasMoreItems {
                                         Button( action: { slidesResult.nextPage() }) {
-                                            NextPageView( onFocusChange: resetItemOnFocusChange )
+                                            NextPageView( onFocusChange: resetItem )
                                         }
                                         .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
                                     }

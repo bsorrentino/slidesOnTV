@@ -256,34 +256,34 @@ class PDFPageViewController : UIViewController {
                 view.removeFromSuperview()
 
                 print( "remove view at index \(zeroBasedIndex)" )
-            }
-            if( newValue > 0 ) {
+        }
+        if( newValue > 0 && oldValue <= self.pages.count ) {
+            
+            let zeroBasedIndex = newValue-1
+            
+            if( !self.pages.indices.contains(zeroBasedIndex) ) {
                 
-                let zeroBasedIndex = newValue-1
+                print( "create view at index \(zeroBasedIndex)" )
+
+                let view = PDFPageView( frame: self.view.frame,
+                                        document: self.document,
+                                        pageNumber: zeroBasedIndex,
+                                        backgroundImage: nil,
+                                        pageViewDelegate: nil)
                 
-                if( !self.pages.indices.contains(zeroBasedIndex) ) {
-                    
-                    print( "create view at index \(zeroBasedIndex)" )
-
-                    let view = PDFPageView( frame: self.view.frame,
-                                            document: self.document,
-                                            pageNumber: zeroBasedIndex,
-                                            backgroundImage: nil,
-                                            pageViewDelegate: nil)
-                    
-                    self.pages.append( view )
-                    view.isUserInteractionEnabled = false
-                    self.view.addSubview(view)
-
-                }
-                else {
-                    print( "reuse view at index \(zeroBasedIndex)" )
-
-                    let view = self.pages[zeroBasedIndex]
-                    self.view.addSubview(view)
-                }
+                self.pages.append( view )
+                view.isUserInteractionEnabled = false
+                self.view.addSubview(view)
 
             }
+            else {
+                print( "reuse view at index \(zeroBasedIndex)" )
+
+                let view = self.pages[zeroBasedIndex]
+                self.view.addSubview(view)
+            }
+
+        }
 
     }
     
