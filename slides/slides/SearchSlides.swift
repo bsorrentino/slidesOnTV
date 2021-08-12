@@ -93,19 +93,21 @@ struct SearchSlidesView: View {
     func TitleView() -> some View {
         Group {
             if let item = self.selectedItem {
-                VStack {
+                VStack(spacing:0) {
                     Text( item.title )
                         .font(.system(.headline).weight(.semibold))
-                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .lineLimit(2)
-                        //.frame( maxWidth: 300 )
-                        //.padding()
+                        .truncationMode(.tail)
+                        .padding(EdgeInsets(top: 0,leading: 10,bottom: 0,trailing: 10))
+                        .foregroundColor(.blue)
+                        .fixedSize(horizontal: false, vertical: false)
+                        .lineLimit(1)
                     Divider()
                     Text( "\(item.updated)")
                         .font(.system(.subheadline))
+                        .foregroundColor(.purple)
                     
-                }.ignoresSafeArea()
+                }
+                
 
             }
             else {
@@ -202,12 +204,15 @@ struct SearchSlidesView: View {
                         .padding(.horizontal)
 
                     }
+                    Spacer()
                     TitleView()
+                        
+                        
                 }
-                
+                .edgesIgnoringSafeArea(.bottom)
             }
                 
-        }.main()
+        }.main( gradient: Gradient(colors: [.black, .white]) )
     }
         
 }

@@ -9,19 +9,21 @@
 import SwiftUI
 
 struct ScreenModifier: ViewModifier {
+    var gradient:Gradient
+    
     
     func body(content: Content) -> some View {
         
         return content.background(
-                LinearGradient(gradient: Gradient(colors: [.white, .black]), startPoint: .top, endPoint: .bottom))
+                LinearGradient(gradient:gradient , startPoint: .top, endPoint: .bottom))
                 .edgesIgnoringSafeArea(.all)
     }
 }
 
 
 extension View {
-    func main() -> some View {
-        self.modifier(ScreenModifier())
+    func main( gradient:Gradient = Gradient(colors: [.purple, .white]) ) -> some View {
+        self.modifier(ScreenModifier(gradient:gradient))
     }
 }
 

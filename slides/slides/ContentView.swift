@@ -56,18 +56,16 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-        ZStack {
-           
-        HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
-            Spacer()
-            Buttons
-            Spacer()
+               
+            HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
+                Spacer()
+                Buttons
+                Spacer()
+            }
+            .background(BackgroundImage)
+            
         }
-        .background(BackgroundImage)
-        .background(Color.purple.edgesIgnoringSafeArea(.all))
-        }
-        
-    }
+        .main()
     }
 }
 
