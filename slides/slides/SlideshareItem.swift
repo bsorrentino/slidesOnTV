@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct SlidehareItem : Identifiable {
+struct SlidehareItem : Identifiable, Equatable {
     
     static let Title            = "title"
     static let DownloadUrl      = "downloadurl"
@@ -71,6 +71,12 @@ struct SlidehareItem : Identifiable {
 
     }
     
+    // Equatable
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    // Identifiable
     var id: String {
         self.data[SlidehareItem.ITEMID]!
     }

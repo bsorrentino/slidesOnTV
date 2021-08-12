@@ -9,6 +9,9 @@
 
 import SwiftUI
 
+/**
+ 
+ */
 struct SearchBar<Content: View>: UIViewControllerRepresentable {
     
     typealias UIViewControllerType = UIViewController
@@ -16,18 +19,15 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
     @Binding var text: String
     
     var placeholder: String = ""
-    var onFocusChange: (Bool) -> Void = { _ in }
     
     @ViewBuilder var content: () -> Content
 
     class Coordinator: NSObject, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
 
         @Binding var text: String
-        var onFocusChange: (Bool) -> Void
         
-        init(text: Binding<String>, onFocusChange: @escaping (Bool) -> Void ) {
+        init(text: Binding<String> ) {
             _text = text
-            self.onFocusChange = onFocusChange
         }
 
         // MARK: - UISearchResultsUpdating impl
@@ -53,21 +53,29 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
 //      func updateSearchResults(for searchController: UISearchController, selecting searchSuggestion: UISearchSuggestion)
 
         // MARK: - UISearchBarDelegate impl
-
-        func searchBarTextDidBeginEditing(_ searchBar: UISearchBar){
-            print( "searchBarShouldBeginEditing")
-            onFocusChange( true )
-        }
         
-        func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-            print( "searchBarTextDidEndEditing")
-            onFocusChange( false )
-
-        }
+//        func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool  { // return NO to not become first responder
+//            print( "searchBarShouldBeginEditing" )
+//            return true
+//        }
+//
+//        func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool  { // return NO to not become first responder
+//            print( "searchBarShouldEndEditing" )
+//            return true
+//        }
+//
+//        func searchBarTextDidBeginEditing(_ searchBar: UISearchBar){
+//            print( "searchBarTextDidBeginEditing")
+//        }
+//
+//        func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//            print( "searchBarTextDidEndEditing")
+//
+//        }
     }
 
     func makeCoordinator() -> SearchBar.Coordinator {
-        return Coordinator(text: $text, onFocusChange: onFocusChange)
+        return Coordinator(text: $text)
     }
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<SearchBar>) -> UIViewControllerType {

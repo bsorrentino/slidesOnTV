@@ -16,7 +16,9 @@ fileprivate let Const = (
     
     cardSize:       CGSize( width: 490, height: 300 ),
     
-    ProgressView: (fill:Color.white.opacity(0.5),  radius:CGFloat(10))
+    ProgressView: (fill:Color.white.opacity(0.5),  radius:CGFloat(10)),
+    
+    Background: Color.blue
 )
 
 struct SearchSlidesView: View {
@@ -165,6 +167,9 @@ struct SearchSlidesView: View {
         if focused {
             self.selectedItem = item
         }
+        else if( item == self.selectedItem ) {
+            self.selectedItem = nil
+        }
     }
 
     var body: some View {
@@ -175,7 +180,7 @@ struct SearchSlidesView: View {
                                isActive: $isItemDownloaded) { EmptyView() }
                     .hidden()
                 VStack {
-                    SearchBar( text: $slidesResult.searchText, onFocusChange: resetItem ) {
+                    SearchBar( text: $slidesResult.searchText ) {
                         
                         ScrollView {
                                 LazyVGrid( columns: columns ) {
@@ -202,7 +207,7 @@ struct SearchSlidesView: View {
                 
             }
                 
-        }
+        }.main()
     }
         
 }
