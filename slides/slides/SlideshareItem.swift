@@ -19,7 +19,7 @@ struct SlidehareItem : Identifiable, Equatable {
     static let Updated          = "updated"
     static let Format           = "format"
     static let Language         = "language"
-    static let Thumbnail        = "thumbnailurl"
+    static let Thumbnail        = "thumbnailxlargeurl" // thumbnail, thumbnailsmallurl, thumbnailxlargeurl, thumbnailxxlargeurl
     static let ThumbnailSize    = "thumbnailsize"
     static let Query        = "query"
     static let ResultOffset = "resultoffset"
@@ -100,7 +100,7 @@ struct SlidehareItem : Identifiable, Equatable {
         guard let result = self.data[SlidehareItem.Thumbnail] else {
             return ""
         }
-        return "http:\(result)"
+        return result.starts(with: "http") ? result : "https:\(result)"
     }
     
     var created: String {
