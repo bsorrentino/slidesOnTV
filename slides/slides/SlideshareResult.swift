@@ -100,17 +100,22 @@ class SlideShareResult :  ObservableObject {
             
             cancellable =
                 query.toGenericError()
-                    .flatMap( { parser.parse($0.data) } )
-                    .filter({ $0[SlidehareItem.Format]=="pdf" })
-                    //.print()
-                    //.receive(on: RunLoop.main )
-                    .sink(
-                        receiveCompletion: onCompletion,
-                        receiveValue: {
-                            // log.trace( "\($0)")
-                            self.data.append( SlidehareItem(data:$0) )
-                            //self.objectWillChange.send()
-                        })
+                .flatMap    { parser.parse($0.data) }
+                .filter     { $0[SlidehareItem.Format]=="pdf" }
+                .map        { SlidehareItem(data:$0) }
+                //.delay(for: .seconds(1), scheduler: DispatchQueue.main)
+                //.print()
+                //.receive(on: RunLoop.main )
+                // (2.1) .collect()
+                .sink(
+                    receiveCompletion: onCompletion,
+                    receiveValue: {
+                        log.trace( "\($0.title)")
+                        self.data.append( $0 )
+                        //self.objectWillChange.send()
+                        
+                        // (2.2) self.data.insert(contentsOf: $0, at: 0)
+                    })
         }
         else {
             log.error( "error invoking slideshare API" )
