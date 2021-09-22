@@ -189,7 +189,7 @@ struct SearchSlidesView: View {
                                     
                                     ForEach(slidesResult.data, id: \.id) { item in
                                         
-                                        CardView( item: item, onFocusChange: setItem )
+                                        CardView( item: item, onFocusChange: setItem ).id( item.id )
                                             
                                     }
                                     if slidesResult.hasMoreItems {
