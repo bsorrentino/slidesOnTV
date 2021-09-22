@@ -98,12 +98,17 @@ class SlideShareResult :  ObservableObject {
                 }
             }
            
+            let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
             
             cancellable =
                 query.toGenericError()
                 .flatMap    { parser.parse($0.data) }
                 .filter     { $0[SlidehareItem.Format]=="pdf" }
                 .map        { SlidehareItem(data:$0) }
+                .collect()
+                .flatMap {
+                    timer.zip( $0.publisher ).map { $0.1 }
+                }
                 //.modulatedPublisher( interval: 1.0 )
                 //.delay(for: .seconds(1), scheduler: DispatchQueue.main)
                 //.print()

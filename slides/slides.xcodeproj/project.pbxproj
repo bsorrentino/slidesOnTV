@@ -56,6 +56,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5F09129126FB6DC300EA6755 /* timer.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = timer.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5F2066092691A4F5003B819A /* Slideshow.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Slideshow.xml; sourceTree = "<group>"; };
 		5F20660B2691C6DD003B819A /* Publisher+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extensions.swift"; sourceTree = "<group>"; };
 		5F20F23326C534A3004EB2C1 /* ScreenModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenModifier.swift; sourceTree = "<group>"; };
@@ -135,6 +136,7 @@
 		5FCEB8F3240C51D600F9885A = {
 			isa = PBXGroup;
 			children = (
+				5F09129126FB6DC300EA6755 /* timer.playground */,
 				5FB7EA8C269DE67B00B849C0 /* PDFReader */,
 				5FCEB8FE240C51D600F9885A /* slides */,
 				5F3A6E692690EEB4001A3F9F /* slidesTests */,
