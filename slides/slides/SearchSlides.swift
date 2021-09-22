@@ -183,7 +183,11 @@ struct SearchSlidesView: View {
                     .hidden()
                 VStack {
                     SearchBar( text: $slidesResult.searchText ) {
-                        
+                        //
+                        // @ref https://stackoverflow.com/a/67730429/521197
+                        //
+                        // ScrollViewReader usage for dynamically scroll to tagged position
+                        //
                         ScrollView {
                                 LazyVGrid( columns: columns ) {
                                     
