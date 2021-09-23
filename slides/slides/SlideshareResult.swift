@@ -98,6 +98,20 @@ class SlideShareResult :  ObservableObject {
                 }
             }
            
+            // Chunck Array
+            // @ref https://www.hackingwithswift.com/example-code/language/how-to-split-an-array-into-chunks
+            //
+            /*
+            extension Array {
+                func chunked(into size: Int) -> [[Element]] {
+                    return stride(from: 0, to: count, by: size).map {
+                        Array(self[$0 ..< Swift.min($0 + size, count)])
+                    }
+                }
+            }
+            */
+            
+            //let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
             
             cancellable =
                 query.toGenericError()
@@ -105,6 +119,7 @@ class SlideShareResult :  ObservableObject {
                 .filter     { $0[SlidehareItem.Format]=="pdf" }
                 .map        { SlidehareItem(data:$0) }
                 .collect()
+<<<<<<< HEAD
                 .flatMap {
                     
                     $0.publisher
@@ -114,14 +129,14 @@ class SlideShareResult :  ObservableObject {
                 //.print()
                 //.receive(on: RunLoop.main )
                 // (2.1) .collect()
+=======
+                //.flatMap { timer.zip( $0.publisher ).map { $0.1 } }
+>>>>>>> origin/develop
                 .sink(
                     receiveCompletion: onCompletion,
                     receiveValue: {
-                        log.trace( "\($0.title)")
-                        self.data.append( $0 )
-                        //self.objectWillChange.send()
-                        
-                        // (2.2) self.data.insert(contentsOf: $0, at: 0)
+                        //log.trace( "\($0.title)")
+                        self.data.append( contentsOf: $0 )
                     })
         }
         else {

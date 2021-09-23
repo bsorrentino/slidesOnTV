@@ -183,13 +183,17 @@ struct SearchSlidesView: View {
                     .hidden()
                 VStack {
                     SearchBar( text: $slidesResult.searchText ) {
-                        
+                        //
+                        // @ref https://stackoverflow.com/a/67730429/521197
+                        //
+                        // ScrollViewReader usage for dynamically scroll to tagged position
+                        //
                         ScrollView {
                                 LazyVGrid( columns: columns ) {
                                     
                                     ForEach(slidesResult.data, id: \.id) { item in
                                         
-                                        CardView( item: item, onFocusChange: setItem )
+                                        CardView( item: item, onFocusChange: setItem ).id( item.id )
                                             
                                     }
                                     if slidesResult.hasMoreItems {
