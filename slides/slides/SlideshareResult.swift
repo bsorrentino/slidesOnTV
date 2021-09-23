@@ -11,21 +11,21 @@ import Combine
 
 
 class SlideShareResult :  ObservableObject {
-    
+
     @Published var searchText = ""
     @Published var data = [SlidehareItem]()
-    
+
     private(set) var totalItems:Int = 0
     private(set) var currentPage:Int = 1
-    
+
     private var subscriptions = Set<AnyCancellable>()
-    
+
     private var cancellable: AnyCancellable?
-    
+
     var hasMoreItems:Bool {
         totalItems > data.count
     }
-    
+
     /**
     @ref https://stackoverflow.com/a/66165075/521197
      */
@@ -37,27 +37,27 @@ class SlideShareResult :  ObservableObject {
                 self.query(searchText: text)
             })
             .store(in: &subscriptions)
-        
+
     }
-    
+
     private func reset() {
         totalItems  = 0
         currentPage = 1
         data.removeAll()
     }
-    
+
     func nextPage() {
         if( hasMoreItems ) {
-            
+
             currentPage += 1
             query( searchText: searchText )
         }
     }
-    
+
     func query( searchText: String ) -> Void {
-    
+
         if isInPreviewMode {
-            
+
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00000", SlidehareItem.Title:"Title for 000000"] ))
             data.append( SlidehareItem( data:[
                                         SlidehareItem.ITEMID:"00001",
@@ -70,7 +70,7 @@ class SlideShareResult :  ObservableObject {
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00005"] ))
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00006"] ))
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00007"] ))
-            
+
             totalItems = 1000
             return
         }
@@ -79,15 +79,15 @@ class SlideShareResult :  ObservableObject {
             log.trace( "search is empty")
             return
         }
-        
+
         let credentials = try? SlideshareApi.getCredential()
 
         let api = SlideshareApi()
-        
+
         let parser = SlideshareItemsParser()
-        
+
         if let query = try? api.query(credentials: credentials!, query:searchText, page:currentPage) {
-           
+
             let onCompletion = { (completion:Subscribers.Completion<Error>) in
                 switch completion {
                 case .failure(let error):
@@ -97,7 +97,7 @@ class SlideShareResult :  ObservableObject {
                     log.debug("DONE! total:\(self.totalItems) - current: \(self.data.count)")
                 }
             }
-           
+
             // Chunck Array
             // @ref https://www.hackingwithswift.com/example-code/language/how-to-split-an-array-into-chunks
             //
@@ -110,28 +110,16 @@ class SlideShareResult :  ObservableObject {
                 }
             }
             */
-            
+
             //let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
-            
+
             cancellable =
                 query.toGenericError()
                 .flatMap    { parser.parse($0.data) }
                 .filter     { $0[SlidehareItem.Format]=="pdf" }
                 .map        { SlidehareItem(data:$0) }
                 .collect()
-<<<<<<< HEAD
-                .flatMap {
-                    
-                    $0.publisher
-                }
-                //.modulatedPublisher( interval: 1.0 )
-                //.delay(for: .seconds(1), scheduler: DispatchQueue.main)
-                //.print()
-                //.receive(on: RunLoop.main )
-                // (2.1) .collect()
-=======
                 //.flatMap { timer.zip( $0.publisher ).map { $0.1 } }
->>>>>>> origin/develop
                 .sink(
                     receiveCompletion: onCompletion,
                     receiveValue: {
@@ -143,5 +131,5 @@ class SlideShareResult :  ObservableObject {
             log.error( "error invoking slideshare API" )
         }
     }
-    
+
 }
