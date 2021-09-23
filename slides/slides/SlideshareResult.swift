@@ -104,6 +104,11 @@ class SlideShareResult :  ObservableObject {
                 .flatMap    { parser.parse($0.data) }
                 .filter     { $0[SlidehareItem.Format]=="pdf" }
                 .map        { SlidehareItem(data:$0) }
+                .collect()
+                .flatMap {
+                    
+                    $0.publisher
+                }
                 //.modulatedPublisher( interval: 1.0 )
                 //.delay(for: .seconds(1), scheduler: DispatchQueue.main)
                 //.print()
