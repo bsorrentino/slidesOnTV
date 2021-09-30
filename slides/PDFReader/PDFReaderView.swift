@@ -59,13 +59,26 @@ struct PDFReaderContentView: View {
     
     @State var pageSelected: Int = 1
     @State var isPointerVisible: Bool = false
-    
+    @State var isZoom = false
 
     var body: some View {
         GeometryReader { geom in
-            
+
+
+            VStack {
+                HStack(alignment: .center, spacing: 20) {
+                    Spacer()
+
+                    Button( action: { isZoom.toggle() } ) {
+                        Image( systemName: "arrow.up.left.and.arrow.down.right")
+                        .resizable()
+                        .frame(width: 16.0, height: 16.0)
+                    }
+                    
+                }
             HStack {
-                
+
+                if( !isZoom ) {
                 List( document.allPageNumbers, id: \.self ) { pageNumber in
                     
                     ThumbnailView( uiImage:document.pdfPageImage(at: pageNumber)!,
@@ -80,23 +93,25 @@ struct PDFReaderContentView: View {
                         }
                 }
                 .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
-                .focusable( isPointerVisible ) { focused in
-                    print( "thumbnail List focus on page \(pageSelected) - focused:\(focused) -  pointer:\(isPointerVisible)")
+//                .focusable( isPointerVisible ) { focused in
+//                    print( "thumbnail List focus on page \(pageSelected) - focused:\(focused) -  pointer:\(isPointerVisible)")
+//                }
                 }
-                
                 if self.pageSelected > 0  {
-                    Spacer()
-                    
-                    PDFDocumentView(
-                        document:self.document,
-                        pageSelected:self.pageSelected,
-                        isPointerVisible:self.$isPointerVisible)
-                    
-                    Spacer()
+                        Spacer()
+                        
+                        PDFDocumentView(
+                            document:self.document,
+                            pageSelected:self.pageSelected,
+                            isPointerVisible:self.$isPointerVisible)
+                        
+                        Spacer()
                 }
             }
             .background(Color.gray)
         }
+        }
+
             
     }
     

@@ -14,7 +14,7 @@ struct PresentationView: View {
     
     var body: some View {
         
-        Group {
+        VStack {
             
             if let doc = downloadInfo.document {
                 PDFReaderContentView( document: doc )
