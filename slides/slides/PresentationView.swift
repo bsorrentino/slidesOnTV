@@ -14,16 +14,12 @@ struct PresentationView: View {
     
     var body: some View {
         
-        VStack {
-            
-            if let doc = downloadInfo.document {
-                PDFReaderContentView( document: doc )
-            }
-            else {
-                Text( "error loading presentation")
-            }
+        if let doc = downloadInfo.document {
+            PDFReaderContentView( document: doc )
         }
-        
+        else {
+            Text( "error loading presentation")
+        }
     }
 }
 

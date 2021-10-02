@@ -19,6 +19,7 @@
 		5F3A6E742690F1B5001A3F9F /* SlideshareXML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E622690D240001A3F9F /* SlideshareXML.swift */; };
 		5F3A6E752690F1B5001A3F9F /* SlideshareApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E5E2690C0F0001A3F9F /* SlideshareApi.swift */; };
 		5F3A6E762690F1B5001A3F9F /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3A6E602690C414001A3F9F /* String+Extensions.swift */; };
+		5F3E75322709079D0027C085 /* ContentViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3E75312709079D0027C085 /* ContentViewTest.swift */; };
 		5F6804E82691EBA300E114FA /* SlideshareResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6804E72691EBA300E114FA /* SlideshareResult.swift */; };
 		5F6804E92691EBA300E114FA /* SlideshareResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6804E72691EBA300E114FA /* SlideshareResult.swift */; };
 		5F6804EB2691F8AD00E114FA /* SlideshareItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6804EA2691F8AD00E114FA /* SlideshareItem.swift */; };
@@ -67,6 +68,7 @@
 		5F3A6E6A2690EEB4001A3F9F /* slidesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slidesTests.swift; sourceTree = "<group>"; };
 		5F3A6E6C2690EEB5001A3F9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F3A6E722690EF3A001A3F9F /* slideshare.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = slideshare.plist; sourceTree = "<group>"; };
+		5F3E75312709079D0027C085 /* ContentViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewTest.swift; sourceTree = "<group>"; };
 		5F6804E72691EBA300E114FA /* SlideshareResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshareResult.swift; sourceTree = "<group>"; };
 		5F6804EA2691F8AD00E114FA /* SlideshareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshareItem.swift; sourceTree = "<group>"; };
 		5F88CD6B2691D09700D27865 /* Slideshows.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Slideshows.xml; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				5FB7EA9B269E306F00B849C0 /* PresentationView.swift */,
 				5FCEB901240C51D600F9885A /* ContentView.swift */,
 				5FCEB8FF240C51D600F9885A /* App.swift */,
+				5F3E75312709079D0027C085 /* ContentViewTest.swift */,
 				5FCEB903240C51D600F9885A /* Assets.xcassets */,
 				5FCEB908240C51D600F9885A /* LaunchScreen.storyboard */,
 				5FCEB90B240C51D600F9885A /* Info.plist */,
@@ -316,6 +319,7 @@
 			files = (
 				5FEA94A32693061E002D228A /* XCode+Utils.swift in Sources */,
 				5FD5CE7F269F44E7001046EA /* SwiftUI+Styles.swift in Sources */,
+				5F3E75322709079D0027C085 /* ContentViewTest.swift in Sources */,
 				5FCEB902240C51D600F9885A /* ContentView.swift in Sources */,
 				5FCEB900240C51D600F9885A /* App.swift in Sources */,
 				A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */,

@@ -63,30 +63,37 @@ struct PDFReaderContentView: View {
     @State var isPointerVisible: Bool = false
     @State var isZoom = false
     
-    struct CommandBar : View {
+    var CommandBar: some View {
         
-        @Binding var isZoom:Bool
-        
-        var body: some View {
-            HStack(alignment: .top, spacing: 20) {
-                Spacer()
-                
-                Button( action: { isZoom.toggle() } ) {
-                    Image( systemName: "arrow.up.left.and.arrow.down.right")
-                        //.resizable()
+        VStack {
+            Spacer()
+            HStack(alignment: .center, spacing: 100 ) {
+                Button( action: {} ) { //
+                    Image( systemName: "bookmark")
+                        .resizable()
                         .renderingMode(.original)
                         .aspectRatio(contentMode: .fill)
                         .clipped()
-                        //.frame(width: 16.0, height: 16.0)
+                        .frame(width: 25, height: 25)
+                        .padding( .top, 40 )
                 }
-                //.buttonStyle(CardButtonStyle())
+                .frame( width: 50, height: 50)
+                Button( action: { isZoom.toggle() } ) {
+                    Image( systemName: "arrow.up.left.and.arrow.down.right")
+                        .resizable()
+                        .renderingMode(.original)
+                        .aspectRatio(contentMode: .fill)
+                        .clipped()
+                        .frame(width: 25.0, height: 25.0)
+                        .padding( .top, 40 )
+                }
+                .frame( width: 50, height: 50)
+
             }
-            
-        }
+        }.ignoresSafeArea()
     }
     
     var body: some View {
-        
         
         GeometryReader { geom in
             ZStack {
@@ -128,21 +135,14 @@ struct PDFReaderContentView: View {
                         }
                         .if( isZoom , transform: { view in view.edgesIgnoringSafeArea( .all ) } )
 
-                                
                     }
                 }
-
-                VStack {
-                    CommandBar( isZoom: $isZoom )
-                    Spacer()
-                }
-                .edgesIgnoringSafeArea( .top )
-                .frame(width: geom.size.width,
-                       height: geom.size.height + geom.safeAreaInsets.top,
-                       alignment: .trailing)
+                
+                CommandBar
             }
             .focusScope( focusNS )
             .background(Color.gray)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             
         }
         
@@ -152,7 +152,7 @@ struct PDFReaderContentView: View {
 
 struct PDFReaderContentView_Previews: PreviewProvider {
     static var previews: some View {
-        overlay_previews
+        zstack_previews
     }
     
     static var zstack_previews: some View {
@@ -197,30 +197,30 @@ struct PDFReaderContentView_Previews: PreviewProvider {
         }
     }
     
-    static var overlay_previews: some View {
-        // PDFReaderContentView(document: PDFDocument.createFormBundle(resource: "apple"))
-        VStack {
-            
-            HStack {
-                Spacer()
-                Text( "TEST" )
-                Text( "TEST" )
-                    
-                Spacer()
-            }
-            .frame(height: 500)
-            .background( Color.blue )
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background( Color.gray )
-        .edgesIgnoringSafeArea( .trailing )
-        .edgesIgnoringSafeArea( .leading )
-        .edgesIgnoringSafeArea( .bottom )
-        .overlay(
-            PDFReaderContentView.CommandBar( isZoom: .constant(false))
-                .padding( EdgeInsets( top:15, leading: 0,bottom: 0, trailing: 20 )) ,
-            alignment: .top )
-    }
+//    static var overlay_previews: some View {
+//        // PDFReaderContentView(document: PDFDocument.createFormBundle(resource: "apple"))
+//        VStack {
+//
+//            HStack {
+//                Spacer()
+//                Text( "TEST" )
+//                Text( "TEST" )
+//
+//                Spacer()
+//            }
+//            .frame(height: 500)
+//            .background( Color.blue )
+//        }
+//        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//        .background( Color.gray )
+//        .edgesIgnoringSafeArea( .trailing )
+//        .edgesIgnoringSafeArea( .leading )
+//        .edgesIgnoringSafeArea( .bottom )
+//        .overlay(
+//            PDFReaderContentView.CommandBar( isZoom: .constant(false))
+//                .padding( EdgeInsets( top:15, leading: 0,bottom: 0, trailing: 20 )) ,
+//            alignment: .top )
+//    }
 
     static var shadow_previews: some View {
         // PDFReaderContentView(document: PDFDocument.createFormBundle(resource: "apple"))
