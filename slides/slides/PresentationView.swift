@@ -11,15 +11,53 @@ import SwiftUI
 struct PresentationView: View {
     
     @EnvironmentObject var downloadInfo:DownloadManager
+    @State var isZoom = false
+    @State var pageSelected: Int = 1
+
+    func ToolbarModifier<Content:View>( _ content: Content) -> some View {
+        
+        content
+        .navigationTitle("")
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button( action: { isZoom.toggle() } ) {
+                                Image( systemName: "arrow.up.left.and.arrow.down.right")
+                                    .resizable()
+                                    .renderingMode(.original)
+                                    .aspectRatio(contentMode: .fill)
+                                    .clipped()
+                                    .frame(width: 25.0, height: 25.0)
+                                    //.padding( .top, 40 )
+                            }
+            }
+            ToolbarItem(placement: .confirmationAction) {
+                Button( action: {} ) { //
+                    Image( systemName: "bookmark")
+                        .resizable()
+                        .renderingMode(.original)
+                        .aspectRatio(contentMode: .fill)
+                        .clipped()
+                        .frame(width: 25, height: 25)
+                        //.padding( .top, 40 )
+                }
+            }
+        }
+
+    }
     
     var body: some View {
-        
-        if let doc = downloadInfo.document {
-            PDFReaderContentView( document: doc )
+        NavigationView {
+            if let doc = downloadInfo.document {
+                PDFReaderContentView( document: doc, pageSelected: $pageSelected, isZoom: isZoom )
+                    .if( isZoom ) { $0.onExitCommand { isZoom.toggle() } }
+                    .if( !isZoom, modifier: ToolbarModifier )
+                    .if( isZoom ) { $0.edgesIgnoringSafeArea( .all ) }
+            }
+            else {
+                Text( "error loading presentation")
+            }
         }
-        else {
-            Text( "error loading presentation")
-        }
+
     }
 }
 

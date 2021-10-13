@@ -56,93 +56,65 @@ func pageNumberLabel( of pageNumber:Int ) -> some View {
 
 struct PDFReaderContentView: View {
     @Namespace private var focusNS
-    
-    var document:PDFDocument
-    
-    @State var pageSelected: Int = 1
     @State var isPointerVisible: Bool = false
-    @State var isZoom = false
-    
-    var CommandBar: some View {
-        
-        VStack {
-            Spacer()
-            HStack(alignment: .center, spacing: 100 ) {
-                Button( action: {} ) { //
-                    Image( systemName: "bookmark")
-                        .resizable()
-                        .renderingMode(.original)
-                        .aspectRatio(contentMode: .fill)
-                        .clipped()
-                        .frame(width: 25, height: 25)
-                        .padding( .top, 40 )
-                }
-                .frame( width: 50, height: 50)
-                Button( action: { isZoom.toggle() } ) {
-                    Image( systemName: "arrow.up.left.and.arrow.down.right")
-                        .resizable()
-                        .renderingMode(.original)
-                        .aspectRatio(contentMode: .fill)
-                        .clipped()
-                        .frame(width: 25.0, height: 25.0)
-                        .padding( .top, 40 )
-                }
-                .frame( width: 50, height: 50)
 
-            }
-        }.ignoresSafeArea()
-    }
-    
+    var document:PDFDocument    
+    @Binding var pageSelected: Int
+    var isZoom: Bool
+        
     var body: some View {
         
         GeometryReader { geom in
-            ZStack {
+            
+            HStack {
                 
-                HStack {
+                if( !isZoom ) {
                     
-                    if( !isZoom ) {
+                    List( document.allPageNumbers, id: \.self ) { pageNumber in
                         
-                        List( document.allPageNumbers, id: \.self ) { pageNumber in
-                            
-                            ThumbnailView( uiImage:document.pdfPageImage(at: pageNumber)!,
-                                           size:CGSize(width: geom.size.width * 0.2, height: geom.size.height * 0.25))
-                                .modifier( ThumbnailShadow( focused: pageSelected == pageNumber ) )
-                                .overlay( pageNumberLabel(of: pageNumber ), alignment: .bottomTrailing )
-                                .focusable(true) { focused in
-                                    print( "thumbnail focus on page \(pageNumber) - focused:\(focused) - pinter:\(isPointerVisible)")
-                                    if( focused && pageNumber != self.pageSelected ) {
-                                        self.pageSelected = pageNumber
-                                    }
+                        ThumbnailView( uiImage:document.pdfPageImage(at: pageNumber)!,
+                                       size:CGSize(width: geom.size.width * 0.2, height: geom.size.height * 0.25))
+                            .modifier( ThumbnailShadow( focused: pageSelected == pageNumber ) )
+                            .overlay( pageNumberLabel(of: pageNumber ), alignment: .bottomTrailing )
+                            .focusable(true) { focused in
+                                print( "thumbnail focus on page \(pageNumber) - focused:\(focused) - pinter:\(isPointerVisible)")
+                                if( focused && pageNumber != self.pageSelected ) {
+                                    self.pageSelected = pageNumber
                                 }
-                        }
-                        .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
-                        //  .focusable( isPointerVisible ) { focused in
-                        //      print( "thumbnail List focus on page \(pageSelected) - focused:\(focused pointer:\(isPointerVisible)")
-                        //   }
-                        .prefersDefaultFocus(in: focusNS )
+                            }
+//                            .if( pageNumber == pageSelected ) {
+//                                $0.prefersDefaultFocus(in: focusNS )
+//                            }
                     }
-                    if self.pageSelected > 0  {
-                        
-                        Group {
-                            if( !isZoom ) { Spacer() }
-                            
-                            PDFDocumentView(
-                                document:self.document,
-                                pageSelected:self.pageSelected,
-                                isPointerVisible:self.$isPointerVisible)
-
-                            if( !isZoom ) { Spacer() }
-                        }
-                        .if( isZoom , transform: { view in view.edgesIgnoringSafeArea( .all ) } )
-
-                    }
+                    .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
+                    //  .focusable( isPointerVisible ) { focused in
+                    //      print( "thumbnail List focus on page \(pageSelected) - focused:\(focused pointer:\(isPointerVisible)")
+                    //   }
+                    .prefersDefaultFocus(in: focusNS )
                 }
-                
-                CommandBar
+//                if self.pageSelected > 0  {
+                    
+                    Group {
+                        if( !isZoom ) { Spacer() }
+                        
+                        PDFDocumentView(
+                            document:self.document,
+                            pageSelected:self.pageSelected,
+                            isPointerVisible:self.$isPointerVisible)
+                        .if( isZoom ) { view in
+                            view.prefersDefaultFocus(in: focusNS )
+                        }
+                        
+                        if( !isZoom ) { Spacer() }
+                    }
+                        
+//                }
             }
             .focusScope( focusNS )
             .background(Color.gray)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            
             
         }
         
