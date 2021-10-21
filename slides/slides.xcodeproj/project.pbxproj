@@ -44,6 +44,7 @@
 		5FEA94A626931CF0002D228A /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5FEA94A526931CF0002D228A /* SDWebImageSwiftUI */; };
 		A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F3268F59B9001F26E4 /* SearchBar.swift */; };
 		A05CB1F6268F59F5001F26E4 /* SearchSlides.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */; };
+		A08E60CA2721B2CB00981311 /* PDFThumbnailsView+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		5FEA94A22693061E002D228A /* XCode+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCode+Utils.swift"; sourceTree = "<group>"; };
 		A05CB1F3268F59B9001F26E4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSlides.swift; sourceTree = "<group>"; };
+		A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDFThumbnailsView+UIKit.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 				5FB7EA93269DE71A00B849C0 /* TiledView.swift */,
 				5FB7EA8E269DE6FE00B849C0 /* PDFDocument.swift */,
 				5FB7EA8D269DE6FE00B849C0 /* PDFPageView.swift */,
+				A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */,
 			);
 			path = PDFReader;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				5FCEB902240C51D600F9885A /* ContentView.swift in Sources */,
 				5FCEB900240C51D600F9885A /* App.swift in Sources */,
 				A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */,
+				A08E60CA2721B2CB00981311 /* PDFThumbnailsView+UIKit.swift in Sources */,
 				5FD5CE7D269F3B72001046EA /* SwiftUI+Condition.swift in Sources */,
 				5FB7EA97269DE7D700B849C0 /* PDFReaderView.swift in Sources */,
 				5F20F23426C534A3004EB2C1 /* ScreenModifier.swift in Sources */,
