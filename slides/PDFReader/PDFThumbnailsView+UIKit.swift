@@ -12,21 +12,25 @@ struct PDFThumbnailsView : UIViewControllerRepresentable {
         
     typealias UIViewControllerType = PDFThumbnailsViewController
     
-    class Coordinator: NSObject, UITableViewDelegate {
+    class Coordinator: NSObject {
+        var document: PDFDocument
+        
+        init( document: PDFDocument ) {
+            self.document = document
+        }
         
     }
     
     var document : PDFDocument
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator()
+        return Coordinator( document:document )
     }
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<PDFThumbnailsView>) -> UIViewControllerType {
         
-        let controller = PDFThumbnailsViewController( document: document )
+        let controller = PDFThumbnailsViewController.of( document: document, coordinator:context.coordinator )
         
-        controller.tableView.delegate = context.coordinator
         
         return controller
     }
@@ -38,21 +42,28 @@ struct PDFThumbnailsView : UIViewControllerRepresentable {
 }
 
 
-
-
-public class PDFThumbnailsViewController : UIViewController  {
+public class PDFThumbnailsViewController : UITableViewController  {
         
     var document:PDFDocument
     
-    fileprivate var tableView: UITableView! {
-       didSet {
-         tableView.dataSource = self
-         //tableView.delegate = self
-         // tableView.tableFooterView = UIView(frame: CGRect.zero)
-         // tableView.backgroundColor = .black
-         view.addSubview(tableView)
-       }
+    static func of<C>( document:PDFDocument, coordinator:C ) -> PDFThumbnailsViewController where C:UITableViewDelegate & UITableViewDataSource {
+        
+        let result = PDFThumbnailsViewController(document:document)
+        
+        //result.tableView.rowHeight =  UITableView.automaticDimension
+        //result.tableView.estimatedRowHeight = UITableView.automaticDimension
+        //tableView.separatorStyle = .none
+        result.tableView.allowsSelection = false
+        result.tableView.allowsSelectionDuringEditing = false
+        result.tableView.allowsMultipleSelectionDuringEditing = false
+
+        result.tableView.dataSource = coordinator
+        result.tableView.delegate = coordinator
+        
+        return result
+
     }
+    
     
     internal init(document: PDFDocument) {
         self.document = document
@@ -67,36 +78,71 @@ public class PDFThumbnailsViewController : UIViewController  {
 
 }
 
+// MARK: Coordinator (UITableViewDelegate)
+extension PDFThumbnailsView.Coordinator: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+         100 //UITableView.automaticDimension
+            }
 
-// MARK: PDFThumbnailsView (UITableViewDataSource)
-extension PDFThumbnailsViewController : UITableViewDataSource {
+}
+
+// MARK: Coordinator (UITableViewDataSource)
+extension PDFThumbnailsView.Coordinator: UITableViewDataSource {
     
-    public func numberOfSections(in tableView: UITableView) -> Int {
-      return 1
-    }
-
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return document.pageCount
+         document.pageCount
     }
     
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+
+        let cell =  UITableViewCell(style: .subtitle, reuseIdentifier:  nil)
+
+//        var cellConfiguration = UIListContentConfiguration.cell()
+//        cellConfiguration.image = UIImage(systemName: "doc.fill")
+//        // cellConfiguration.image = document.pdfPageImage(at: indexPath.item + 1)
+//        cellConfiguration.text = "page \(indexPath.item)"
+//        cell.contentConfiguration = cellConfiguration
+
+        //let view = UIImageView(image: document.pdfPageImage(at: indexPath.item + 1))
+        let view = UIImageView(image: UIImage(systemName: "doc.fill"))
+        view.contentMode = .scaleAspectFit
+        view.frame.size = CGSize( width: 100, height: 100)
+        cell.contentView.addSubview( view )
+        
+        
+        
+        return cell
     }
     
     
 }
 
 
-
-struct SwiftUIView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct PDFThumbnailsView_Previews: PreviewProvider {
+    
+    static var sampleFileUrl:URL? {
+        Bundle.main.url(forResource: "sample", withExtension: "pdf")
     }
-}
 
-struct SwiftUIView_Previews: PreviewProvider {
+    static var document:PDFDocument? {
+        guard let url = sampleFileUrl else {
+            return nil
+        }
+        
+        return PDFDocument( url: url)
+    }
+
     static var previews: some View {
-        SwiftUIView()
+        Group {
+            VStack {
+                //Text( sampleFileUrl?.absoluteString ?? "'sample.pdf' not found" )
+                //Text( "\(document?.pageCount ?? 0)" )
+                PDFThumbnailsView( document:document! )
+                //Text( "\(document?.pageCount ?? 0)" )
+
+            }
+
+        }
     }
 }
