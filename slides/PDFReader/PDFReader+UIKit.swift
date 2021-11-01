@@ -326,7 +326,7 @@ struct PDFDocumentView : UIViewControllerRepresentable, PDFPageDelegate {
     
     
     var document : PDFDocument
-    var pageSelected:Int
+    var page:Int
     @Binding var isPointerVisible:Bool
     
     func pointerStatedDidChange( show: Bool ) {
@@ -347,7 +347,7 @@ struct PDFDocumentView : UIViewControllerRepresentable, PDFPageDelegate {
     
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: UIViewControllerRepresentableContext<PDFDocumentView>) {
     
-        uiViewController.currentPageIndex = pageSelected
+        uiViewController.currentPageIndex = page
     }
     
 }

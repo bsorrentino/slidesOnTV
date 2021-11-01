@@ -23,32 +23,24 @@ struct PDFReaderContentView: View {
             HStack {
                 
                 if( !isZoom ) {
-                    
                     //PDFThumbnailsView( document:document, pageSelected:$pageSelected, parentSize:geom.size )
                     PDFThumbnailsViewUIKit( document:document, pageSelected:$pageSelected, parentSize:geom.size )
-                    //  .focusable( isPointerVisible ) { focused in
-                    //      print( "thumbnail List focus on page \(pageSelected) - focused:\(focused pointer:\(isPointerVisible)")
-                    //   }
+                    .equatable()
                     .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
-                    .prefersDefaultFocus(in: focusNS )
+                    .prefersDefaultFocus( !isZoom, in: focusNS )
                 }
-//                if self.pageSelected > 0  {
-                    
-                    Group {
-                        if( !isZoom ) { Spacer() }
-                        
-                        PDFDocumentView(
-                            document:self.document,
-                            pageSelected:self.pageSelected,
-                            isPointerVisible:self.$isPointerVisible)
-//                        .if( isZoom ) { view in
-//                            view.prefersDefaultFocus(in: focusNS )
-//                        }
-                        
-                        if( !isZoom ) { Spacer() }
-                    }
-                        
-//                }
+                Group {
+                    if( !isZoom ) { Spacer() }
+
+                    PDFDocumentView(
+                        document:self.document,
+                        page:self.pageSelected,
+                        isPointerVisible:self.$isPointerVisible)
+                    .prefersDefaultFocus( isZoom, in: focusNS )
+
+                    if( !isZoom ) { Spacer() }
+                }
+
             }
             .focusScope( focusNS )
             .background(Color.gray)

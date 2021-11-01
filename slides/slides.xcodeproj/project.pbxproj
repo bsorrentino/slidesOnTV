@@ -46,6 +46,7 @@
 		A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F3268F59B9001F26E4 /* SearchBar.swift */; };
 		A05CB1F6268F59F5001F26E4 /* SearchSlides.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */; };
 		A08E60CA2721B2CB00981311 /* PDFThumbnailsView+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */; };
+		A0CF7BA627300C6100C511F6 /* PDFThumbnailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CF7BA527300C6100C511F6 /* PDFThumbnailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		A05CB1F3268F59B9001F26E4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSlides.swift; sourceTree = "<group>"; };
 		A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDFThumbnailsView+UIKit.swift"; sourceTree = "<group>"; };
+		A0CF7BA527300C6100C511F6 /* PDFThumbnailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFThumbnailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				5FB7EA93269DE71A00B849C0 /* TiledView.swift */,
 				5FB7EA8E269DE6FE00B849C0 /* PDFDocument.swift */,
 				5FB7EA8D269DE6FE00B849C0 /* PDFPageView.swift */,
+				A0CF7BA527300C6100C511F6 /* PDFThumbnailsView.swift */,
 				A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */,
 			);
 			path = PDFReader;
@@ -334,6 +337,7 @@
 				5FD5CE7D269F3B72001046EA /* SwiftUI+Condition.swift in Sources */,
 				5FB7EA97269DE7D700B849C0 /* PDFReaderView.swift in Sources */,
 				5F20F23426C534A3004EB2C1 /* ScreenModifier.swift in Sources */,
+				A0CF7BA627300C6100C511F6 /* PDFThumbnailsView.swift in Sources */,
 				5F6804E82691EBA300E114FA /* SlideshareResult.swift in Sources */,
 				5FB7EA94269DE71A00B849C0 /* TiledView.swift in Sources */,
 				5F3A6E5F2690C0F0001A3F9F /* SlideshareApi.swift in Sources */,

@@ -54,8 +54,14 @@ func pageNumberLabel( of pageNumber:Int ) -> some View {
         )
 }
 
-struct PDFThumbnailsView : View {
+struct PDFThumbnailsView : View, Equatable {
+    static func == (lhs: PDFThumbnailsView, rhs: PDFThumbnailsView) -> Bool {
+        
+        print( "Equatable \(lhs.pageSelected) - \(rhs.pageSelected)")
+        return lhs.pageSelected == rhs.pageSelected
+    }
     
+
     var document:PDFDocument
     @Binding var pageSelected: Int
     var parentSize:CGSize
@@ -74,13 +80,10 @@ struct PDFThumbnailsView : View {
                         self.pageSelected = pageNumber
                     }
                 }
-//              .if( pageNumber == pageSelected ) {
-//                  $0.prefersDefaultFocus(in: focusNS )
-//              }
+                .id(pageNumber)
         }
-        
-
     }
+    
 }
 
 struct PDFThumbnailsView_Previews: PreviewProvider {
