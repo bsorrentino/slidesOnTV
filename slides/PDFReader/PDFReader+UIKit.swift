@@ -11,32 +11,32 @@ import Combine
 
 
 class PageContainerView: UIView {
-
+    
     override init(frame: CGRect) {
-      super.init(frame: frame)
-      setupView()
+        super.init(frame: frame)
+        setupView()
     }
     
     //initWithCode to init view from xib or storyboard
     required init?(coder aDecoder: NSCoder) {
-      super.init(coder: aDecoder)
-      setupView()
+        super.init(coder: aDecoder)
+        setupView()
     }
     
     //common func to init our view
     private func setupView() {
         // backgroundColor = .red
-
+        
         isUserInteractionEnabled = true
-
+        
         // Setup Pointer
-    // let tap = UILongPressGestureRecognizer(target: self, action: #selector(togglePointer) )
+        // let tap = UILongPressGestureRecognizer(target: self, action: #selector(togglePointer) )
         let tap = UITapGestureRecognizer(target: self, action: #selector(togglePointer) )
-
+        
         tap.numberOfTapsRequired = 1
-
+        
         addGestureRecognizer(tap)
-
+        
     }
     
     // MARK: - Shadow management
@@ -52,9 +52,9 @@ class PageContainerView: UIView {
             page.layer.shadowRadius = 10
             page.layer.cornerRadius = 0.0
         }
-     }
-     private func removeShadow() {
-
+    }
+    private func removeShadow() {
+        
         if let page = self.subviews.first {
             page.layer.masksToBounds = false
             page.layer.shadowColor = UIColor.clear.cgColor
@@ -63,29 +63,29 @@ class PageContainerView: UIView {
             page.layer.shadowRadius = 0.0
             page.layer.cornerRadius = 0.0
         }
-     }
-        
+    }
+    
     // MARK: - Focus Management
     // MARK: -
     
     override var canBecomeFocused : Bool {
         return true
     }
-//
-//    /// Asks whether the system should allow a focus update to occur.
-//    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
-//        print( "PageView.shouldUpdateFocusInContext:" )
-//        return true
-//
-//    }
+    //
+    //    /// Asks whether the system should allow a focus update to occur.
+    //    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+    //        print( "PageView.shouldUpdateFocusInContext:" )
+    //        return true
+    //
+    //    }
     
     /// Called when the screen’s focusedView has been updated to a new view. Use the animation coordinator to schedule focus-related animations in response to the update.
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator)
     {
         print( "\(type(of: self)).didUpdateFocusInContext: focused: \(self.isFocused)" );
-
+        
         coordinator.addCoordinatedAnimations(nil) {
-          // Perform some task after item has received focus
+            // Perform some task after item has received focus
             if context.nextFocusedView == self {
                 self.addShadow()
             }
@@ -122,11 +122,11 @@ class PageContainerView: UIView {
     }()
     
     let showPointerSubject = CurrentValueSubject<Bool, Never>(false)
-
+    
     var showPointer:Bool = false {
         
         didSet {
-
+            
             if !showPointer {
                 pointer.removeFromSuperview()
             }
@@ -136,7 +136,7 @@ class PageContainerView: UIView {
             }
             
             showPointerSubject.send( showPointer )
-
+            
         }
     }
     
@@ -145,7 +145,7 @@ class PageContainerView: UIView {
         print( "\(type(of: self)).togglePointer \(showPointer)")
         
         showPointer.toggle()
-
+        
     }
     
     // MARK: - Touch Handling
@@ -167,7 +167,7 @@ class PageContainerView: UIView {
     }
     
     override func  touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        print( "\(type(of: self)).touchesMoved: focused: \(self.isFocused)" )
+        //        print( "\(type(of: self)).touchesMoved: focused: \(self.isFocused)" )
         guard showPointer, let firstTouch = touches.first else {
             return
         }
@@ -177,7 +177,7 @@ class PageContainerView: UIView {
         var f = pointer.frame
         
         f.origin = locationInView
-    
+        
         pointer.frame = f
     }
     
@@ -194,7 +194,7 @@ class PageContainerView: UIView {
 }
 
 public protocol PDFPageDelegate {
-
+    
     func pointerStatedDidChange( show: Bool ) -> Void
 }
 
@@ -205,7 +205,7 @@ class PDFPageViewController : UIViewController {
     
     typealias Value = (newValue:Int,oldValue:Int)
     
-    fileprivate var pages = Array<PDFPageView>()
+    fileprivate var pagesCache = NSCache<NSNumber,PDFPageView>()
     
     fileprivate var document : PDFDocument
     
@@ -247,44 +247,44 @@ class PDFPageViewController : UIViewController {
     
     fileprivate func onUpdateCurrentPageIndex( newValue:Int, oldValue:Int ) {
         
-            print( "CurrentPageIndex changed from \(oldValue) to \(newValue)")
+        print( "current page index changed from \(oldValue) to \(newValue)")
+        
+        if( oldValue > 0 /*&& oldValue <= self.pages.count*/ ) {
+            let zeroBasedIndex = NSNumber( value: oldValue - 1 )
             
-        if( oldValue > 0 && oldValue <= self.pages.count ) {
-                let zeroBasedIndex = oldValue-1
-                
-                let view = self.pages[zeroBasedIndex]
+            if let view = self.pagesCache.object(forKey: zeroBasedIndex)  {
                 view.removeFromSuperview()
-
+                
                 print( "remove view at index \(zeroBasedIndex)" )
+            }
         }
-        if( newValue > 0 && oldValue <= self.pages.count ) {
+        if( newValue > 0 /*&& oldValue <= self.pages.count*/ ) {
             
-            let zeroBasedIndex = newValue-1
+            let zeroBasedIndex = NSNumber( value: newValue - 1 )
             
-            if( !self.pages.indices.contains(zeroBasedIndex) ) {
+            guard let cachedView = self.pagesCache.object(forKey: zeroBasedIndex) else {
                 
                 print( "create view at index \(zeroBasedIndex)" )
-
-                let view = PDFPageView( frame: self.view.frame,
-                                        document: self.document,
-                                        pageNumber: zeroBasedIndex,
-                                        backgroundImage: nil,
-                                        pageViewDelegate: nil)
                 
-                self.pages.append( view )
-                view.isUserInteractionEnabled = false
-                self.view.addSubview(view)
+                let newView = PDFPageView( frame: self.view.frame,
+                                           document: self.document,
+                                           pageNumber: zeroBasedIndex.intValue,
+                                           backgroundImage: nil,
+                                           pageViewDelegate: nil)
+                
+                newView.isUserInteractionEnabled = false
+                self.view.addSubview(newView)
 
+                self.pagesCache.setObject(newView, forKey: zeroBasedIndex)
+                return
             }
-            else {
-                print( "reuse view at index \(zeroBasedIndex)" )
-
-                let view = self.pages[zeroBasedIndex]
-                self.view.addSubview(view)
-            }
-
+            
+            print( "reuse view at index \(zeroBasedIndex)" )
+            
+            self.view.addSubview(cachedView)
+            
         }
-
+        
     }
     
     
@@ -299,7 +299,7 @@ class PDFPageViewController : UIViewController {
                 self.onUpdateCurrentPageIndex( newValue:$0.newValue, oldValue:$0.oldValue )
             }
     }
-
+    
     override func viewDidDisappear(_ animated:Bool) {
         super.viewDidDisappear(animated)
         
@@ -308,30 +308,30 @@ class PDFPageViewController : UIViewController {
         }
         onUpdateCurrentPageIndexSubscriber = nil
     }
-
+    
     // MARK: - Focus Engine
     // MARK: -
-//    override var preferredFocusEnvironments: [UIFocusEnvironment] {
-//        print( "\(type(of: self)).preferredFocusEnvironments")
-//        
-//        return [view]
-//    }
-        
+    //    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+    //        print( "\(type(of: self)).preferredFocusEnvironments")
+    //
+    //        return [view]
+    //    }
+    
 }
 
 
 struct PDFDocumentView : UIViewControllerRepresentable, PDFPageDelegate {
-        
+    
     typealias UIViewControllerType = PDFPageViewController
     
     
     var document : PDFDocument
-    var pageSelected:Int
+    var page:Int
     @Binding var isPointerVisible:Bool
     
     func pointerStatedDidChange( show: Bool ) {
         DispatchQueue.main.async {
-            print( "pointerStatedDidChange \(show)")            
+            print( "pointerStatedDidChange \(show)")
             isPointerVisible = show
         }
     }
@@ -341,13 +341,13 @@ struct PDFDocumentView : UIViewControllerRepresentable, PDFPageDelegate {
         let controller = PDFPageViewController( document: document )
         
         controller.pageDelegate = self
-        
+        controller.currentPageIndex = page
         return controller
     }
     
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: UIViewControllerRepresentableContext<PDFDocumentView>) {
-    
-        uiViewController.currentPageIndex = pageSelected
+        
+        uiViewController.currentPageIndex = page
     }
     
 }

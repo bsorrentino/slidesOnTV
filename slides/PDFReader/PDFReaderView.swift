@@ -7,120 +7,57 @@
 //
 import SwiftUI
 
-struct ThumbnailShadow: ViewModifier {
-    
-    var focused:Bool
-    
-    func body(content: Content) -> some View {
-        if (focused) {
-            return content
-                .shadow( color: Color.black, radius: 20, x:5, y:5 )
-        }
-        
-        return content.shadow( color: Color.clear, radius: 0 )
-    }
-}
-
-struct ThumbnailView : View {
-    //    @Environment(\.isFocused) var focused: Bool
-    
-    var uiImage:UIImage
-    var size:CGSize
-    
-    var body: some View {
-        
-        Image( uiImage: uiImage )
-            .resizable()
-            .frame(width: size.width,
-                   height: size.height,
-                   alignment: .center)
-    }
-}
-
-func pageNumberLabel( of pageNumber:Int ) -> some View {
-    
-    Circle()
-        .fill( Color.blue )
-        .shadow( color: Color.black, radius: 1, x:1, y:1)
-        .shadow( color: Color.black, radius: 1, x:1, y:1)
-        .frame(width: 30, height: 30)
-        .padding( EdgeInsets(top:0,leading:0,bottom:5,trailing:5))
-        .overlay(
-            Text("\(pageNumber)")
-                .padding( EdgeInsets(top:0,leading:0,bottom:5,trailing:5) )
-                .font(.system(size: 12).weight(.heavy))
-        )
-}
-
-
 
 struct PDFReaderContentView: View {
     @Namespace private var focusNS
     @State var isPointerVisible: Bool = false
 
-    var document:PDFDocument    
+    var document:PDFDocument
     @Binding var pageSelected: Int
     var isZoom: Bool
         
+    
+    var CurrentPageView:some View {
+        PDFDocumentView(
+            document:           self.document,
+            page:               self.pageSelected,
+            isPointerVisible:   self.$isPointerVisible)
+    }
+    
     var body: some View {
         
-        GeometryReader { geom in
-            
-            HStack {
-                
-                if( !isZoom ) {
-                    
-                    List( document.allPageNumbers, id: \.self ) { pageNumber in
-                        
-                        ThumbnailView( uiImage:document.pdfPageImage(at: pageNumber)!,
-                                       size:CGSize(width: geom.size.width * 0.2, height: geom.size.height * 0.25))
-                            .modifier( ThumbnailShadow( focused: pageSelected == pageNumber ) )
-                            .overlay( pageNumberLabel(of: pageNumber ), alignment: .bottomTrailing )
-                            .focusable(true) { focused in
-                                print( "thumbnail focus on page \(pageNumber) - focused:\(focused) - pinter:\(isPointerVisible)")
-                                if( focused && pageNumber != self.pageSelected ) {
-                                    self.pageSelected = pageNumber
-                                }
-                            }
-//                            .if( pageNumber == pageSelected ) {
-//                                $0.prefersDefaultFocus(in: focusNS )
-//                            }
-                    }
-                    .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
-                    //  .focusable( isPointerVisible ) { focused in
-                    //      print( "thumbnail List focus on page \(pageSelected) - focused:\(focused pointer:\(isPointerVisible)")
-                    //   }
-                    .prefersDefaultFocus(in: focusNS )
-                }
-//                if self.pageSelected > 0  {
-                    
-                    Group {
-                        if( !isZoom ) { Spacer() }
-                        
-                        PDFDocumentView(
-                            document:self.document,
-                            pageSelected:self.pageSelected,
-                            isPointerVisible:self.$isPointerVisible)
-                        .if( isZoom ) { view in
-                            view.prefersDefaultFocus(in: focusNS )
-                        }
-                        
-                        if( !isZoom ) { Spacer() }
-                    }
-                        
-//                }
+        Group {
+            if isZoom {
+                CurrentPageView
             }
-            .focusScope( focusNS )
-            .background(Color.gray)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-            
-            
+            else {
+                
+                GeometryReader { geom in
+                    HStack {
+                        //PDFThumbnailsView( 
+                        PDFThumbnailsViewUIKit(
+                            document:       document,
+                            pageSelected:   $pageSelected,
+                            parentSize:     geom.size )
+                        .equatable()
+                        .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
+                        .prefersDefaultFocus( in: focusNS )
+
+                        Spacer()
+                        CurrentPageView
+                        Spacer()
+                    }
+                    .focusScope( focusNS )
+                }
+            }
         }
-        
+        .background(Color.gray)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+
     }
     
 }
+
 
 struct PDFReaderContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -169,31 +106,6 @@ struct PDFReaderContentView_Previews: PreviewProvider {
         }
     }
     
-//    static var overlay_previews: some View {
-//        // PDFReaderContentView(document: PDFDocument.createFormBundle(resource: "apple"))
-//        VStack {
-//
-//            HStack {
-//                Spacer()
-//                Text( "TEST" )
-//                Text( "TEST" )
-//
-//                Spacer()
-//            }
-//            .frame(height: 500)
-//            .background( Color.blue )
-//        }
-//        .frame(maxWidth: .infinity, maxHeight: .infinity)
-//        .background( Color.gray )
-//        .edgesIgnoringSafeArea( .trailing )
-//        .edgesIgnoringSafeArea( .leading )
-//        .edgesIgnoringSafeArea( .bottom )
-//        .overlay(
-//            PDFReaderContentView.CommandBar( isZoom: .constant(false))
-//                .padding( EdgeInsets( top:15, leading: 0,bottom: 0, trailing: 20 )) ,
-//            alignment: .top )
-//    }
-
     static var shadow_previews: some View {
         // PDFReaderContentView(document: PDFDocument.createFormBundle(resource: "apple"))
         VStack {
@@ -220,5 +132,31 @@ struct PDFReaderContentView_Previews: PreviewProvider {
         .background( Color.white )
         //.edgesIgnoringSafeArea(.all)
     }
+
+//    static var overlay_previews: some View {
+//        // PDFReaderContentView(document: PDFDocument.createFormBundle(resource: "apple"))
+//        VStack {
+//
+//            HStack {
+//                Spacer()
+//                Text( "TEST" )
+//                Text( "TEST" )
+//
+//                Spacer()
+//            }
+//            .frame(height: 500)
+//            .background( Color.blue )
+//        }
+//        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//        .background( Color.gray )
+//        .edgesIgnoringSafeArea( .trailing )
+//        .edgesIgnoringSafeArea( .leading )
+//        .edgesIgnoringSafeArea( .bottom )
+//        .overlay(
+//            PDFReaderContentView.CommandBar( isZoom: .constant(false))
+//                .padding( EdgeInsets( top:15, leading: 0,bottom: 0, trailing: 20 )) ,
+//            alignment: .top )
+//    }
+
 
 }
