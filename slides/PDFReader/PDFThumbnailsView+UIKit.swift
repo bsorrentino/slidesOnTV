@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct PDFThumbnailsViewUIKit : UIViewControllerRepresentable , Equatable {
+struct PDFThumbnailsViewUIKit : UIViewControllerRepresentable {
     
     typealias UIViewControllerType = PDFThumbnailsViewController
     
@@ -64,13 +64,6 @@ struct PDFThumbnailsViewUIKit : UIViewControllerRepresentable , Equatable {
         }
         
     }
-
-    static func == (lhs: PDFThumbnailsViewUIKit, rhs: PDFThumbnailsViewUIKit) -> Bool {
-        
-        // print( "Equatable \(lhs.pageSelected) - \(rhs.pageSelected)")
-        return lhs.pageSelected == rhs.pageSelected
-    }
-        
 
     var document:PDFDocument
     @Binding var pageSelected: Int
@@ -132,6 +125,17 @@ public class PDFThumbnailsViewController : UITableViewController  {
 //        
 //    }
 
+}
+
+// MARK: PDFThumbnailsViewUIKit (Equatable)
+extension PDFThumbnailsViewUIKit : Equatable {
+    
+    static func == (lhs: PDFThumbnailsViewUIKit, rhs: PDFThumbnailsViewUIKit) -> Bool {
+
+        // print( "Equatable \(lhs.pageSelected) - \(rhs.pageSelected)")
+        return lhs.pageSelected == rhs.pageSelected
+    }
+            
 }
 
 // MARK: Coordinator (UITableViewDelegate)
