@@ -9,10 +9,11 @@
 import SwiftUI
 
 struct PDFThumbnailsViewUIKit : UIViewControllerRepresentable , Equatable {
+    
     static func == (lhs: PDFThumbnailsViewUIKit, rhs: PDFThumbnailsViewUIKit) -> Bool {
         
-        print( "Equatable \(lhs.pageSelected) - \(rhs.pageSelected)")
-        return true // lhs.pageSelected == rhs.pageSelected
+        // print( "Equatable \(lhs.pageSelected) - \(rhs.pageSelected)")
+        return lhs.pageSelected == rhs.pageSelected
     }
         
     typealias UIViewControllerType = PDFThumbnailsViewController
@@ -79,7 +80,7 @@ struct PDFThumbnailsViewUIKit : UIViewControllerRepresentable , Equatable {
     }
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<PDFThumbnailsViewUIKit>) -> UIViewControllerType {
-        print("makeUIViewController")
+        // print("makeUIViewController")
         
         let controller = PDFThumbnailsViewController(document:document)
 
@@ -91,6 +92,7 @@ struct PDFThumbnailsViewUIKit : UIViewControllerRepresentable , Equatable {
         controller.tableView.allowsSelectionDuringEditing = false
         controller.tableView.allowsMultipleSelectionDuringEditing = false
 
+        controller.tableView.remembersLastFocusedIndexPath = true
         controller.tableView.dataSource = context.coordinator
         controller.tableView.delegate = context.coordinator
         
@@ -101,8 +103,7 @@ struct PDFThumbnailsViewUIKit : UIViewControllerRepresentable , Equatable {
     }
     
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: UIViewControllerRepresentableContext<PDFThumbnailsViewUIKit>) {
-        print("updateUIViewController")
-
+        // print("updateUIViewController")
     }
     
 }
@@ -121,6 +122,15 @@ public class PDFThumbnailsViewController : UITableViewController  {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+
 }
 
 // MARK: Coordinator (UITableViewDelegate)
@@ -160,10 +170,10 @@ extension PDFThumbnailsViewUIKit.Coordinator: UITableViewDelegate {
 //        return true
 //    }
     
-//    func indexPathForPreferredFocusedView(in tableView: UITableView) -> IndexPath? {
-//        print( "indexPathForPreferredFocusedView" )
-//        return IndexPath( item: view.pageSelected - 1, section: 0)
-//    }
+    func indexPathForPreferredFocusedView(in tableView: UITableView) -> IndexPath? {
+        print( "indexPathForPreferredFocusedView" )
+        return IndexPath( item: view.pageSelected - 1, section: 0)
+    }
 
 //    func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
 //        print( "shouldUpdateFocusIn \(String(describing: context.nextFocusedItem))" )
@@ -215,7 +225,7 @@ struct PDFThumbnailsViewUIKit_Previews: PreviewProvider {
                 //Text( "\(document?.pageCount ?? 0)" )
                 HStack {
                     Spacer()
-                    PDFThumbnailsViewUIKit( document:document!, pageSelected:.constant(3), parentSize: geom.size )
+                    PDFThumbnailsViewUIKit( document:document!, pageSelected:.constant(1), parentSize: geom.size )
                         .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
                     Spacer()
                 }

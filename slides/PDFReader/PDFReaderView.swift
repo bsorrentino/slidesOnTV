@@ -12,7 +12,7 @@ struct PDFReaderContentView: View {
     @Namespace private var focusNS
     @State var isPointerVisible: Bool = false
 
-    var document:PDFDocument    
+    var document:PDFDocument
     @Binding var pageSelected: Int
     var isZoom: Bool
         
@@ -24,7 +24,10 @@ struct PDFReaderContentView: View {
                 
                 if( !isZoom ) {
                     //PDFThumbnailsView( document:document, pageSelected:$pageSelected, parentSize:geom.size )
-                    PDFThumbnailsViewUIKit( document:document, pageSelected:$pageSelected, parentSize:geom.size )
+                    PDFThumbnailsViewUIKit(
+                        document:       document,
+                        pageSelected:   $pageSelected,
+                        parentSize:geom.size )
                     .equatable()
                     .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
                     .prefersDefaultFocus( !isZoom, in: focusNS )
@@ -33,9 +36,9 @@ struct PDFReaderContentView: View {
                     if( !isZoom ) { Spacer() }
 
                     PDFDocumentView(
-                        document:self.document,
-                        page:self.pageSelected,
-                        isPointerVisible:self.$isPointerVisible)
+                        document:           self.document,
+                        page:               self.pageSelected,
+                        isPointerVisible:   self.$isPointerVisible)
                     .prefersDefaultFocus( isZoom, in: focusNS )
 
                     if( !isZoom ) { Spacer() }
