@@ -16,46 +16,48 @@ struct PDFReaderContentView: View {
     @Binding var pageSelected: Int
     var isZoom: Bool
         
+    
+    var CurrentPageView:some View {
+        PDFDocumentView(
+            document:           self.document,
+            page:               self.pageSelected,
+            isPointerVisible:   self.$isPointerVisible)
+    }
+    
     var body: some View {
         
-        GeometryReader { geom in
-            
-            HStack {
-                
-                if( !isZoom ) {
-                    //PDFThumbnailsView( document:document, pageSelected:$pageSelected, parentSize:geom.size )
-                    PDFThumbnailsViewUIKit(
-                        document:       document,
-                        pageSelected:   $pageSelected,
-                        parentSize:geom.size )
-                    .equatable()
-                    .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
-                    .prefersDefaultFocus( !isZoom, in: focusNS )
-                }
-                Group {
-                    if( !isZoom ) { Spacer() }
-
-                    PDFDocumentView(
-                        document:           self.document,
-                        page:               self.pageSelected,
-                        isPointerVisible:   self.$isPointerVisible)
-                    .prefersDefaultFocus( isZoom, in: focusNS )
-
-                    if( !isZoom ) { Spacer() }
-                }
-
+        Group {
+            if isZoom {
+                CurrentPageView
             }
-            .focusScope( focusNS )
-            .background(Color.gray)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-            
-            
+            else {
+                
+                GeometryReader { geom in
+                    HStack {
+                        //PDFThumbnailsView( 
+                        PDFThumbnailsViewUIKit(
+                            document:       document,
+                            pageSelected:   $pageSelected,
+                            parentSize:     geom.size )
+                        .equatable()
+                        .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
+                        .prefersDefaultFocus( in: focusNS )
+
+                        Spacer()
+                        CurrentPageView
+                        Spacer()
+                    }
+                    .focusScope( focusNS )
+                }
+            }
         }
-        
+        .background(Color.gray)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+
     }
     
 }
+
 
 struct PDFReaderContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -104,31 +106,6 @@ struct PDFReaderContentView_Previews: PreviewProvider {
         }
     }
     
-//    static var overlay_previews: some View {
-//        // PDFReaderContentView(document: PDFDocument.createFormBundle(resource: "apple"))
-//        VStack {
-//
-//            HStack {
-//                Spacer()
-//                Text( "TEST" )
-//                Text( "TEST" )
-//
-//                Spacer()
-//            }
-//            .frame(height: 500)
-//            .background( Color.blue )
-//        }
-//        .frame(maxWidth: .infinity, maxHeight: .infinity)
-//        .background( Color.gray )
-//        .edgesIgnoringSafeArea( .trailing )
-//        .edgesIgnoringSafeArea( .leading )
-//        .edgesIgnoringSafeArea( .bottom )
-//        .overlay(
-//            PDFReaderContentView.CommandBar( isZoom: .constant(false))
-//                .padding( EdgeInsets( top:15, leading: 0,bottom: 0, trailing: 20 )) ,
-//            alignment: .top )
-//    }
-
     static var shadow_previews: some View {
         // PDFReaderContentView(document: PDFDocument.createFormBundle(resource: "apple"))
         VStack {
@@ -155,5 +132,31 @@ struct PDFReaderContentView_Previews: PreviewProvider {
         .background( Color.white )
         //.edgesIgnoringSafeArea(.all)
     }
+
+//    static var overlay_previews: some View {
+//        // PDFReaderContentView(document: PDFDocument.createFormBundle(resource: "apple"))
+//        VStack {
+//
+//            HStack {
+//                Spacer()
+//                Text( "TEST" )
+//                Text( "TEST" )
+//
+//                Spacer()
+//            }
+//            .frame(height: 500)
+//            .background( Color.blue )
+//        }
+//        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//        .background( Color.gray )
+//        .edgesIgnoringSafeArea( .trailing )
+//        .edgesIgnoringSafeArea( .leading )
+//        .edgesIgnoringSafeArea( .bottom )
+//        .overlay(
+//            PDFReaderContentView.CommandBar( isZoom: .constant(false))
+//                .padding( EdgeInsets( top:15, leading: 0,bottom: 0, trailing: 20 )) ,
+//            alignment: .top )
+//    }
+
 
 }

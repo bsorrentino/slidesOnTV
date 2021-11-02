@@ -10,12 +10,6 @@ import SwiftUI
 
 struct PDFThumbnailsViewUIKit : UIViewControllerRepresentable , Equatable {
     
-    static func == (lhs: PDFThumbnailsViewUIKit, rhs: PDFThumbnailsViewUIKit) -> Bool {
-        
-        // print( "Equatable \(lhs.pageSelected) - \(rhs.pageSelected)")
-        return lhs.pageSelected == rhs.pageSelected
-    }
-        
     typealias UIViewControllerType = PDFThumbnailsViewController
     
     //
@@ -70,7 +64,14 @@ struct PDFThumbnailsViewUIKit : UIViewControllerRepresentable , Equatable {
         }
         
     }
-    
+
+    static func == (lhs: PDFThumbnailsViewUIKit, rhs: PDFThumbnailsViewUIKit) -> Bool {
+        
+        // print( "Equatable \(lhs.pageSelected) - \(rhs.pageSelected)")
+        return lhs.pageSelected == rhs.pageSelected
+    }
+        
+
     var document:PDFDocument
     @Binding var pageSelected: Int
     var parentSize:CGSize
@@ -122,14 +123,14 @@ public class PDFThumbnailsViewController : UITableViewController  {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    public override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
+//    public override func viewDidLoad() {
+//        super.viewDidLoad()
+//    }
+//    
+//    public override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        
+//    }
 
 }
 
@@ -171,7 +172,7 @@ extension PDFThumbnailsViewUIKit.Coordinator: UITableViewDelegate {
 //    }
     
     func indexPathForPreferredFocusedView(in tableView: UITableView) -> IndexPath? {
-        print( "indexPathForPreferredFocusedView" )
+        // print( "indexPathForPreferredFocusedView" )
         return IndexPath( item: view.pageSelected - 1, section: 0)
     }
 
@@ -220,17 +221,12 @@ struct PDFThumbnailsViewUIKit_Previews: PreviewProvider {
 
     static var previews: some View {
         GeometryReader { geom in
-        VStack {
-                //Text( sampleFileUrl?.absoluteString ?? "'sample.pdf' not found" )
-                //Text( "\(document?.pageCount ?? 0)" )
-                HStack {
-                    Spacer()
-                    PDFThumbnailsViewUIKit( document:document!, pageSelected:.constant(1), parentSize: geom.size )
-                        .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
-                    Spacer()
-                }
-                //Text( "\(document?.pageCount ?? 0)" )
-
+            HStack {
+                Spacer()
+                PDFThumbnailsViewUIKit( document:document!, pageSelected:.constant(1), parentSize: geom.size )
+                    .equatable()
+                    .frame( width: geom.size.width * 0.2, height: geom.size.height - 1)
+                Spacer()
             }
         }
     }
