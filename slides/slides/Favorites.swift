@@ -8,8 +8,6 @@
 
 import Foundation
 
-typealias FavoriteData = ( key:String, value:[String:String]? )
-
 
 struct FavoriteItem : SlideItem {
     private let data:Slideshow
