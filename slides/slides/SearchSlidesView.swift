@@ -83,9 +83,9 @@ struct SearchSlidesView: View  {
                                     ForEach(slidesResult.data, id: \.id) { item in
                                         
                                         SearchCardView<SlidehareItem>( item: item,
-                                                                       downloadManager: downloadManager,
                                                                        isItemDownloaded: $isItemDownloaded,
                                                                        onFocusChange: setItem )
+                                            .environmentObject(downloadManager)
                                             .id( item.id )
                                             
                                     }

@@ -65,8 +65,8 @@ private struct SearchResultImageView<T> : View where T : SlideItem {
 
 struct SearchCardView<T> : View where T : SlideItem {
     
+    @EnvironmentObject var downloadManager:DownloadManager<T>
     var item: T
-    var downloadManager: DownloadManager<T>
     @Binding var isItemDownloaded: Bool
     var onFocusChange: (T, Bool) -> Void
     
