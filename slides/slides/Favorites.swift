@@ -16,6 +16,7 @@ struct FavoriteItem : SlideItem {
     var id: String          { data["id"]! }
     var title: String       { data["title"]! }
     var thumbnail: String   { data["thumbnail"]! }
+    var updated: String     { data["updated"]! }
 
     var downloadUrl: URL? {
         guard let result = self.data["downloadurl"] else {
@@ -31,7 +32,7 @@ struct FavoriteItem : SlideItem {
     
     init?(data: Slideshow) {
         
-        guard let _ = data["id"], let _ = data["title"], let _ = data["thumbnail"] else {
+        guard let _ = data["id"], let _ = data["title"], let _ = data["thumbnail"], let _ = data["updated"] else {
             return nil
         }
         

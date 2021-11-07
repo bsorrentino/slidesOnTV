@@ -18,7 +18,7 @@ protocol SlideItem : Identifiable, Equatable {
     var downloadUrl: URL? { get }
     var thumbnail: String { get }
 //    var created: String { get }
-//    var updated: String { get }
+    var updated: String { get }
     
     init?(data: Slideshow)
 }
