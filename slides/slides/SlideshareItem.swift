@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct SlidehareItem : Identifiable, Equatable {
+struct SlidehareItem : SlideItem {
     
     static let Title            = "title"
     static let DownloadUrl      = "downloadurl"

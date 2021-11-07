@@ -21,9 +21,9 @@ fileprivate let Const = (
     Background: Color.blue
 )
 
-struct SearchSlidesView: View {
+struct SearchSlidesView: View  {
     @StateObject var slidesResult       = SlideShareResult()
-    @StateObject var downloadManager    = DownloadManager()
+    @StateObject var downloadManager    = DownloadManager<SlidehareItem>()
     
     @State var isItemDownloaded:Bool    = false
     @State var selectedItem:SlidehareItem?
@@ -178,7 +178,7 @@ struct SearchSlidesView: View {
         NavigationView {
             
             ZStack {
-                NavigationLink(destination: PresentationView().environmentObject(downloadManager),
+                NavigationLink(destination: PresentationView<SlidehareItem>().environmentObject(downloadManager),
                                isActive: $isItemDownloaded) { EmptyView() }
                     .hidden()
                 VStack {

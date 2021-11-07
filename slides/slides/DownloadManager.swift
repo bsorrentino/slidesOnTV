@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DownloadManager : ObservableObject {
+class DownloadManager<T> : ObservableObject where T: SlideItem {
     
     typealias Progress = (Double,TimeInterval?)
     
@@ -36,7 +36,7 @@ class DownloadManager : ObservableObject {
         return result
 
     }
-    func isDownloading( item:SlidehareItem ) -> Bool {
+    func isDownloading( item:T ) -> Bool {
         guard let id = itemId, let progress = downloadProgress, progress.0 < 1, id==item.id else {
             return false
         }
@@ -55,7 +55,7 @@ class DownloadManager : ObservableObject {
     }
     
     
-    func download( item: SlidehareItem, completionHandler: @escaping (Bool) -> Void )  {
+    func download( item: T, completionHandler: @escaping (Bool) -> Void )  {
         
         guard let downloadURL = item.downloadUrl else {
             return

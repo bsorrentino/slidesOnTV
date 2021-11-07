@@ -43,6 +43,10 @@
 		5FD5CE7F269F44E7001046EA /* SwiftUI+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD5CE7E269F44E7001046EA /* SwiftUI+Styles.swift */; };
 		5FEA94A32693061E002D228A /* XCode+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA94A22693061E002D228A /* XCode+Utils.swift */; };
 		5FEA94A626931CF0002D228A /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5FEA94A526931CF0002D228A /* SDWebImageSwiftUI */; };
+		A0035D262737ED9600DD85E4 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D252737ED9600DD85E4 /* Favorites.swift */; };
+		A0035D272737ED9600DD85E4 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D252737ED9600DD85E4 /* Favorites.swift */; };
+		A0035D292737EEF900DD85E4 /* SlideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D282737EEF900DD85E4 /* SlideItem.swift */; };
+		A0035D2A2737EEF900DD85E4 /* SlideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D282737EEF900DD85E4 /* SlideItem.swift */; };
 		A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F3268F59B9001F26E4 /* SearchBar.swift */; };
 		A05CB1F6268F59F5001F26E4 /* SearchSlides.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */; };
 		A08E60CA2721B2CB00981311 /* PDFThumbnailsView+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */; };
@@ -93,6 +97,8 @@
 		5FD5CE7C269F3B72001046EA /* SwiftUI+Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Condition.swift"; sourceTree = "<group>"; };
 		5FD5CE7E269F44E7001046EA /* SwiftUI+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Styles.swift"; sourceTree = "<group>"; };
 		5FEA94A22693061E002D228A /* XCode+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCode+Utils.swift"; sourceTree = "<group>"; };
+		A0035D252737ED9600DD85E4 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
+		A0035D282737EEF900DD85E4 /* SlideItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideItem.swift; sourceTree = "<group>"; };
 		A05CB1F3268F59B9001F26E4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSlides.swift; sourceTree = "<group>"; };
 		A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDFThumbnailsView+UIKit.swift"; sourceTree = "<group>"; };
@@ -175,10 +181,12 @@
 				5F20660B2691C6DD003B819A /* Publisher+Extensions.swift */,
 				5F20F23326C534A3004EB2C1 /* ScreenModifier.swift */,
 				5FB7EA99269DF79A00B849C0 /* DownloadManager.swift */,
+				A0035D282737EEF900DD85E4 /* SlideItem.swift */,
 				5F6804EA2691F8AD00E114FA /* SlideshareItem.swift */,
 				5F3A6E622690D240001A3F9F /* SlideshareXML.swift */,
 				5F3A6E5E2690C0F0001A3F9F /* SlideshareApi.swift */,
 				5F6804E72691EBA300E114FA /* SlideshareResult.swift */,
+				A0035D252737ED9600DD85E4 /* Favorites.swift */,
 				A05CB1F3268F59B9001F26E4 /* SearchBar.swift */,
 				A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */,
 				5FB7EA9B269E306F00B849C0 /* PresentationView.swift */,
@@ -312,9 +320,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0035D272737ED9600DD85E4 /* Favorites.swift in Sources */,
 				5FD5CE7B269ED569001046EA /* XCode+Utils.swift in Sources */,
 				5F6804E92691EBA300E114FA /* SlideshareResult.swift in Sources */,
 				5F3A6E742690F1B5001A3F9F /* SlideshareXML.swift in Sources */,
+				A0035D2A2737EEF900DD85E4 /* SlideItem.swift in Sources */,
 				5F3A6E752690F1B5001A3F9F /* SlideshareApi.swift in Sources */,
 				5F3A6E762690F1B5001A3F9F /* String+Extensions.swift in Sources */,
 				5F3A6E6B2690EEB4001A3F9F /* slidesTests.swift in Sources */,
@@ -335,7 +345,9 @@
 				A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */,
 				A08E60CA2721B2CB00981311 /* PDFThumbnailsView+UIKit.swift in Sources */,
 				5FD5CE7D269F3B72001046EA /* SwiftUI+Condition.swift in Sources */,
+				A0035D262737ED9600DD85E4 /* Favorites.swift in Sources */,
 				5FB7EA97269DE7D700B849C0 /* PDFReaderView.swift in Sources */,
+				A0035D292737EEF900DD85E4 /* SlideItem.swift in Sources */,
 				5F20F23426C534A3004EB2C1 /* ScreenModifier.swift in Sources */,
 				A0CF7BA627300C6100C511F6 /* PDFThumbnailsView.swift in Sources */,
 				5F6804E82691EBA300E114FA /* SlideshareResult.swift in Sources */,

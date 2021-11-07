@@ -8,9 +8,9 @@
 
 import SwiftUI
 
-struct PresentationView: View {
+struct PresentationView<T>: View where T : SlideItem {
     
-    @EnvironmentObject var downloadInfo:DownloadManager
+    @EnvironmentObject var downloadInfo:DownloadManager<T>
     @State var isZoom = false
     @State var pageSelected: Int = 1
 
