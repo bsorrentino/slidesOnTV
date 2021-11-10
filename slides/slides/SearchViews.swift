@@ -35,7 +35,7 @@ private struct SearchResultImageView<T> : View where T : SlideItem {
                     .scaledToFit()
             }
             else {
-                WebImage(url: URL(string: item.thumbnail) )
+                WebImage(url: URL(string: item.thumbnail ?? "unknown") )
                     // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
                     .onSuccess { image, data, cacheType in
                         // Success
@@ -120,11 +120,12 @@ func TitleView<T>( selectedItem: T?) -> some View where T : SlideItem  {
                     .foregroundColor(.blue)
                     .fixedSize(horizontal: false, vertical: false)
                     .lineLimit(1)
-                Divider()
-                Text( "\(item.updated)")
-                    .font(.system(.subheadline))
-                    .foregroundColor(.purple)
-                
+                if let updated = item.updated {
+                    Divider()
+                    Text( "\(updated)")
+                        .font(.system(.subheadline))
+                        .foregroundColor(.purple)
+                }
             }
         }
         else {

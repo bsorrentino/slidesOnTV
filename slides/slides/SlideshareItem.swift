@@ -96,25 +96,19 @@ struct SlidehareItem : SlideItem {
 
     }
 
-    var thumbnail: String {
-        guard let result = self.data[SlidehareItem.Thumbnail] else {
-            return ""
+    var thumbnail: String? {
+        guard  let result = self.data[SlidehareItem.Thumbnail] else {
+            return  nil
         }
         return result.starts(with: "http") ? result : "https:\(result)"
     }
     
-    var created: String {
-        guard let result = self.data[SlidehareItem.Created] else {
-            return ""
-        }
-        return result
+    var created: String? {
+        self.data[SlidehareItem.Created]
     }
     
-    var updated: String {
-        guard let result = self.data[SlidehareItem.Updated] else {
-            return ""
-        }
-        return result
+    var updated: String? {
+        self.data[SlidehareItem.Updated]
     }
 
 }

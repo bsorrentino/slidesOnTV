@@ -10,16 +10,23 @@ import Foundation
 
 
 struct FavoriteItem : SlideItem {
+    
+    static let ITEMID           = "id"
+    static let Title            = "title"
+    static let DownloadUrl      = "location"
+    static let Thumbnail        = "thumbnail"
+    static let Updated          = "updated"
+
     private let data:Slideshow
     
     // Identifiable
-    var id: String          { data["id"]! }
-    var title: String       { data["title"]! }
-    var thumbnail: String   { data["thumbnail"]! }
-    var updated: String     { data["updated"]! }
+    var id: String          { data[FavoriteItem.ITEMID]! }
+    var title: String       { data[FavoriteItem.Title]! }
 
+    var updated: String?     { data[FavoriteItem.Updated] }
+    var thumbnail: String?   { data[FavoriteItem.Thumbnail] }
     var downloadUrl: URL? {
-        guard let result = self.data["downloadurl"] else {
+        guard let result = self.data[FavoriteItem.DownloadUrl] else {
             return nil
         }
         return URL(string:result)
@@ -32,7 +39,7 @@ struct FavoriteItem : SlideItem {
     
     init?(data: Slideshow) {
         
-        guard let _ = data["id"], let _ = data["title"], let _ = data["thumbnail"], let _ = data["updated"] else {
+        guard let _ = data[FavoriteItem.ITEMID], let _ = data[FavoriteItem.Title], let _ = data[FavoriteItem.DownloadUrl] else {
             return nil
         }
         
@@ -69,12 +76,12 @@ func favoriteAdd<T>( data:T, synchronize:Bool = false ) where T : SlideItem  {
     var value = Dictionary<String,String>()
     
     if let url = data.downloadUrl?.absoluteString {
-        value["downloadurl"] = url
+        value[FavoriteItem.DownloadUrl] = url
     }
     
-    value["id"]         = data.id
-    value["thumbnail"]  = data.thumbnail
-    value["title"]      = data.title
+    value[FavoriteItem.ITEMID]     = data.id
+    value[FavoriteItem.Title]      = data.title
+    value[FavoriteItem.Thumbnail]  = data.thumbnail
 
     NSUbiquitousKeyValueStore.default.set( value, forKey: key )
         
