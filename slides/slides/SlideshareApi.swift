@@ -9,8 +9,6 @@
 import Foundation
 import CommonCrypto
 
-typealias Slideshow = [String:String]
-
 
 class SlideshareApi /*: ObservableObject */ {
     

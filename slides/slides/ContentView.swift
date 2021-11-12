@@ -44,8 +44,12 @@ struct ContentView: View {
             VStack(alignment: .center, spacing:50) {
 
                 Spacer()
-                NavigationButton( text: "Search   ", image: "magnifyingglass.circle.fill", destination:SearchSlidesView() )
-                NavigationButton( text: "Favorites", image:"bookmark.fill", destination: Text("TO DO") )
+                NavigationButton( text: "Search   ",
+                                  image: "magnifyingglass.circle.fill",
+                                  destination:SearchSlidesView() )
+                NavigationButton( text: "Favorites",
+                                  image:"bookmark.fill",
+                                  destination: FavoritesView() )
                 Spacer()
             }
     }
@@ -65,7 +69,7 @@ struct ContentView: View {
             .background(BackgroundImage)
             
         }
-        .main()
+        .mainTheme()
     }
 }
 

@@ -43,8 +43,14 @@
 		5FD5CE7F269F44E7001046EA /* SwiftUI+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD5CE7E269F44E7001046EA /* SwiftUI+Styles.swift */; };
 		5FEA94A32693061E002D228A /* XCode+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA94A22693061E002D228A /* XCode+Utils.swift */; };
 		5FEA94A626931CF0002D228A /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5FEA94A526931CF0002D228A /* SDWebImageSwiftUI */; };
+		A0035D262737ED9600DD85E4 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D252737ED9600DD85E4 /* Favorites.swift */; };
+		A0035D272737ED9600DD85E4 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D252737ED9600DD85E4 /* Favorites.swift */; };
+		A0035D292737EEF900DD85E4 /* SlideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D282737EEF900DD85E4 /* SlideItem.swift */; };
+		A0035D2A2737EEF900DD85E4 /* SlideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D282737EEF900DD85E4 /* SlideItem.swift */; };
+		A0035D2F2738156D00DD85E4 /* SearchFavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D2E2738156D00DD85E4 /* SearchFavoritesView.swift */; };
+		A0035D312738174800DD85E4 /* SearchViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D302738174800DD85E4 /* SearchViews.swift */; };
 		A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F3268F59B9001F26E4 /* SearchBar.swift */; };
-		A05CB1F6268F59F5001F26E4 /* SearchSlides.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */; };
+		A05CB1F6268F59F5001F26E4 /* SearchSlidesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F5268F59F5001F26E4 /* SearchSlidesView.swift */; };
 		A08E60CA2721B2CB00981311 /* PDFThumbnailsView+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */; };
 		A0CF7BA627300C6100C511F6 /* PDFThumbnailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CF7BA527300C6100C511F6 /* PDFThumbnailsView.swift */; };
 /* End PBXBuildFile section */
@@ -74,6 +80,7 @@
 		5F5FCF05272EB3D800D956D9 /* slideshare.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = slideshare.plist; sourceTree = "<group>"; };
 		5F6804E72691EBA300E114FA /* SlideshareResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshareResult.swift; sourceTree = "<group>"; };
 		5F6804EA2691F8AD00E114FA /* SlideshareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshareItem.swift; sourceTree = "<group>"; };
+		5F75B0F3273E8BAC00D49211 /* slides.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = slides.entitlements; sourceTree = "<group>"; };
 		5F88CD6B2691D09700D27865 /* Slideshows.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Slideshows.xml; sourceTree = "<group>"; };
 		5FAE8580272EB6300079D67B /* sample.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample.pdf; sourceTree = "<group>"; };
 		5FB7EA8D269DE6FE00B849C0 /* PDFPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPageView.swift; sourceTree = "<group>"; };
@@ -93,8 +100,12 @@
 		5FD5CE7C269F3B72001046EA /* SwiftUI+Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Condition.swift"; sourceTree = "<group>"; };
 		5FD5CE7E269F44E7001046EA /* SwiftUI+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Styles.swift"; sourceTree = "<group>"; };
 		5FEA94A22693061E002D228A /* XCode+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCode+Utils.swift"; sourceTree = "<group>"; };
+		A0035D252737ED9600DD85E4 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
+		A0035D282737EEF900DD85E4 /* SlideItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideItem.swift; sourceTree = "<group>"; };
+		A0035D2E2738156D00DD85E4 /* SearchFavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFavoritesView.swift; sourceTree = "<group>"; };
+		A0035D302738174800DD85E4 /* SearchViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViews.swift; sourceTree = "<group>"; };
 		A05CB1F3268F59B9001F26E4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSlides.swift; sourceTree = "<group>"; };
+		A05CB1F5268F59F5001F26E4 /* SearchSlidesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSlidesView.swift; sourceTree = "<group>"; };
 		A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDFThumbnailsView+UIKit.swift"; sourceTree = "<group>"; };
 		A0CF7BA527300C6100C511F6 /* PDFThumbnailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFThumbnailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,6 +179,7 @@
 		5FCEB8FE240C51D600F9885A /* slides */ = {
 			isa = PBXGroup;
 			children = (
+				5F75B0F3273E8BAC00D49211 /* slides.entitlements */,
 				5FEA94A22693061E002D228A /* XCode+Utils.swift */,
 				5FD5CE7C269F3B72001046EA /* SwiftUI+Condition.swift */,
 				5FD5CE7E269F44E7001046EA /* SwiftUI+Styles.swift */,
@@ -175,12 +187,16 @@
 				5F20660B2691C6DD003B819A /* Publisher+Extensions.swift */,
 				5F20F23326C534A3004EB2C1 /* ScreenModifier.swift */,
 				5FB7EA99269DF79A00B849C0 /* DownloadManager.swift */,
+				A0035D282737EEF900DD85E4 /* SlideItem.swift */,
 				5F6804EA2691F8AD00E114FA /* SlideshareItem.swift */,
 				5F3A6E622690D240001A3F9F /* SlideshareXML.swift */,
 				5F3A6E5E2690C0F0001A3F9F /* SlideshareApi.swift */,
 				5F6804E72691EBA300E114FA /* SlideshareResult.swift */,
+				A0035D252737ED9600DD85E4 /* Favorites.swift */,
 				A05CB1F3268F59B9001F26E4 /* SearchBar.swift */,
-				A05CB1F5268F59F5001F26E4 /* SearchSlides.swift */,
+				A0035D302738174800DD85E4 /* SearchViews.swift */,
+				A0035D2E2738156D00DD85E4 /* SearchFavoritesView.swift */,
+				A05CB1F5268F59F5001F26E4 /* SearchSlidesView.swift */,
 				5FB7EA9B269E306F00B849C0 /* PresentationView.swift */,
 				5FCEB901240C51D600F9885A /* ContentView.swift */,
 				5FCEB8FF240C51D600F9885A /* App.swift */,
@@ -312,9 +328,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0035D272737ED9600DD85E4 /* Favorites.swift in Sources */,
 				5FD5CE7B269ED569001046EA /* XCode+Utils.swift in Sources */,
 				5F6804E92691EBA300E114FA /* SlideshareResult.swift in Sources */,
 				5F3A6E742690F1B5001A3F9F /* SlideshareXML.swift in Sources */,
+				A0035D2A2737EEF900DD85E4 /* SlideItem.swift in Sources */,
 				5F3A6E752690F1B5001A3F9F /* SlideshareApi.swift in Sources */,
 				5F3A6E762690F1B5001A3F9F /* String+Extensions.swift in Sources */,
 				5F3A6E6B2690EEB4001A3F9F /* slidesTests.swift in Sources */,
@@ -335,7 +353,10 @@
 				A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */,
 				A08E60CA2721B2CB00981311 /* PDFThumbnailsView+UIKit.swift in Sources */,
 				5FD5CE7D269F3B72001046EA /* SwiftUI+Condition.swift in Sources */,
+				A0035D2F2738156D00DD85E4 /* SearchFavoritesView.swift in Sources */,
+				A0035D262737ED9600DD85E4 /* Favorites.swift in Sources */,
 				5FB7EA97269DE7D700B849C0 /* PDFReaderView.swift in Sources */,
+				A0035D292737EEF900DD85E4 /* SlideItem.swift in Sources */,
 				5F20F23426C534A3004EB2C1 /* ScreenModifier.swift in Sources */,
 				A0CF7BA627300C6100C511F6 /* PDFThumbnailsView.swift in Sources */,
 				5F6804E82691EBA300E114FA /* SlideshareResult.swift in Sources */,
@@ -348,9 +369,10 @@
 				5F3A6E632690D240001A3F9F /* SlideshareXML.swift in Sources */,
 				5F20660C2691C6DD003B819A /* Publisher+Extensions.swift in Sources */,
 				5FB7EA9C269E306F00B849C0 /* PresentationView.swift in Sources */,
+				A0035D312738174800DD85E4 /* SearchViews.swift in Sources */,
 				5FB7EA91269DE6FE00B849C0 /* PDFDocument.swift in Sources */,
 				5FB7EA98269DE7D700B849C0 /* PDFReader+UIKit.swift in Sources */,
-				A05CB1F6268F59F5001F26E4 /* SearchSlides.swift in Sources */,
+				A05CB1F6268F59F5001F26E4 /* SearchSlidesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,6 +560,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"slides/Preview Content\"";
@@ -561,6 +584,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"slides/Preview Content\"";
