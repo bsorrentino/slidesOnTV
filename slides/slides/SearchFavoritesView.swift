@@ -60,7 +60,7 @@ struct FavoritesView: View {
                                 Button( action: {
                                     self.downloadManager.downloadFavorite(item ) { isItemDownloaded = $0 }
                                 }) {
-                                        SearchCardView2<FavoriteItem>( item: item,
+                                        SearchCardView<FavoriteItem>( item: item,
                                                                        onFocusChange: setItem )
                                             .environmentObject(downloadManager)
                                 }
@@ -107,7 +107,6 @@ struct FavoritesView: View {
 
 
 extension DownloadManager where T == FavoriteItem {
-    
     
     func downloadFavorite( _ item: FavoriteItem, completionHandler: @escaping (Bool) -> Void ) {
         

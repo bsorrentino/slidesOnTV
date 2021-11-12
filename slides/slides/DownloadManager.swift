@@ -16,8 +16,8 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
     @Published var downloadProgress:Progress?
 
     
-    private var itemId:String?
-    private(set) var downloadedDcument:PDFDocument?
+    private var downloadingItemId:String?
+    private(set) var downloadedDocument:PDFDocument?
     private(set) var downdloadedItem:T?
 
     private var downloadTask:URLSessionDownloadTask?
@@ -40,7 +40,7 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
 
     }
     func isDownloading( item:T ) -> Bool {
-        guard let id = itemId, let progress = downloadProgress, progress.0 < 1, id==item.id else {
+        guard let id = downloadingItemId, let progress = downloadProgress, progress.0 < 1, id==item.id else {
             return false
         }
         return true
@@ -52,8 +52,8 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
         if let task = downloadTask {
             task.cancel()
             observation = nil
-            itemId = nil
-            downloadedDcument = nil
+            downloadingItemId = nil
+            downloadedDocument = nil
             downdloadedItem = nil
         }
     }
@@ -79,7 +79,7 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
                                       appropriateFor: nil,
                                       create: false).appendingPathComponent("presentation.pdf")
             
-            self.itemId = item.id
+            self.downloadingItemId = item.id
             
             downloadTask = session.downloadTask(with: request) { [self] (tempLocalUrl, response, error) in
                 
@@ -109,7 +109,7 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
                     // try FileManager.default.copyItem(at: tempLocalUrl, to: destinationFileUrl)
                     if let url =  try FileManager.default.replaceItemAt(destinationFileUrl, withItemAt: tempLocalUrl) {
                         
-                        self.downloadedDcument = PDFDocument(url: url)
+                        self.downloadedDocument = PDFDocument(url: url)
                         self.downdloadedItem = item
                         
                         DispatchQueue.main.async {

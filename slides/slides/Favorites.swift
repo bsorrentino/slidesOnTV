@@ -92,9 +92,10 @@ extension NSUbiquitousKeyValueStore {
             value[FavoriteItem.DownloadUrl] = url
         }
         
-        value[FavoriteItem.ITEMID]     = data.id
-        value[FavoriteItem.Title]      = data.title
-        value[FavoriteItem.Thumbnail]  = data.thumbnail
+        value[FavoriteItem.ITEMID]      = data.id
+        value[FavoriteItem.Title]       = data.title
+        value[FavoriteItem.Thumbnail]   = data.thumbnail
+        value[FavoriteItem.Updated]     = data.updated
 
        self.set( value, forKey: key )
             

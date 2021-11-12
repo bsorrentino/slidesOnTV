@@ -62,7 +62,7 @@ private struct SearchResultImageView<T> : View where T : SlideItem {
 }
 
 
-struct SearchCardView2<T> : View where T : SlideItem {
+struct SearchCardView<T> : View where T : SlideItem {
     
     @EnvironmentObject var downloadManager:DownloadManager<T>
     var item: T
@@ -77,49 +77,6 @@ struct SearchCardView2<T> : View where T : SlideItem {
         .padding()
         .frame( width: Const.cardSize.width, height: Const.cardSize.height)
         .background(Color.white)
-    }
-
-    func DownloadProgressView() -> some View {
-        
-        ZStack {
-            Rectangle()
-                .fill( Const.ProgressView.fill )
-                .cornerRadius(Const.ProgressView.radius)
-                .shadow( color: Color.black, radius: Const.ProgressView.radius )
-
-            ProgressView( "Download: \(self.downloadManager.downloadingDescription)", value: self.downloadManager.downloadProgress?.0, total:1)
-                .progressViewStyle(BlueShadowProgressViewStyle())
-                .padding()
-                
-        }
-    }
-
-}
-
-
-struct SearchCardView<T> : View where T : SlideItem {
-    
-    @EnvironmentObject var downloadManager:DownloadManager<T>
-    var item: T
-    @Binding var isItemDownloaded: Bool
-    var onFocusChange: (T, Bool) -> Void
-    
-    var body: some View {
-        
-        Button( action: {
-            self.downloadManager.download(item: item)  { isItemDownloaded = $0 }
-        }) {
-      
-            SearchResultImageView( item: item, onFocusChange: onFocusChange)
-            .if( self.downloadManager.isDownloading(item: item) ) {
-                $0.overlay( DownloadProgressView(), alignment: .bottom )
-            }
-            .padding()
-            .frame( width: Const.cardSize.width, height: Const.cardSize.height)
-            .background(Color.white)
-        }
-        .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
-        .disabled( self.downloadManager.isDownloading(item: item) )
     }
 
     func DownloadProgressView() -> some View {

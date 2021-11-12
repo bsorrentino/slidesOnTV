@@ -82,11 +82,17 @@ struct SearchSlidesView: View  {
                                     
                                     ForEach(slidesResult.data, id: \.id) { item in
                                         
+                                        Button( action: {
+                                            self.downloadManager.download(item: item)  { isItemDownloaded = $0 }
+                                        }) {
+
                                         SearchCardView<SlidehareItem>( item: item,
-                                                                       isItemDownloaded: $isItemDownloaded,
                                                                        onFocusChange: setItem )
                                             .environmentObject(downloadManager)
-                                            .id( item.id )
+                                        }
+                                        .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
+                                        .disabled( self.downloadManager.isDownloading(item: item) )
+                                        .id( item.id )
                                             
                                     }
                                     if slidesResult.hasMoreItems {
