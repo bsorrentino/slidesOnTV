@@ -14,6 +14,13 @@ struct PresentationView<T>: View where T : SlideItem {
     @State var isZoom = false
     @State var pageSelected: Int = 1
 
+    func saveToFavorites() {
+        
+        if let item = downloadInfo.downdloadedItem {
+            NSUbiquitousKeyValueStore.default.favoriteAdd(data: item, synchronize: true)
+        }
+    }
+    
     func ToolbarModifier<Content:View>( _ content: Content) -> some View {
         
         content
@@ -31,7 +38,7 @@ struct PresentationView<T>: View where T : SlideItem {
                             }
             }
             ToolbarItem(placement: .confirmationAction) {
-                Button( action: {} ) { //
+                Button( action: saveToFavorites ) { //
                     Image( systemName: "bookmark")
                         .resizable()
                         .renderingMode(.original)
@@ -47,7 +54,7 @@ struct PresentationView<T>: View where T : SlideItem {
     
     var body: some View {
         NavigationView {
-            if let doc = downloadInfo.document {
+            if let doc = downloadInfo.downloadedDcument {
                 PDFReaderContentView( document: doc, pageSelected: $pageSelected, isZoom: isZoom )
                     .if( isZoom ) { $0.onExitCommand { isZoom.toggle() } }
                     .if( !isZoom, modifier: ToolbarModifier )

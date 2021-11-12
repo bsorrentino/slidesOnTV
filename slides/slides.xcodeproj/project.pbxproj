@@ -80,6 +80,7 @@
 		5F5FCF05272EB3D800D956D9 /* slideshare.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = slideshare.plist; sourceTree = "<group>"; };
 		5F6804E72691EBA300E114FA /* SlideshareResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshareResult.swift; sourceTree = "<group>"; };
 		5F6804EA2691F8AD00E114FA /* SlideshareItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshareItem.swift; sourceTree = "<group>"; };
+		5F75B0F3273E8BAC00D49211 /* slides.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = slides.entitlements; sourceTree = "<group>"; };
 		5F88CD6B2691D09700D27865 /* Slideshows.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Slideshows.xml; sourceTree = "<group>"; };
 		5FAE8580272EB6300079D67B /* sample.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample.pdf; sourceTree = "<group>"; };
 		5FB7EA8D269DE6FE00B849C0 /* PDFPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPageView.swift; sourceTree = "<group>"; };
@@ -178,6 +179,7 @@
 		5FCEB8FE240C51D600F9885A /* slides */ = {
 			isa = PBXGroup;
 			children = (
+				5F75B0F3273E8BAC00D49211 /* slides.entitlements */,
 				5FEA94A22693061E002D228A /* XCode+Utils.swift */,
 				5FD5CE7C269F3B72001046EA /* SwiftUI+Condition.swift */,
 				5FD5CE7E269F44E7001046EA /* SwiftUI+Styles.swift */,
@@ -558,6 +560,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"slides/Preview Content\"";
@@ -581,6 +584,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "\"slides/Preview Content\"";

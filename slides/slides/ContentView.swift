@@ -45,7 +45,7 @@ struct ContentView: View {
 
                 Spacer()
                 NavigationButton( text: "Search   ", image: "magnifyingglass.circle.fill", destination:SearchSlidesView() )
-                NavigationButton( text: "Favorites", image:"bookmark.fill", destination: Text("TO DO") )
+                NavigationButton( text: "Favorites", image:"bookmark.fill", destination: FavoritesView() )
                 Spacer()
             }
     }

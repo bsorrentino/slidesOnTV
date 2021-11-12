@@ -19,7 +19,7 @@ struct FavoritesView: View {
     @StateObject var downloadManager = DownloadManager<FavoriteItem>()
     @State var isItemDownloaded:Bool    = false
     @State var selectedItem:FavoriteItem?
-    @State var data = favorites()
+    @State var data = NSUbiquitousKeyValueStore.default.favorites()
     
     let columns:[GridItem] = Array(repeating: .init(.fixed(Const.gridItemSize)), count: 3)
     
@@ -27,49 +27,61 @@ struct FavoritesView: View {
         NavigationView {
             
             ZStack {
-                NavigationLink(destination: PresentationView<SlidehareItem>().environmentObject(downloadManager),
+                NavigationLink(destination: PresentationView<FavoriteItem>().environmentObject(downloadManager),
                                isActive: $isItemDownloaded) { EmptyView() }
-                    .hidden()
+                               .hidden()
                 VStack {
-                        //
-                        // @ref https://stackoverflow.com/a/67730429/521197
-                        //
-                        // ScrollViewReader usage for dynamically scroll to tagged position
-                        //
-                        ScrollView {
-                                LazyVGrid( columns: columns ) {
-                                    
-                                    ForEach(data, id: \.id) { item in
-                                        
-                                        SearchCardView<FavoriteItem>( item: item,
-                                                                       isItemDownloaded: $isItemDownloaded,
-                                                                       onFocusChange: setItem )
-                                            .environmentObject(downloadManager)
-                                            .id( item.id )
-                                            
-                                    }
-                                }
-
+                    
+                    HStack(alignment: .center, spacing: 10 ) {
+                        Image( systemName: "bookmark.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame( minWidth: 100, maxHeight: 70 )
+                            
+                        Text( "Favorites" )
+                            .font(.largeTitle.bold())
+                            
+                    }.padding()
+                    Divider()
+                    //
+                    // @ref https://stackoverflow.com/a/67730429/521197
+                    //
+                    // ScrollViewReader usage for dynamically scroll to tagged position
+                    //
+                    ScrollView {
+                        LazyVGrid( columns: columns ) {
+                            
+                            ForEach(data, id: \.id) { item in
+                                
+                                SearchCardView<FavoriteItem>( item: item,
+                                                              isItemDownloaded: $isItemDownloaded,
+                                                              onFocusChange: setItem )
+                                    .environmentObject(downloadManager)
+                                    .id( item.id )
+                                
+                            }
                         }
-                        .padding(.horizontal)
-
+                        
                     }
+                    .padding(.horizontal)
+                    
                     Spacer()
                     TitleView( selectedItem: selectedItem )
-                        
-                        
                 }
-                .edgesIgnoringSafeArea(.bottom)
+                
+                
             }
-            .main( gradient: Gradient(colors: [.black, .white]) )
+            .edgesIgnoringSafeArea(.bottom)
+        }
+        .main( gradient: Gradient(colors: [.black, .white]) )
     }
-
+    
     fileprivate func resetItem( OnFocusChange focused : Bool ) {
         if focused {
             self.selectedItem = nil
         }
     }
-
+    
     fileprivate func setItem( item:FavoriteItem, OnFocusChange focused : Bool ) {
         if focused {
             self.selectedItem = item
@@ -78,7 +90,7 @@ struct FavoritesView: View {
             self.selectedItem = nil
         }
     }
-
+    
 }
 
 struct FavoritesView_Previews: PreviewProvider {

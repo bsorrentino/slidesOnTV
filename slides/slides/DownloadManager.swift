@@ -17,8 +17,9 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
 
     
     private var itemId:String?
-    private(set) var document:PDFDocument?
-    
+    private(set) var downloadedDcument:PDFDocument?
+    private(set) var downdloadedItem:T?
+
     private var downloadTask:URLSessionDownloadTask?
     private var observation:NSKeyValueObservation?
     private var subscriptions = Set<AnyCancellable>()
@@ -50,7 +51,8 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
             task.cancel()
             observation = nil
             itemId = nil
-            document = nil
+            downloadedDcument = nil
+            downdloadedItem = nil
         }
     }
     
@@ -99,7 +101,8 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
                     // try FileManager.default.copyItem(at: tempLocalUrl, to: destinationFileUrl)
                     if let url =  try FileManager.default.replaceItemAt(destinationFileUrl, withItemAt: tempLocalUrl) {
                         
-                        self.document = PDFDocument(url: url)
+                        self.downloadedDcument = PDFDocument(url: url)
+                        self.downdloadedItem = item
                         
                         DispatchQueue.main.async {
                             completionHandler( true )

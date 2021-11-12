@@ -50,43 +50,45 @@ struct FavoriteItem : SlideItem {
     
 }
 
+extension NSUbiquitousKeyValueStore {
 
-func favorites() -> [FavoriteItem] {
-    let sequence = NSUbiquitousKeyValueStore.default.dictionaryRepresentation.enumerated()
+    func favorites() -> [FavoriteItem] {
+        let sequence = self.dictionaryRepresentation.enumerated()
     
-    return sequence
-        .compactMap { $0.element.value as? [String:String] }
-        .compactMap { FavoriteItem( data: $0 ) }
+        return sequence
+            .compactMap { $0.element.value as? [String:String] }
+            .compactMap { FavoriteItem( data: $0 ) }
     
-}
-
-func favoriteRemove( key:String, synchronize:Bool = false ) {
-
-    NSUbiquitousKeyValueStore.default.removeObject(forKey: key)
-    
-    if( synchronize ) {
-        NSUbiquitousKeyValueStore.default.synchronize()
     }
-}
 
-func favoriteAdd<T>( data:T, synchronize:Bool = false ) where T : SlideItem  {
-            
-    let key = data.id //NSUUID().uuidString
-  
-    var value = Dictionary<String,String>()
-    
-    if let url = data.downloadUrl?.absoluteString {
-        value[FavoriteItem.DownloadUrl] = url
-    }
-    
-    value[FavoriteItem.ITEMID]     = data.id
-    value[FavoriteItem.Title]      = data.title
-    value[FavoriteItem.Thumbnail]  = data.thumbnail
+    func favoriteRemove( key:String, synchronize:Bool = false ) {
 
-    NSUbiquitousKeyValueStore.default.set( value, forKey: key )
+        self.removeObject(forKey: key)
         
-    if( synchronize ) {
-        NSUbiquitousKeyValueStore.default.synchronize()
+        if( synchronize ) {
+            self.synchronize()
+        }
     }
-}
 
+    func favoriteAdd<T>( data:T, synchronize:Bool = false ) where T : SlideItem  {
+                
+        let key = data.id //NSUUID().uuidString
+      
+        var value = Dictionary<String,String>()
+        
+        if let url = data.downloadUrl?.absoluteString {
+            value[FavoriteItem.DownloadUrl] = url
+        }
+        
+        value[FavoriteItem.ITEMID]     = data.id
+        value[FavoriteItem.Title]      = data.title
+        value[FavoriteItem.Thumbnail]  = data.thumbnail
+
+       self.set( value, forKey: key )
+            
+        if( synchronize ) {
+            self.synchronize()
+        }
+    }
+
+}
