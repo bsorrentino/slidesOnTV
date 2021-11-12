@@ -22,8 +22,17 @@ struct ScreenModifier: ViewModifier {
 
 
 extension View {
-    func main( gradient:Gradient = Gradient(colors: [.purple, .white]) ) -> some View {
-        self.modifier(ScreenModifier(gradient:gradient))
+    //
+    func searchTheme()  -> some View {
+        self.modifier( ScreenModifier(gradient: Gradient(colors: [.black, .white])))
+    }
+    
+    func favoritesTheme()  -> some View {
+        self.modifier( ScreenModifier(gradient: Gradient(colors: [.purple, .white])))
+    }
+    
+    func mainTheme() -> some View {
+        self.modifier(ScreenModifier(gradient:Gradient(colors: [.purple, .white])))
     }
 }
 
@@ -40,6 +49,6 @@ struct ScreenModifier_Previews: PreviewProvider {
             Spacer()
             
         }
-        .main()
+        .mainTheme()
     }
 }

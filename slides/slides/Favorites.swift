@@ -46,6 +46,18 @@ struct FavoriteItem : SlideItem {
         self.data = data
         
     }
+    
+    init?<T>(item: T) where T : SlideItem {
+        
+        var value = Dictionary<String,String>()
+        
+        value[FavoriteItem.ITEMID]      = item.id
+        value[FavoriteItem.Title]       = item.title
+        value[FavoriteItem.DownloadUrl] = item.downloadUrl?.absoluteString
+        value[FavoriteItem.Thumbnail]   = item.thumbnail
+
+        self.init( data: value )
+    }
 
     
 }

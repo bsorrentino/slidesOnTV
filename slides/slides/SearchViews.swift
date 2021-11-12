@@ -57,10 +57,44 @@ private struct SearchResultImageView<T> : View where T : SlideItem {
             print( "ThumbnailView(\(item.title)): old:\(focused) new:\($0)")
             onFocusChange( item, $0 ) // Workaround for 'CardButtonStyle' bug
         })
-//            .frame(width: item.thumbnailSize.width, height: item.thumbnailSize.height, alignment: .center)
+//      .frame(width: item.thumbnailSize.width, height: item.thumbnailSize.height, alignment: .center)
     }
 }
 
+
+struct SearchCardView2<T> : View where T : SlideItem {
+    
+    @EnvironmentObject var downloadManager:DownloadManager<T>
+    var item: T
+    var onFocusChange: (T, Bool) -> Void
+    
+    var body: some View {
+              
+        SearchResultImageView( item: item, onFocusChange: onFocusChange)
+        .if( self.downloadManager.isDownloading(item: item) ) {
+            $0.overlay( DownloadProgressView(), alignment: .bottom )
+        }
+        .padding()
+        .frame( width: Const.cardSize.width, height: Const.cardSize.height)
+        .background(Color.white)
+    }
+
+    func DownloadProgressView() -> some View {
+        
+        ZStack {
+            Rectangle()
+                .fill( Const.ProgressView.fill )
+                .cornerRadius(Const.ProgressView.radius)
+                .shadow( color: Color.black, radius: Const.ProgressView.radius )
+
+            ProgressView( "Download: \(self.downloadManager.downloadingDescription)", value: self.downloadManager.downloadProgress?.0, total:1)
+                .progressViewStyle(BlueShadowProgressViewStyle())
+                .padding()
+                
+        }
+    }
+
+}
 
 
 struct SearchCardView<T> : View where T : SlideItem {

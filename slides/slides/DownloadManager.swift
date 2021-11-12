@@ -23,7 +23,9 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
     private var downloadTask:URLSessionDownloadTask?
     private var observation:NSKeyValueObservation?
     private var subscriptions = Set<AnyCancellable>()
-        
+   
+    internal var bag = Set<AnyCancellable>()
+    
     var downloadingDescription:String {
         guard let progress = downloadProgress else { return "" }
         
@@ -91,9 +93,15 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
                     return
                 }
                 
-                // Success
-                if let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                    log.trace("Successfully downloaded. Status code: \(statusCode)")
+                guard let response = response as? HTTPURLResponse else {
+                    log.error("HTTP Error: invalid response" )
+                    return
+
+                }
+                
+                guard response.statusCode < 400 else  {
+                    log.error("HTTP Error status code \(response.statusCode) - \(HTTPURLResponse.localizedString(forStatusCode: response.statusCode))" )
+                    return
                 }
                 
                 do {
@@ -130,3 +138,5 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
         }
     }
 }
+
+

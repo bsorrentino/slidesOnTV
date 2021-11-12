@@ -109,7 +109,7 @@ struct SearchSlidesView: View  {
                 .edgesIgnoringSafeArea(.bottom)
             }
                 
-        }.main( gradient: Gradient(colors: [.black, .white]) )
+        }.searchTheme()
     }
         
 }
