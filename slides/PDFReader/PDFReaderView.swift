@@ -20,8 +20,9 @@ struct PDFReaderContentView: View {
     var CurrentPageView:some View {
         PDFDocumentView(
             document:           self.document,
-            page:               self.pageSelected,
-            isPointerVisible:   self.$isPointerVisible)
+            page:               self.$pageSelected,
+            isPointerVisible:   self.$isPointerVisible,
+            isZoom:             self.isZoom)
     }
     
     var body: some View {

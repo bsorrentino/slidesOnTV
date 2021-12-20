@@ -8,9 +8,9 @@
 
 import SwiftUI
 import Combine
+import GameController
 
-
-class PageContainerView: UIView {
+class PageContainerView: UIView, NameDescribable {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,15 +30,23 @@ class PageContainerView: UIView {
         isUserInteractionEnabled = true
         
         // Setup Pointer
-        // let tap = UILongPressGestureRecognizer(target: self, action: #selector(togglePointer) )
-        let tap = UITapGestureRecognizer(target: self, action: #selector(togglePointer) )
-        
-        tap.numberOfTapsRequired = 1
-        
-        addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(togglePointer) )
+//
+//        tap.numberOfTapsRequired = 2
+//
+//        addGestureRecognizer(tap)
         
     }
+
     
+//    @objc private func togglePointer(_ sender: UITapGestureRecognizer) {
+//
+//        print( "\(typeName).togglePointer \(showPointer)")
+//
+//        showPointer.toggle()
+//
+//    }
+
     // MARK: - Shadow management
     // MARRK: -
     
@@ -71,13 +79,14 @@ class PageContainerView: UIView {
     override var canBecomeFocused : Bool {
         return true
     }
-    //
-    //    /// Asks whether the system should allow a focus update to occur.
-    //    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
-    //        print( "PageView.shouldUpdateFocusInContext:" )
-    //        return true
-    //
-    //    }
+
+//
+//    /// Asks whether the system should allow a focus update to occur.
+//    override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+//        print( "PageView.shouldUpdateFocusInContext:" )
+//        return true
+//
+//    }
     
     /// Called when the screen’s focusedView has been updated to a new view. Use the animation coordinator to schedule focus-related animations in response to the update.
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator)
@@ -140,14 +149,6 @@ class PageContainerView: UIView {
         }
     }
     
-    @objc private func togglePointer(_ sender: UITapGestureRecognizer) {
-        
-        print( "\(type(of: self)).togglePointer \(showPointer)")
-        
-        showPointer.toggle()
-        
-    }
-    
     // MARK: - Touch Handling
     // MARK: -
     
@@ -196,12 +197,14 @@ class PageContainerView: UIView {
 public protocol PDFPageDelegate {
     
     func pointerStatedDidChange( show: Bool ) -> Void
+
+    func pageDidChange( page: Int ) -> Void
 }
 
 /**
  PDFPageViewController
  */
-class PDFPageViewController : UIViewController {
+class PDFPageViewController : UIViewController, NameDescribable {
     
     typealias Value = (newValue:Int,oldValue:Int)
     
@@ -287,8 +290,12 @@ class PDFPageViewController : UIViewController {
         
     }
     
-    
     var onUpdateCurrentPageIndexSubscriber:AnyCancellable?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
     
     override func viewWillAppear(_ animated:Bool) {
         
@@ -317,17 +324,78 @@ class PDFPageViewController : UIViewController {
     //        return [view]
     //    }
     
+    // MARK: - Presses Handling
+    // MARK: -
+
+    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        print("\(typeName).pressesBegan")
+
+        
+        if let press = presses.first {
+ 
+            switch press.type {
+            case .playPause:
+                print( "playPause" )
+                break
+            case .downArrow:
+                print( "downArrow" )
+                break
+            case .upArrow:
+                print( "upArrow" )
+                break
+            case .leftArrow:
+                print( "leftArrow" )
+                pageDelegate?.pageDidChange(page: self.currentPageIndex - 1)
+                break
+            case .rightArrow:
+                print( "rightArrow" )
+                pageDelegate?.pageDidChange(page: self.currentPageIndex + 1)
+                break
+            case .select:
+                print( "select" )
+                if let view = self.view as? PageContainerView {
+                    view.showPointer.toggle()
+                }
+                break
+            default:
+                print("press.type=\(press.type.rawValue)")
+                super.pressesBegan(presses, with: event)
+                break
+            }
+             
+
+        }
+        
+        
+    }
+    
+    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        //print("\(typeName).pressesEnded")
+        super.pressesEnded(presses, with: event)
+    }
+    
+    
+    override func pressesChanged(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        super.pressesChanged(presses, with: event)
+    }
+    
+    override func pressesCancelled(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        super.pressesCancelled(presses, with: event)
+    }
+
 }
 
 
 struct PDFDocumentView : UIViewControllerRepresentable, PDFPageDelegate {
     
+    
     typealias UIViewControllerType = PDFPageViewController
     
     
     var document : PDFDocument
-    var page:Int
+    @Binding var page:Int
     @Binding var isPointerVisible:Bool
+    var isZoom:Bool
     
     func pointerStatedDidChange( show: Bool ) {
         DispatchQueue.main.async {
@@ -336,6 +404,14 @@ struct PDFDocumentView : UIViewControllerRepresentable, PDFPageDelegate {
         }
     }
     
+    func pageDidChange(page: Int) {
+        if isZoom && page > 0 && page <= document.pageCount {
+            DispatchQueue.main.async {
+                self.page = page
+            }
+        }
+    }
+
     func makeUIViewController(context: UIViewControllerRepresentableContext<PDFDocumentView>) -> UIViewControllerType {
         
         let controller = PDFPageViewController( document: document )
