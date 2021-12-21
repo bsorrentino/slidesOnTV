@@ -39,7 +39,7 @@ struct FavoriteItem : SlideItem {
     
     init?(data: Slideshow) {
         
-        guard let _ = data[FavoriteItem.ITEMID], let _ = data[FavoriteItem.Title], let _ = data[FavoriteItem.DownloadUrl] else {
+        guard let _ = data[FavoriteItem.ITEMID], let _ = data[FavoriteItem.Title] /*, let _ = data[FavoriteItem.DownloadUrl]*/ else {
             return nil
         }
         
@@ -68,7 +68,14 @@ extension NSUbiquitousKeyValueStore {
         let sequence = self.dictionaryRepresentation.enumerated()
     
         return sequence
-            .compactMap { $0.element.value as? [String:String] }
+            .compactMap { $0.element }
+            .compactMap {
+                
+                if let value = $0.value as? [String:String] {
+                    return [ "id":$0.key ].merging( value ) { (first, _) in  first }
+                }
+                return nil
+            }
             .compactMap { FavoriteItem( data: $0 ) }
     
     }

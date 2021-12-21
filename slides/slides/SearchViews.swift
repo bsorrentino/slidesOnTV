@@ -26,6 +26,23 @@ private struct SearchResultImageView<T> : View where T : SlideItem {
     var item: T
     var onFocusChange: (T,Bool) -> Void = { _,_ in }
 
+    private var placeholderView:some View {
+        Rectangle().foregroundColor(.gray)
+    }
+    
+    private var imageLoadError:Bool {
+        item.thumbnail == nil || WebImageId > 0
+    }
+    
+    private var url:URL? {
+        guard let thumbnail = item.thumbnail, WebImageId == 0  else {
+            return URL.fromXCAsset(name: "slideshow" )
+        }
+        return URL(string: thumbnail)
+    }
+    
+    @State private var WebImageId = 0
+    
     var body: some View {
     
         Group {
@@ -35,22 +52,24 @@ private struct SearchResultImageView<T> : View where T : SlideItem {
                     .scaledToFit()
             }
             else {
-                WebImage(url: URL(string: item.thumbnail ?? "unknown") )
+                VStack {
                     // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
-                    .onSuccess { image, data, cacheType in
-                        // Success
-                        // Note: Data exist only when queried from disk cache or network. Use `.queryMemoryData` if you really need data
-                        // print( "ThumbnailView: \(focused) - \(item.title)")
+                    WebImage(url: url , options: .delayPlaceholder )
+                        .placeholder( Image(systemName: "photo") ) // Placeholder Image
+                        .resizable() // Resizable like SwiftUI.Image, you must use this modifier or the view will use the image bitmap size
+    //                    .onSuccess { image, data, cacheType in }
+                        .onFailure { err in WebImageId += 1 } // force refresh @ref https://stackoverflow.com/a/65095862/521197
+                        .indicator(.activity) // Activity Indicator
+                        .transition(.fade(duration: 0.5)) // Fade Transition with duration
+                        .scaledToFit()
+                        .id( WebImageId )
+                    
+                    if( imageLoadError ) {
+                        Divider()
+                        Text( "\(item.title)" )
+                            .foregroundColor(Color.black)
                     }
-                    .resizable() // Resizable like SwiftUI.Image, you must use this modifier or the view will use the image bitmap size
-                    .placeholder(Image(systemName: "photo")) // Placeholder Image
-                    // Supports ViewBuilder as well
-                    .placeholder {
-                        Rectangle().foregroundColor(.gray)
-                    }
-                    .indicator(.activity) // Activity Indicator
-                    .transition(.fade(duration: 0.5)) // Fade Transition with duration
-                    .scaledToFit()
+                }
             }
         }
         .onChange(of: focused, perform: {
