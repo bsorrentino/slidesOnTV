@@ -77,6 +77,7 @@ extension NSUbiquitousKeyValueStore {
                 return nil
             }
             .compactMap { FavoriteItem( data: $0 ) }
+            .sorted( by: { $0.title < $1.title } )
     
     }
 
