@@ -11,40 +11,48 @@ import Combine
 
 fileprivate let Const = (
     gridItemSize:   CGFloat(500),
-    
+
     Background: Color.blue
 )
 
 struct FavoritesView: View {
-    
+
     @StateObject var downloadManager = DownloadManager<FavoriteItem>()
     @State var isItemDownloaded:Bool    = false
     @State var selectedItem:FavoriteItem?
     @State private var data:[FavoriteItem] = []
-    
+    @State private var confirmationShown = false
+
     private let columns:[GridItem] = Array(repeating: .init(.fixed(Const.gridItemSize)), count: 3)
-    
+
     private var cancellable: AnyCancellable?
-    
+
+    private func download( _ item : FavoriteItem ) {
+        self.downloadManager.downloadFavorite(item) { isItemDownloaded = $0 }
+    }
+    private func delete( _ item : FavoriteItem ) {
+
+    }
+
     var body: some View {
         NavigationView {
-            
+
             ZStack {
                 NavigationLink(destination: PresentationView<FavoriteItem>()
                                                 .environmentObject(downloadManager),
                                isActive: $isItemDownloaded) { EmptyView() }
                                .hidden()
                 VStack {
-                    
+
                     HStack(alignment: .center, spacing: 10 ) {
                         Image( systemName: "bookmark.fill")
                             .resizable()
                             .scaledToFit()
                             .frame( minWidth: 100, maxHeight: 70 )
-                            
+
                         Text( "Favorites" )
                             .font(.largeTitle.bold())
-                            
+
                     }.padding()
                     Divider()
                     //
@@ -54,12 +62,11 @@ struct FavoritesView: View {
                     //
                     ScrollView {
                         LazyVGrid( columns: columns ) {
-                            
+
                             ForEach(data, id: \.id) { item in
-                                
-                                Button( action: {
-                                    self.downloadManager.downloadFavorite(item ) { isItemDownloaded = $0 }
-                                }) {
+
+                                Button( action: { download(item) } )
+                                {
                                         SearchCardView<FavoriteItem>( item: item,
                                                                        onFocusChange: setItem )
                                             .environmentObject(downloadManager)
@@ -67,33 +74,61 @@ struct FavoritesView: View {
                                 .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
                                 .disabled( self.downloadManager.isDownloading(item: item) )
                                 .id( item.id )
-                                
+                                .contextMenu {
+                                        Button( "MENU ↩︎") { }
+                                        Button( "Download ▼") { download(item) }
+                                        Button( "Delete 🗑" ) { confirmationShown.toggle() }
+
+                                }
+                                /* Only Available from TVOS 15
+                                .confirmationDialog(
+                                    "Are you sure?",
+                                     isPresented: $confirmationShown
+                                ) {
+                                    Button("Yes") {
+                                        withAnimation {
+                                            delete(item)
+                                        }
+                                    }
+                                }
+                                */
+                                .alert(isPresented:$confirmationShown) {
+                                    Alert(
+                                        title: Text("Are you sure you want to delete this?"),
+                                        message: Text("There is no undo"),
+                                        primaryButton: .destructive(Text("Delete")) {
+                                            delete(item)
+                                        },
+                                        secondaryButton: .cancel()
+                                    )
+                                }
+
                             }
                         }
-                        
+
                     }
                     .padding(.horizontal)
-                    
+
                     Spacer()
                     TitleView( selectedItem: selectedItem )
                 }
                 .onAppear {
                     data = NSUbiquitousKeyValueStore.default.favorites()
                 }
-                
+
             }
             .edgesIgnoringSafeArea(.bottom)
         }
         .favoritesTheme()
     }
-    
-    
+
+
     fileprivate func resetItem( OnFocusChange focused : Bool ) {
         if focused {
             self.selectedItem = nil
         }
     }
-    
+
     fileprivate func setItem( item:FavoriteItem, OnFocusChange focused : Bool ) {
         if focused {
             self.selectedItem = item
@@ -102,14 +137,14 @@ struct FavoritesView: View {
             self.selectedItem = nil
         }
     }
-    
+
 }
 
 
 extension DownloadManager where T == FavoriteItem {
-    
+
     func downloadFavorite( _ item: FavoriteItem, completionHandler: @escaping (Bool) -> Void ) {
-        
+
         guard let credentials = try? SlideshareApi.getCredential() else {
             return
         }
