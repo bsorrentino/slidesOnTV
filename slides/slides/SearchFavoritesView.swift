@@ -15,13 +15,104 @@ fileprivate let Const = (
     Background: Color.blue
 )
 
+
+struct FavoriteContextMenuModifier: ViewModifier {
+    
+    var item : FavoriteItem
+    var delete: ( FavoriteItem ) -> Void
+    var download: ( FavoriteItem ) -> Void
+    @State private var confirmationShown = false
+
+    #if swift(<15.0)
+
+    @State private var presentSheet = false
+
+    struct MenuButtonModifier: ViewModifier {
+        var foreground: Color?
+        var background: Color?
+        func body(content: Content) -> some View {
+            content
+                .font(.headline)
+                .padding(EdgeInsets( top: 10, leading: 120, bottom: 10, trailing: 120 ))
+                .if( foreground != nil ) { $0.foregroundColor( foreground )}
+                .if( background != nil ) { $0.background( background )}
+        }
+    }
+    
+    private var sheetTitle:some View {
+        HStack {
+            Label( "Actions", systemImage: "filemenu.and.selection")
+                .labelStyle(.iconOnly)
+                .font(.largeTitle)
+            Text( "_press 'MENU' to dismiss_")
+                .font(.callout)
+        }
+    }
+    
+    #endif
+    
+    func body(content: Content) -> some View {
+        content
+            #if swift(>=15.0)
+            .contextMenu {
+                    Button( "MENU 􀱢") { }
+                    Button( "Download 􀈄") { download(item) }
+                    Button( "Delete 􀈓", role: .destructive ) { confirmationShown.toggle() }
+
+            }
+            .confirmationDialog(
+                "Are you sure?",
+                 isPresented: $confirmationShown
+            ) {
+                Button("Yes") {
+                    withAnimation {
+                        delete(item)
+                    }
+                }
+            }
+            #else
+            .onLongPressGesture(minimumDuration: 0.5,
+                                perform: { presentSheet.toggle() },
+                                onPressingChanged: { state in print("onPressingChanged: \(state)")})
+            .sheet(isPresented: $presentSheet) {
+                VStack {
+                    sheetTitle
+                    Divider()
+                    Button( action: { presentSheet.toggle(); download(item) },
+                            label: { Label( "Download", systemImage: "square.and.arrow.down")
+                                        .modifier( MenuButtonModifier( foreground: .black, background: .white) )
+                        })
+                        .buttonStyle(.plain)
+                    Button( action: { confirmationShown.toggle() },
+                            label: { Label( "Delete", systemImage: "trash.circle")
+                                        .modifier( MenuButtonModifier( foreground: .white, background: .red) )
+                        })
+                        .buttonStyle(.plain)
+                }
+                .fixedSize()
+                .padding()
+                .alert( isPresented: $confirmationShown) {
+                    Alert(
+                        title: Text("Are you sure you want to delete this?"),
+                        message: Text("**There is no undo**"),
+                        primaryButton: .destructive(Text("Confirm")) {
+                            presentSheet.toggle()
+                            delete(item)
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
+            }
+            #endif
+    }
+}
+
 struct FavoritesView: View {
 
     @StateObject var downloadManager = DownloadManager<FavoriteItem>()
     @State var isItemDownloaded:Bool    = false
     @State var selectedItem:FavoriteItem?
     @State private var data:[FavoriteItem] = []
-    @State private var confirmationShown = false
 
     private let columns:[GridItem] = Array(repeating: .init(.fixed(Const.gridItemSize)), count: 3)
 
@@ -31,7 +122,9 @@ struct FavoritesView: View {
         self.downloadManager.downloadFavorite(item) { isItemDownloaded = $0 }
     }
     private func delete( _ item : FavoriteItem ) {
-
+        NSUbiquitousKeyValueStore.default.favoriteRemove(key: item.id)
+        selectedItem = nil
+        data = NSUbiquitousKeyValueStore.default.favorites()
     }
 
     var body: some View {
@@ -67,41 +160,14 @@ struct FavoritesView: View {
 
                                 Button( action: { download(item) } )
                                 {
-                                        SearchCardView<FavoriteItem>( item: item,
-                                                                       onFocusChange: setItem )
-                                            .environmentObject(downloadManager)
+                                    SearchCardView<FavoriteItem>( item: item,
+                                                                   onFocusChange: setItem )
+                                        .environmentObject(downloadManager)
                                 }
                                 .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
                                 .disabled( self.downloadManager.isDownloading(item: item) )
                                 .id( item.id )
-                                .contextMenu {
-                                        Button( "MENU ↩︎") { }
-                                        Button( "Download ▼") { download(item) }
-                                        Button( "Delete 🗑" ) { confirmationShown.toggle() }
-
-                                }
-                                /* Only Available from TVOS 15
-                                .confirmationDialog(
-                                    "Are you sure?",
-                                     isPresented: $confirmationShown
-                                ) {
-                                    Button("Yes") {
-                                        withAnimation {
-                                            delete(item)
-                                        }
-                                    }
-                                }
-                                */
-                                .alert(isPresented:$confirmationShown) {
-                                    Alert(
-                                        title: Text("Are you sure you want to delete this?"),
-                                        message: Text("There is no undo"),
-                                        primaryButton: .destructive(Text("Delete")) {
-                                            delete(item)
-                                        },
-                                        secondaryButton: .cancel()
-                                    )
-                                }
+                                .modifier( FavoriteContextMenuModifier(item: item, delete: delete, download: download) )
 
                             }
                         }
