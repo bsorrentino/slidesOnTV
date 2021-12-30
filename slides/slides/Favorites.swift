@@ -20,7 +20,7 @@ struct FavoriteItem : SlideItem {
     private let data:Slideshow
     
     // Identifiable
-    var id: String          { data[FavoriteItem.ITEMID]! }
+    var id: String          { data[FavoriteItem.ITEMID]!.trimmingCharacters(in: .whitespacesAndNewlines) }
     var title: String       { data[FavoriteItem.Title]! }
 
     var updated: String?     { data[FavoriteItem.Updated] }

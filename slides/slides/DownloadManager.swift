@@ -40,6 +40,7 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
 
     }
     func isDownloading( item:T ) -> Bool {
+        
         guard let id = downloadingItemId, let progress = downloadProgress, progress.0 < 1, id==item.id else {
             return false
         }
