@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A1A270B75789D3AC6A8DDE2 /* Pods_slidesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27BC5D213B325D32F50F66B5 /* Pods_slidesUITests.framework */; };
 		5F06EFC71F17610400B8D23B /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */; };
 		5F0C443E1EDB607D00B098A1 /* SearchStoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0C443D1EDB607D00B098A1 /* SearchStoryboardSegue.swift */; };
 		5F15D3EA1F03C4C2002F03AC /* FavoriteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */; };
@@ -38,6 +39,7 @@
 		5FD9A2E11CAD195A0065BE03 /* slidesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2E01CAD195A0065BE03 /* slidesTests.swift */; };
 		5FD9A2EC1CAD195A0065BE03 /* slidesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A2EB1CAD195A0065BE03 /* slidesUITests.swift */; };
 		5FF0DE0D1D99B033001CEC34 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF0DE0C1D99B033001CEC34 /* PageView.swift */; };
+		60370B690BE16BE5B6FA735E /* Pods_slidesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137192C7A5EE26B58D67E828 /* Pods_slidesTests.framework */; };
 		A02DD8B624449D3B008F8A7E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD8B524449D3B008F8A7E /* Utils.swift */; };
 		A0411F072446134300972331 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0411F062446134300972331 /* SettingsViewController.swift */; };
 		A04CD04524459C2A00EA1FBB /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04CD04424459C2A00EA1FBB /* PageCell.swift */; };
@@ -71,6 +73,8 @@
 
 /* Begin PBXFileReference section */
 		06BA7C51FC30362AA6716B11 /* Pods-slidesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		137192C7A5EE26B58D67E828 /* Pods_slidesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		27BC5D213B325D32F50F66B5 /* Pods_slidesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_slidesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29922D394E25E590CB68BD7B /* Settings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = slides/Settings.swift; sourceTree = SOURCE_ROOT; };
 		3CADED520A0132122567DBAF /* Pods-slidesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slidesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-slidesUITests/Pods-slidesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4B74BAF74AE103B2AC4E9103 /* Pods-slides.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-slides.release.xcconfig"; path = "Pods/Target Support Files/Pods-slides/Pods-slides.release.xcconfig"; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60370B690BE16BE5B6FA735E /* Pods_slidesTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A1A270B75789D3AC6A8DDE2 /* Pods_slidesUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,7 +237,6 @@
 				A06B6D521CBFA23900CBE220 /* slideshare.plist */,
 				5FD9A2FD1CAD5CFA0065BE03 /* Podfile */,
 				5FC7A4A51CAD8A8F00530CB0 /* slides-Bridging-Header.h */,
-				29922D394E25E590CB68BD7B /* Settings.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -268,11 +273,12 @@
 				5F15D3E91F03C4C2002F03AC /* FavoriteViewCell.swift */,
 				5F06EFC61F17610400B8D23B /* MainMenuViewController.swift */,
 				A02DD8B524449D3B008F8A7E /* Utils.swift */,
+				29922D394E25E590CB68BD7B /* Settings.swift */,
+				A07DD7912446852300532A87 /* ViewController+FocusGuide.swift */,
 				5FD9A2D71CAD19590065BE03 /* Info.plist */,
 				5F4515A91CC2F277004C4004 /* Info-dev.plist */,
 				5FD9A2D51CAD19590065BE03 /* Assets.xcassets */,
 				5FAE605A1DB6C7480019C794 /* slides.entitlements */,
-				A07DD7912446852300532A87 /* ViewController+FocusGuide.swift */,
 			);
 			path = slides;
 			sourceTree = "<group>";
@@ -321,6 +327,8 @@
 			children = (
 				A06824EC2771FC1000D96300 /* OHPDFImage.framework */,
 				A06824EA2771FBDF00D96300 /* Pods_slides.framework */,
+				137192C7A5EE26B58D67E828 /* Pods_slidesTests.framework */,
+				27BC5D213B325D32F50F66B5 /* Pods_slidesUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -557,7 +565,8 @@
 		};
 		A0889C3D1CE8F4AA0050094D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			alwaysOutOfDate = 1;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -566,9 +575,9 @@
 			outputPaths = (
 				"$(SRCROOT)/slides/Settings.swift",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "PATH=$(bash -l -c 'echo $PATH')\n$PODS_ROOT/SettingsKit/build -p $PROJECT_FILE_PATH -s $SCRIPT_INPUT_FILE_0 -o $SCRIPT_OUTPUT_FILE_0";
+			shellScript = "PATH=$(bash -l -c 'echo $PATH')\n$PODS_ROOT/SettingsKit/build -p $PROJECT_FILE_PATH -s $SCRIPT_INPUT_FILE_0 -o $SCRIPT_OUTPUT_FILE_0\n";
 		};
 		A59B9FD720C481029FE4F957 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -754,7 +763,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = appletvos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 12.0;
@@ -794,7 +804,10 @@
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/OHPDFImage",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.4;
 				OBJROOT = $PROJECT_DIR/build;
 				PODS_BUILD_DIR = $PROJECT_DIR/Build/Products;
@@ -823,7 +836,11 @@
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
 				);
 				INFOPLIST_FILE = slidesTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -853,7 +870,11 @@
 					"$(PROJECT_DIR)/build/Debug-appletvos",
 				);
 				INFOPLIST_FILE = slidesUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -906,7 +927,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = appletvos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 12.0;
@@ -948,7 +970,10 @@
 					"$(PROJECT_DIR)/build/Debug-appletvos/RxSwiftExt",
 				);
 				INFOPLIST_FILE = slides/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.4;
 				OBJROOT = $PROJECT_DIR/build;
 				PODS_BUILD_DIR = $PROJECT_DIR/Build/Products;
@@ -977,7 +1002,11 @@
 					"$(PROJECT_DIR)/Build/Products/Debug-appletvsimulator/RxSwiftExt",
 				);
 				INFOPLIST_FILE = slidesTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1007,7 +1036,11 @@
 					"$(PROJECT_DIR)/build/Debug-appletvos",
 				);
 				INFOPLIST_FILE = slidesUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slidesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
