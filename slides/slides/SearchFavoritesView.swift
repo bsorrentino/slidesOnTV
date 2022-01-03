@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Combine
+import TVOSToast
 
 fileprivate let Const = (
     gridItemSize:   CGFloat(500),
@@ -180,6 +181,7 @@ struct FavoritesView: View {
                 }
                 .onAppear {
                     data = NSUbiquitousKeyValueStore.default.favorites()
+                    showToast_How_To_Open_Menu()
                 }
 
             }
@@ -206,6 +208,27 @@ struct FavoritesView: View {
 
 }
 
+// MARK: FavoriteView Toast Extension
+
+extension FavoritesView {
+    
+    private func showToast_How_To_Open_Menu() {
+        
+        guard let viewController = UIApplication.shared.windows.first!.rootViewController else {return}
+        
+        let style = TVOSToastStyle( position: .topRight(insets: 10), backgroundColor: UIColor.link )
+            let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 600, height: 80),
+                                  style: style)
+            
+            toast.hintText =
+                TVOSToastHintText(element:
+                    [.stringType("'Long press' to open menu")])
+            
+            viewController.presentToast(toast)
+    }
+}
+
+// MARK: - Download Manager Extension
 
 extension DownloadManager where T == FavoriteItem {
 

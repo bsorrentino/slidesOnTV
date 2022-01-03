@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F001176278372AC00F1AA41 /* TVOSToast in Frameworks */ = {isa = PBXBuildFile; productRef = 5F001175278372AC00F1AA41 /* TVOSToast */; };
 		5F20660A2691A4F5003B819A /* Slideshow.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5F2066092691A4F5003B819A /* Slideshow.xml */; };
 		5F20660C2691C6DD003B819A /* Publisher+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F20660B2691C6DD003B819A /* Publisher+Extensions.swift */; };
 		5F20660D2691C6DD003B819A /* Publisher+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F20660B2691C6DD003B819A /* Publisher+Extensions.swift */; };
@@ -126,6 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F001176278372AC00F1AA41 /* TVOSToast in Frameworks */,
 				5FEA94A626931CF0002D228A /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +261,7 @@
 			name = slides;
 			packageProductDependencies = (
 				5FEA94A526931CF0002D228A /* SDWebImageSwiftUI */,
+				5F001175278372AC00F1AA41 /* TVOSToast */,
 			);
 			productName = slides;
 			productReference = 5FCEB8FC240C51D600F9885A /* slides.app */;
@@ -294,6 +297,7 @@
 			mainGroup = 5FCEB8F3240C51D600F9885A;
 			packageReferences = (
 				5FEA94A426931CF0002D228A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				5F001174278372AC00F1AA41 /* XCRemoteSwiftPackageReference "TVOSToast" */,
 			);
 			productRefGroup = 5FCEB8FD240C51D600F9885A /* Products */;
 			projectDirPath = "";
@@ -645,6 +649,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5F001174278372AC00F1AA41 /* XCRemoteSwiftPackageReference "TVOSToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bsorrentino/TVOSToast";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		5FEA94A426931CF0002D228A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
@@ -656,6 +668,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5F001175278372AC00F1AA41 /* TVOSToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5F001174278372AC00F1AA41 /* XCRemoteSwiftPackageReference "TVOSToast" */;
+			productName = TVOSToast;
+		};
 		5FEA94A526931CF0002D228A /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5FEA94A426931CF0002D228A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;

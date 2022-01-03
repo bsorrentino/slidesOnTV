@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import TVOSToast
 
 struct PresentationView<T>: View where T : SlideItem {
     
@@ -19,6 +20,7 @@ struct PresentationView<T>: View where T : SlideItem {
         
         if let item = downloadInfo.downdloadedItem {
             NSUbiquitousKeyValueStore.default.favoriteAdd(data: item, synchronize: true)
+            showToast_Bookmark_Saved()
         }
     }
     
@@ -97,6 +99,7 @@ struct PresentationView<T>: View where T : SlideItem {
                     .if( isZoom ) { $0.onExitCommand { isZoom.toggle() } }
                     .if( !isZoom , modifier: ToolbarModifier )
                     .if( isZoom ) { $0.edgesIgnoringSafeArea( .all ) }
+                    .if( isZoom ) { $0.onAppear(perform: showToast_How_To_Navigate_Slides) }
             }
             else {
                 Text( "error loading presentation")
@@ -104,6 +107,56 @@ struct PresentationView<T>: View where T : SlideItem {
         }
 
     }
+}
+
+// MARK: Toast Extension
+
+extension PresentationView {
+    
+    private func showToast_Bookmark_Saved() {
+        
+        guard let viewController = UIApplication.shared.windows.first!.rootViewController,
+              let image = UIImage(systemName: "bookmark.circle.fill") else {return}
+        
+            let style = TVOSToastStyle( position: .bottomRight(insets: 10) )
+            let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 800, height: 80),
+                                  style: style)
+            
+            toast.hintText =
+                TVOSToastHintText(element:
+                    [.imageType(image),
+                     .stringType(" Bookmark Saved! ")])
+            
+            viewController.presentToast(toast)
+    }
+
+    private func showToast_How_To_Navigate_Slides() {
+        
+        guard let viewController = UIApplication.shared.windows.first!.rootViewController,
+              let imageL = UIImage(named: "remoteTouchLalpha",
+                                  in: Bundle.main,
+                                  compatibleWith: nil),
+              let imageR = UIImage(named: "remoteTouchRalpha",
+                                    in: Bundle.main,
+                                    compatibleWith: nil) else { return }
+        
+            let style = TVOSToastStyle( position: .bottomRight(insets: 10) )
+            let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 800, height: 80),
+                                  style: style)
+            
+            toast.hintText =
+                TVOSToastHintText(element:
+                    [.stringType("Tap left "),
+                     .imageType(imageL),
+                     .stringType(" and right "),
+                     .imageType(imageR),
+                     .stringType(" to navigates slides")])
+            
+            viewController.presentToast(toast)
+    }
+
+    
+
 }
 
 //struct PresentationView_Previews: PreviewProvider {
