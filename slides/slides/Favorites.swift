@@ -20,7 +20,7 @@ struct FavoriteItem : SlideItem {
     private let data:Slideshow
     
     // Identifiable
-    var id: String          { data[FavoriteItem.ITEMID]!.trimmingCharacters(in: .whitespacesAndNewlines) }
+    var id: String          { data[FavoriteItem.ITEMID]! }
     var title: String       { data[FavoriteItem.Title]! }
 
     var updated: String?     { data[FavoriteItem.Updated] }
@@ -72,7 +72,8 @@ extension NSUbiquitousKeyValueStore {
             .compactMap {
                 
                 if let value = $0.value as? [String:String] {
-                    return [ "id":$0.key ].merging( value ) { (first, _) in  first }
+                    let id = $0.key.trimmingCharacters(in: .whitespacesAndNewlines)
+                    return [ "id":id ].merging( value ) { (first, _) in  first }
                 }
                 return nil
             }

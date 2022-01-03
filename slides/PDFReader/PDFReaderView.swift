@@ -23,6 +23,7 @@ struct PDFReaderContentView: View {
             page:               self.$pageSelected,
             isPointerVisible:   self.$isPointerVisible,
             isZoom:             self.isZoom)
+            
     }
     
     var body: some View {
