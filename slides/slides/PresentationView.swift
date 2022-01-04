@@ -109,7 +109,7 @@ struct PresentationView<T>: View where T : SlideItem {
     }
 }
 
-// MARK: Toast Extension
+// MARK: PresentationView Toast Extension
 
 extension PresentationView {
     
@@ -140,7 +140,7 @@ extension PresentationView {
                                     in: Bundle.main,
                                     compatibleWith: nil) else { return }
         
-            let style = TVOSToastStyle( position: .bottomRight(insets: 10) )
+        let style = TVOSToastStyle( position: .topRight(insets: 10), backgroundColor: .link, textColor: .white )
             let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 800, height: 80),
                                   style: style)
             
