@@ -64,3 +64,5 @@ Carthage/Build
 
 fastlane/report.xml
 fastlane/screenshots
+.gitsecret/keys/random_seed
+!*.secret

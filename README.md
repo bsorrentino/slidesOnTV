@@ -1,4 +1,4 @@
-# SlidesOnTV
+# SlidesOnTV 2.0 - SwiftUI2 Compliant
 
 [![Latest Release](https://img.shields.io/github/release/bsorrentino/slidesOnTV.svg)](https://github.com/bsorrentino/slidesOnTV/releases)
 
@@ -19,7 +19,7 @@ Such application gathers presentations over internet (at moment only from slides
  * Swipe Down Menu
  * Add to Favourite
  * View/Download the/from Favourites
- 
+
 Note:
 > At the moment only PDF format is supported
 
