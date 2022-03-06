@@ -43,7 +43,6 @@
 		5FD5CE7D269F3B72001046EA /* SwiftUI+Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD5CE7C269F3B72001046EA /* SwiftUI+Condition.swift */; };
 		5FD5CE7F269F44E7001046EA /* SwiftUI+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD5CE7E269F44E7001046EA /* SwiftUI+Styles.swift */; };
 		5FEA94A32693061E002D228A /* XCode+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA94A22693061E002D228A /* XCode+Utils.swift */; };
-		5FEA94A626931CF0002D228A /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5FEA94A526931CF0002D228A /* SDWebImageSwiftUI */; };
 		A0035D262737ED9600DD85E4 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D252737ED9600DD85E4 /* Favorites.swift */; };
 		A0035D272737ED9600DD85E4 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D252737ED9600DD85E4 /* Favorites.swift */; };
 		A0035D292737EEF900DD85E4 /* SlideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D282737EEF900DD85E4 /* SlideItem.swift */; };
@@ -128,7 +127,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F001176278372AC00F1AA41 /* TVOSToast in Frameworks */,
-				5FEA94A626931CF0002D228A /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +258,6 @@
 			);
 			name = slides;
 			packageProductDependencies = (
-				5FEA94A526931CF0002D228A /* SDWebImageSwiftUI */,
 				5F001175278372AC00F1AA41 /* TVOSToast */,
 			);
 			productName = slides;
@@ -296,7 +293,6 @@
 			);
 			mainGroup = 5FCEB8F3240C51D600F9885A;
 			packageReferences = (
-				5FEA94A426931CF0002D228A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				5F001174278372AC00F1AA41 /* XCRemoteSwiftPackageReference "TVOSToast" */,
 			);
 			productRefGroup = 5FCEB8FD240C51D600F9885A /* Products */;
@@ -588,7 +584,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 14.1;
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 			};
 			name = Debug;
 		};
@@ -612,7 +608,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 14.1;
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 			};
 			name = Release;
 		};
@@ -657,14 +653,6 @@
 				kind = branch;
 			};
 		};
-		5FEA94A426931CF0002D228A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.2;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -672,11 +660,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5F001174278372AC00F1AA41 /* XCRemoteSwiftPackageReference "TVOSToast" */;
 			productName = TVOSToast;
-		};
-		5FEA94A526931CF0002D228A /* SDWebImageSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5FEA94A426931CF0002D228A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
