@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import PDFReader
 
 class DownloadManager<T> : ObservableObject where T: SlideItem {
     

@@ -8,16 +8,22 @@
 import SwiftUI
 
 
-struct PDFReaderContentView: View {
+public struct PDFReaderContentView: View {
     @Namespace private var focusNS
-    @State var isPointerVisible: Bool = false
+    @State private var isPointerVisible: Bool = false
 
     var document:PDFDocument
     @Binding var pageSelected: Int
     var isZoom: Bool
-        
     
-    var CurrentPageView:some View {
+    // initializer required because default one is implicit declared internal
+    public init( document:PDFDocument, pageSelected:Binding<Int>, isZoom:Bool ) {
+        self.document = document
+        self._pageSelected = pageSelected
+        self.isZoom = isZoom
+    }
+    
+    public var CurrentPageView:some View {
         PDFDocumentView(
             document:           self.document,
             page:               self.$pageSelected,
@@ -26,7 +32,8 @@ struct PDFReaderContentView: View {
             
     }
     
-    var body: some View {
+    
+    public var body: some View {
         
         Group {
             if isZoom {

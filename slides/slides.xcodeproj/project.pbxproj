@@ -27,11 +27,6 @@
 		5F88CD6C2691D09700D27865 /* Slideshows.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5F88CD6B2691D09700D27865 /* Slideshows.xml */; };
 		5FAE8581272EB7E50079D67B /* sample.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5FAE8580272EB6300079D67B /* sample.pdf */; };
 		5FAE8582272EB7E50079D67B /* slideshare.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F5FCF05272EB3D800D956D9 /* slideshare.plist */; };
-		5FB7EA90269DE6FE00B849C0 /* PDFPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7EA8D269DE6FE00B849C0 /* PDFPageView.swift */; };
-		5FB7EA91269DE6FE00B849C0 /* PDFDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7EA8E269DE6FE00B849C0 /* PDFDocument.swift */; };
-		5FB7EA94269DE71A00B849C0 /* TiledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7EA93269DE71A00B849C0 /* TiledView.swift */; };
-		5FB7EA97269DE7D700B849C0 /* PDFReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7EA95269DE7D700B849C0 /* PDFReaderView.swift */; };
-		5FB7EA98269DE7D700B849C0 /* PDFReader+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7EA96269DE7D700B849C0 /* PDFReader+UIKit.swift */; };
 		5FB7EA9A269DF79A00B849C0 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7EA99269DF79A00B849C0 /* DownloadManager.swift */; };
 		5FB7EA9C269E306F00B849C0 /* PresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB7EA9B269E306F00B849C0 /* PresentationView.swift */; };
 		5FCEB900240C51D600F9885A /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCEB8FF240C51D600F9885A /* App.swift */; };
@@ -52,9 +47,8 @@
 		A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F3268F59B9001F26E4 /* SearchBar.swift */; };
 		A05CB1F6268F59F5001F26E4 /* SearchSlidesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F5268F59F5001F26E4 /* SearchSlidesView.swift */; };
 		A06824EF2772304A00D96300 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06824EE2772304A00D96300 /* URL+Extensions.swift */; };
-		A08E60CA2721B2CB00981311 /* PDFThumbnailsView+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */; };
 		A0A1226C2770FC97007B45FE /* Swift+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A1226B2770FC97007B45FE /* Swift+Utils.swift */; };
-		A0CF7BA627300C6100C511F6 /* PDFThumbnailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CF7BA527300C6100C511F6 /* PDFThumbnailsView.swift */; };
+		A0B2674427F07993007B5BCA /* PDFReader in Frameworks */ = {isa = PBXBuildFile; productRef = A0B2674327F07993007B5BCA /* PDFReader */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,11 +79,6 @@
 		5F75B0F3273E8BAC00D49211 /* slides.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = slides.entitlements; sourceTree = "<group>"; };
 		5F88CD6B2691D09700D27865 /* Slideshows.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Slideshows.xml; sourceTree = "<group>"; };
 		5FAE8580272EB6300079D67B /* sample.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample.pdf; sourceTree = "<group>"; };
-		5FB7EA8D269DE6FE00B849C0 /* PDFPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPageView.swift; sourceTree = "<group>"; };
-		5FB7EA8E269DE6FE00B849C0 /* PDFDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFDocument.swift; sourceTree = "<group>"; };
-		5FB7EA93269DE71A00B849C0 /* TiledView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiledView.swift; sourceTree = "<group>"; };
-		5FB7EA95269DE7D700B849C0 /* PDFReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFReaderView.swift; sourceTree = "<group>"; };
-		5FB7EA96269DE7D700B849C0 /* PDFReader+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PDFReader+UIKit.swift"; sourceTree = "<group>"; };
 		5FB7EA99269DF79A00B849C0 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		5FB7EA9B269E306F00B849C0 /* PresentationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationView.swift; sourceTree = "<group>"; };
 		5FCEB8FC240C51D600F9885A /* slides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slides.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,9 +98,8 @@
 		A05CB1F3268F59B9001F26E4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		A05CB1F5268F59F5001F26E4 /* SearchSlidesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSlidesView.swift; sourceTree = "<group>"; };
 		A06824EE2772304A00D96300 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
-		A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDFThumbnailsView+UIKit.swift"; sourceTree = "<group>"; };
+		A075E07227F0732F0044CE7D /* PDFReader */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PDFReader; sourceTree = "<group>"; };
 		A0A1226B2770FC97007B45FE /* Swift+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Swift+Utils.swift"; sourceTree = "<group>"; };
-		A0CF7BA527300C6100C511F6 /* PDFThumbnailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFThumbnailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0B2674427F07993007B5BCA /* PDFReader in Frameworks */,
 				5F001176278372AC00F1AA41 /* TVOSToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,30 +133,17 @@
 			path = slidesTests;
 			sourceTree = "<group>";
 		};
-		5FB7EA8C269DE67B00B849C0 /* PDFReaderLib */ = {
-			isa = PBXGroup;
-			children = (
-				5FB7EA96269DE7D700B849C0 /* PDFReader+UIKit.swift */,
-				5FB7EA95269DE7D700B849C0 /* PDFReaderView.swift */,
-				5FB7EA93269DE71A00B849C0 /* TiledView.swift */,
-				5FB7EA8E269DE6FE00B849C0 /* PDFDocument.swift */,
-				5FB7EA8D269DE6FE00B849C0 /* PDFPageView.swift */,
-				A0CF7BA527300C6100C511F6 /* PDFThumbnailsView.swift */,
-				A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */,
-			);
-			path = PDFReaderLib;
-			sourceTree = "<group>";
-		};
 		5FCEB8F3240C51D600F9885A = {
 			isa = PBXGroup;
 			children = (
+				A075E07227F0732F0044CE7D /* PDFReader */,
 				5FAE8580272EB6300079D67B /* sample.pdf */,
 				5F5FCF05272EB3D800D956D9 /* slideshare.plist */,
 				5F09129126FB6DC300EA6755 /* timer.playground */,
-				5FB7EA8C269DE67B00B849C0 /* PDFReaderLib */,
 				5FCEB8FE240C51D600F9885A /* slides */,
 				5F3A6E692690EEB4001A3F9F /* slidesTests */,
 				5FCEB8FD240C51D600F9885A /* Products */,
+				A0B2674227F07993007B5BCA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -223,6 +199,13 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		A0B2674227F07993007B5BCA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -259,6 +242,7 @@
 			name = slides;
 			packageProductDependencies = (
 				5F001175278372AC00F1AA41 /* TVOSToast */,
+				A0B2674327F07993007B5BCA /* PDFReader */,
 			);
 			productName = slides;
 			productReference = 5FCEB8FC240C51D600F9885A /* slides.app */;
@@ -359,27 +343,20 @@
 				A0A1226C2770FC97007B45FE /* Swift+Utils.swift in Sources */,
 				A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */,
 				A06824EF2772304A00D96300 /* URL+Extensions.swift in Sources */,
-				A08E60CA2721B2CB00981311 /* PDFThumbnailsView+UIKit.swift in Sources */,
 				5FD5CE7D269F3B72001046EA /* SwiftUI+Condition.swift in Sources */,
 				A0035D2F2738156D00DD85E4 /* SearchFavoritesView.swift in Sources */,
 				A0035D262737ED9600DD85E4 /* Favorites.swift in Sources */,
-				5FB7EA97269DE7D700B849C0 /* PDFReaderView.swift in Sources */,
 				A0035D292737EEF900DD85E4 /* SlideItem.swift in Sources */,
 				5F20F23426C534A3004EB2C1 /* ScreenModifier.swift in Sources */,
-				A0CF7BA627300C6100C511F6 /* PDFThumbnailsView.swift in Sources */,
 				5F6804E82691EBA300E114FA /* SlideshareResult.swift in Sources */,
-				5FB7EA94269DE71A00B849C0 /* TiledView.swift in Sources */,
 				5F3A6E5F2690C0F0001A3F9F /* SlideshareApi.swift in Sources */,
 				5FB7EA9A269DF79A00B849C0 /* DownloadManager.swift in Sources */,
-				5FB7EA90269DE6FE00B849C0 /* PDFPageView.swift in Sources */,
 				5F3A6E612690C414001A3F9F /* String+Extensions.swift in Sources */,
 				5F6804EB2691F8AD00E114FA /* SlideshareItem.swift in Sources */,
 				5F3A6E632690D240001A3F9F /* SlideshareXML.swift in Sources */,
 				5F20660C2691C6DD003B819A /* Publisher+Extensions.swift in Sources */,
 				5FB7EA9C269E306F00B849C0 /* PresentationView.swift in Sources */,
 				A0035D312738174800DD85E4 /* SearchViews.swift in Sources */,
-				5FB7EA91269DE6FE00B849C0 /* PDFDocument.swift in Sources */,
-				5FB7EA98269DE7D700B849C0 /* PDFReader+UIKit.swift in Sources */,
 				A05CB1F6268F59F5001F26E4 /* SearchSlidesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,7 +482,7 @@
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TVOS_DEPLOYMENT_TARGET = 13.2;
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 			};
 			name = Debug;
 		};
@@ -559,7 +536,7 @@
 				SDKROOT = appletvos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				TVOS_DEPLOYMENT_TARGET = 13.2;
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -571,7 +548,7 @@
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_ASSET_PATHS = "\"slides/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "slides/Preview\\ Content";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = slides/Info.plist;
@@ -595,7 +572,7 @@
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_ASSET_PATHS = "\"slides/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "slides/Preview\\ Content";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = slides/Info.plist;
@@ -660,6 +637,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5F001174278372AC00F1AA41 /* XCRemoteSwiftPackageReference "TVOSToast" */;
 			productName = TVOSToast;
+		};
+		A0B2674327F07993007B5BCA /* PDFReader */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PDFReader;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
