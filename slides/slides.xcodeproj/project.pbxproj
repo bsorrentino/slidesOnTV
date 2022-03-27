@@ -144,7 +144,7 @@
 			path = slidesTests;
 			sourceTree = "<group>";
 		};
-		5FB7EA8C269DE67B00B849C0 /* PDFReader */ = {
+		5FB7EA8C269DE67B00B849C0 /* PDFReaderLib */ = {
 			isa = PBXGroup;
 			children = (
 				5FB7EA96269DE7D700B849C0 /* PDFReader+UIKit.swift */,
@@ -155,7 +155,7 @@
 				A0CF7BA527300C6100C511F6 /* PDFThumbnailsView.swift */,
 				A08E60C92721B2CB00981311 /* PDFThumbnailsView+UIKit.swift */,
 			);
-			path = PDFReader;
+			path = PDFReaderLib;
 			sourceTree = "<group>";
 		};
 		5FCEB8F3240C51D600F9885A = {
@@ -164,7 +164,7 @@
 				5FAE8580272EB6300079D67B /* sample.pdf */,
 				5F5FCF05272EB3D800D956D9 /* slideshare.plist */,
 				5F09129126FB6DC300EA6755 /* timer.playground */,
-				5FB7EA8C269DE67B00B849C0 /* PDFReader */,
+				5FB7EA8C269DE67B00B849C0 /* PDFReaderLib */,
 				5FCEB8FE240C51D600F9885A /* slides */,
 				5F3A6E692690EEB4001A3F9F /* slidesTests */,
 				5FCEB8FD240C51D600F9885A /* Products */,
