@@ -182,6 +182,7 @@ struct FavoritesView: View {
                 .onAppear {
                     data = NSUbiquitousKeyValueStore.default.favorites()
                     showToast_How_To_Open_Menu()
+                    
                 }
 
             }

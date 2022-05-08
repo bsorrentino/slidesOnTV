@@ -44,6 +44,8 @@
 		A0035D2A2737EEF900DD85E4 /* SlideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D282737EEF900DD85E4 /* SlideItem.swift */; };
 		A0035D2F2738156D00DD85E4 /* SearchFavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D2E2738156D00DD85E4 /* SearchFavoritesView.swift */; };
 		A0035D312738174800DD85E4 /* SearchViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0035D302738174800DD85E4 /* SearchViews.swift */; };
+		A0202BDC28280D5D000A403D /* App+Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0202BDB28280D5D000A403D /* App+Info.swift */; };
+		A0202BDF2828125D000A403D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0202BDE2828125D000A403D /* CloudKit.framework */; };
 		A05CB1F4268F59B9001F26E4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F3268F59B9001F26E4 /* SearchBar.swift */; };
 		A05CB1F6268F59F5001F26E4 /* SearchSlidesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05CB1F5268F59F5001F26E4 /* SearchSlidesView.swift */; };
 		A06824EF2772304A00D96300 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06824EE2772304A00D96300 /* URL+Extensions.swift */; };
@@ -95,6 +97,9 @@
 		A0035D282737EEF900DD85E4 /* SlideItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideItem.swift; sourceTree = "<group>"; };
 		A0035D2E2738156D00DD85E4 /* SearchFavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFavoritesView.swift; sourceTree = "<group>"; };
 		A0035D302738174800DD85E4 /* SearchViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViews.swift; sourceTree = "<group>"; };
+		A0202BDB28280D5D000A403D /* App+Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+Info.swift"; sourceTree = "<group>"; };
+		A0202BDD28280E23000A403D /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		A0202BDE2828125D000A403D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		A05CB1F3268F59B9001F26E4 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		A05CB1F5268F59F5001F26E4 /* SearchSlidesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSlidesView.swift; sourceTree = "<group>"; };
 		A06824EE2772304A00D96300 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
@@ -114,6 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0202BDF2828125D000A403D /* CloudKit.framework in Frameworks */,
 				A0B2674427F07993007B5BCA /* PDFReader in Frameworks */,
 				5F001176278372AC00F1AA41 /* TVOSToast in Frameworks */,
 			);
@@ -136,6 +142,7 @@
 		5FCEB8F3240C51D600F9885A = {
 			isa = PBXGroup;
 			children = (
+				A0202BDD28280E23000A403D /* MyPlayground.playground */,
 				A075E07227F0732F0044CE7D /* PDFReader */,
 				5FAE8580272EB6300079D67B /* sample.pdf */,
 				5F5FCF05272EB3D800D956D9 /* slideshare.plist */,
@@ -159,7 +166,7 @@
 		5FCEB8FE240C51D600F9885A /* slides */ = {
 			isa = PBXGroup;
 			children = (
-				5F75B0F3273E8BAC00D49211 /* slides.entitlements */,
+				A0202BDB28280D5D000A403D /* App+Info.swift */,
 				5FEA94A22693061E002D228A /* XCode+Utils.swift */,
 				A0A1226B2770FC97007B45FE /* Swift+Utils.swift */,
 				5FD5CE7C269F3B72001046EA /* SwiftUI+Condition.swift */,
@@ -186,6 +193,7 @@
 				5FCEB903240C51D600F9885A /* Assets.xcassets */,
 				5FCEB908240C51D600F9885A /* LaunchScreen.storyboard */,
 				5FCEB90B240C51D600F9885A /* Info.plist */,
+				5F75B0F3273E8BAC00D49211 /* slides.entitlements */,
 				5FCEB905240C51D600F9885A /* Preview Content */,
 			);
 			path = slides;
@@ -202,6 +210,7 @@
 		A0B2674227F07993007B5BCA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0202BDE2828125D000A403D /* CloudKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -352,6 +361,7 @@
 				5F3A6E5F2690C0F0001A3F9F /* SlideshareApi.swift in Sources */,
 				5FB7EA9A269DF79A00B849C0 /* DownloadManager.swift in Sources */,
 				5F3A6E612690C414001A3F9F /* String+Extensions.swift in Sources */,
+				A0202BDC28280D5D000A403D /* App+Info.swift in Sources */,
 				5F6804EB2691F8AD00E114FA /* SlideshareItem.swift in Sources */,
 				5F3A6E632690D240001A3F9F /* SlideshareXML.swift in Sources */,
 				5F20660C2691C6DD003B819A /* Publisher+Extensions.swift in Sources */,
@@ -547,7 +557,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "slides/Preview\\ Content";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
@@ -556,7 +566,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slides;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -571,7 +581,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				CODE_SIGN_ENTITLEMENTS = slides/slides.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "slides/Preview\\ Content";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
@@ -580,7 +590,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.slides;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
