@@ -183,6 +183,10 @@ struct FavoritesView: View {
                     data = NSUbiquitousKeyValueStore.default.favorites()
                     showToast_How_To_Open_Menu()
                     
+                    DispatchQueue.main.async {
+                        let mainUrl = FileManager.default.url(forUbiquityContainerIdentifier: nil)
+                        print( "mainUrl: \(String(describing: mainUrl))" )
+                    }
                 }
 
             }
