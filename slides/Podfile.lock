@@ -1,0 +1,18 @@
+PODS:
+  - MSAL (1.2.1):
+    - MSAL/app-lib (= 1.2.1)
+  - MSAL/app-lib (1.2.1)
+
+DEPENDENCIES:
+  - MSAL (from `/Users/bsorrentino/WORKSPACES/GITHUB.me/AppleOS/microsoft-authentication-library-for-objc`)
+
+EXTERNAL SOURCES:
+  MSAL:
+    :path: "/Users/bsorrentino/WORKSPACES/GITHUB.me/AppleOS/microsoft-authentication-library-for-objc"
+
+SPEC CHECKSUMS:
+  MSAL: e10c62a3d1f0c58f77e3baa01c4d564845f5fe39
+
+PODFILE CHECKSUM: 08b924636e9f29376ab4051689a0a6a21f4d1d96
+
+COCOAPODS: 1.11.3

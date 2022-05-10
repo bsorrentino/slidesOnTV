@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "tvostoast",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bsorrentino/TVOSToast",
+      "state" : {
+        "branch" : "master",
+        "revision" : "79621d087795197fd238e07adf81052dd5ed4775"
+      }
+    }
+  ],
+  "version" : 2
+}
