@@ -82,7 +82,10 @@ struct SearchSlidesView: View  {
                                     ForEach(slidesResult.data, id: \.id) { item in
                                         
                                         Button( action: {
-                                            self.downloadManager.download(item: item)  { isItemDownloaded = $0 }
+                                            // self.downloadManager.download(item: item)  { isItemDownloaded = $0 }
+                                            Task {
+                                                isItemDownloaded = await self.downloadManager.download(item: item)
+                                            }
                                         }) {
 
                                         SearchCardView<SlidehareItem>( item: item,

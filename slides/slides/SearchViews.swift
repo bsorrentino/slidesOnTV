@@ -112,7 +112,7 @@ struct SearchCardView<T> : View where T : SlideItem {
                 .cornerRadius(Const.ProgressView.radius)
                 .shadow( color: Color.black, radius: Const.ProgressView.radius )
 
-            ProgressView( "Download: \(self.downloadManager.downloadingDescription)", value: self.downloadManager.downloadProgress?.0, total:1)
+            ProgressView( "Download: \(self.downloadManager.downloadingDescription)", value: self.downloadManager.downloadProgress.0, total:1)
                 .progressViewStyle(BlueShadowProgressViewStyle())
                 .padding()
                 
