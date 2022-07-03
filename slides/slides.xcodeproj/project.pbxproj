@@ -103,7 +103,7 @@
 		A0035D282737EEF900DD85E4 /* SlideItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideItem.swift; sourceTree = "<group>"; };
 		A0035D2E2738156D00DD85E4 /* SearchFavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFavoritesView.swift; sourceTree = "<group>"; };
 		A0035D302738174800DD85E4 /* SearchViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViews.swift; sourceTree = "<group>"; };
-		A00980D3282AC48D002C9412 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		A00980D3282AC48D002C9412 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A0202BDB28280D5D000A403D /* App+Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+Info.swift"; sourceTree = "<group>"; };
 		A0202BDD28280E23000A403D /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A0202BDE2828125D000A403D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -231,7 +231,6 @@
 				EFA3BFC6C2A04C8016055503 /* Pods-slidesTests.debug.xcconfig */,
 				FC68CEBF54A76E990C0C6C34 /* Pods-slidesTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
