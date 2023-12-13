@@ -21,7 +21,7 @@ struct FavoriteContextMenuModifier: ViewModifier {
     
     var item : FavoriteItem
     var delete: ( FavoriteItem ) -> Void
-    var download: ( FavoriteItem ) -> Void
+    var download: ( FavoriteItem ) async -> Void
     @State private var confirmationShown = false
 
     #if swift(<15.0)
@@ -79,11 +79,16 @@ struct FavoriteContextMenuModifier: ViewModifier {
                 VStack {
                     sheetTitle
                     Divider()
-                    Button( action: { presentSheet.toggle(); download(item) },
-                            label: { Label( "Download", systemImage: "square.and.arrow.down")
-                                        .modifier( MenuButtonModifier( foreground: .black, background: .white) )
+                    Button(
+                        action: {
+                            presentSheet.toggle();
+                            Task { await download(item) }
+                        },
+                        label: {
+                            Label( "Download", systemImage: "square.and.arrow.down")
+                                .modifier( MenuButtonModifier( foreground: .black, background: .white) )
                         })
-                        .buttonStyle(.plain)
+                            .buttonStyle(.plain)
                     Button( action: { confirmationShown.toggle() },
                             label: { Label( "Delete", systemImage: "trash.circle")
                                         .modifier( MenuButtonModifier( foreground: .white, background: .red) )
@@ -119,9 +124,10 @@ struct FavoritesView: View {
 
     private var cancellable: AnyCancellable?
 
-    private func download( _ item : FavoriteItem ) {
-        self.downloadManager.downloadFavorite(item) { isItemDownloaded = $0 }
+    private func download( _ item : FavoriteItem ) async -> Void {
+        isItemDownloaded =  await self.downloadManager.downloadFavorite(item)
     }
+    
     private func delete( _ item : FavoriteItem ) {
         NSUbiquitousKeyValueStore.default.favoriteRemove(key: item.id)
         selectedItem = nil
@@ -159,7 +165,7 @@ struct FavoritesView: View {
 
                             ForEach(data, id: \.id) { item in
 
-                                Button( action: { download(item) } )
+                                Button( action: { Task { await download(item) } } )
                                 {
                                     SearchCardView<FavoriteItem>( item: item,
                                                                    onFocusChange: setItem )
@@ -232,22 +238,31 @@ extension FavoritesView {
 
 extension DownloadManager where T == FavoriteItem {
 
-    func downloadFavorite( _ item: FavoriteItem, completionHandler: @escaping (Bool) -> Void ) {
+    func downloadFavorite( _ item: FavoriteItem ) async -> Bool {
+        
+        return await withCheckedContinuation { (continuation ) in
+            
+            guard let credentials = try? SlideshareApi.getCredential() else {
+                log.debug("failed getting credential")
+                continuation.resume(returning: false)
+                return
+            }
 
-        guard let credentials = try? SlideshareApi.getCredential() else {
-            return
-        }
+            let api = SlideshareApi()
 
-        let api = SlideshareApi()
+            let parser = SlideshareItemsParser()
 
-        let parser = SlideshareItemsParser()
-
-        if let query = try? api.queryById(credentials: credentials, id: item.id ) {
+            guard let query = try? api.queryById(credentials: credentials, id: item.id ) else {
+                log.error( "error invoking slideshare API" )
+                continuation.resume(returning: false)
+                return
+            }
 
             let onCompletion = { (completion:Subscribers.Completion<Error>) in
                 switch completion {
                 case .failure(let error):
                     log.error( "\(error.localizedDescription)")
+                    continuation.resume(returning: false)
                 case .finished:
                     log.debug("DONE!")
                 }
@@ -258,18 +273,20 @@ extension DownloadManager where T == FavoriteItem {
                 .map        { SlidehareItem(data:$0) }
                 .compactMap { FavoriteItem(item:$0) }
                 .first()
+                //.receive(on: DispatchQueue.main)
                 .sink(
                     receiveCompletion: onCompletion,
-                    receiveValue: {
-                        self.download(item: $0, completionHandler: completionHandler)
+                    receiveValue: { favoriteItem in
+                        // self.download(item: $0, completionHandler: completionHandler)
+                        Task {
+                            let status = await self.download(item: favoriteItem)
+                            log.debug("Download finished: status \(status)")
+                            continuation.resume(returning: status)
+                        }
                     })
                 .store(in: &bag)
+        
         }
-        else {
-            log.error( "error invoking slideshare API" )
-        }
-
-
     }
 }
 

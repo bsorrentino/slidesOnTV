@@ -8,14 +8,15 @@
 
 import Foundation
 import Combine
+import PDFReader
 
 class DownloadManager<T> : ObservableObject where T: SlideItem {
+    private typealias DownloadCheckedContinuation = CheckedContinuation<Bool, Never>
     
     typealias Progress = (Double,TimeInterval?)
     
-    @Published var downloadProgress:Progress?
+    @Published var downloadProgress:Progress = (0,0)
 
-    
     private var downloadingItemId:String?
     private(set) var downloadedDocument:PDFDocument?
     private(set) var downdloadedItem:T?
@@ -27,117 +28,143 @@ class DownloadManager<T> : ObservableObject where T: SlideItem {
     internal var bag = Set<AnyCancellable>()
     
     var downloadingDescription:String {
-        guard let progress = downloadProgress else { return "" }
+        guard downloadProgress.0 > 0 else { return "" }
         
-        let perc = Int(progress.0 * 100)
+        let perc = Int(downloadProgress.0 * 100)
         
         let result = "\(perc)%"
         
-        if let time = progress.1 {
+        if let time = downloadProgress.1 {
             return "\(result) - \(time)"
         }
         return result
 
     }
+    
     func isDownloading( item:T ) -> Bool {
         
-        guard let id = downloadingItemId, let progress = downloadProgress, progress.0 < 1, id==item.id else {
+        guard let id = downloadingItemId, downloadProgress.0 < 1, id==item.id else {
             return false
         }
         return true
     }
     
-    private func reset() {
-        downloadProgress = nil
-        
-        if let task = downloadTask {
+    @MainActor private func reset( _ item: T )  {
+    
+        if let task = self.downloadTask {
             task.cancel()
-            observation = nil
-            downloadingItemId = nil
-            downloadedDocument = nil
-            downdloadedItem = nil
+            self.observation        = nil
+//            self.downloadingItemId  = nil
+            self.downloadedDocument = nil
+            self.downdloadedItem    = nil
         }
+        
+        self.downloadProgress   = (0,0)
+        self.downloadingItemId  = item.id
     }
     
     
-    func download( item: T, completionHandler: @escaping (Bool) -> Void )  {
+    func download( item: T ) async -> Bool {
+        await reset( item );
         
-        guard let downloadURL = item.downloadUrl else {
-            return
-        }
-        
-        reset()
-        
-        do {
+        return await withCheckedContinuation { (continuation ) in
+            
+            guard let downloadURL = item.downloadUrl else {
+                continuation.resume(returning: false)
+                return
+            }
             
             let request = URLRequest(url:downloadURL)
             
             let session = URLSession(configuration: URLSessionConfiguration.default)
-            
-            let destinationFileUrl =
-                try FileManager().url(for: .cachesDirectory,
-                                      in: .userDomainMask,
-                                      appropriateFor: nil,
-                                      create: false).appendingPathComponent("presentation.pdf")
-            
-            self.downloadingItemId = item.id
-            
-            downloadTask = session.downloadTask(with: request) { [self] (tempLocalUrl, response, error) in
+
+            do {
+                                
+                let destinationFileUrl =
+                    try FileManager().url(for: .cachesDirectory,
+                                          in: .userDomainMask,
+                                          appropriateFor: nil,
+                                          create: false).appendingPathComponent("presentation.pdf")
                 
-                if let error = error  {
-                    log.error("Error took place while downloading a file. Error description: \(error.localizedDescription)" )
-                    return
+                
+                
+                self.downloadTask = session.downloadTask(with: request) { [self] (tempLocalUrl, response, error) in
+                    
+                    if let error = error  {
+                        log.error("Error took place while downloading a file. Error description: \(error.localizedDescription)" )
+                        continuation.resume(returning: false)
+                        return
+                    }
+                    
+                    guard let tempLocalUrl = tempLocalUrl else {
+                        log.error("Error file dodn't dowloaded. tempLocalUrl == nil" )
+                        continuation.resume(returning: false)
+                        return
+                    }
+                    
+                    guard let response = response as? HTTPURLResponse else {
+                        log.error("HTTP Error: invalid response" )
+                        continuation.resume(returning: false)
+                        return
+
+                    }
+                    
+                    guard response.statusCode < 400 else  {
+                        log.error("HTTP Error status code \(response.statusCode) - \(HTTPURLResponse.localizedString(forStatusCode: response.statusCode))" )
+                        continuation.resume(returning: false)
+                        return
+                    }
+                    
+                    do {
+                        
+                        // try FileManager.default.copyItem(at: tempLocalUrl, to: destinationFileUrl)
+                        if let url =  try FileManager.default.replaceItemAt(destinationFileUrl, withItemAt: tempLocalUrl) {
+                            
+                            self.downloadedDocument = PDFDocument(url: url)
+                            self.downdloadedItem = item
+                            
+                            continuation.resume(returning: true)
+                            return
+                            
+                        }
+                        
+                    } catch (let writeError) {
+                        log.error("Error creating a file \(destinationFileUrl) : \(writeError.localizedDescription)")
+                        continuation.resume(returning: false)
+                        return
+                    }
+                    
+                    
                 }
                 
-                guard let tempLocalUrl = tempLocalUrl else {
-                    log.error("Error file dodn't dowloaded. tempLocalUrl == nil" )
-                    return
-                }
-                
-                guard let response = response as? HTTPURLResponse else {
-                    log.error("HTTP Error: invalid response" )
+                guard let task = downloadTask else {
+                    log.error("Error creating downloadTask")
+                    continuation.resume(returning: false)
                     return
 
                 }
                 
-                guard response.statusCode < 400 else  {
-                    log.error("HTTP Error status code \(response.statusCode) - \(HTTPURLResponse.localizedString(forStatusCode: response.statusCode))" )
-                    return
-                }
-                
-                do {
-                    
-                    // try FileManager.default.copyItem(at: tempLocalUrl, to: destinationFileUrl)
-                    if let url =  try FileManager.default.replaceItemAt(destinationFileUrl, withItemAt: tempLocalUrl) {
-                        
-                        self.downloadedDocument = PDFDocument(url: url)
-                        self.downdloadedItem = item
-                        
-                        DispatchQueue.main.async {
-                            completionHandler( true )
+                observation = task.progress.observe(\.fractionCompleted ) { observationProgress, _ in
+                    Task {
+                        await MainActor.run {
+                            self.downloadProgress = ( observationProgress.fractionCompleted, observationProgress.estimatedTimeRemaining)
                         }
                     }
-                    
-                } catch (let writeError) {
-                    log.error("Error creating a file \(destinationFileUrl) : \(writeError.localizedDescription)")
                 }
                 
+                task.resume()
                 
             }
-            
-            observation = downloadTask?.progress.observe(\.fractionCompleted ) { observationProgress, _ in
-                DispatchQueue.main.async { [self] in
-                    downloadProgress = ( observationProgress.fractionCompleted, observationProgress.estimatedTimeRemaining)
-                }
+            catch {
+                log.error( "download error \(error.localizedDescription)")
+                continuation.resume(returning: false)
+                return
             }
-            
-            downloadTask?.resume()
-            
+
         }
-        catch {
-            log.error( "download error \(error.localizedDescription)")
-        }
+        
     }
+
 }
 
 

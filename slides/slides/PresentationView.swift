@@ -8,6 +8,7 @@
 
 import SwiftUI
 import TVOSToast
+import PDFReader
 
 struct PresentationView<T>: View where T : SlideItem {
     

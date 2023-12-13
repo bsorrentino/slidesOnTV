@@ -7,8 +7,6 @@
 //
 
 import SwiftUI
-
-import SDWebImageSwiftUI
    
 
 fileprivate let Const = (
@@ -53,17 +51,24 @@ private struct SearchResultImageView<T> : View where T : SlideItem {
             }
             else {
                 VStack {
-                    // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
-                    WebImage(url: url , options: .delayPlaceholder )
-                        .placeholder( Image(systemName: "photo") ) // Placeholder Image
-                        .resizable() // Resizable like SwiftUI.Image, you must use this modifier or the view will use the image bitmap size
-    //                    .onSuccess { image, data, cacheType in }
-                        .onFailure { err in WebImageId += 1 } // force refresh @ref https://stackoverflow.com/a/65095862/521197
-                        .indicator(.activity) // Activity Indicator
-                        .transition(.fade(duration: 0.5)) // Fade Transition with duration
-                        .scaledToFit()
-                        .id( WebImageId )
-                    
+                    AsyncImage( url: url ) { phase in
+                        switch phase {
+                            case .empty:
+                                ProgressView()
+                            case .success(let image):
+                                image.resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            case .failure:
+                                Image(systemName: "photo")
+                            @unknown default:
+                                // Since the AsyncImagePhase enum isn't frozen,
+                                // we need to add this currently unused fallback
+                                // to handle any new cases that might be added
+                                // in the future:
+                                EmptyView()
+                        }
+                    }
+                    .id( WebImageId )
                     if( imageLoadError ) {
                         Divider()
                         Text( "\(item.title)" )
@@ -77,6 +82,7 @@ private struct SearchResultImageView<T> : View where T : SlideItem {
             onFocusChange( item, $0 ) // Workaround for 'CardButtonStyle' bug
         })
 //      .frame(width: item.thumbnailSize.width, height: item.thumbnailSize.height, alignment: .center)
+        
     }
 }
 
@@ -106,7 +112,7 @@ struct SearchCardView<T> : View where T : SlideItem {
                 .cornerRadius(Const.ProgressView.radius)
                 .shadow( color: Color.black, radius: Const.ProgressView.radius )
 
-            ProgressView( "Download: \(self.downloadManager.downloadingDescription)", value: self.downloadManager.downloadProgress?.0, total:1)
+            ProgressView( "Download: \(self.downloadManager.downloadingDescription)", value: self.downloadManager.downloadProgress.0, total:1)
                 .progressViewStyle(BlueShadowProgressViewStyle())
                 .padding()
                 

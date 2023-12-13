@@ -1,34 +1,14 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "SDWebImage",
-        "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
-        "state": {
-          "branch": null,
-          "revision": "76dd4b49110b8624317fc128e7fa0d8a252018bc",
-          "version": "5.11.1"
-        }
-      },
-      {
-        "package": "SDWebImageSwiftUI",
-        "repositoryURL": "https://github.com/SDWebImage/SDWebImageSwiftUI.git",
-        "state": {
-          "branch": null,
-          "revision": "cd8625b7cf11a97698e180d28bb7d5d357196678",
-          "version": "2.0.2"
-        }
-      },
-      {
-        "package": "TVOSToast",
-        "repositoryURL": "https://github.com/bsorrentino/TVOSToast",
-        "state": {
-          "branch": "master",
-          "revision": "79621d087795197fd238e07adf81052dd5ed4775",
-          "version": null
-        }
+  "pins" : [
+    {
+      "identity" : "tvostoast",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bsorrentino/TVOSToast",
+      "state" : {
+        "branch" : "master",
+        "revision" : "79621d087795197fd238e07adf81052dd5ed4775"
       }
-    ]
-  },
-  "version": 1
+    }
+  ],
+  "version" : 2
 }
