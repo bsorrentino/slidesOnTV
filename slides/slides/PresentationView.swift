@@ -116,7 +116,8 @@ extension PresentationView {
     
     private func showToast_Bookmark_Saved() {
         
-        guard let viewController = UIApplication.shared.windows.first!.rootViewController,
+        
+        guard let viewController = UIApplication.shared.keyWindow?.rootViewController,
               let image = UIImage(systemName: "bookmark.circle.fill") else {return}
         
             let style = TVOSToastStyle( position: .bottomRight(insets: 10) )
@@ -133,7 +134,7 @@ extension PresentationView {
 
     private func showToast_How_To_Navigate_Slides() {
         
-        guard let viewController = UIApplication.shared.windows.first!.rootViewController,
+        guard let viewController =  UIApplication.shared.keyWindow?.rootViewController,
               let imageL = UIImage(named: "remoteTouchLalpha",
                                   in: Bundle.main,
                                   compatibleWith: nil),
