@@ -12,6 +12,7 @@ import SwiftUI
 /**
  
  */
+@available(*, deprecated, message: "No longer needed use searchable view modifier")
 struct SearchBar<Content: View>: UIViewControllerRepresentable {
     
     typealias UIViewControllerType = UIViewController

@@ -24,7 +24,7 @@ struct SearchSlidesView: View  {
     @State var selectedItem:SlidehareItem?
     
     let columns:[GridItem] = Array(repeating: .init(.fixed(Const.gridItemSize)), count: 3)
-
+    
     /**
      *  NEXT PAGE VIEW
      */
@@ -61,7 +61,7 @@ struct SearchSlidesView: View  {
             self.selectedItem = nil
         }
     }
-
+    
     var body: some View {
         NavigationView {
             
@@ -70,56 +70,59 @@ struct SearchSlidesView: View  {
                                isActive: $isItemDownloaded) { EmptyView() }
                     .hidden()
                 VStack {
-                    SearchBar( text: $slidesResult.searchText ) {
-                        //
-                        // @ref https://stackoverflow.com/a/67730429/521197
-                        //
-                        // ScrollViewReader usage for dynamically scroll to tagged position
-                        //
-                        ScrollView {
-                                LazyVGrid( columns: columns ) {
+                    //
+                    // @ref https://stackoverflow.com/a/67730429/521197
+                    //
+                    // ScrollViewReader usage for dynamically scroll to tagged position
+                    //
+                    ScrollView {
+                        LazyVGrid( columns: columns ) {
+                            
+                            ForEach(slidesResult.data, id: \.id) { item in
+                                
+                                Button( action: {
+                                    // self.downloadManager.download(item: item)  { isItemDownloaded = $0 }
+                                    Task {
+                                        isItemDownloaded = await self.downloadManager.download(item: item)
+                                    }
+                                }) {
                                     
-                                    ForEach(slidesResult.data, id: \.id) { item in
-                                        
-                                        Button( action: {
-                                            // self.downloadManager.download(item: item)  { isItemDownloaded = $0 }
-                                            Task {
-                                                isItemDownloaded = await self.downloadManager.download(item: item)
-                                            }
-                                        }) {
-
-                                        SearchCardView<SlidehareItem>( item: item,
-                                                                       onFocusChange: setItem )
-                                            .environmentObject(downloadManager)
-                                        }
-                                        .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
-                                        .disabled( self.downloadManager.isDownloading(item: item) )
-                                        .id( item.id )
-                                            
-                                    }
-                                    if slidesResult.hasMoreItems {
-                                        Button( action: { slidesResult.nextPage() }) {
-                                            NextPageView( onFocusChange: resetItem )
-                                        }
-                                        .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
-                                    }
+                                    SearchCardView<SlidehareItem>( item: item,
+                                                                   onFocusChange: setItem )
+                                    .environmentObject(downloadManager)
                                 }
-
+                                .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
+                                .disabled( self.downloadManager.isDownloading(item: item) )
+                                .id( item.id )
+                                
+                            }
+                            if slidesResult.hasMoreItems {
+                                Button( action: { slidesResult.nextPage() }) {
+                                    NextPageView( onFocusChange: resetItem )
+                                }
+                                .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
+                            }
                         }
-                        .padding(.horizontal)
-
+                        
                     }
+                    .padding(.horizontal)
+                    
                     Spacer()
                     TitleView( selectedItem: selectedItem )
-                        
-                        
+                    
+                    
                 }
                 .edgesIgnoringSafeArea(.bottom)
             }
-                
-        }.searchTheme()
+            
+        }
+//        .navigationDestination(isPresented: $isItemDownloaded ) {
+//            
+//        }
+        .searchable(text: $slidesResult.searchText)
+        .searchTheme()
     }
-        
+    
 }
 
 struct SearchSlides_Previews: PreviewProvider {
@@ -131,11 +134,11 @@ struct SearchSlides_Previews: PreviewProvider {
                         .fill( Color.white.opacity(0.5) )
                         .cornerRadius(10)
                         .shadow( color: Color.black, radius: 10 )
-
+                    
                     ProgressView( "Download:", value: 0.5, total:1)
                         .progressViewStyle(BlueShadowProgressViewStyle())
                         .padding()
-                        
+                    
                 }
             }
             .frame( width:500, height: 150)
@@ -143,7 +146,7 @@ struct SearchSlides_Previews: PreviewProvider {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background( Color.white )
-
+        
     }
 }
 
