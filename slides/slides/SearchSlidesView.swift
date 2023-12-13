@@ -63,90 +63,82 @@ struct SearchSlidesView: View  {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             
-            ZStack {
-                NavigationLink(destination: PresentationView<SlidehareItem>().environmentObject(downloadManager),
-                               isActive: $isItemDownloaded) { EmptyView() }
-                    .hidden()
-                VStack {
-                    //
-                    // @ref https://stackoverflow.com/a/67730429/521197
-                    //
-                    // ScrollViewReader usage for dynamically scroll to tagged position
-                    //
-                    ScrollView {
-                        LazyVGrid( columns: columns ) {
-                            
-                            ForEach(slidesResult.data, id: \.id) { item in
-                                
-                                Button( action: {
-                                    // self.downloadManager.download(item: item)  { isItemDownloaded = $0 }
-                                    Task {
-                                        isItemDownloaded = await self.downloadManager.download(item: item)
-                                    }
-                                }) {
-                                    
-                                    SearchCardView<SlidehareItem>( item: item,
-                                                                   onFocusChange: setItem )
-                                    .environmentObject(downloadManager)
-                                }
-                                .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
-                                .disabled( self.downloadManager.isDownloading(item: item) )
-                                .id( item.id )
-                                
-                            }
-                            if slidesResult.hasMoreItems {
-                                Button( action: { slidesResult.nextPage() }) {
-                                    NextPageView( onFocusChange: resetItem )
-                                }
-                                .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
-                            }
-                        }
+            VStack {
+                //
+                // @ref https://stackoverflow.com/a/67730429/521197
+                //
+                // ScrollViewReader usage for dynamically scroll to tagged position
+                //
+                ScrollView {
+                    LazyVGrid( columns: columns ) {
                         
+                        ForEach(slidesResult.data, id: \.id) { item in
+                            
+                            Button( action: {
+                                Task {
+                                    isItemDownloaded = 
+                                        await self.downloadManager.download(item: item)
+                                }
+                            }) {
+                                
+                                SearchCardView<SlidehareItem>( item: item,
+                                                               onFocusChange: setItem )
+                                .environmentObject(downloadManager)
+                            }
+                            .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
+                            .disabled( self.downloadManager.isDownloading(item: item) )
+                            .id( item.id )
+                            
+                        }
+                        if slidesResult.hasMoreItems {
+                            Button( action: { slidesResult.nextPage() }) {
+                                NextPageView( onFocusChange: resetItem )
+                            }
+                            .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
+                        }
                     }
-                    .padding(.horizontal)
-                    
-                    Spacer()
-                    TitleView( selectedItem: selectedItem )
-                    
-                    
                 }
-                .edgesIgnoringSafeArea(.bottom)
+                .padding(.horizontal)
+
+                Spacer()
+                TitleView( selectedItem: selectedItem )
+                
             }
-            
+            .edgesIgnoringSafeArea(.bottom)
+            .searchable(text: $slidesResult.searchText)
+            .navigationDestination(isPresented: $isItemDownloaded ) {
+                PresentationView<SlidehareItem>()
+                    .environmentObject(downloadManager)
+            }
         }
-//        .navigationDestination(isPresented: $isItemDownloaded ) {
-//            
-//        }
-        .searchable(text: $slidesResult.searchText)
         .searchTheme()
     }
     
 }
 
-struct SearchSlides_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Button( action: {} ) {
-                ZStack {
-                    Rectangle()
-                        .fill( Color.white.opacity(0.5) )
-                        .cornerRadius(10)
-                        .shadow( color: Color.black, radius: 10 )
-                    
-                    ProgressView( "Download:", value: 0.5, total:1)
-                        .progressViewStyle(BlueShadowProgressViewStyle())
-                        .padding()
-                    
-                }
+#Preview {
+    VStack {
+        Button( action: {} ) {
+            ZStack {
+                Rectangle()
+                    .fill( Color.white.opacity(0.5) )
+                    .cornerRadius(10)
+                    .shadow( color: Color.black, radius: 10 )
+                
+                ProgressView( "Download:", value: 0.5, total:1)
+                    .progressViewStyle(BlueShadowProgressViewStyle())
+                    .padding()
+                
             }
-            .frame( width:500, height: 150)
-            
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background( Color.white )
+        .frame( width:500, height: 150)
         
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background( Color.white )
+    
 }
+
 

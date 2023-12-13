@@ -12,7 +12,7 @@ import TVOSToast
 
 fileprivate let Const = (
     gridItemSize:   CGFloat(500),
-
+    
     Background: Color.blue
 )
 
@@ -23,11 +23,11 @@ struct FavoriteContextMenuModifier: ViewModifier {
     var delete: ( FavoriteItem ) -> Void
     var download: ( FavoriteItem ) async -> Void
     @State private var confirmationShown = false
-
-    #if swift(<15.0)
-
+    
+#if swift(<15.0)
+    
     @State private var presentSheet = false
-
+    
     struct MenuButtonModifier: ViewModifier {
         var foreground: Color?
         var background: Color?
@@ -50,20 +50,20 @@ struct FavoriteContextMenuModifier: ViewModifier {
         }
     }
     
-    #endif
+#endif
     
     func body(content: Content) -> some View {
         content
-            #if swift(>=15.0)
+#if swift(>=15.0)
             .contextMenu {
-                    Button( "MENU 􀱢") { }
-                    Button( "Download 􀈄") { download(item) }
-                    Button( "Delete 􀈓", role: .destructive ) { confirmationShown.toggle() }
-
+                Button( "MENU 􀱢") { }
+                Button( "Download 􀈄") { download(item) }
+                Button( "Delete 􀈓", role: .destructive ) { confirmationShown.toggle() }
+                
             }
             .confirmationDialog(
                 "Are you sure?",
-                 isPresented: $confirmationShown
+                isPresented: $confirmationShown
             ) {
                 Button("Yes") {
                     withAnimation {
@@ -71,7 +71,7 @@ struct FavoriteContextMenuModifier: ViewModifier {
                     }
                 }
             }
-            #else
+#else
             .onLongPressGesture(minimumDuration: 0.5,
                                 perform: { presentSheet.toggle() },
                                 onPressingChanged: { state in print("onPressingChanged: \(state)")})
@@ -88,12 +88,12 @@ struct FavoriteContextMenuModifier: ViewModifier {
                             Label( "Download", systemImage: "square.and.arrow.down")
                                 .modifier( MenuButtonModifier( foreground: .black, background: .white) )
                         })
-                            .buttonStyle(.plain)
+                    .buttonStyle(.plain)
                     Button( action: { confirmationShown.toggle() },
                             label: { Label( "Delete", systemImage: "trash.circle")
-                                        .modifier( MenuButtonModifier( foreground: .white, background: .red) )
-                        })
-                        .buttonStyle(.plain)
+                            .modifier( MenuButtonModifier( foreground: .white, background: .red) )
+                    })
+                    .buttonStyle(.plain)
                 }
                 .fixedSize()
                 .padding()
@@ -109,21 +109,21 @@ struct FavoriteContextMenuModifier: ViewModifier {
                     )
                 }
             }
-            #endif
+#endif
     }
 }
 
 struct FavoritesView: View {
-
+    
     @StateObject var downloadManager = DownloadManager<FavoriteItem>()
     @State var isItemDownloaded:Bool    = false
     @State var selectedItem:FavoriteItem?
     @State private var data:[FavoriteItem] = []
-
+    
     private let columns:[GridItem] = Array(repeating: .init(.fixed(Const.gridItemSize)), count: 3)
-
+    
     private var cancellable: AnyCancellable?
-
+    
     private func download( _ item : FavoriteItem ) async -> Void {
         isItemDownloaded =  await self.downloadManager.downloadFavorite(item)
     }
@@ -133,76 +133,73 @@ struct FavoritesView: View {
         selectedItem = nil
         data = NSUbiquitousKeyValueStore.default.favorites()
     }
-
+    
     var body: some View {
-        NavigationView {
-
-            ZStack {
-                NavigationLink(destination: PresentationView<FavoriteItem>()
-                                                .environmentObject(downloadManager),
-                               isActive: $isItemDownloaded) { EmptyView() }
-                               .hidden()
-                VStack {
-
-                    HStack(alignment: .center, spacing: 10 ) {
-                        Image( systemName: "bookmark.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame( minWidth: 100, maxHeight: 70 )
-
-                        Text( "Favorites" )
-                            .font(.largeTitle.bold())
-
-                    }.padding()
-                    Divider()
-                    //
-                    // @ref https://stackoverflow.com/a/67730429/521197
-                    //
-                    // ScrollViewReader usage for dynamically scroll to tagged position
-                    //
-                    ScrollView {
-                        LazyVGrid( columns: columns ) {
-
-                            ForEach(data, id: \.id) { item in
-
-                                Button( action: { Task { await download(item) } } )
-                                {
-                                    SearchCardView<FavoriteItem>( item: item,
-                                                                   onFocusChange: setItem )
-                                        .environmentObject(downloadManager)
-                                }
-                                .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
-                                .disabled( self.downloadManager.isDownloading(item: item) )
-                                .id( item.id )
-                                .modifier( FavoriteContextMenuModifier(item: item, delete: delete, download: download) )
-
+        NavigationStack {
+            
+            VStack {
+                
+                HStack(alignment: .center, spacing: 10 ) {
+                    Image( systemName: "bookmark.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame( minWidth: 100, maxHeight: 70 )
+                    
+                    Text( "Favorites" )
+                        .font(.largeTitle.bold())
+                    
+                }.padding()
+                Divider()
+                //
+                // @ref https://stackoverflow.com/a/67730429/521197
+                //
+                // ScrollViewReader usage for dynamically scroll to tagged position
+                //
+                ScrollView {
+                    LazyVGrid( columns: columns ) {
+                        
+                        ForEach(data, id: \.id) { item in
+                            
+                            Button( action: { Task { await download(item) } } )
+                            {
+                                SearchCardView<FavoriteItem>( item: item,
+                                                              onFocusChange: setItem )
+                                .environmentObject(downloadManager)
                             }
+                            .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
+                            .disabled( self.downloadManager.isDownloading(item: item) )
+                            .id( item.id )
+                            .modifier( FavoriteContextMenuModifier(item: item, delete: delete, download: download) )
+                            
                         }
-
                     }
-                    .padding(.horizontal)
-
-                    Spacer()
-                    TitleView( selectedItem: selectedItem )
+                    
                 }
-                .onAppear {
-                    data = NSUbiquitousKeyValueStore.default.favorites()
-                    showToast_How_To_Open_Menu()
-                }
-
+                .padding(.horizontal)
+                
+                Spacer()
+                TitleView( selectedItem: selectedItem )
+            }
+            .onAppear {
+                data = NSUbiquitousKeyValueStore.default.favorites()
+                showToast_How_To_Open_Menu()
             }
             .edgesIgnoringSafeArea(.bottom)
+            .navigationDestination(isPresented: $isItemDownloaded ) {
+                PresentationView<FavoriteItem>()
+                    .environmentObject(downloadManager)
+            }
         }
         .favoritesTheme()
     }
-
-
+    
+    
     fileprivate func resetItem( OnFocusChange focused : Bool ) {
         if focused {
             self.selectedItem = nil
         }
     }
-
+    
     fileprivate func setItem( item:FavoriteItem, OnFocusChange focused : Bool ) {
         if focused {
             self.selectedItem = item
@@ -211,7 +208,7 @@ struct FavoritesView: View {
             self.selectedItem = nil
         }
     }
-
+    
 }
 
 // MARK: FavoriteView Toast Extension
@@ -223,21 +220,21 @@ extension FavoritesView {
         guard let viewController = UIApplication.shared.keyWindow?.rootViewController else {return}
         
         let style = TVOSToastStyle( position: .topRight(insets: 10), backgroundColor: UIColor.link )
-            let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 600, height: 80),
-                                  style: style)
-            
-            toast.hintText =
-                TVOSToastHintText(element:
-                    [.stringType("'Long press' to open menu")])
-            
-            viewController.presentToast(toast)
+        let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 600, height: 80),
+                              style: style)
+        
+        toast.hintText =
+        TVOSToastHintText(element:
+                            [.stringType("'Long press' to open menu")])
+        
+        viewController.presentToast(toast)
     }
 }
 
 // MARK: - Download Manager Extension
 
 extension DownloadManager where T == FavoriteItem {
-
+    
     func downloadFavorite( _ item: FavoriteItem ) async -> Bool {
         
         return await withCheckedContinuation { (continuation ) in
@@ -247,17 +244,17 @@ extension DownloadManager where T == FavoriteItem {
                 continuation.resume(returning: false)
                 return
             }
-
+            
             let api = SlideshareApi()
-
+            
             let parser = SlideshareItemsParser()
-
+            
             guard let query = try? api.queryById(credentials: credentials, id: item.id ) else {
                 log.error( "error invoking slideshare API" )
                 continuation.resume(returning: false)
                 return
             }
-
+            
             let onCompletion = { (completion:Subscribers.Completion<Error>) in
                 switch completion {
                 case .failure(let error):
@@ -267,13 +264,13 @@ extension DownloadManager where T == FavoriteItem {
                     log.debug("DONE!")
                 }
             }
-
-           query.toGenericError()
+            
+            query.toGenericError()
                 .flatMap    { parser.parse($0.data) }
                 .map        { SlidehareItem(data:$0) }
                 .compactMap { FavoriteItem(item:$0) }
                 .first()
-                //.receive(on: DispatchQueue.main)
+            //.receive(on: DispatchQueue.main)
                 .sink(
                     receiveCompletion: onCompletion,
                     receiveValue: { favoriteItem in
@@ -285,14 +282,12 @@ extension DownloadManager where T == FavoriteItem {
                         }
                     })
                 .store(in: &bag)
-        
+            
         }
     }
 }
 
 
-struct FavoritesView_Previews: PreviewProvider {
-    static var previews: some View {
-        FavoritesView()
-    }
+#Preview {
+    FavoritesView()
 }
