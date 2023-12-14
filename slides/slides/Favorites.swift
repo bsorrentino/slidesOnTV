@@ -82,7 +82,7 @@ extension NSUbiquitousKeyValueStore {
     
     }
 
-    func favoriteRemove( key:String, synchronize:Bool = false ) {
+    func removeFavorite( key:String, synchronize:Bool = false ) {
 
         self.removeObject(forKey: key)
         
@@ -91,7 +91,7 @@ extension NSUbiquitousKeyValueStore {
         }
     }
 
-    func favoriteAdd<T>( data:T, synchronize:Bool = false ) where T : SlideItem  {
+    func addFavorite<T>( data:T, synchronize:Bool = false ) where T : SlideItem  {
                 
         let key = data.id //NSUUID().uuidString
       
