@@ -113,11 +113,3 @@ struct SearchBar<Content: View>: UIViewControllerRepresentable {
     }
 
 }
-
-struct SearchBar_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchBar(text: .constant("")) {
-            EmptyView()
-        }
-    }
-}
