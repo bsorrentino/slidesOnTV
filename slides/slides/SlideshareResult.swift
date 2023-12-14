@@ -19,8 +19,8 @@ class SlideShareResult :  ObservableObject {
     private(set) var currentPage:Int = 1
 
     private var subscriptions = Set<AnyCancellable>()
-
     private var cancellable: AnyCancellable?
+    private var lastSearchText:String?
 
     var hasMoreItems:Bool {
         totalItems > data.count
@@ -31,7 +31,9 @@ class SlideShareResult :  ObservableObject {
      */
     init() {
         $searchText
-            .debounce(for: .seconds(1.0), scheduler: DispatchQueue.main)
+            .debounce(for: .seconds(2.0), scheduler: DispatchQueue.main)
+            .removeDuplicates()
+//            .filter { $0 != self.lastSearchText }
             .sink(receiveValue: { text in
                 self.reset()
                 self.query(searchText: text)
@@ -54,8 +56,8 @@ class SlideShareResult :  ObservableObject {
         }
     }
 
-    func query( searchText: String ) -> Void {
-
+    private func query( searchText: String ) -> Void {
+        
         if isInPreviewMode {
 
             data.append( SlidehareItem( data:[SlidehareItem.ITEMID:"00000", SlidehareItem.Title:"Title for 000000"] ))
