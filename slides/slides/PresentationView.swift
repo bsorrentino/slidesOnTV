@@ -20,7 +20,7 @@ struct PresentationView<T>: View where T : SlideItem {
     func saveToFavorites() {
         
         if let item = downloadInfo.downdloadedItem {
-            NSUbiquitousKeyValueStore.default.favoriteAdd(data: item, synchronize: true)
+            NSUbiquitousKeyValueStore.default.addFavorite(data: item, synchronize: true)
             showToast_Bookmark_Saved()
         }
     }
