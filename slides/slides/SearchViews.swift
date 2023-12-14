@@ -96,12 +96,12 @@ struct SearchCardView<T> : View where T : SlideItem {
     var body: some View {
               
         SearchResultImageView( item: item, onFocusChange: onFocusChange)
-        .if( self.downloadManager.isDownloading(item: item) ) {
-            $0.overlay( DownloadProgressView(), alignment: .bottom )
-        }
-        .padding()
-        .frame( width: Const.cardSize.width, height: Const.cardSize.height)
-        .background(Color.white)
+            .if( self.downloadManager.isDownloading(item: item) ) {
+                $0.overlay( DownloadProgressView(), alignment: .bottom )
+            }
+            .padding()
+            .frame( width: Const.cardSize.width, height: Const.cardSize.height)
+            .background(Color.white)
     }
 
     func DownloadProgressView() -> some View {
