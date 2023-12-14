@@ -85,7 +85,7 @@ struct SearchSlidesView: View  {
                                 
                                 SearchCardView<SlidehareItem>( item: item,
                                                                onFocusChange: setItem )
-                                .environmentObject(downloadManager)
+                                    .environmentObject(downloadManager)
                             }
                             .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
                             .disabled( self.downloadManager.isDownloading(item: item) )
@@ -103,6 +103,7 @@ struct SearchSlidesView: View  {
                 .padding(.horizontal)
 
                 Spacer()
+                
                 TitleView( selectedItem: selectedItem )
                 
             }
