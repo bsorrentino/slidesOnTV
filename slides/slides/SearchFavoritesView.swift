@@ -22,48 +22,24 @@ struct FavoriteContextMenuModifier: ViewModifier {
     var item : FavoriteItem
     var delete: ( FavoriteItem ) -> Void
     var download: ( FavoriteItem ) async -> Void
-    @State private var confirmationShown = false
-    
-#if swift(<15.0)
-    
-    @State private var presentSheet = false
-    
-    struct MenuButtonModifier: ViewModifier {
-        var foreground: Color?
-        var background: Color?
-        func body(content: Content) -> some View {
-            content
-                .font(.headline)
-                .padding(EdgeInsets( top: 10, leading: 120, bottom: 10, trailing: 120 ))
-                .if( foreground != nil ) { $0.foregroundColor( foreground )}
-                .if( background != nil ) { $0.background( background )}
-        }
-    }
-    
-    private var sheetTitle:some View {
-        HStack {
-            Label( "Actions", systemImage: "filemenu.and.selection")
-                .labelStyle(.iconOnly)
-                .font(.largeTitle)
-            Text( "_press 'MENU' to dismiss_")
-                .font(.callout)
-        }
-    }
-    
-#endif
-    
+    @State private var confirmationDelete = false
+    @State private var confirmationDeleteAll = false
+
     func body(content: Content) -> some View {
         content
-#if swift(>=15.0)
             .contextMenu {
-                Button( "MENU 􀱢") { }
-                Button( "Download 􀈄") { download(item) }
-                Button( "Delete 􀈓", role: .destructive ) { confirmationShown.toggle() }
+//                Button( "MENU") { }
+                Button( "Download") {
+                    Task { await download(item) }
+                }
+                Button( "Delete", role: .destructive ) {
+                    confirmationDelete.toggle()
+                }
                 
             }
             .confirmationDialog(
-                "Are you sure?",
-                isPresented: $confirmationShown
+                String("Are you sure?"),
+                isPresented: $confirmationDelete
             ) {
                 Button("Yes") {
                     withAnimation {
@@ -71,45 +47,6 @@ struct FavoriteContextMenuModifier: ViewModifier {
                     }
                 }
             }
-#else
-            .onLongPressGesture(minimumDuration: 0.5,
-                                perform: { presentSheet.toggle() },
-                                onPressingChanged: { state in print("onPressingChanged: \(state)")})
-            .sheet(isPresented: $presentSheet) {
-                VStack {
-                    sheetTitle
-                    Divider()
-                    Button(
-                        action: {
-                            presentSheet.toggle();
-                            Task { await download(item) }
-                        },
-                        label: {
-                            Label( "Download", systemImage: "square.and.arrow.down")
-                                .modifier( MenuButtonModifier( foreground: .black, background: .white) )
-                        })
-                    .buttonStyle(.plain)
-                    Button( action: { confirmationShown.toggle() },
-                            label: { Label( "Delete", systemImage: "trash.circle")
-                            .modifier( MenuButtonModifier( foreground: .white, background: .red) )
-                    })
-                    .buttonStyle(.plain)
-                }
-                .fixedSize()
-                .padding()
-                .alert( isPresented: $confirmationShown) {
-                    Alert(
-                        title: Text("Are you sure you want to delete this?"),
-                        message: Text("**There is no undo**"),
-                        primaryButton: .destructive(Text("Confirm")) {
-                            presentSheet.toggle()
-                            delete(item)
-                        },
-                        secondaryButton: .cancel()
-                    )
-                }
-            }
-#endif
     }
 }
 
@@ -124,19 +61,18 @@ struct FavoritesView: View {
     
     private var cancellable: AnyCancellable?
     
-    private func download( _ item : FavoriteItem ) async -> Void {
+    private func downloadFavorite( _ item : FavoriteItem ) async -> Void {
         isItemDownloaded =  await self.downloadManager.downloadFavorite(item)
     }
     
-    private func delete( _ item : FavoriteItem ) {
-        NSUbiquitousKeyValueStore.default.favoriteRemove(key: item.id)
+    private func deleteFavorite( _ item : FavoriteItem ) {
+        NSUbiquitousKeyValueStore.default.removeFavorite(key: item.id, synchronize: true)
         selectedItem = nil
         data = NSUbiquitousKeyValueStore.default.favorites()
     }
-    
+
     var body: some View {
         NavigationStack {
-            
             VStack {
                 
                 HStack(alignment: .center, spacing: 10 ) {
@@ -160,17 +96,18 @@ struct FavoritesView: View {
                         
                         ForEach(data, id: \.id) { item in
                             
-                            Button( action: { Task { await download(item) } } )
+                            Button( action: { Task { await downloadFavorite(item) } } )
                             {
                                 SearchCardView<FavoriteItem>( item: item,
                                                               onFocusChange: setItem )
-                                .environmentObject(downloadManager)
+                                    .environmentObject(downloadManager)
                             }
                             .buttonStyle( CardButtonStyle() ) // 'CardButtonStyle' doesn't work whether .focusable() is called
                             .disabled( self.downloadManager.isDownloading(item: item) )
                             .id( item.id )
-                            .modifier( FavoriteContextMenuModifier(item: item, delete: delete, download: download) )
-                            
+                            .modifier( FavoriteContextMenuModifier(item: item, 
+                                                                   delete: deleteFavorite,
+                                                                   download: downloadFavorite ) )                            
                         }
                     }
                     
@@ -217,9 +154,12 @@ extension FavoritesView {
     
     private func showToast_How_To_Open_Menu() {
         
-        guard let viewController = UIApplication.shared.keyWindow?.rootViewController else {return}
+        guard let viewController = UIApplication.shared.keyWindow?.rootViewController else {
+            log.error( "rootViewController not found!")
+            return
+        }
         
-        let style = TVOSToastStyle( position: .topRight(insets: 10), backgroundColor: UIColor.link )
+        let style = TVOSToastStyle( position: .topRight(insets: 10), duration: 3.5, backgroundColor: UIColor.link )
         let toast = TVOSToast(frame: CGRect(x: 0, y: 0, width: 600, height: 80),
                               style: style)
         
